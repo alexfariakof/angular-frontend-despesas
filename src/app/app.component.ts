@@ -5,6 +5,11 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass']
 })
-export class AppComponent {
+export class AppComponent {  
   title = 'despesas-frontend-angular';
+  isAuthenticated:Boolean = false;
+
+  onLoginClicked() {
+    this.isAuthenticated = true;
+  }
 }

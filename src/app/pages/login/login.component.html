@@ -1,0 +1,60 @@
+<div class="d-flex flex-column full-height">
+  <div class="bg-info w-100 h-15">
+    <nav id="navBrand" class="bg-dark navbar navbar-dark navbar-expand-sm  navbar-expand-md">
+      <div class="container-fluid">
+        <div  class="d-flex justify-content-start">
+          <a class="navbar-brand align-text-lg-start fs-6 fs-sm-5 fs-md-4 fs-lg-3" href="/"> <span
+              class="green">DESPESA$ PESSOAI$</span></a>
+        </div>
+        <div class="d-flex justify-content-end">
+          <ul class="navbar-nav ms-auto mt-2 ">
+            <li class="nav-item"><a class="nav-link fs-6 fs-sm-5 fs-md-4 fs-lg-3" href="/register"
+                style="color: #0d6efd;">Criar uma conta</a></li>
+            <li class="nav-item"><a class="nav-link fs-6 fs-sm-5 fs-md-4 fs-lg-3" href="/login"
+                style="color: #0d6efd;">Fazer login</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <div class="d-flex flex-column flex-grow-1 align-items-center justify-content-center">
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="txtLogin">@</span>
+      <input type="text" class="form-control" placeholder="email" aria-label="email" aria-describedby="txtLogin">
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="txtPassword">*</span>
+      <input type="password" class="form-control" placeholder="Senha" aria-label="Senha" aria-describedby="txtPassword">
+    </div>
+    <div>
+      <button type="button" class="btn btn-primary" (click)="onLoginClick()" data-bs-dismiss="modal">Entrar</button>
+    </div>
+  </div>
+</div>
+<footer class="bg-dark text-center text-white " style="height: 25%;">
+  <!-- Grid container -->
+  <div class="container p-4 pb-0">
+    <!-- Section: Social media -->
+    <section class="mb-4">
+      <!-- Facebook -->
+      <a class="btn text-white btn-floating m-1" style="background-color: #3b5998;" target="_blank"
+        href="https://www.facebook.com/alex.ribeiro.noeh/" role="button"><i class="fab fa-facebook-f"></i></a>
+
+      <!-- Linkedin -->
+      <a class="btn text-white btn-floating m-1" style="background-color: #0082ca;" target="_blank"
+        href="https://www.linkedin.com/in/alex-ribeiro-de-faria-b3376b26/" role="button"><i
+          class="fab fa-linkedin-in"></i></a>
+      <!-- Github -->
+      <a class="btn text-white btn-floating m-1" style="background-color: #333333;" target="_blank"
+        href="https://github.com/stars/alexfariakof/lists/portif%C3%B3lio" role="button"><i
+          class="fab fa-github"></i></a>
+    </section>
+    <!-- Section: Social media -->
+  </div>
+  <!-- Grid container -->
+
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2023 Copyright Honey TI. Todos os direitos reservados - Desenvolvido por Alex Ribeiro de Faria
+  </div>
+</footer>
