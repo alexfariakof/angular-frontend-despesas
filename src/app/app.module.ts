@@ -7,6 +7,12 @@ import { LoginComponent } from './pages/login/login.component';
 import { SuccessAlertComponent } from './shared/components/success-alert/success-alert.component';
 import { WarningAlertComponent }  from './shared/components/warning-alert/warning-alert.component';
 import { LayoutComponent } from './shared/components/layout/layout.component';
+import { CategoriasComponent } from './pages/categorias/categorias.component';
+import { ReceitasComponent } from './pages/receitas/receitas.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { DespesasComponent } from './pages/despesas/despesas.component';
+import { LancamentosComponent } from './pages/lancamentos/lancamentos.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -14,12 +20,18 @@ import { LayoutComponent } from './shared/components/layout/layout.component';
     LoginComponent,
     LayoutComponent,
     SuccessAlertComponent,
-    WarningAlertComponent
+    WarningAlertComponent,
+    CategoriasComponent,
+    ReceitasComponent,
+    DashboardComponent,
+    DespesasComponent,
+    LancamentosComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

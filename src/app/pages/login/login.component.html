@@ -20,18 +20,18 @@
   <div class="d-flex flex-column flex-grow-1 align-items-center justify-content-center">
     <div class="input-group mb-3">
       <span class="input-group-text" id="txtLogin">@</span>
-      <input type="text" class="form-control" placeholder="email" aria-label="email" aria-describedby="txtLogin">
+      <input [(ngModel)]="login.email" type="text" class="form-control" placeholder="email" aria-label="email" aria-describedby="txtLogin" />
     </div>
     <div class="input-group mb-3">
       <span class="input-group-text" id="txtPassword">*</span>
-      <input type="password" class="form-control" placeholder="Senha" aria-label="Senha" aria-describedby="txtPassword">
+      <input [(ngModel)]="login.password" type="password" class="form-control" placeholder="Senha" aria-label="Senha" aria-describedby="txtPassword">
     </div>
     <div>
-      <button type="button" class="btn btn-primary" (click)="onLoginClick()" data-bs-dismiss="modal">Entrar</button>
+      <button type="button" class="btn btn-primary" (click)="onLoginClick()" >Entrar</button>
     </div>
   </div>
 </div>
-<footer class="bg-dark text-center text-white " style="height: 25%;">
+<footer class="bg-dark text-center text-white " >
   <!-- Grid container -->
   <div class="container p-4 pb-0">
     <!-- Section: Social media -->
@@ -54,7 +54,7 @@
   <!-- Grid container -->
 
   <!-- Copyright -->
-  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+  <div class="text-center fs-sm-4 fs-md-4 fs-lg-3" style="background-color: rgba(0, 0, 0, 0.2);">
     © 2023 Copyright Honey TI. Todos os direitos reservados - Desenvolvido por Alex Ribeiro de Faria
   </div>
 </footer>
