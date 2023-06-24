@@ -1,3 +1,14 @@
+
 .full-height {
   height: 60%;
+}
+
+.footer {
+  position: fixed;
+  bottom:0;
+  width: 100%;
+}
+
+.tituloHeader{
+  color: lightcyan;
 }
