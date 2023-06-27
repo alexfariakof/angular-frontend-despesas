@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { ILogin } from "src/app/shared/interfaces/ILogin";
+import { LoginService } from "src/app/shared/services/login.service";
 
 @Component({
   selector: 'app-login', 
@@ -10,10 +11,11 @@ import { ILogin } from "src/app/shared/interfaces/ILogin";
 })
 
 export class LoginComponent {
-    @Input() login: ILogin = { email: '', password: '' };  
+  private login: ILogin = { email: '', senha: '' };  
 
   constructor(public formbuilder: FormBuilder, 
-    private router: Router){
+    private router: Router,
+    private loginService: LoginService ){
 
   }
 
@@ -28,11 +30,22 @@ export class LoginComponent {
         
   }
 
-  getLoginDados(){
+  get getLoginDados(){
     return this, this.loginForm.controls;
   }
 
   onLoginClick() {
-    alert('email: ' + this.login.email + ' -' + 'password: ' + this.login.password );    
+    this.login.email = this.getLoginDados["txtLogin"].value;
+    this.login.senha = this.getLoginDados["txtPassword"].value;
+    this.loginService.login(this.login).subscribe(
+      token => {
+        alert(token);
+        this.router.navigate(['/dashboard']);
+      },
+      err => {
+        console.log(err);
+      }
+
+    )
   }
 }
