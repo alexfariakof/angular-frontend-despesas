@@ -3,12 +3,15 @@
     <nav id="navBrand" class="bg-dark navbar navbar-dark navbar-expand-sm  navbar-expand-md">
       <div class="container-fluid">
         <div class="d-flex justify-content-start">
-          <a class="navbar-brand tituloHeader align-text-lg-start fs-6 fs-sm-5 fs-md-4 fs-lg-3" href="/"> DESPESA$ PESSOAI$</a>
+          <a class="navbar-brand tituloHeader align-text-lg-start fs-6 fs-sm-5 fs-md-4 fs-lg-3" href="/"> DESPESA$
+            PESSOAI$</a>
         </div>
         <div class="d-flex justify-content-end">
           <ul class="navbar-nav ms-auto mt-2 ">
-            <li class="nav-item"><a class="nav-link fs-6 fs-sm-5 fs-md-4 fs-lg-3 textBtnHeader" href="/register" >Criar uma conta</a></li>
-            <li class="nav-item"><a class="nav-link fs-6 fs-sm-5 fs-md-4 fs-lg-3 textBtnHeader" href="/login" >Fazer login</a></li>
+            <li class="nav-item"><a class="nav-link fs-6 fs-sm-5 fs-md-4 fs-lg-3 textBtnHeader" href="/register">Criar
+                uma conta</a></li>
+            <li class="nav-item"><a class="nav-link fs-6 fs-sm-5 fs-md-4 fs-lg-3 textBtnHeader" href="/login">Fazer
+                login</a></li>
           </ul>
         </div>
       </div>
@@ -19,19 +22,29 @@
       <div class="bg-dark w-100 d-flex flex-column align-items-center justify-content-center">
         <h2 class="text-light fw-bolder">Identifique-se</h2>
       </div>
-      <form class="p-4 " (submit)="onLoginClick()" [formGroup]="loginForm" >
-        <div class="input-group mb-3">
-          <span class="input-group-text" id="login" >@</span>
-          <input id="txtLogin" name="txtLogin" [(ngModel)]="login.email" type="text" class="form-control" placeholder="email" aria-label="email"  aria-describedby="login" />
+      <form class="p-4 " (submit)="onLoginClick()" [formGroup]="loginForm">
+        <div class="input-group mt-3">
+          <span class="input-group-text" id="login">@</span>
+          <input id="txtLogin" name="txtLogin" formControlName="txtLogin" required="" type="text" class="form-control"
+            placeholder="email" aria-label="email" aria-describedby="login" />
         </div>
-        <br>
-        <span ngModel>{{login.email}}</span>
-        <div class="input-group mb-3" id="password">
-          <span class="input-group-text" ><i class="bi bi-lock"></i></span>
-          <input id="txtPassword" name="txtPassword" [(ngModel)]="login.password" type="password" class="form-control" placeholder="Senha" aria-label="Senha" aria-describedby="password">
+        <label *ngIf="loginForm.get('txtLogin')?.errors?.['required'] &&  loginForm.get('txtLogin')?.touched"
+          class="error-input">
+          Campo Obrigatório!
+        </label>
+
+        <div class="input-group mt-3" id="password">
+          <span class="input-group-text"><i class="bi bi-lock"></i></span>
+          <input id="txtPassword" name="txtPassword" formControlName="txtPassword" required="" type="password"
+            class="form-control" placeholder="Senha" aria-label="Senha" aria-describedby="password">
         </div>
-        <div class="input-group mb-3  d-flex flex-column align-items-center justify-content-center">
-          <button type="submit" class="btn btn-primary w-100" >Entrar</button>
+        <label *ngIf="loginForm.get('txtPassword')?.errors?.['required'] &&  loginForm.get('txtPassword')?.touched"
+          class="error-input">
+          Campo Obrigatório!
+        </label>
+        <div class="input-group mt-3  d-flex flex-column align-items-center justify-content-center">
+          <button type="submit" class="btn btn-primary w-100" [ngClass]="{'disabled' : !loginForm.valid}"
+            [disabled]="!loginForm.valid">Entrar</button>
         </div>
       </form>
     </div>
@@ -43,21 +56,21 @@
       <!-- Facebook -->
       <a class="btn text-white btn-floating m-1 bg-primary" target="_blank"
         href="https://www.facebook.com/alex.ribeiro.noeh/" role="button">
-        <i class="bi bi-facebook btnSocialMedia" ></i>
+        <i class="bi bi-facebook btnSocialMedia"></i>
       </a>
       <!-- Linkedin -->
       <a class="btn text-white btn-floating m-1" target="_blank"
         href="https://www.linkedin.com/in/alex-ribeiro-de-faria-b3376b26/" role="button">
-        <i class="bi bi-linkedin btnSocialMedia" ></i>
+        <i class="bi bi-linkedin btnSocialMedia"></i>
       </a>
       <!-- Github -->
-      <a class="btn text-white btn-floating m-1 bg-black"  target="_blank"
+      <a class="btn text-white btn-floating m-1 bg-black" target="_blank"
         href="https://github.com/stars/alexfariakof/lists/portif%C3%B3lio" role="button">
-        <i class="bi bi-github btnSocialMedia" ></i>
+        <i class="bi bi-github btnSocialMedia"></i>
       </a>
     </section>
   </div>
-  <div class="text-center fs-sm-4 fs-md-4 fs-lg-3 bg-black opacity-50" >    
+  <div class="text-center fs-sm-4 fs-md-4 fs-lg-3 bg-black opacity-50">
     © 2023 Copyright Honey TI. Todos os direitos reservados - Desenvolvido por Alex Ribeiro de Faria
   </div>
 </footer>

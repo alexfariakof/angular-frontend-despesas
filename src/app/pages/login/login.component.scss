@@ -1,19 +1,18 @@
-
 .full-height {
   height: 60%;
 }
 
 .footer {
   position: fixed;
-  bottom:0;
+  bottom: 0;
   width: 100%;
 }
 
-.tituloHeader{
+.tituloHeader {
   color: lightcyan;
 }
 
-.textBtnHeader{
+.textBtnHeader {
   color: #0d6efd;
 }
 
@@ -23,4 +22,9 @@
   top: 53%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.error-input {
+  color: red;
+   font-size: 0.8rem;
 }
