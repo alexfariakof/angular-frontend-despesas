@@ -1,10 +1,1 @@
-<ng-container *ngIf="!isAuthenticated; else layout">
-  <app-login (loginClicked)="onLoginClicked()"></app-login>
-</ng-container>
-
-<ng-template #layout>
-  <app-layout></app-layout>
-</ng-template>
-
-<app-success-alert [message]="message" ></app-success-alert>
-<app-warning-alert></app-warning-alert>
+<router-outlet></router-outlet>

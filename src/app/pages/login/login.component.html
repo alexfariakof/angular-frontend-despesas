@@ -3,8 +3,7 @@
     <nav id="navBrand" class="bg-dark navbar navbar-dark navbar-expand-sm  navbar-expand-md">
       <div class="container-fluid">
         <div class="d-flex justify-content-start">
-          <a class="navbar-brand tituloHeader align-text-lg-start fs-6 fs-sm-5 fs-md-4 fs-lg-3" href="/"> DESPESA$
-            PESSOAI$</a>
+          <a class="navbar-brand tituloHeader align-text-lg-start fs-6 fs-sm-5 fs-md-4 fs-lg-3" href="/"> DESPESA$ PESSOAI$</a>
         </div>
         <div class="d-flex justify-content-end">
           <ul class="navbar-nav ms-auto mt-2 ">
@@ -18,49 +17,52 @@
     </nav>
   </div>
   <div class="d-flex align-items-center justify-content-center flex-grow-1">
-    <div class="d-flex flex-column border border-dark p-2 rounded align-items-center justify-content-center">
-      <div>
-        <h4 >Identifique-se</h4>
+    <div class="d-flex flex-column border border-4 border-dark rounded-4 align-items-center justify-content-center">
+      <div class="bg-dark w-100 d-flex flex-column align-items-center justify-content-center">
+        <h2 class="text-light fw-bolder">Identifique-se</h2>
       </div>
-    <div class="input-group mb-3">
-      <span class="input-group-text" id="txtLogin">@</span>
-      <input [(ngModel)]="login.email" type="text" class="form-control" placeholder="email" aria-label="email"
-        aria-describedby="txtLogin" />
-    </div>
-    <div class="input-group mb-3">
-      <span class="input-group-text" id="txtPassword"><i class="bi bi-lock"></i></span>
-      <input [(ngModel)]="login.password" type="password" class="form-control" placeholder="Senha" aria-label="Senha"
-        aria-describedby="txtPassword">
-    </div>
-    <div>
-      <button type="button" class="btn btn-primary" (click)="onLoginClick()">Entrar</button>
+      <form class="p-4" (ngSubmit)="onLoginClick()">
+
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="txtLogin">@</span>
+          <input type="text" class="form-control" placeholder="email" aria-label="email"
+            aria-describedby="txtLogin" />
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="txtPassword"><i class="bi bi-lock"></i></span>
+          <input type="password" class="form-control" placeholder="Senha"
+            aria-label="Senha" aria-describedby="txtPassword">
+        </div>
+        <div class="input-group mb-3 d-flex flex-column align-items-center justify-content-center">
+          <button type="submit" class="btn btn-primary" >Entrar</button>
+        </div>
+      </form>
     </div>
   </div>
-</div>
 </div>
 <footer class="bg-dark text-center text-white footer navbar-fixed-bottom" sty>
-  <!-- Grid container -->
   <div class="container p-1 pb-0">
-    <!-- Section: Social media -->
     <section class="mb-2">
       <!-- Facebook -->
-      <a  class="btn text-white btn-floating m-1 " style="background-color: #3b5998;" target="_blank"  href="https://www.facebook.com/alex.ribeiro.noeh/" role="button" >
-        <i class="bi bi-facebook" style="font-size: 2rem; position: absolute; top: 53%; left: 50%; transform: translate(-50%, -50%);"></i>
+      <a class="btn text-white btn-floating m-1 " style="background-color: #3b5998;" target="_blank"
+        href="https://www.facebook.com/alex.ribeiro.noeh/" role="button">
+        <i class="bi bi-facebook"
+          style="font-size: 2rem; position: absolute; top: 53%; left: 50%; transform: translate(-50%, -50%);"></i>
       </a>
       <!-- Linkedin -->
-      <a  class="btn text-white btn-floating m-1" target="_blank" href="https://www.linkedin.com/in/alex-ribeiro-de-faria-b3376b26/" role="button">
-        <i class="bi bi-linkedin" style="font-size: 2rem; position: absolute; top: 53%; left: 50%; transform: translate(-50%, -50%);"></i>        
+      <a class="btn text-white btn-floating m-1" target="_blank"
+        href="https://www.linkedin.com/in/alex-ribeiro-de-faria-b3376b26/" role="button">
+        <i class="bi bi-linkedin"
+          style="font-size: 2rem; position: absolute; top: 53%; left: 50%; transform: translate(-50%, -50%);"></i>
       </a>
       <!-- Github -->
-      <a  class="btn text-white btn-floating m-1" style="background-color: #333333;" target="_blank"  href="https://github.com/stars/alexfariakof/lists/portif%C3%B3lio" role="button">
-        <i class="bi bi-github" style="font-size: 2rem; position: absolute; top: 53%; left: 50%; transform: translate(-50%, -50%);"></i>                
+      <a class="btn text-white btn-floating m-1" style="background-color: #333333;" target="_blank"
+        href="https://github.com/stars/alexfariakof/lists/portif%C3%B3lio" role="button">
+        <i class="bi bi-github"
+          style="font-size: 2rem; position: absolute; top: 53%; left: 50%; transform: translate(-50%, -50%);"></i>
       </a>
     </section>
-    <!-- Section: Social media -->
   </div>
-  <!-- Grid container -->
-
-  <!-- Copyright -->
   <div class="text-center fs-sm-4 fs-md-4 fs-lg-3" style="background-color: rgba(0, 0, 0, 0.2);">
     © 2023 Copyright Honey TI. Todos os direitos reservados - Desenvolvido por Alex Ribeiro de Faria
   </div>
