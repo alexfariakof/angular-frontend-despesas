@@ -7,7 +7,6 @@ import { LayoutComponent } from './layout.component';
         providers:[],
         declarations:[LayoutComponent],
         imports:[
-            NgModule,
             CommonModule,
             LayoutComponent
         ]
