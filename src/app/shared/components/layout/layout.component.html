@@ -23,19 +23,19 @@
                 [ngClass]="{'menu-select': this.menuService.menuSelecionado == 1, '':this.menuService.menuSelecionado!= 1}"><i class="bi bi-house"></i> Home</button>
               </li>
               <li class="nav-item list-unstyled menu">
-                <button class="nav-link " href="#" (click)="selectMenu(2)"
+                <button class="nav-link " (click)="selectMenu(2)"
                 [ngClass]="{'menu-select': this.menuService.menuSelecionado == 2, '':this.menuService.menuSelecionado!= 2}"><i class="bi bi-layout-text-window"></i> Categoria</button>
               </li>
               <li class="nav-item list-unstyled menu">
-                <button class="nav-link " href="#" (click)="selectMenu(3)"
+                <button class="nav-link " (click)="selectMenu(3)"
                 [ngClass]="{'menu-select': this.menuService.menuSelecionado == 3, '':this.menuService.menuSelecionado!= 3}"><i class="bi bi-layout-text-window"></i> Despesas</button>
               </li>
               <li class="nav-item list-unstyled menu">
-                <button class="nav-link " href="#" (click)="selectMenu(4)"
+                <button class="nav-link " (click)="selectMenu(4)"
                 [ngClass]="{'menu-select': this.menuService.menuSelecionado == 4, '':this.menuService.menuSelecionado!= 4}"><i class="bi bi-layout-text-window"></i> Receitas</button>
               </li>
               <li class="nav-item list-unstyled menu">
-                <button class="nav-link" href="#" (click)="selectMenu(5)"
+                <button class="nav-link" (click)="selectMenu(5)"
                 [ngClass]="{'menu-select': this.menuService.menuSelecionado == 5, '':this.menuService.menuSelecionado!= 5}"><i class="bi bi-list-columns"></i> Lançamentos</button>
               </li>
             </ul>
@@ -45,16 +45,16 @@
       <div class="d-flex justify-content-end align-items-center">
         <ul>
           <li class="nav-item dropdown list-unstyled  ">
-            <button class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="true">
+            <button class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="true">
               <img src="../../../../assets/perfil_static.png" alt="" width="32" height="32" class="rounded-circle me-2">
             </button>
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" style="left:-200%" aria-labelledby="dropdown">
-              <li><button class="nav-link dropdown-item" href="perfil"><i class="bi bi-person"></i> Perfil</button></li>
-              <li><button class="nav-link dropdown-item" href="configuracoes"><i class="bi bi-gear-fill"></i> Configurações</button></li>
+              <li><button class="nav-link dropdown-item"  (click)="selectMenu(6)" ><i class="bi bi-person"></i> Perfil</button></li>
+              <li><button class="nav-link dropdown-item"  (click)="selectMenu(7)" ><i class="bi bi-gear-fill"></i> Configurações</button></li>
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li><button class="nav-link dropdown-item" href="/logout"><i class="bi bi-power"></i> Sair</button></li>
+              <li><button class="nav-link dropdown-item" ><i class="bi bi-power"></i> Sair</button></li>
             </ul>
           </li>
         </ul>
