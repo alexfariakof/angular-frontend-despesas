@@ -11,7 +11,9 @@ const routes: Routes = [
   { path: 'categoria', loadChildren: () => import('./pages/categorias/categorias.module').then(m => m.CategoriasdModule), },
   { path: 'despesa', loadChildren: () => import('./pages/despesas/despesas.module').then(m => m.DespesasModule), },
   { path: 'receita', loadChildren: () => import('./pages/receitas/receitas.module').then(m => m.ReceitasModule), },
-  { path: 'lancamento', loadChildren: () => import('./pages/lancamentos/lancamentos.module').then(m => m.LancamentosModule),}
+  { path: 'lancamento', loadChildren: () => import('./pages/lancamentos/lancamentos.module').then(m => m.LancamentosModule),},
+  { path: 'perfil', component: PerfilComponent },
+  { path: 'configuracoes', component: ConfiguracoesComponent }
 ];
 
 @NgModule({

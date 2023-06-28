@@ -44,7 +44,6 @@ export class LayoutComponent {
                 this.router.navigate(['/configuracoes']);
                 break;
 
-
             default:
                 break;
         }
@@ -52,5 +51,4 @@ export class LayoutComponent {
         this.menuService.menuSelecionado = menu;
 
     }
-
 }
