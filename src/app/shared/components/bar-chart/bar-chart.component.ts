@@ -12,8 +12,8 @@ export class BarChartComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
   public barChartOptions: ChartConfiguration['options'] = {
-    responsive: true,
-    // We use these empty structures as placeholders for dynamic theming.
+    responsive: true,    
+    maintainAspectRatio: false,
     scales: {
       x: {},
       y: {
