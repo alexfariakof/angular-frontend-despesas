@@ -1,33 +1,31 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Component, EventEmitter, Input, Output,  } from "@angular/core";
+import { FormBuilder, FormGroup, Validators, FormsModule  } from "@angular/forms";
 import { Router } from "@angular/router";
 import { ILogin } from "src/app/shared/interfaces/ILogin";
 import { LoginService } from "src/app/shared/services/login.service";
 
 @Component({
-  selector: 'app-login', 
+  selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 
 export class LoginComponent {
-  private login: ILogin = { email: '', senha: '' };  
+  public login: ILogin = { email: '', senha: '' };
+  loginForm: FormGroup;
 
-  constructor(public formbuilder: FormBuilder, 
+  constructor(public formbuilder: FormBuilder,
     private router: Router,
     private loginService: LoginService ){
 
   }
-
-  loginForm: FormGroup;
 
   ngOnInit(): void{
     this.loginForm = this.formbuilder.group({
         txtLogin: ['', [Validators.required, Validators.email]],
         txtPassword: ['', Validators.required]
     })
-    
-        
+
   }
 
   get getLoginDados(){
@@ -35,8 +33,6 @@ export class LoginComponent {
   }
 
   onLoginClick() {
-    this.login.email = this.getLoginDados["txtLogin"].value;
-    this.login.senha = this.getLoginDados["txtPassword"].value;
     this.loginService.login(this.login).subscribe(
       token => {
         alert(token);
@@ -45,7 +41,6 @@ export class LoginComponent {
       err => {
         console.log(err);
       }
-
     )
   }
 }
