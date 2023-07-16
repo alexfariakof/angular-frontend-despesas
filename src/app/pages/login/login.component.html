@@ -36,7 +36,8 @@
         <div class="input-group mt-3" id="password">
           <span class="input-group-text"><i class="bi bi-lock"></i></span>
           <input id="txtPassword" [(ngModel)]="login.senha" name="txtPassword" formControlName="txtPassword" required="" type="password"
-            class="form-control" placeholder="Senha" aria-label="Senha" aria-describedby="password">
+                 [type]="showPassword ? 'text' : 'password'" class="form-control" placeholder="Senha" aria-label="Senha" aria-describedby="password">
+          <span class="input-group-text" (click)="onTooglePassword()" ><i [ngClass]="eyeIconClass" ></i></span>
         </div>
         <label *ngIf="loginForm.get('txtPassword')?.errors?.['required'] &&  loginForm.get('txtPassword')?.touched"
           class="error-input">

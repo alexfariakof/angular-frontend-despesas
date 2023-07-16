@@ -13,6 +13,8 @@ import { LoginService } from "src/app/shared/services/login.service";
 export class LoginComponent {
   public login: ILogin = { email: '', senha: '' };
   loginForm: FormGroup;
+  showPassword = false;
+  eyeIconClass: string = 'bi-eye';
 
   constructor(public formbuilder: FormBuilder,
     private router: Router,
@@ -43,4 +45,10 @@ export class LoginComponent {
       }
     )
   }
+
+  onTooglePassword() {
+    this.showPassword = !this.showPassword;
+    this.eyeIconClass = (this.eyeIconClass === 'bi-eye') ? 'bi-eye-slash' : 'bi-eye';
+  }
+
 }
