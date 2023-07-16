@@ -25,7 +25,7 @@
       <form class="p-4 " (submit)="onLoginClick()" [formGroup]="loginForm">
         <div class="input-group mt-3">
           <span class="input-group-text" id="login">@</span>
-          <input id="txtLogin" name="txtLogin" formControlName="txtLogin" required="" type="text" class="form-control"
+          <input id="txtLogin" [(ngModel)]="login.email" name="txtLogin" formControlName="txtLogin" required="" type="text" class="form-control"
             placeholder="email" aria-label="email" aria-describedby="login" />
         </div>
         <label *ngIf="loginForm.get('txtLogin')?.errors?.['required'] &&  loginForm.get('txtLogin')?.touched"
@@ -35,10 +35,9 @@
 
         <div class="input-group mt-3" id="password">
           <span class="input-group-text"><i class="bi bi-lock"></i></span>
-          <input id="txtPassword" name="txtPassword" formControlName="txtPassword" required=""
-          [type]="showPassword ? 'text' : 'password'"
-            class="form-control" placeholder="Senha" aria-label="Senha" aria-describedby="password">
-            <span class="input-group-text" (click)="onTooglePassword()" ><i [ngClass]="eyeIconClass" ></i></span>
+          <input id="txtPassword" [(ngModel)]="login.senha" name="txtPassword" formControlName="txtPassword" required="" type="password"
+                 [type]="showPassword ? 'text' : 'password'" class="form-control" placeholder="Senha" aria-label="Senha" aria-describedby="password">
+          <span class="input-group-text" (click)="onTooglePassword()" ><i [ngClass]="eyeIconClass" ></i></span>
         </div>
         <label *ngIf="loginForm.get('txtPassword')?.errors?.['required'] &&  loginForm.get('txtPassword')?.touched"
           class="error-input">

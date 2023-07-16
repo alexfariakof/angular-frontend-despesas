@@ -48,10 +48,7 @@ export class LoginComponent {
 
   onTooglePassword() {
     this.showPassword = !this.showPassword;
-    this.toggleEyeIcon();
-  }
-
-  toggleEyeIcon() {
     this.eyeIconClass = (this.eyeIconClass === 'bi-eye') ? 'bi-eye-slash' : 'bi-eye';
   }
+
 }
