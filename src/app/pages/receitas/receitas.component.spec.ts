@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ReceitasComponent } from './receitas.component';
+import { CommonModule } from '@angular/common';
+import { CategoriaRoutingModule } from '../categorias/categorias-routing.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 describe('ReceitasComponent', () => {
   let component: ReceitasComponent;
@@ -8,7 +11,8 @@ describe('ReceitasComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ReceitasComponent]
+      declarations: [ReceitasComponent],
+      imports: [CommonModule, CategoriaRoutingModule, SharedModule]
     });
     fixture = TestBed.createComponent(ReceitasComponent);
     component = fixture.componentInstance;

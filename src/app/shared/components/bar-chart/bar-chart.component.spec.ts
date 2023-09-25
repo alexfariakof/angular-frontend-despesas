@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { BarChartComponent } from './bar-chart.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('BarChartComponent', () => {
   let component: BarChartComponent;
@@ -8,7 +8,9 @@ describe('BarChartComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [BarChartComponent]
+      declarations: [BarChartComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+
     });
     fixture = TestBed.createComponent(BarChartComponent);
     component = fixture.componentInstance;

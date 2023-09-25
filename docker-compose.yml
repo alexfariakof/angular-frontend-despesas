@@ -1,12 +1,12 @@
 version: '3.4'
 
 services:
-  despesas-frontend-angular:
-    image: alexfariakof/despesas-frontend-angular-img
+  despesasfrontendangular:
+    image: despesasfrontendangular
     build:
       context: .
       dockerfile: ./Dockerfile
     environment:
       NODE_ENV: production
     ports:
-      - 80:80
+      - 4200:4200

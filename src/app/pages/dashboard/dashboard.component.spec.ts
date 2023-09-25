@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { DashboardComponent } from './dashboard.component';
+import { CommonModule } from '@angular/common';
+import { NgChartsModule } from 'ng2-charts';
+import { BarChartComponent } from 'src/app/shared/components/bar-chart/bar-chart.component';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { DashboardRoutingModule } from './dashboard-routing.module';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -8,7 +12,8 @@ describe('DashboardComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [DashboardComponent]
+      declarations: [DashboardComponent, BarChartComponent ],
+  imports: [CommonModule, DashboardRoutingModule, SharedModule, NgChartsModule]
     });
     fixture = TestBed.createComponent(DashboardComponent);
     component = fixture.componentInstance;
