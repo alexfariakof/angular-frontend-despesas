@@ -25,16 +25,15 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/despesas-frontend-angular'),
+      dir: require('path').join(__dirname, './coverage'),
       subdir: '.',
       reporters: [
-        { type: 'html' },
-        { type: 'text-summary' },
         { type: 'lcov' },
-        { type: 'lcovonly' }
+        { type: 'clover' },
+        { type: 'json' }
       ]
     },
-    reporters: ['progress', 'kjhtml'],
+    reporters: ['progress', 'coverage'],
     browsers: ['ChromeHeadless'],
     restartOnFileChange: true
   });
