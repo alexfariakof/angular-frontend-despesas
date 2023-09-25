@@ -7,4 +7,4 @@ COPY . .
 EXPOSE 4200
 RUN chown -R node /usr/src/app
 USER node
-CMD ["ng", "serve", "--host", "0.0.0.0"]
+CMD ["npm", "start"]

@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   despesasfrontendangular:
-    image: despesasfrontendangular
+    image: despesas-front-end-angular-dev-img
     build:
       context: .
       dockerfile: ./Dockerfile
