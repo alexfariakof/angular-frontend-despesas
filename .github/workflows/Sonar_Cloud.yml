@@ -19,7 +19,7 @@ jobs:
           npm install
 
       - name: Test and coverage
-        run: npm run test
+        run: npm run coverageTest
         continue-on-error: true
 
       - name: SonarCloud Scan
