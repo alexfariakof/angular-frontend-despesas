@@ -31,7 +31,10 @@ module.exports = function (config) {
         { type: 'lcov' },
         { type: 'clover' },
         { type: 'json' }
-      ]
+      ],
+      exclude: [
+        '**/*.spec.ts', // Exclui todos os arquivos .spec.ts
+      ],
     },
     reporters: ['progress', 'kjhtml', 'coverage'],
     browsers: ['ChromeHeadless'],
