@@ -75,4 +75,10 @@ describe('LayoutComponent', () => {
     component.selectMenu(7);
     expect(router.navigate).toHaveBeenCalledWith(['/configuracoes']);
   });
+
+  it('should navigate to Dashboard when an invalid menu is selected', () => {
+    spyOn(router, 'navigate');
+    component.selectMenu(8); // Valor fora do intervalo válido
+    expect(router.navigate).toHaveBeenCalledWith(['/dashboard']);
+  });
 });
