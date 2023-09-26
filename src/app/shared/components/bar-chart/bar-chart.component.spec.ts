@@ -20,4 +20,34 @@ describe('BarChartComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should have the correct chart type', () => {
+    expect(component.barChartType).toBe('bar');
+  });
+
+  it('should update chart data when randomize is called', () => {
+    const initialData = component.barChartData.datasets[0].data.slice();
+    component.randomize();
+    const newData = component.barChartData.datasets[0].data;
+
+    expect(newData).not.toEqual(initialData);
+  });
+
+  it('should log event and active when chartClicked is called', () => {
+    const active = [{ index: 0, datasetIndex: 0, x: 0, y: 0 }];
+
+    spyOn(console, 'log');
+    component.chartClicked({ active });
+
+    expect(console.log).toHaveBeenCalledWith(undefined, active);
+  });
+
+  it('should log event and active when chartHovered is called', () => {
+    const active = [{ index: 1, datasetIndex: 0, x: 10, y: 20 }];
+
+    spyOn(console, 'log');
+    component.chartHovered({ active });
+
+    expect(console.log).toHaveBeenCalledWith(undefined, active);
+  });
 });
