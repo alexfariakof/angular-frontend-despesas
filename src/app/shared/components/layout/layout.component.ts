@@ -41,6 +41,7 @@ export class LayoutComponent {
                 break;
 
             default:
+                this.router.navigate(['/dashboard']);
                 break;
         }
 
