@@ -39,7 +39,6 @@ export class LayoutComponent {
             case 7:
                 this.router.navigate(['/configuracoes']);
                 break;
-
             default:
                 break;
         }

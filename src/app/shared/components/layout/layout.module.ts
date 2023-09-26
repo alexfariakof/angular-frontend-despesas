@@ -9,8 +9,7 @@ import { LayoutRoutingModule } from './layout-routing.module';
         declarations:[LayoutComponent],
         imports:[
             CommonModule,
-            LayoutRoutingModule,
-            LayoutComponent
+            LayoutRoutingModule
         ]
     }
 )
