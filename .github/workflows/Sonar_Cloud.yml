@@ -3,6 +3,12 @@ on:
   push:
     branches:
       - master
+      - pre-release
+      - hotfix/*
+      - develop
+      - feature/*
+      - bugfix/*
+
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
