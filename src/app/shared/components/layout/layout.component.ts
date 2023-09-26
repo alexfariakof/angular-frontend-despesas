@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { MenuService } from "../../services/menu.service";
-
 @Component({
     selector: 'app-layout',
     templateUrl: './layout.component.html',
@@ -9,10 +8,7 @@ import { MenuService } from "../../services/menu.service";
 })
 
 export class LayoutComponent {
-
-    constructor(private router: Router, public menuService: MenuService) {
-
-    }
+    constructor(private router: Router, public menuService: MenuService) { }
 
     selectMenu(menu: number) {
         switch (menu) {
@@ -49,6 +45,5 @@ export class LayoutComponent {
         }
 
         this.menuService.menuSelecionado = menu;
-
     }
 }
