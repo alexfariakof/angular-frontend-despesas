@@ -27,7 +27,6 @@ describe('LayoutComponent', () => {
     fixture = TestBed.createComponent(LayoutComponent);
     component = fixture.componentInstance;
     router = TestBed.inject(Router);
-    menuService = TestBed.inject(MenuService);
     fixture.detectChanges();
   });
 
