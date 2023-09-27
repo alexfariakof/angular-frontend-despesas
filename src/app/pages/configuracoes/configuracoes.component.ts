@@ -43,6 +43,7 @@ export class ConfiguracoesComponent {
               break;
 
           default:
+              this.router.navigate(['/dashboard']);
               break;
       }
 

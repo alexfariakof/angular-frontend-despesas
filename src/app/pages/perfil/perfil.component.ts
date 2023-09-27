@@ -9,7 +9,7 @@ import { MenuService } from 'src/app/shared/services/menu.service';
   styleUrls: ['./perfil.component.scss']
 })
 export class PerfilComponent {
-  
+
   constructor(private router: Router, public menuService: MenuService) {
 
   }
@@ -45,6 +45,7 @@ export class PerfilComponent {
               break;
 
           default:
+              this.router.navigate(['/dashboard']);
               break;
       }
 
