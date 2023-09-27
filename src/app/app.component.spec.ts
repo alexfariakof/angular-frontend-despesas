@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -9,36 +9,34 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 
 describe('AppComponent', () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    declarations: [AppComponent, LoginComponent],
-    imports: [
-      RouterTestingModule,
-      BrowserModule,
-      AppRoutingModule,
-      CommonModule,
-      ReactiveFormsModule,
-      HttpClientModule,
-      FormsModule
-    ],
-    providers: []
-  }));
+  let app: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+
+  beforeEach(() => {
+     TestBed.configureTestingModule({
+          declarations: [AppComponent, LoginComponent],
+          imports: [RouterTestingModule, BrowserModule, AppRoutingModule, CommonModule,  ReactiveFormsModule, HttpClientModule, FormsModule ],
+        providers: []
+    });
+    fixture = TestBed.createComponent(AppComponent);
+    app = fixture.componentInstance;
+  });
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
 
   it(`should have as title 'despesas-frontend-angular'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
     expect(app.title).toEqual('despesas-frontend-angular');
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('despesas-frontend-angular app is running!');
+  it('should initialize isAuthenticated to false', () => {
+    expect(app.isAuthenticated).toBe(false);
   });
+
+  it('should set isAuthenticated to true when onLoginClicked is called', () => {
+    app.onLoginClicked();
+    expect(app.isAuthenticated).toBe(true);
+  });
+
 });
