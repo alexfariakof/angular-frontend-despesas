@@ -11,7 +11,6 @@ describe('LayoutComponent', () => {
   let component: LayoutComponent;
   let fixture: ComponentFixture<LayoutComponent>;
   let router: Router;
-  let menuService: MenuService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({

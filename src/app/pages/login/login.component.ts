@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output,  } from "@angular/core";
 import { FormBuilder, FormGroup, Validators, FormsModule  } from "@angular/forms";
 import { Router } from "@angular/router";
+import { catchError, of, switchMap } from "rxjs";
 import { ILogin } from "src/app/shared/interfaces/ILogin";
 import { LoginService } from "src/app/shared/services/login.service";
 
@@ -35,15 +36,18 @@ export class LoginComponent {
   }
 
   onLoginClick() {
-    this.loginService.login(this.login).subscribe(
-      token => {
-        alert(token);
+    const { email, senha } = this.login;
+
+    this.loginService.login({ email, senha }).pipe(
+      switchMap(token => {
         this.router.navigate(['/dashboard']);
-      },
-      err => {
-        console.log(err);
-      }
-    )
+        return of(token);
+      }),
+      catchError(err => {
+        console.log(new Error('Login failed'));
+        return of(err);
+      })
+    ).subscribe();
   }
 
   onTooglePassword() {
