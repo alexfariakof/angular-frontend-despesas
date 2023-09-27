@@ -8,9 +8,7 @@ import { MenuService } from "../../services/menu.service";
 })
 
 export class LayoutComponent {
-    constructor(private router: Router, public menuService: MenuService) {
-      menuService = new MenuService();
-     }
+    constructor(private router: Router, public menuService: MenuService) { }
 
     selectMenu(menu: number) {
       this.menuService.selectMenu(menu, this.router);
