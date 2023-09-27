@@ -10,9 +10,7 @@ import { MenuService } from 'src/app/shared/services/menu.service';
 })
 export class PerfilComponent {
 
-  constructor(private router: Router, public menuService: MenuService) {
-
-  }
+  constructor(private router: Router, public menuService: MenuService) {  }
 
   selectMenu(menu: number) {
     this.menuService.selectMenu(menu, this.router);
