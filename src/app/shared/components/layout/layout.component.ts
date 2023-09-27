@@ -8,43 +8,11 @@ import { MenuService } from "../../services/menu.service";
 })
 
 export class LayoutComponent {
-    constructor(private router: Router, public menuService: MenuService) { }
+    constructor(private router: Router, public menuService: MenuService) {
+      menuService = new MenuService();
+     }
 
     selectMenu(menu: number) {
-        switch (menu) {
-            case 1:
-                this.router.navigate(['/dashboard']);
-                break;
-
-            case 2:
-                this.router.navigate(['/categoria']);
-                break;
-
-            case 3:
-                this.router.navigate(['/despesa']);
-                break;
-
-            case 4:
-                this.router.navigate(['/receita']);
-                break;
-
-            case 5:
-                this.router.navigate(['/lancamento']);
-                break;
-
-            case 6:
-                this.router.navigate(['/perfil']);
-                break;
-
-            case 7:
-                this.router.navigate(['/configuracoes']);
-                break;
-
-            default:
-                this.router.navigate(['/dashboard']);
-                break;
-        }
-
-        this.menuService.menuSelecionado = menu;
+      this.menuService.selectMenu(menu, this.router);
     }
 }

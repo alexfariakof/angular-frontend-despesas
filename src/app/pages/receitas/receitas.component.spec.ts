@@ -4,6 +4,7 @@ import { ReceitasComponent } from './receitas.component';
 import { CommonModule } from '@angular/common';
 import { CategoriaRoutingModule } from '../categorias/categorias-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { MenuService } from 'src/app/shared/services/menu.service';
 
 describe('ReceitasComponent', () => {
   let component: ReceitasComponent;
@@ -12,7 +13,8 @@ describe('ReceitasComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ReceitasComponent],
-      imports: [CommonModule, CategoriaRoutingModule, SharedModule]
+      imports: [CommonModule, CategoriaRoutingModule, SharedModule],
+      providers: [MenuService]
     });
     fixture = TestBed.createComponent(ReceitasComponent);
     component = fixture.componentInstance;

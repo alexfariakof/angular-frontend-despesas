@@ -74,4 +74,10 @@ describe('ConfiguracoesComponent', () => {
     component.selectMenu(8); // Valor fora do intervalo válido
     expect(router.navigate).toHaveBeenCalledWith(['/dashboard']);
   });
+
+  it('should create the ConfiguracoesRoutingModule', () => {
+    const routingModule: ConfiguracoesRoutingModule = TestBed.inject(ConfiguracoesRoutingModule);
+    expect(routingModule).toBeTruthy();
+  });
+
 });
