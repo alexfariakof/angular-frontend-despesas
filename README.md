@@ -1,6 +1,10 @@
-# DespesasFrontendAngular
+# Fontend Angular Despesas Pessoais 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.0.
+
+## Application in Production 
+
+This project can be access at [Despesas Pessoais](http://alexfariakof.com:3000).
 
 ## Development server
 
@@ -14,14 +18,32 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
+## Running Project in Docker
+
+First Run `docker-compose -f docker-compose.prod.yml build` to build and create docker image. 
+After Run `docker-compose -f docker-compose.prod.yml up` to compile and running container in docker.
+
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
+## Running unit tests
+
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+## Running tests coverage
+
+Run `ng test --code-coverage --no-watch` to execute the tests and generate coverage report lcov pages via [Coverage](http://127.0.0.1:3000/coverage/lcov-report/index.html).
+
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+The end-to-end tests have not been implemented yet. In the future, we plan to use the Playwright framework.
+Playwright is an open-source framework for testing web applications. It offers powerful automation capabilities for web interactions and supports various browsers. Playwright is known for its flexibility, concise syntax, and speed. We intend to use Playwright to enhance the quality and reliability of our end-to-end tests in the near future."
 
-## Further help
+## Sonar Cloud
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+[Overview](https://sonarcloud.io/project/overview?id=alexfariakof_despesas-frontend-angular)
+
+SonarCloud is a cloud-based static code analysis platform that helps development teams maintain code quality and identify issues early in the software development process. It offers automated code review, continuous inspection, and code analytics. SonarCloud scans your code for bugs, vulnerabilities, and code smells, providing actionable feedback to improve code quality and security. It is an essential tool for ensuring that your software projects are maintainable, reliable, and secure. via [Sonar Cloud](https://sonarcloud.io/).
+
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=alexfariakof_despesas-frontend-angular&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=alexfariakof_despesas-frontend-angular)
