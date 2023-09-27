@@ -1,11 +1,12 @@
-import { Router } from '@angular/router';
+import { Router, Routes } from '@angular/router';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LayoutComponent } from './layout.component';
 import { CommonModule } from '@angular/common';
-import { LayoutRoutingModule } from './layout-routing.module';
 import { MenuService } from '../../services/menu.service';
 import { RouterTestingModule } from '@angular/router/testing';
-
+import { LayoutRoutingModule } from './layout-routing.module';
+import { PerfilComponent } from 'src/app/pages/perfil/perfil.component';
+import { ConfiguracoesComponent } from 'src/app/pages/configuracoes/configuracoes.component';
 
 describe('LayoutComponent', () => {
   let component: LayoutComponent;
@@ -15,14 +16,9 @@ describe('LayoutComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [LayoutComponent],
-      imports:[
-        CommonModule,
-        LayoutRoutingModule,
-        RouterTestingModule
-    ],
-    providers: [MenuService]
+      imports:[ CommonModule, RouterTestingModule, LayoutRoutingModule],
+      providers: [MenuService]
     });
-
     fixture = TestBed.createComponent(LayoutComponent);
     component = fixture.componentInstance;
     router = TestBed.inject(Router);
@@ -80,4 +76,15 @@ describe('LayoutComponent', () => {
     component.selectMenu(8); // Valor fora do intervalo válido
     expect(router.navigate).toHaveBeenCalledWith(['/dashboard']);
   });
+
+  it('should create the LayoutRoutingModule', () => {
+    const routingModule: LayoutRoutingModule = TestBed.inject(LayoutRoutingModule);
+    expect(routingModule).toBeTruthy();
+  });
+
+  it('should create the LayoutRoutingModule', () => {
+    const routingModule: LayoutRoutingModule = TestBed.inject(LayoutRoutingModule);
+    expect(routingModule).toBeTruthy();
+  });
+
 });

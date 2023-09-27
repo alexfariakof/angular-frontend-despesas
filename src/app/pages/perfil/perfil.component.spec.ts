@@ -78,4 +78,9 @@ describe('PerfilComponent', () => {
     component.selectMenu(8); // Valor fora do intervalo válido
     expect(router.navigate).toHaveBeenCalledWith(['/dashboard']);
   });
+
+  it('should create the PerfilRoutingModule', () => {
+    const routingModule: PerfilRoutingModule = TestBed.inject(PerfilRoutingModule);
+    expect(routingModule).toBeTruthy();
+  });
 });
