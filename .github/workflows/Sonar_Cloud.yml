@@ -2,15 +2,12 @@ name: Test Code in Sonar Cloud
 on:
   push:
     branches:
-      - master
-      - pre-release
-      - hotfix/*
-      - develop
       - feature/*
       - bugfix/*
 
   pull_request:
     types: [opened, synchronize, reopened]
+
 jobs:
   sonarcloud:
     name: SonarCloud

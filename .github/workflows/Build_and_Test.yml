@@ -1,0 +1,65 @@
+name: Build, Test Unit and Test Analiysis Code in Sonar Cloud
+on:
+  push:
+    branches:
+      - master
+      - pre-release
+      - develop
+      - hotfix/*
+
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+
+  build_and_test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: Install dependencies
+        run: |
+          npm install -g @angular/cli
+          npm install
+        continue-on-error: false
+
+      - name: Build
+        run: ng build
+        continue-on-error: false
+
+      - name: Test
+        run: ng test --no-watch
+        continue-on-error: false
+
+      - name: Build Docker image # Compilação e criação de uam Imagem docker  da Imagem
+        env:
+          DOCKER_CLI_AGGREGATE: 1
+        run: |
+          docker-compose -f docker-compose.prod.yml build
+        continue-on-error: false
+
+  sonarcloud:
+    needs: build_and_test
+    name: Test Code in Sonar Cloud
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Install dependencies
+        run: |
+          npm install -g @angular/cli
+          npm install
+
+      - name: Test and coverage
+        run: npm run coverageTest
+        continue-on-error: false
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
