@@ -27,10 +27,6 @@ After Run `docker-compose -f docker-compose.prod.yml up` to compile and running 
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
 ## Running tests coverage
 
 Run `ng test --code-coverage --no-watch` to execute the tests and generate coverage report lcov pages via [Coverage](http://127.0.0.1:3000/coverage/lcov-report/index.html).
