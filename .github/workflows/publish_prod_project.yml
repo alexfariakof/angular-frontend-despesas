@@ -49,12 +49,6 @@ jobs:
             docker push ${{ secrets.DOCKER_IMAGE }}
         continue-on-error: false
 
-      - name: Install dependencies
-        run: |
-          npm install -g @angular/cli
-          npm install
-        continue-on-error: false
-
       - name: Test and coverage
         run: npm run test:coverage
         continue-on-error: false
