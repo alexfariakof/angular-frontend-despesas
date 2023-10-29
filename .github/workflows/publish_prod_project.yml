@@ -18,6 +18,20 @@ jobs:
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
+      - name: Install dependencies
+        run: |
+          npm install -g @angular/cli
+          npm install
+        continue-on-error: false
+
+      - name: Build Project
+        run: ng build
+        continue-on-error: false
+
+      - name: Test Unit
+        run: ng test --no-watch
+        continue-on-error: false
+
       - name: Build Docker image
         env:
           DOCKER_CLI_AGGREGATE: 1
