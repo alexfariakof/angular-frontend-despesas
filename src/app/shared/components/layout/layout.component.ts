@@ -13,4 +13,10 @@ export class LayoutComponent {
     selectMenu(menu: number) {
       this.menuService.selectMenu(menu, this.router);
     }
+
+
+    onLogoutClick(){
+      this.router.navigate(['/']);
+    }
+
 }
