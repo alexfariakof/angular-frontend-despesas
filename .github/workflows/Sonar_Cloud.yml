@@ -1,16 +1,16 @@
-name: Test Code in Sonar Cloud
+name: Test and Analysis Code in Sonar Cloud
 on:
   push:
     branches:
-      - master
-      - pre-release
-      - hotfix/*
-      - develop
       - feature/*
       - bugfix/*
 
   pull_request:
     types: [opened, synchronize, reopened]
+    branches:
+      - feature/*
+      - bugfix/*
+
 jobs:
   sonarcloud:
     name: SonarCloud
@@ -25,7 +25,7 @@ jobs:
           npm install
 
       - name: Test and coverage
-        run: npm run coverageTest
+        run: npm run test:coverage
         continue-on-error: true
 
       - name: SonarCloud Scan
