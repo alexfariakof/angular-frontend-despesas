@@ -12,7 +12,7 @@ import { LoginService } from "src/app/shared/services/login.service";
 })
 
 export class LoginComponent {
-  public login: ILogin = { email: '', senha: '' };
+  public login: ILogin = { email: 'teste@teste.com', senha: 'teste' };
   loginForm: FormGroup;
   showPassword = false;
   eyeIconClass: string = 'bi-eye';
