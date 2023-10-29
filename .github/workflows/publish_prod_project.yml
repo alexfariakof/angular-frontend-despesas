@@ -1,11 +1,17 @@
-name: Build Test Deploy and Publish Production Project In AWS
+name: Build Test and Deploy Project In Production
 on:
   push:
     branches:
       - release/*
+
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - release/*
+
 jobs:
-  sonarcloud:
-    name: SonarCloud
+  build_test_unit_and_test_and__analyse_code_in_sonarcloud:
+    name: Build Test Unit and Test and Analyse Code In Sonar Cloud
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -14,9 +20,19 @@ jobs:
 
       - name: Build Docker image
         env:
-           DOCKER_CLI_AGGREGATE: 1
+          DOCKER_CLI_AGGREGATE: 1
         run: |
-           docker-compose -f docker-compose.prod.yml build
+          docker-compose -f docker-compose.prod.yml build
+        continue-on-error: false
+
+      - name: Push Docker image to Docker Hub
+        env:
+          DOCKER_LOGIN: ${{ secrets.DOCKER_LOGIN }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          DOCKER_CLI_AGGREGATE: 1
+        run: |
+            docker login -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }}
+            docker push ${{ secrets.DOCKER_IMAGE }}
         continue-on-error: false
 
       - name: Install dependencies
@@ -26,7 +42,7 @@ jobs:
         continue-on-error: false
 
       - name: Test and coverage
-        run: ng test
+        run: npm run test:coverage
         continue-on-error: false
 
       - name: SonarCloud Scan
@@ -35,39 +51,21 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-
   deploy_prod:
-    needs: sonarcloud
+    needs: build_test_unit_and_test_and__analyse_code_in_sonarcloud
     name: Production Build Deploy and Publish Docker Image
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Build Docker image
-        env:
-           DOCKER_CLI_AGGREGATE: 1
-        run: |
-           docker-compose -f docker-compose.prod.yml build
-        continue-on-error: false
-
-      - name: Push Docker image to Docker Hub
-        env:
-           DOCKER_LOGIN: ${{ secrets.DOCKER_LOGIN }}
-           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-           DOCKER_CLI_AGGREGATE: 1
-        run: |
-            docker login -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }}
-            docker push ${{ secrets.DOCKER_IMAGE }}
-        continue-on-error: false
-
       - name: Execute SSH Commands into EC2
         env:
-           EC2_HOST: ${{ secrets.EC2_HOST }}
-           EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
-           AWS_SSH_KEY: ${{ secrets.AWS_SSH_KEY }}
-           DOCKER_LOGIN: ${{ secrets.DOCKER_LOGIN }}
-           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+          EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
+          AWS_SSH_KEY: ${{ secrets.AWS_SSH_KEY }}
+          DOCKER_LOGIN: ${{ secrets.DOCKER_LOGIN }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
         uses: appleboy/ssh-action@master
         with:
