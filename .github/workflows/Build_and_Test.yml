@@ -3,12 +3,15 @@ on:
   push:
     branches:
       - master
-      - pre-release
       - develop
       - hotfix/*
 
   pull_request:
     types: [opened, synchronize, reopened]
+    branches:
+      - master
+      - develop
+      - hotfix/*
 
 jobs:
 
@@ -55,7 +58,7 @@ jobs:
           npm install
 
       - name: Test and coverage
-        run: npm run coverageTest
+        run: npm run test:coverage
         continue-on-error: false
 
       - name: SonarCloud Scan
