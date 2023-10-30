@@ -1,8 +1,6 @@
 version: '3.4'
-
 services:
   despesas-frontend-angular-prod:
-    container_name: despesas-frontend-angular-cont
     image: alexfariakof/despesas-frontend-angular-img
     build:
       context: .

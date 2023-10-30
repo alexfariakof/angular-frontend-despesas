@@ -1,8 +1,8 @@
 version: '3.4'
 services:
-  despesas-angular-dev:
-    container_name: despesas-angular-dev
-    image: despesas-angular-dev-img
+  despesas-angular-local:
+    container_name: despesas-frontend-angular-local
+    image: despesas-frontend-angular-local-img
     build:
       context: .
       dockerfile: ./Dockerfile
@@ -14,4 +14,4 @@ services:
     volumes:
       - ./:/app
     command: |
-      /bin/sh -c "npm install --silent --no-audit --no-fund; npm start;"
+      /bin/sh -c "npm install --silent --no-audit --no-fund; npm run start:dev;"
