@@ -16,6 +16,7 @@
 **/compose*
 **/Dockerfile*
 **/node_modules
+**/angular
 **/coverage
 **/npm-debug.log
 **/obj
@@ -23,3 +24,6 @@
 **/values.dev.yaml
 LICENSE
 README.md
+**/despesas-frontend-angular.code-workspace
+**/.editorconfig
+**/generate_coverage_report.*
