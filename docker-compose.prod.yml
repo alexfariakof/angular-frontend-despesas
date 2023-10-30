@@ -1,5 +1,4 @@
 version: '3.4'
-
 services:
   despesas-frontend-angular-prod:
     image: alexfariakof/despesas-frontend-angular-img
