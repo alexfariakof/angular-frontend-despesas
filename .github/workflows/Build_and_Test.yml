@@ -25,6 +25,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          npm install -g npm@latest
           npm install -g @angular/cli
           npm install
         continue-on-error: false
@@ -54,6 +55,7 @@ jobs:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: Install dependencies
         run: |
+          npm install -g npm@latest
           npm install -g @angular/cli
           npm install
 
