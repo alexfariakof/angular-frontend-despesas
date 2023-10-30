@@ -37,7 +37,7 @@ jobs:
         run: ng test --no-watch
         continue-on-error: false
 
-      - name: Build Docker image # Compilação e criação de uam Imagem docker  da Imagem
+      - name: Build Docker image
         env:
           DOCKER_CLI_AGGREGATE: 1
         run: |
