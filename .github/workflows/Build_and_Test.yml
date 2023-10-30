@@ -25,6 +25,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          npm install npm@latest
           npm install -g @angular/cli
           npm install
         continue-on-error: false
@@ -37,7 +38,7 @@ jobs:
         run: ng test --no-watch
         continue-on-error: false
 
-      - name: Build Docker image # Compilação e criação de uam Imagem docker  da Imagem
+      - name: Build Docker image
         env:
           DOCKER_CLI_AGGREGATE: 1
         run: |
@@ -54,6 +55,7 @@ jobs:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: Install dependencies
         run: |
+          npm install npm@latest
           npm install -g @angular/cli
           npm install
 

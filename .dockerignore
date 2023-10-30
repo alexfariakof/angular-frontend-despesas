@@ -23,3 +23,7 @@
 **/values.dev.yaml
 LICENSE
 README.md
+**/.angular
+despesas-frontend-angular.code-workspace
+.editorconfig
+**/generate_coverage_report.*
