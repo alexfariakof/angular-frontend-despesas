@@ -87,4 +87,10 @@ describe('LayoutComponent', () => {
     expect(routingModule).toBeTruthy();
   });
 
+  it('should navigate to Initial Page when button logout is clicked ', () => {
+    spyOn(router, 'navigate');
+    component.onLogoutClick();
+    expect(router.navigate).toHaveBeenCalledWith(['/']);
+  });
+
 });
