@@ -2,8 +2,6 @@ name: Build, Test Unit and Test Analiysis Code in Sonar Cloud
 on:
   push:
     branches:
-      - master
-      - develop
       - hotfix/*
 
   pull_request:
