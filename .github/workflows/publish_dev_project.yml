@@ -1,11 +1,8 @@
 name: Deploy Development Project
-
 on:
   push:
     branches:
       - develop
-      - feature/Set-Up-Development-Environment-Server-In-AWS
-
 jobs:
   build_test_unit_and_test_and__analyse_code_in_sonarcloud:
     name: Build Test Unit and Test and Analyse Code In Sonar Cloud
