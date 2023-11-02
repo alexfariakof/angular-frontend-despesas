@@ -1,4 +1,4 @@
-name: Build Test and Deploy Development Project
+name: Deploy Development Project
 on:
   push:
     branches:

@@ -1,4 +1,4 @@
-name: Build Test and Deploy Project In Production
+name: Deploy Production Project
 on:
   push:
     branches:
