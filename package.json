@@ -2,7 +2,7 @@
   "name": "despesas-frontend-angular",
   "version": "0.0.0",
   "scripts": {
-    "start": "ng serve ",
+    "start": "ng serve --host 0.0.0.0 --disable-host-check --configuration local-development",
     "start:dev": "ng serve --host 0.0.0.0 --disable-host-check --configuration development",
     "start:prod": "ng serve --host 0.0.0.0 --disable-host-check --configuration production",
     "build": "ng build",
