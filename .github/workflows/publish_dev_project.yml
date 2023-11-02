@@ -1,0 +1,88 @@
+name: Deploy Development Project
+on:
+  push:
+    branches:
+      - develop
+jobs:
+  build_test_unit_and_test_and__analyse_code_in_sonarcloud:
+    name: Build Test Unit and Test and Analyse Code In Sonar Cloud
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: Install dependencies
+        run: |
+          npm install npm@latest
+          npm install -g @angular/cli
+          npm install
+        continue-on-error: false
+
+      - name: Build Project
+        run: ng build
+        continue-on-error: false
+
+      - name: Test Unit
+        run: ng test --no-watch
+        continue-on-error: false
+
+      - name: Build Docker image
+        env:
+          DOCKER_CLI_AGGREGATE: 1
+        run: |
+          docker-compose -f docker-compose.dev.yml build
+        continue-on-error: false
+
+      - name: Push Docker image to Docker Hub
+        env:
+          DOCKER_LOGIN: ${{ secrets.DOCKER_LOGIN }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          DOCKER_CLI_AGGREGATE: 1
+        run: |
+            docker login -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }}
+            docker push ${{ secrets.DOCKER_IMAGE_DEV }}
+        continue-on-error: false
+
+      - name: Test and coverage
+        run: npm run test:coverage
+        continue-on-error: false
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  deploy_dev:
+    needs: build_test_unit_and_test_and__analyse_code_in_sonarcloud
+    name: Developement Build Deploy and Publish Docker Image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Execute SSH Commands into EC2
+        env:
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+          EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
+          AWS_SSH_KEY: ${{ secrets.AWS_SSH_KEY }}
+          DOCKER_LOGIN: ${{ secrets.DOCKER_LOGIN }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.AWS_SSH_KEY }}
+          port: 22
+          script: |
+            IMAGEM="${{ secrets.DOCKER_IMAGE_DEV }}"
+            container_id=$(docker ps -a -q --filter "ancestor=$IMAGEM")
+            image_id=$(docker images --format "{{.ID}}" "$IMAGEM")
+            docker login -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }}
+            docker rm --force $container_id
+            docker rmi --force $image_id
+            docker pull $IMAGEM
+            container_id=$(docker ps -a -q --filter "ancestor=$IMAGEM")
+            docker run -d -p 4200:4200 $IMAGEM
