@@ -18,13 +18,6 @@ jobs:
   trigger:
     runs-on: ubuntu-latest
     steps:
-      - name: Generate GitHub App Token
-        id: generate_github_app_token
-        uses: actions/create-github-app-token@v1
-        with:
-          app-id: ${{ secrets.APP_ID }}
-          private-key: ${{ secrets.APP_PEM }}
-
       - name: Trigger Workflow
         id: trigger
         run: |
@@ -54,4 +47,4 @@ jobs:
                 core.setOutput('workflow_status', 'failure');
             }
         env:
-          GH_TOKEN: ${{ steps.generate_token.outputs.token }}
+          GH_TOKEN: ${{ secrets.WORKFLOW_TRIGGER_TOKEN  }}
