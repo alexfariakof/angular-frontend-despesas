@@ -28,3 +28,5 @@ jobs:
           repository: alexfariakof/despesas-frontend-angular-tests-e2e
           token: ${{ secrets.GITHUB_TOKEN }}
           event-type: run-e2e-tests
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
