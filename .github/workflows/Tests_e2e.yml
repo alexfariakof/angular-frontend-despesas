@@ -17,9 +17,11 @@ jobs:
   trigger:
     runs-on: ubuntu-latest
     outputs:
-      workflow_status: ${{ steps.wait_for_external.outputs.workflow_status }}
+      run_id: ${{ steps.trigger.outputs.run_id }}
+      workflow_status: ${{ steps.trigger.outputs.workflow_status }}
     steps:
       - name: Trigger Workflow
+        id: trigger
         run: |
           curl -X POST -H "Authorization: token ${{ secrets.WORKFLOW_TRIGGER_TOKEN }}" \
           -H "Accept: application/vnd.github.v3+json" \
@@ -34,7 +36,7 @@ jobs:
             const { data: workflowRun } = await github.actions.getWorkflowRun({
               owner: 'alexfariakof',
               repo: 'despesas-frontend-angular-tests-e2e',
-              run_id: ${{ steps.trigger.outputs.run_id }}
+              run_id: "${{ steps.trigger.outputs.run_id }}"
             });
 
             if (workflowRun.status === 'completed' && workflowRun.conclusion === 'success') {
