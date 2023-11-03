@@ -23,12 +23,12 @@ jobs:
       - name: Trigger Workflow
         id: trigger
         run: |
-          response=$(curl -X POST
+          response=$(curl -X POST \
             -H "Authorization: token ${{ secrets.TRIGGER_TOKEN }}" \
             -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/alexfariakof/despesas-frontend-angular-tests-e2e/dispatches \
-            -d '{"event_type":"trigger-python-plyawright-e2e-tests", "client_payload": {
-              "workflow_run_id": "${{ github.run_id }}"
+            -d '{"event_type":"trigger-python-plyawright-e2e-tests", "client_payload": { \
+              "workflow_run_id": "${{ github.run_id }}" \
             }}')
           run_id = $(echo $response | jq -r '.run_id')
           echo "Workflow Triggered Id : $run_id"
