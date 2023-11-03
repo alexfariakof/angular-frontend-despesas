@@ -17,8 +17,6 @@ on:
 jobs:
   trigger:
     runs-on: ubuntu-latest
-    outputs:
-      run_id: ${{ steps.trigger.outputs.run_id }}
     steps:
       - name: Trigger Workflow
         id: trigger
@@ -30,7 +28,7 @@ jobs:
             -d '{"event_type":"trigger-python-plyawright-e2e-tests", "client_payload": { \
               "workflow_run_id": "${{ github.run_id }}" \
             }}')
-          workflow_id=$(echo $response | jq -r '.run_id')
+          workflow_id=$(echo $response | jq -r '.workflow_id')
           echo "Workflow Triggered Id : $workflow_id"
           echo "run_id=$workflow_id" >> $GITHUB_OUTPUT
 
@@ -39,6 +37,7 @@ jobs:
 
       - name: Wait for Triggered Workflow Test e2e
         run: |
+          echo "Workflow Triggered Id : $workflow_id"
           response=$(curl -L \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ secrets.TRIGGER_TOKEN }}" \
