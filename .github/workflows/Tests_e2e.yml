@@ -16,8 +16,6 @@ on:
 jobs:
   trigger:
     runs-on: ubuntu-latest
-    outputs:
-      workflow_status: ${{ steps.trigger.outputs.workflow_status }}
     steps:
       - name: Trigger Workflow
         id: trigger
@@ -28,6 +26,9 @@ jobs:
           -d '{"event_type":"trigger-python-plyawright-e2e-tests", "client_payload": {
             "workflow_run_id": "${{ github.run_id }}"
           }}'
+
+      - name: Wait for Triggered Workflow Test e2e
+        run: sleep 30
 
       - name: Wait for Triggered Workflow Test e2e
         uses: actions/github-script@v4
