@@ -14,18 +14,11 @@ on:
       - pre-release
 
 jobs:
-  run_tests_e2e:
-    name: Run Tests e2e
+  dispatch:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Dispatch Event
+        uses: peter-evans/repository-dispatch@v1
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-
-      - name: Executar o Workflow Externo
-        uses: softprops/action-gh-run@v1
-        with:
-          repo: alexfariakof/despesas-frontend-angular-tests-e2e
-          workflow: main.yml
-        env:
-         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          event-type: trigger-python-tests
