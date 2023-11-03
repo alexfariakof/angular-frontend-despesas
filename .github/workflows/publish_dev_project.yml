@@ -86,3 +86,4 @@ jobs:
             docker pull $IMAGEM
             container_id=$(docker ps -a -q --filter "ancestor=$IMAGEM")
             docker run -d -p 4200:4200 $IMAGEM
+        continue-on-error: false

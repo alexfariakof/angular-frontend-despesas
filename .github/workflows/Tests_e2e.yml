@@ -1,12 +1,9 @@
 name: Run Tests e2e
 on:
   workflow_run:
-    workflows: Run Build and Tests
+    workflows: Deploy Development Project
     types:
       - completed
-  push:
-    branches:
-      - feature/Create-workflow-to-trigger-e2e-tests
 
   pull_request:
     types: [opened, synchronize, reopened]
