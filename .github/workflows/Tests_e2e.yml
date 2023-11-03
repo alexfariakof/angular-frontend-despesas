@@ -28,7 +28,6 @@ jobs:
             -X POST https://api.github.com/repos/alexfariakof/despesas-frontend-angular-tests-e2e/dispatches \
             -d '{"event_type":"trigger-python-plyawright-e2e-tests", "client_payload": {"unit": false, "integration": true, "father_workflow_id": "${{ github.run_id }}" }}')
 
-          # Verificar o código de resposta HTTP para garantir que a solicitação foi bem-sucedida (código 2xx)
           http_status=$(echo "$response" | grep -o 'HTTP/.* [0-9]\+' | awk '{print $2}')
 
           if [ $http_status -ge 200 ] && [ $http_status -lt 300 ]; then
