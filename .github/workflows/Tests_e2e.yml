@@ -43,4 +43,4 @@ jobs:
                 core.setOutput('workflow_status', 'failure');
             }
         env:
-          GITHUB_TOKEN: ${{ secrets.WORKFLOW_TRIGGER_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
