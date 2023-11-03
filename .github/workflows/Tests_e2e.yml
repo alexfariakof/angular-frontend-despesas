@@ -27,7 +27,7 @@ jobs:
             "workflow_run_id": "${{ github.run_id }}"
           }}'
 
-      - name: Wait for Triggered Workflow Test e2e
+      - name: Wait 30s To Workflow Initialize
         run: sleep 30
 
       - name: Wait for Triggered Workflow Test e2e
@@ -47,3 +47,4 @@ jobs:
             }
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
