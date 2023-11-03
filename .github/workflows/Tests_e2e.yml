@@ -23,7 +23,7 @@ jobs:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
       - name: Executar o Workflow Externo
-        uses: peter-evans/repository-dispatch@v1
+        uses: alexfariakof/repository-dispatch@v1
         with:
           repository: alexfariakof/despesas-frontend-angular-tests-e2e
           token: ${{ secrets.GITHUB_TOKEN }}
