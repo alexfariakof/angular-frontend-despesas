@@ -21,33 +21,14 @@ jobs:
       - name: Trigger Workflow
         id: trigger
         run: |
+          echo "workflow_id=0" >> $GITHUB_ENV
           response=$(curl -sS  \
             -H "Authorization: token ${{ secrets.TRIGGER_TOKEN }}" \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             -X POST https://api.github.com/repos/alexfariakof/despesas-frontend-angular-tests-e2e/dispatches \
-            -d '{"event_type":"trigger-python-plyawright-e2e-tests", "client_payload": {"unit": false, "integration": true, "father_workflow_id": "${{ github.run_id }}" }}')
+            -d '{"event_type":"trigger-python-plyawright-e2e-tests", "client_payload": {"unit": false, "integration": true, "branch":"${{ github.head_ref }}" }}')
 
-          http_status=$(curl -s -o /dev/null -w "%{http_code}" https://api.github.com/repos/alexfariakof/despesas-frontend-angular-tests-e2e/dispatches)
-
-          echo $http_status
-
-          if [ $http_status -ge 200 ] && [ $http_status -lt 300 ]; then
-            echo "Solicitação bem-sucedida (HTTP $http_status)"
-            # Aguardar o resultado (você pode especificar um tempo limite)
-            timeout=60  # Tempo limite em segundos
-            while [ $timeout -gt 0 ]; do
-              # Verificar se a resposta contém o resultado desejado
-              if echo "$response" | grep -q '"status": "completed"'; then
-                echo "Workflow concluído com sucesso."
-                break
-              fi
-              sleep 10  # Aguardar 10 segundos e verificar novamente
-              timeout=$((timeout - 10))
-            done
-          else
-            exit(1)
-          fi
         continue-on-error: false
 
       - name: Wait for Triggered Workflow Test e2e
@@ -64,9 +45,9 @@ jobs:
           conclusion=$(echo $response | jq -r '.conclusion')
 
           if [ "$status" == "completed" ] && [ "$conclusion" == "success" ]; then
-            echo "workflow_status=${{ job.status }}" >> $GITHUB_OUTPUT
+            echo "workflow_status=${{ job.status }}" >> $GITHUB_ENV
           else
-            echo "workflow_status=failure" >> $GITHUB_OUTPUT
+            echo "workflow_status=failure" >> $GITHUB_ENV
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
