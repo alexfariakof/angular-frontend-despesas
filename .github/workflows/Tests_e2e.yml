@@ -44,8 +44,9 @@ jobs:
               timeout=$((timeout - 10))
             done
           else
-            echo "Falha na solicitação (HTTP $http_status)"
+            exit(1)
           fi
+        continue-on-error: false
 
       - name: Wait for Triggered Workflow Test e2e
         run: |
