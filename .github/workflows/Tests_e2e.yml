@@ -23,20 +23,8 @@ jobs:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
       - name: Executar o Workflow Externo
-        uses: actions/github-script@v5
+        uses: peter-evans/repository-dispatch@v1
         with:
-          script: |
-            const { data: workflows } = await github.actions.listRepoWorkflows({
-              owner: 'alexfariakof',
-              repo: 'despesas-frontend-angular-tests-e2e'
-            });
-            const workflowId = workflows.find(workflow => workflow.name === 'Run Tests e2e');
-            if (workflowId) {
-              await github.actions.reRunWorkflow({
-                owner: 'alexfariakof',
-                repo: 'despesas-frontend-angular-tests-e2e',
-                run_id: workflowId.id
-              });
-            }
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          repository: alexfariakof/despesas-frontend-angular-tests-e2e
+          token: ${{ secrets.GITHUB_TOKEN }}
+          event-type: run-e2e-tests
