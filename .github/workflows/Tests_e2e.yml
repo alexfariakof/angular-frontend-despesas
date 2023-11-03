@@ -23,10 +23,9 @@ jobs:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
       - name: Executar o Workflow Externo
-        uses: peter-evans/repository-dispatch@v1
+        uses: softprops/action-gh-run@v1
         with:
-          repository: alexfariakof/despesas-frontend-angular-tests-e2e
-          token: ${{ secrets.GITHUB_TOKEN }}
-          event-type: run-e2e-tests
+          repo: alexfariakof/despesas-frontend-angular-tests-e2e
+          workflow: main.yml
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
