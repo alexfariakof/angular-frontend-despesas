@@ -30,13 +30,12 @@ jobs:
 
       - name: Wait for Triggered Workflow Test e2e
         uses: actions/github-script@v4
-        id: Wait_For_Tests_e2e_Execution
         with:
           script: |
             const { data: workflowRun } = await github.actions.getWorkflowRun({
               owner: 'alexfariakof',
               repo: 'despesas-frontend-angular-tests-e2e',
-              run_id: "${{ steps.trigger.outputs.run_id }}"
+              run_id: ${{ steps.trigger.outputs.run_id }}
             });
 
             if (workflowRun.status === 'completed' && workflowRun.conclusion === 'success') {
