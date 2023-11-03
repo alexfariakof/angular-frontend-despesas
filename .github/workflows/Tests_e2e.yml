@@ -26,7 +26,10 @@ jobs:
           curl -X POST -H "Authorization: token ${{ secrets.WORKFLOW_TRIGGER_TOKEN }}" \
           -H "Accept: application/vnd.github.v3+json" \
           https://api.github.com/repos/alexfariakof/despesas-frontend-angular-tests-e2e/dispatches \
-          -d '{"event_type":"trigger-python-plyawright-e2e-tests"}'
+          -d '{"event_type":"trigger-python-plyawright-e2e-tests", "client_payload": {
+            "workflow_run_id": "${{ github.run_id }}",
+            "workflow_status": "failure"
+          }}'
 
       - name: Wait for Triggered Workflow Test e2e
         uses: actions/github-script@v4
