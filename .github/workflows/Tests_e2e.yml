@@ -35,6 +35,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: run_id-${{ github.run_id }}
+          path: run_id-${{ github.run_id }}
 
       - name: Set Workflow Run ID
         run: |
