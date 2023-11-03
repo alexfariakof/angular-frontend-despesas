@@ -28,7 +28,8 @@ jobs:
             https://api.github.com/repos/alexfariakof/despesas-frontend-angular-tests-e2e/dispatches \
             -d '{"event_type":"trigger-python-plyawright-e2e-tests", \
                  "client_payload": {"unit":false,"integration":true} \
-                }}')
+                }')
+
           echo $response
           workflow_id=$(echo $response | jq -r '.workflow_id')
           echo "Workflow Triggered Id : $workflow_id"
