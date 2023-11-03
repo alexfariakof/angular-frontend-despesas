@@ -36,8 +36,7 @@ jobs:
             const { data: workflowRun } = await github.actions.getWorkflowRun({
               owner: 'alexfariakof',
               repo: 'despesas-frontend-angular-tests-e2e',
-              run_id: "${{ github.run_id }}",
-              token: "${{ secrets.WORKFLOW_TRIGGER_TOKEN }}"
+              run_id: "${{ github.run_id }}"
             });
 
             if (workflowRun.status === 'completed' && workflowRun.conclusion === 'success') {
