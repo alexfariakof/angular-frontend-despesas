@@ -30,6 +30,8 @@ jobs:
 
           http_status=$(curl -s -o /dev/null -w "%{http_code}" https://api.github.com/repos/alexfariakof/despesas-frontend-angular-tests-e2e/dispatches)
 
+          echo $http_status
+
           if [ $http_status -ge 200 ] && [ $http_status -lt 300 ]; then
             echo "Solicitação bem-sucedida (HTTP $http_status)"
             # Aguardar o resultado (você pode especificar um tempo limite)
