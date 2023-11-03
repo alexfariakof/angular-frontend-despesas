@@ -37,6 +37,7 @@ jobs:
               owner: 'alexfariakof',
               repo: 'despesas-frontend-angular-tests-e2e',
               run_id: "${{ github.run_id }}"
+              token: "${{ secrets.WORKFLOW_TRIGGER_TOKEN }}"
             });
 
             if (workflowRun.status === 'completed' && workflowRun.conclusion === 'success') {
