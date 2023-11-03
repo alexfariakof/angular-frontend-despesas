@@ -14,13 +14,12 @@ on:
       - pre-release
 
 jobs:
-  dispatch:
+  trigger:
     runs-on: ubuntu-latest
     steps:
-      - name: Dispatch Event
-        uses: peter-evans/repository-dispatch@v1
-        with:
-          token: ${{ secrets.PAT_TOKEN }}
-          event-type: trigger-python-tests
-        env:
-         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Trigger Workflow
+        run: |
+          curl -X POST -H "Authorization: token ${{ secrets.WORKFLOW_TRIGGER_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/alexfariakof/despesas-frontend-angular-tests-e2e/dispatches \
+          -d '{"event-type":"trigger-python-plyawright-e2e-tests"}'
