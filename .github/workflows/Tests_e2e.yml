@@ -16,6 +16,8 @@ on:
 jobs:
   trigger:
     runs-on: ubuntu-latest
+    outputs:
+      workflow_status: ${{ steps.wait_for_external.outputs.workflow_status }}
     steps:
       - name: Trigger Workflow
         run: |
@@ -23,3 +25,22 @@ jobs:
           -H "Accept: application/vnd.github.v3+json" \
           https://api.github.com/repos/alexfariakof/despesas-frontend-angular-tests-e2e/dispatches \
           -d '{"event_type":"trigger-python-plyawright-e2e-tests"}'
+
+      - name: Wait for Triggered Workflow Test e2e
+        uses: actions/github-script@v4
+        id: Wait_For_Tests_e2e_Execution
+        with:
+          script: |
+            const { data: workflowRun } = await github.actions.getWorkflowRun({
+              owner: 'alexfariakof',
+              repo: 'despesas-frontend-angular-tests-e2e',
+              run_id: ${{ steps.trigger.outputs.run_id }}
+            });
+
+            if (workflowRun.status === 'completed' && workflowRun.conclusion === 'success') {
+                core.setOutput('workflow_status', 'success');
+            } else {
+                core.setOutput('workflow_status', 'failure');
+            }
+        env:
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_TRIGGER_TOKEN }}
