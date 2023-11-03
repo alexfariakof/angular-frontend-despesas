@@ -28,6 +28,7 @@ jobs:
             -d '{"event_type":"trigger-python-plyawright-e2e-tests", "client_payload": { \
               "workflow_run_id": "${{ github.run_id }}" \
             }}')
+          echo $response
           workflow_id=$(echo $response | jq -r '.workflow_id')
           echo "Workflow Triggered Id : $workflow_id"
           echo "run_id=$workflow_id" >> $GITHUB_OUTPUT
