@@ -20,5 +20,7 @@ jobs:
       - name: Dispatch Event
         uses: peter-evans/repository-dispatch@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT_TOKEN }}
           event-type: trigger-python-tests
+        env:
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
