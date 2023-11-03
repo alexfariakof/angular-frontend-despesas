@@ -1,9 +1,12 @@
 name: Run Tests e2e
 on:
-  workflow_run:
-    workflows: Deploy Development Project
-    types:
-      - completed
+  #workflow_run:
+    #workflows: Deploy Development Project
+    #types:
+     # - completed
+  push:
+    branches:
+      - feature/Create-workflow-to-trigger-e2e-tests
 
   pull_request:
     types: [opened, synchronize, reopened]
@@ -37,3 +40,31 @@ jobs:
       - name: Test and coverage
         run: npm run test:coverage
         continue-on-error: false
+
+  run_tests_e2e:
+    needs: build_test_unit_and_test_and__analyse_code_in_sonarcloud
+    name: Run Tests e2e
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: Executar o Workflow Externo
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const { data: workflows } = await github.actions.listRepoWorkflows({
+              owner: 'alexfariakof',
+              repo: 'despesas-frontend-angular-tests-e2e'
+            });
+            const workflowId = workflows.find(workflow => workflow.name === 'Run Tests e2e');  # Substitua 'Run Tests e2e'
+            if (workflowId) {
+              await github.actions.reRunWorkflow({
+                owner: 'alexfariakof',
+                repo: 'despesas-frontend-angular-tests-e2e',
+                run_id: workflowId.id
+              });
+            }
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
