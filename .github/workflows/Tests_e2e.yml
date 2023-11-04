@@ -23,7 +23,6 @@ jobs:
         id: trigger
         run: |
             repo=$(echo "${{ github.repository }}")
-            #file_path=".github/workflows/attachments/triggerd-workflow-id/run_id.txt" # Substitua pelo caminho correto
             file_path= $(echo "${{ github.workflow_ref }}/.github/workflows/attachments/triggerd-workflow-id")
             echo $repo
             echo file_path
