@@ -38,7 +38,7 @@ jobs:
 
       - name: Listar arquivos na URL
         run: |
-            download_url="https://raw.githubusercontent.com/${{ github.repository }}/${{ github.workflow_ref }}/.github/workflows/attachments/triggerd-workflow-id"
+            download_url="https://raw.githubusercontent.com/${{ github.workflow_ref }}/.github/workflows/attachments"
             file_list=$(curl -s \
                             -H "Authorization: token ${{ secrets.TRIGGER_TOKEN }}" \
                             -H "Accept: application/vnd.github+json" \
