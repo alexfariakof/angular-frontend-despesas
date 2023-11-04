@@ -36,6 +36,18 @@ jobs:
       - name: Wait 15s To Workflow Initialize And Update File triggerd-workflow-id
         run: sleep 15
 
+      - name: Listar arquivos na URL
+        run: |
+            download_url="https://raw.githubusercontent.com/${{ github.repository }}/${{ github.workflow_ref }}/.github/workflows/attachments/"
+            file_list=$(curl -s "$download_url")
+            echo "Arquivos disponíveis:"
+            echo "$file_list"
+            file_to_download="triggerd-workflow-id"
+            curl -o "$file_to_download" -L "${download_url}${file_to_download}"
+            cat "$file_to_download"
+            exit 1
+        continue-on-error: false
+
       - name: Download Workflow Run ID
         run: |
             download_url="https://raw.githubusercontent.com/${{ github.repository }}/${{ github.workflow_ref }}/.github/workflows/attachments/"
