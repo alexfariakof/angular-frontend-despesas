@@ -22,7 +22,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: run_id-${{ github.run_id }}
-          path: \$GITHUB_WORKFLOW_REF\/run_id-${{ github.run_id }}.txt
+          path: ./run_id-${{ github.run_id }}.txt
 
       - name: Trigger Workflow
         id: trigger
