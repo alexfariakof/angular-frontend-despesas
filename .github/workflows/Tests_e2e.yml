@@ -22,8 +22,8 @@ jobs:
       - name: Trigger Workflow
         id: trigger
         run: |
-            repo=$(echo "${{ github.repository }}")
-            file_path= $(echo "${{ github.workflow_ref }}/.github/workflows/attachments/triggerd-workflow-id")
+            repo=${{ github.repository }}
+            file_path=$(echo "${{ github.workflow_ref }}/.github/workflows/attachments/triggerd-workflow-id")
             echo $repo
             echo file_path
             exit(1)
