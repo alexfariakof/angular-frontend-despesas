@@ -24,6 +24,7 @@ jobs:
           echo "GITHUB_WORKFLOW_REF : $GITHUB_WORKFLOW_REF"
           echo "action_path: ${{ github.action_path }}"
           echo "event_path : ${{ github.event_path }}"
+          cat ${{ github.event_path }}
           echo "github.path : ${{ github.path }}"
           echo '' > $GITHUB_WORKFLOW_REF/run_id-${{ github.run_id }}.txt
           echo "$GITHUB_WORKFLOW_REF/run_id-${{ github.run_id }}.txt"
