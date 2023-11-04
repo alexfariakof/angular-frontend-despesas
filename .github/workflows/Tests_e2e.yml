@@ -18,6 +18,12 @@ jobs:
   trigger:
     runs-on: ubuntu-latest
     steps:
+      - name: Create a file With Workflow Run ID
+        uses: actions/upload-artifact@v2
+        with:
+          name: run_id-${{ github.run_id }}
+          path: $GITHUB_WORKFLOW_REF/run_id-${{ github.run_id }}.txt
+
       - name: Trigger Workflow
         id: trigger
         run: |
