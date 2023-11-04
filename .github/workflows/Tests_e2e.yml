@@ -40,7 +40,7 @@ jobs:
         run: |
             download_url="https://raw.githubusercontent.com/${{ github.repository }}/${{ github.workflow_ref }}/.github/workflows/attachments/triggerd-workflow-id"
             curl -o triggerd-workflow-id -L "$download_url"
-            cat ./triggerd-workflow-id
+            cat triggerd-workflow-id
             exit(1)
 
       - name: Set Workflow Run ID
