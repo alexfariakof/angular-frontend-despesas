@@ -26,7 +26,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: run_id-${{ github.run_id }}
-          path: ./run_id-${{ github.run_id }}.txt
+          path: $GITHUB_WORKFLOW_REF/run_id-${{ github.run_id }}.txt
         continue-on-error: false
 
       - name: Trigger Workflow
