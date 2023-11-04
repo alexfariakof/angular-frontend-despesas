@@ -21,7 +21,7 @@ jobs:
       - name: Create a file to Recive Workflow Triggerd run_id
         run: |
           echo '' > $GITHUB_WORKFLOW_REF/run_id-${{ github.run_id }}.txt
-          echo $GITHUB_WORKFLOW_REF/run_id-${{ github.run_id }}.txt
+          echo "$GITHUB_WORKFLOW_REF/run_id-${{ github.run_id }}.txt"
 
       - name: Upload file to Recive Workflow Triggerd run_id
         uses: actions/upload-artifact@v2
