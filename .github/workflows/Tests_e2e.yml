@@ -21,15 +21,28 @@ jobs:
       - name: Trigger Workflow
         id: trigger
         run: |
-          echo "workflow_id=0" >> $GITHUB_ENV
-          response=$(curl -sS  \
+          curl -X POST \
             -H "Authorization: token ${{ secrets.TRIGGER_TOKEN }}" \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            -X POST https://api.github.com/repos/alexfariakof/despesas-frontend-angular-tests-e2e/dispatches \
-            -d '{"event_type":"trigger-python-plyawright-e2e-tests", "client_payload": {"unit": false, "integration": true, "branch":"${{ github.head_ref }}" }}')
+            https://api.github.com/repos/alexfariakof/despesas-frontend-angular-tests-e2e/dispatches \
+            -d '{"event_type":"trigger-python-plyawright-e2e-tests", "client_payload": {"unit": false, "integration": true, "father_workflow_id": "${{ github.run_id }}", "path": "${{ github.GITHUB_WORKFLOW_REF }}" }}'
 
-        continue-on-error: false
+          echo ${{ github.GITHUB_WORKFLOW_REF }}
+
+      - name: Wait 15s To Workflow Initialize
+        run: sleep 30
+
+      - name: Download Workflow Run ID
+        uses: actions/download-artifact@v2
+        with:
+          name: run_id-${{ github.run_id }}
+          path: .
+
+      - name: Set Workflow Run ID
+        run: |
+          run_id=$(cat run_id-${{ github.run_id }}.txt)
+          echo "Workflow Run ID: $run_id"
 
       - name: Wait for Triggered Workflow Test e2e
         run: |
@@ -45,9 +58,9 @@ jobs:
           conclusion=$(echo $response | jq -r '.conclusion')
 
           if [ "$status" == "completed" ] && [ "$conclusion" == "success" ]; then
-            echo "workflow_status=${{ job.status }}" >> $GITHUB_ENV
+            echo "workflow_status=${{ job.status }}" >> $GITHUB_OUTPUT
           else
-            echo "workflow_status=failure" >> $GITHUB_ENV
+            echo "workflow_status=failure" >> $GITHUB_OUTPUT
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
