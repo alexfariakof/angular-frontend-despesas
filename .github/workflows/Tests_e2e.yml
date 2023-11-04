@@ -23,6 +23,7 @@ jobs:
         with:
           name: run_id-${{ github.run_id }}
           path: run_id-${{ github.run_id }}.txt
+        continue-on-error: false
 
       - name: Trigger Workflow
         id: trigger
