@@ -14,7 +14,7 @@ on:
     types: [opened, synchronize, reopened]
     branches:
       - master
-      - develop
+      #- develop
       - hotfix/*
 
 jobs:
