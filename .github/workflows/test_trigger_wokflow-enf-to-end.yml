@@ -20,18 +20,27 @@ jobs:
     name: Trigger Run End-to-End Tests
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger Workflow Tests End-to-End
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            const response = await github.actions.createWorkflowDispatch({
-              owner: '${{ github.repository_owner }}',
-              repo: '${{ github.repository }}',
-              workflow_file: '.github/workflows/Tests_e2e.yml',
-              ref: '${{ github.action_ref }}',
+      - name: Trigger Workflow
+        run: |
+            const { Octokit } = require("@octokit/core");
+            const octokit = new Octokit({
+              auth: process.env.GITHUB_TOKEN
+            });
+
+            const response = await octokit.request('POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches', {
+              owner: process.env.GITHUB_REPOSITORY_OWNER,
+              repo: process.env.GITHUB_REPOSITORY,
+              workflow_id: 'YOUR-WORKFLOW-ID',
+              ref: ${{ github.workflow_ref }},
               inputs: {
                 e2e_test_input: 'run'
+              },
+              headers: {
+                'X-GitHub-Api-Version': '2022-11-28'
               }
             });
             console.log(response);
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
