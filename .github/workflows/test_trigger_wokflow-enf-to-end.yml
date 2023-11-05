@@ -1,14 +1,13 @@
 name: Test Trigger Workflow End-to-End
 on:
-  push:
-    branches:
-      - feature/Create-workflow-to-trigger-e2e-tests
-
-
   workflow_run:
     workflows: ["Build And Test Code in Sonar Cloud"]
     types:
       - completed
+
+  push:
+    branches:
+      - feature/Create-workflow-to-trigger-e2e-tests
 
 jobs:
   trigger_e2e_tests:
