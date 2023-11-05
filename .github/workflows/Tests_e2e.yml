@@ -4,9 +4,6 @@ on:
     secrets:
         envPAT:
           required: true
-  push:
-    branches:
-      - master
 
   pull_request:
     types: [opened, synchronize, reopened]
