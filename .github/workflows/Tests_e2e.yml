@@ -27,6 +27,7 @@ jobs:
         run: |
             repo=${{ github.repository }}
             file_path=$(echo ".github/workflows/attachments")
+            echo ${{ secrets.ENV_PAT }}
 
             curl -X POST \
               -H "Authorization: token ${{ secrets.ENV_PAT }}" \
