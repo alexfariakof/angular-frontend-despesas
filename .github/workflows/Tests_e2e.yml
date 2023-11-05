@@ -1,10 +1,6 @@
 name: Run End-to-End Tests
 on:
   workflow_call:
-    inputs:
-      config-path:
-        required: true
-        type: string
     secrets:
         envPAT:
           required: true
@@ -20,8 +16,7 @@ jobs:
     steps:
       - uses: actions/labeler@v4
         with:
-          repo-token: ${{ secrets.TRIGGER_TOKEN }}
-          configuration-path: ${{ inputs.config-path }}
+          repo-token: ${{ secrets.envPAT }}
 
       - name: Trigger Workflow End-to-End
         run: |
