@@ -4,13 +4,6 @@ on:
     workflows: ["Build And Test Code in Sonar Cloud"]
     types:
       - requested
-      - completed
-    branches-ignore:
-      - master
-      - hotfix/*
-      - develop
-      - release
-      - bugfix/*
 
   push:
     branches:
