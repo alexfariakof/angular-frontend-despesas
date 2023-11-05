@@ -1,9 +1,12 @@
 name: Test Trigger Workflow End-to-End
 on:
   workflow_run:
-    workflows: ["Run Build and Unit Tests"]
+    workflows: Run Build and Unit Tests
     types:
       - completed
+
+  repository_dispatch:
+    types: [trigger-tests-e2e]
 
   workflow_dispatch:
     inputs:
@@ -25,7 +28,7 @@ jobs:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
       - name: Trigger Workflow
-        uses: actions/repository-dispatch@v2
+        uses: actions/checkout@v2
         with:
           workflow: Run End-to-End Tests
           token: ${{ secrets.TRIGGER_TOKEN }}
