@@ -1,12 +1,8 @@
 name: Deploy Production Project
 on:
   push:
-    branches: [master]
     tags:
-      - v1.*.*
-      - v2.*.*
-      - v3.*.*
-
+      - v*.*.*
 jobs:
   build_and_test:
     name: Build Test
