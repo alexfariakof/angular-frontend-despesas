@@ -3,7 +3,7 @@ on:
   workflow_run:
     workflows: ["Run Build and Unit Tests"]
     types:
-      - completed
+      - requested
 
   push:
     branches:

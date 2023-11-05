@@ -3,7 +3,7 @@ on:
   workflow_run:
     workflows: ["Build And Test Code in Sonar Cloud"]
     types:
-      - completed
+      - requested
 
   push:
     branches:
