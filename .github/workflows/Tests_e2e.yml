@@ -65,10 +65,8 @@ jobs:
             echo "Conclusion: $conclusion"
 
             if [ "$status" == "completed" ] && [ "$conclusion" == "success" ]; then
-              echo $conclusion
               echo "workflow_status=${{ job.status }}" >> $GITHUB_OUTPUT
             else
-              echo $conclusion
               echo "workflow_status=failure" >> $GITHUB_OUTPUT
               exit(1)
             fi
