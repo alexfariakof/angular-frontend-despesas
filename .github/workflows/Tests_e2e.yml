@@ -56,7 +56,7 @@ jobs:
                 status=$(echo $response | jq -r '.status')
                 echo "Current status: $status"
 
-                if [ "$status" == "queued" ]; then
+                if [ "$status" == "queued" ] || [ "$status" == "in_progress" ]; then
                   sleep 20
                 else
                   break
