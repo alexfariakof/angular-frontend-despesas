@@ -43,5 +43,4 @@ Thumbs.db
 .vscode
 .vs
 *.pem
-*/attachments/*
 .github/workflows/attachments/*

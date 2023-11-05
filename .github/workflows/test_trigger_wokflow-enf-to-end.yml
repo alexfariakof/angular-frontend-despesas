@@ -9,4 +9,4 @@ jobs:
     name: Trigger Run End-to-End Tests
     uses: alexfariakof/despesas-frontend-angular/.github/workflows/Tests_e2e.yml@master
     secrets:
-      envPAT: ${{ secrets.TRIGGER_TOKEN }}
+      envPAT: ${{ secrets.ENV_PAT }}
