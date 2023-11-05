@@ -12,4 +12,4 @@ jobs:
     with:
       config-path: .github/labeler.yml
     secrets:
-      envPAT: ${{ secrets.TRIGGER_TOKEN }}
+      envPAT: ${{ secrets.ENV_PAT }}
