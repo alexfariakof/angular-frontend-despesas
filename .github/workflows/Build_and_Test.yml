@@ -1,6 +1,6 @@
 name: Run Build and Unit Tests
 on:
-  workflow_dispatch:
+  []
 
 
 jobs:
