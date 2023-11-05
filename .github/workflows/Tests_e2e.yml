@@ -49,8 +49,8 @@ jobs:
               -H "X-GitHub-Api-Version: 2022-11-28" \
               "https://api.github.com/repos/alexfariakof/despesas-frontend-angular-tests-e2e/actions/runs/$triggered_workflow_id")
 
-            echo $response
             status=$(echo $response | jq -r '.status')
+            echo $status
             conclusion=$(echo $response | jq -r '.conclusion')
 
             if [ "$status" == "completed" ] && [ "$conclusion" == "success" ]; then
