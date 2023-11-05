@@ -6,8 +6,6 @@ on:
       - completed
 
   push:
-    branches:
-      - master
     tags:
       - 'v*.*.*'
 
