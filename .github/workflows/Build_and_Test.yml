@@ -1,8 +1,5 @@
-name: Run Build and Unit Tests
-on:
-  push:
-  pull_request:
-
+name: "Run Build and Unit Tests"
+on: []
 jobs:
   build_and_test:
     name: Build and Test

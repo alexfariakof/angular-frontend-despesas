@@ -1,18 +1,19 @@
 name: Test Trigger Workflow End-to-End
 on:
-  workflow_run:
-    workflows: ["Build And Test Code in Sonar Cloud"]
-    types:
-      - requested
-
   push:
     branches:
       - feature/Create-workflow-to-trigger-e2e-tests
+
+  workflow_run:
+    workflows: ["Build And Test Code in Sonar Cloud"]
+    types:
+      - completed
 
 jobs:
   trigger_e2e_tests:
     name: Trigger Run End-to-End Tests
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: actions/checkout@v3
         with:

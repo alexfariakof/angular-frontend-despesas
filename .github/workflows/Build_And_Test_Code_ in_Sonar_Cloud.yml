@@ -1,14 +1,10 @@
 name: Build And Test Code in Sonar Cloud
 on:
-  workflow_run:
-    workflows: ["Run Build and Unit Tests"]
-    types:
-      - requested
-
   push:
     branches:
       - develop
       - hotfix/*
+      - feature/*
 
   pull_request:
     types: [opened, synchronize, reopened]
@@ -17,10 +13,16 @@ on:
       #- develop
       - hotfix/*
 
+  workflow_run:
+    workflows: ["Run Build and Unit Tests"]
+    types:
+      - completed
+
 jobs:
   Test_Code_in_Sonar_Cloud:
     name: Test Code in Sonar Cloud
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: actions/checkout@v3
         with:

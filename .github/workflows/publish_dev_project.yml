@@ -1,26 +1,5 @@
 name: Deploy Development Project
 on:
-  workflow_run:
-    workflows: ["Build And Test Code in Sonar Cloud"]
-    types:
-      - requested
-
-    branches:
-      - release
-
-    branches-ignore:
-      - master
-      - hotfix/*
-      - release
-      - feature/*
-      - bugfix/*
-
-  workflow_dispatch:
-    inputs:
-      e2e_test_input:
-        description: 'Trigger Workflow End-to-End'
-        required: true
-
   push:
     branches:
       - release
@@ -30,10 +9,23 @@ on:
     branches:
       - release
 
+  workflow_run:
+    workflows: ["Build And Test Code in Sonar Cloud"]
+    types:
+      - completed
+
+  workflow_dispatch:
+    inputs:
+      e2e_test_input:
+        description: 'Trigger Workflow End-to-End'
+        required: true
+
+
 jobs:
   build_and_push_docker_image:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: actions/checkout@v3
         with:

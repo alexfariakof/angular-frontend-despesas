@@ -1,15 +1,13 @@
 name: Deploy Production Project
 on:
-  workflow_run:
-    workflows: ["Build And Test Code in Sonar Cloud"]
-    types: [requested]
-    branches: [master]
-    branches-ignore: [hotfix/*, release, develop, feature/*, bugfix/*]
-
   push:
     tags:
       - 'v*.*.*'
 
+  workflow_run:
+    workflows: ["Build And Test Code in Sonar Cloud"]
+    types:
+      - completed
 jobs:
   deploy_prod:
     name: Build and Deploy In Production
