@@ -41,10 +41,10 @@ jobs:
               });
 
               const response = await octokit.request('POST /repos/${{ github.repository_owner }}/${{ github.repository }}/actions/workflows/${{ github.run_id }}/dispatches', {
-                owner: ${{ github.repository_owner }},
-                repo: ${{ github.repository }},
-                workflow_id: ${{ github.run_id }},
-                ref: ${{ github.workflow_ref }},
+                owner: "${{ github.repository_owner }}",
+                repo: "${{ github.repository }}",
+                workflow_id: "${{ github.run_id }}",
+                ref: "${{ github.workflow_ref }}",
                 inputs: {
                   e2e_test_input: 'run'
                 },

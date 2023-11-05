@@ -18,7 +18,7 @@ on:
       - hotfix/*
 
 jobs:
-  sonarcloud:
+  Test_Code_in_Sonar_Cloud:
     name: Test Code in Sonar Cloud
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
