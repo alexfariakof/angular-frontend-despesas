@@ -18,7 +18,6 @@ jobs:
   trigger-tests-e2e:
     runs-on: ubuntu-latest
     steps:
-
       - name: Trigger Workflow
         run: |
             repo=${{ github.repository }}
