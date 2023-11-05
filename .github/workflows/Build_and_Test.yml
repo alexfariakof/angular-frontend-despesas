@@ -1,7 +1,17 @@
 name: Run Build and Unit Tests
 on:
-  []
+  push:
+    branches:
+      - develop
+      - hotfix/*
+      - feature/*
 
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+      - develop
+      - hotfix/*
 
 jobs:
   build_and_test:
