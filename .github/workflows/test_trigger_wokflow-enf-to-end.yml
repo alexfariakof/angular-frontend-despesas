@@ -4,7 +4,6 @@ on:
     workflows: [Run Build and Unit Tests]
     types:
       - completed
-  workflow_dispatch:
 
   push:
     branches:
