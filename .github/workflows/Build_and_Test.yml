@@ -1,0 +1,37 @@
+name: Run Build and Unit Tests
+on:
+  push:
+    branches:
+      - develop
+      - hotfix/*
+
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+      - develop
+      - hotfix/*
+
+jobs:
+  build_and_test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: Install dependencies
+        run: |
+          npm install npm@latest
+          npm install -g @angular/cli
+          npm install
+        continue-on-error: false
+
+      - name: Build
+        run: ng build
+        continue-on-error: false
+
+      - name: Test
+        run: ng test --no-watch
+        continue-on-error: false

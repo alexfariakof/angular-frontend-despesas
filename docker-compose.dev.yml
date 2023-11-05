@@ -2,8 +2,8 @@ version: '3.4'
 
 services:
   despesas-frontend-angular-dev:
-    container_name: despesas-frontend-angular-dev
-    image: despesas-frontend-angular-dev-img
+    container_name: dev
+    image: alexfariakof/despesas-frontend-angular-dev-img
     build:
       context: .
       dockerfile: ./Dockerfile-Development
