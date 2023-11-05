@@ -1,7 +1,7 @@
 name: Test Trigger Workflow End-to-End
 on:
   workflow_run:
-    workflows: ["Build And Test Code in Sonar Cloud"]
+    workflows: Build And Test Code in Sonar Cloud
     types:
       - completed
 
