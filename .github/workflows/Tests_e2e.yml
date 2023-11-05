@@ -14,10 +14,6 @@ jobs:
   trigger-tests-e2e:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/labeler@v4
-        with:
-          repo-token: ${{ secrets.envPAT  }}
-
       - name: Trigger Workflow End-to-End
         run: |
             repo=${{ github.repository }}
