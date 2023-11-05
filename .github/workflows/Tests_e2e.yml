@@ -1,9 +1,10 @@
 name: Run End-to-End Tests
 on:
   workflow_call:
-    secrets:
-        envPAT:
-          required: true
+
+  push:
+    branches:
+      - feature/Create-workflow-to-trigger-e2e-tests
 
   pull_request:
     types: [opened, synchronize, reopened]
@@ -18,7 +19,7 @@ jobs:
         run: |
             repo=${{ github.repository }}
             file_path=$(echo ".github/workflows/attachments")
-            echo ${{ secrets.ENV_PAT }}
+            echo ${{ secrets.TR }}
 
             curl -X POST \
               -H "Authorization: token ${{ secrets.ENV_PAT }}" \
