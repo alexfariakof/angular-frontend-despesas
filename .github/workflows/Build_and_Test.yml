@@ -1,13 +1,14 @@
-name: Run Build and Tests
+name: Run Build and Unit Tests
 on:
   push:
     branches:
+      - develop
       - hotfix/*
 
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
-      - master
+      - main
       - develop
       - hotfix/*
 
@@ -34,13 +35,6 @@ jobs:
 
       - name: Test
         run: ng test --no-watch
-        continue-on-error: false
-
-      - name: Build Docker image
-        env:
-          DOCKER_CLI_AGGREGATE: 1
-        run: |
-          docker-compose -f docker-compose.prod.yml build
         continue-on-error: false
 
   sonarcloud:

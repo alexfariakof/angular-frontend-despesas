@@ -1,23 +1,21 @@
-name: Run Tests e2e
+name: Run End-to-End Tests
 on:
-  #workflow_run:
-    #workflows: Deploy Development Project
-    #types:
-     # - completed
-  push:
-    branches:
-      - feature/Create-workflow-to-trigger-e2e-tests
+  workflow_dispatch:
+    inputs:
+      e2e_test_input:
+        description: 'Run End-to-End Tests'
+        required: true
+
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
-      - pre-release
-  workflow_dispatch:
+      - release
 
 jobs:
   trigger-tests-e2e:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger Workflow
+      - name: Trigger Workflow End-to-End
         run: |
             repo=${{ github.repository }}
             file_path=$(echo "attachments")
@@ -30,7 +28,7 @@ jobs:
               -d "{\"event_type\":\"trigger-python-plyawright-e2e-tests\", \"client_payload\": {\"unit\": false, \"integration\": true, \"father_workflow_id\": \"${{ github.run_id }}\", \"path\": \"$file_path\", \"repo\": \"$repo\" }}"
         continue-on-error: false
 
-      - name: Wait 15s To Workflow Initialize And Update File triggered-workflow-id
+      - name: Wait Workflow End-to-End Initialize And Update File triggered-workflow-id
         run: sleep 15
 
       - name: Wait for Triggered Workflow Test e2e Run

@@ -1,37 +1,23 @@
 name: Deploy Production Project
 on:
+  workflow_run:
+    workflows: ["Run Build and Tests"]
+    types:
+      - completed
+
   push:
     branches:
-      - release/*
-
-  pull_request:
-    types: [opened, synchronize, reopened]
-    branches:
-      - release/*
+      - main
+    tags:
+      - 'v*.*.*'
 
 jobs:
-  build_test_unit_and_test_and__analyse_code_in_sonarcloud:
-    name: Build Test Unit and Test and Analyse Code In Sonar Cloud
+  deploy_prod:
+    name: Build and Deploy In Production
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-
-      - name: Install dependencies
-        run: |
-          npm install npm@latest
-          npm install -g @angular/cli
-          npm install
-        continue-on-error: false
-
-      - name: Build Project
-        run: ng build
-        continue-on-error: false
-
-      - name: Test Unit
-        run: ng test --no-watch
-        continue-on-error: false
+      - name: Checkout code
+        uses: actions/checkout@v2
 
       - name: Build Docker image
         env:
@@ -49,24 +35,6 @@ jobs:
             docker login -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }}
             docker push ${{ secrets.DOCKER_IMAGE }}
         continue-on-error: false
-
-      - name: Test and coverage
-        run: npm run test:coverage
-        continue-on-error: false
-
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
-  deploy_prod:
-    needs: build_test_unit_and_test_and__analyse_code_in_sonarcloud
-    name: Production Build Deploy and Publish Docker Image
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
 
       - name: Execute SSH Commands into EC2
         env:
