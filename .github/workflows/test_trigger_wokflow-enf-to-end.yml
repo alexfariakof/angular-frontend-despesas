@@ -28,7 +28,7 @@ jobs:
         uses: actions/repository-dispatch@v2
         with:
           workflow: Run End-to-End Tests
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.TRIGGER_TOKEN }}
           inputs: |
               {
                 "e2e_test_input": "run"
