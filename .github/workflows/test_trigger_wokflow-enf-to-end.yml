@@ -3,10 +3,12 @@ on:
   push:
     branches:
       - feature/Create-workflow-to-trigger-e2e-tests
-      - master
+
 jobs:
   trigger_e2e_tests:
     name: Trigger Run End-to-End Tests
     uses: alexfariakof/despesas-frontend-angular/.github/workflows/Tests_e2e.yml@master
+    with:
+      config-path: .github/labeler.yml
     secrets:
-      envPAT: ${{ secrets.ENV_PAT }}
+      envPAT: ${{ secrets.TRIGGER_TOKEN }}
