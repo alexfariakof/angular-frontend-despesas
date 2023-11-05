@@ -20,13 +20,20 @@ jobs:
     name: Trigger Run End-to-End Tests
     runs-on: ubuntu-latest
     steps:
-      - name: Install Dependencies Octokit
-        run : |
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: Install Dependencies
+        run: |
+          npm install npm@latest
           npm install @octokit/core
+          npm install
+        continue-on-error: false
 
       - name: Trigger Workflow
         run: |
-            import { Octokit } from "@octokit/core";
+            const { Octokit } = require("@octokit/core");
             const octokit = new Octokit({
               auth: process.env.GITHUB_TOKEN
             });
