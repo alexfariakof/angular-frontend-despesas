@@ -26,10 +26,10 @@ jobs:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const response = await github.actions.createWorkflowDispatch({
-              owner: ${{ github.repository_owner }},
-              repo: ${{ github.repository }},
+              owner: '${{ github.repository_owner }}',
+              repo: '${{ github.repository }}',
               workflow_file: '.github/workflows/Tests_e2e.yml',
-              ref: ${{ github.base_ref }},
+              ref: '${{ github.action_ref }}',
               inputs: {
                 e2e_test_input: 'run'
               }
