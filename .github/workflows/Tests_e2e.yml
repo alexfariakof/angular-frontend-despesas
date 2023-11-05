@@ -43,14 +43,26 @@ jobs:
             triggered_workflow_id=$(cat triggered-workflow-id)
             echo "Triggered Workflow ID: $triggered_workflow_id"
 
-            response=$(curl -L \
-              -H "Accept: application/vnd.github+json" \
-              -H "Authorization: Bearer ${{ secrets.TRIGGER_TOKEN }}" \
-              -H "X-GitHub-Api-Version: 2022-11-28" \
-              "https://api.github.com/repos/alexfariakof/despesas-frontend-angular-tests-e2e/actions/runs/$triggered_workflow_id")
+            response=""
+            status=""
 
-            status=$(echo $response | jq -r '.status')
-            echo $status
+            while true; do
+              $response=$(curl -L \
+                -H "Accept: application/vnd.github+json" \
+                -H "Authorization: Bearer ${{ secrets.TRIGGER_TOKEN }}" \
+                -H "X-GitHub-Api-Version: 2022-11-28" \
+                "https://api.github.com/repos/alexfariakof/despesas-frontend-angular-tests-e2e/actions/runs/$triggered_workflow_id")
+
+                $status=$(echo $response | jq -r '.status')
+                echo "Current status: $status"
+
+                if [ "$status" == "queued" ]; then
+                  sleep 20
+                else
+                  break
+                fi
+            done
+
             conclusion=$(echo $response | jq -r '.conclusion')
 
             if [ "$status" == "completed" ] && [ "$conclusion" == "success" ]; then
