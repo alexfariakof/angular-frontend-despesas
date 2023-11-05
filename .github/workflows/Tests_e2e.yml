@@ -1,9 +1,6 @@
 name: Run End-to-End Tests
 on:
   workflow_call:
-    secrets:
-        envPAT:
-          required: true
 
   pull_request:
     types: [opened, synchronize, reopened]
