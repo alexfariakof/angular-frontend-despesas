@@ -36,7 +36,7 @@ jobs:
       - name: Wait 15s To Workflow Initialize And Update File triggered-workflow-id
         run: sleep 15
 
-      - name: Wait for Triggered Workflow Test e2e
+      - name: Wait for Triggered Workflow Test e2e Run
         run: |
             download_url="https://raw.githubusercontent.com/${{ github.repository }}/master/attachments/triggered-workflow-id-${{ github.run_id }}"
             curl -o triggered-workflow-id -L "$download_url"
@@ -66,8 +66,10 @@ jobs:
             conclusion=$(echo $response | jq -r '.conclusion')
 
             if [ "$status" == "completed" ] && [ "$conclusion" == "success" ]; then
+              echo $conclusion
               echo "workflow_status=${{ job.status }}" >> $GITHUB_OUTPUT
             else
+              echo $conclusion
               echo "workflow_status=failure" >> $GITHUB_OUTPUT
             fi
         env:
