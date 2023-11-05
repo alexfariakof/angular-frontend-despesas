@@ -1,7 +1,7 @@
 name: Deploy Production Project
 on:
   workflow_run:
-    workflows: Run Build and Unit Tests
+    workflows: ["Run Build and Unit Tests"]
     types:
       - completed
 
@@ -15,6 +15,7 @@ jobs:
   deploy_prod:
     name: Build and Deploy In Production
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2

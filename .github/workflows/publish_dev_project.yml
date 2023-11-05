@@ -1,7 +1,7 @@
 name: Deploy Development Project
 on:
   workflow_run:
-    workflows: Run Build and Unit Tests
+    workflows: ["Run Build and Unit Tests"]
     types:
       - completed
 
@@ -24,6 +24,7 @@ jobs:
   build_and_push_docker_image:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: actions/checkout@v3
         with:

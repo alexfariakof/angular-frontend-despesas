@@ -1,9 +1,15 @@
 name: Test Trigger Workflow End-to-End
 on:
   workflow_run:
-    workflows: Run Build and Unit Tests
+    workflows: ["Run Build and Unit Tests"]
     types:
       - completed
+
+  workflow_dispatch:
+    inputs:
+      e2e_test_input:
+        description: 'Trigger Workflow End-to-End'
+        required: true
 
   push:
     branches:
