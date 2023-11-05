@@ -15,12 +15,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  trigger:
+  trigger-tests-e2e:
     runs-on: ubuntu-latest
     steps:
 
       - name: Trigger Workflow
-        id: trigger
         run: |
             repo=${{ github.repository }}
             file_path=$(echo "attachments")
