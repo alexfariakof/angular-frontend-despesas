@@ -5,6 +5,9 @@ on:
       config-path:
         required: true
         type: string
+    secrets:
+        envPAT:
+          required: true
 
   pull_request:
     types: [opened, synchronize, reopened]
@@ -17,7 +20,7 @@ jobs:
     steps:
       - uses: actions/labeler@v4
         with:
-          repo-token: ${{ secrets.TRIGGER_TOKEN }}
+          repo-token: ${{ secrets.envPAT  }}
           configuration-path: ${{ inputs.config-path }}
 
       - name: Trigger Workflow End-to-End
