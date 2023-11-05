@@ -68,7 +68,7 @@ jobs:
               echo "workflow_status=${{ job.status }}" >> $GITHUB_OUTPUT
             else
               echo "workflow_status=failure" >> $GITHUB_OUTPUT
-              exit(1)
+              exit 1
             fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
