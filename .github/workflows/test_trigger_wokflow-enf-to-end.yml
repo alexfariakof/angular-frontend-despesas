@@ -8,3 +8,5 @@ jobs:
   trigger_e2e_tests:
     name: Trigger Run End-to-End Tests
     uses: alexfariakof/despesas-frontend-angular/.github/workflows/Tests_e2e.yml@master
+    secrets:
+      Authorization: ${{ secrets.envPAT }}
