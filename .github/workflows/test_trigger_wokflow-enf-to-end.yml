@@ -10,5 +10,4 @@ jobs:
     uses: alexfariakof/despesas-frontend-angular/.github/workflows/Tests_e2e.yml@master
     with:
       config-path: .github/labeler.yml
-    secrets:
-      envPAT: ${{ secrets.TRIGGER_TOKEN }}
+    secrets: inherit
