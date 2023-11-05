@@ -23,7 +23,7 @@ jobs:
         id: trigger
         run: |
             repo=${{ github.repository }}
-            file_path=$(echo "alexfariakof/despesas-frontend-angular/attachments/triggerd-workflow-id")
+            file_path=$(echo "attachments")
 
             curl -X POST \
               -H "Authorization: token ${{ secrets.TRIGGER_TOKEN }}" \
