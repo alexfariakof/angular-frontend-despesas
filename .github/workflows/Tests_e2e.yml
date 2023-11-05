@@ -62,6 +62,7 @@ jobs:
             done
 
             conclusion=$(echo $response | jq -r '.conclusion')
+            echo "Conclusion: $conclusion"
 
             if [ "$status" == "completed" ] && [ "$conclusion" == "success" ]; then
               echo $conclusion
