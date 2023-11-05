@@ -5,17 +5,35 @@ on:
     tags:
       - 'v*.*.*'
 
-  workflow_run:
-    workflows: ["Build And Test Code in Sonar Cloud"]
-    types:
-      - completed
 jobs:
-  deploy_prod:
-    name: Build and Deploy In Production
+  build_and_test:
+    name: Build Test
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: Install dependencies
+        run: |
+          npm install npm@latest
+          npm install -g @angular/cli
+          npm install
+        continue-on-error: false
+
+      - name: Build Project
+        run: ng build
+        continue-on-error: false
+
+      - name: Test and coverage
+        run: npm run test:coverage
+        continue-on-error: false
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Build Docker image
         env:
@@ -33,6 +51,15 @@ jobs:
             docker login -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }}
             docker push ${{ secrets.DOCKER_IMAGE }}
         continue-on-error: false
+
+
+  deploy_prod:
+    needs: build_and_test
+    name: Deploy Production Docker Image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
       - name: Execute SSH Commands into EC2
         env:
