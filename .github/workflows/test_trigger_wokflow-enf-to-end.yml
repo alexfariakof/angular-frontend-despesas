@@ -20,6 +20,10 @@ jobs:
     name: Trigger Run End-to-End Tests
     runs-on: ubuntu-latest
     steps:
+      - name: Install Dependencies Octokit
+        run : |
+          npm install @octokit/core
+
       - name: Trigger Workflow
         run: |
             const { Octokit } = require("@octokit/core");
