@@ -38,7 +38,8 @@ jobs:
 
       - name: Listar arquivos na URL
         run: |
-            download_url="https://raw.githubusercontent.com/${{ github.repository }}/master/${{ github.workflow_ref }}/.github/workflows/attachments"
+            file_path=$(echo "alexfariakof/despesas-frontend-angular/attachments/triggerd-workflow-id")
+            download_url="https://raw.githubusercontent.com/$file_path"
             file_list=$(curl -s "$download_url")
             echo "Arquivos disponíveis:"
             echo "$file_list"
