@@ -6,6 +6,7 @@ on:
 
 jobs:
   trigger_e2e_tests:
-    name: Trigger Run End-to-End Tests
-    uses: alexfariakof/despesas-frontend-angular/.github/workflows/Tests_e2e.yml@master
-
+    - name: Trigger Run End-to-End Tests
+      uses: alexfariakof/despesas-frontend-angular/.github/workflows/Tests_e2e.yml@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
