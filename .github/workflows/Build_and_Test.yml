@@ -1,5 +1,11 @@
 name: "Run Build and Unit Tests"
-on: []
+on:
+  workflow_dispatch:
+    inputs:
+      Test_Code_in_Sonar_Cloud:
+        description: 'Build And Test Code in Sonar Cloud'
+        required: true
+
 jobs:
   build_and_test:
     name: Build and Test
