@@ -1,10 +1,13 @@
 name: Run End-to-End Tests
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
-      e2e_test_input:
-        description: 'Run End-to-End Tests'
+      config-path:
         required: true
+        type: string
+    secrets:
+        envPAT:
+          required: true
 
   pull_request:
     types: [opened, synchronize, reopened]
@@ -15,6 +18,11 @@ jobs:
   trigger-tests-e2e:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/labeler@v4
+        with:
+          repo-token: ${{ secrets.TRIGGER_TOKEN }}
+          configuration-path: ${{ inputs.config-path }}
+
       - name: Trigger Workflow End-to-End
         run: |
             repo=${{ github.repository }}

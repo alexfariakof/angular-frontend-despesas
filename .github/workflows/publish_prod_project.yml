@@ -3,7 +3,9 @@ on:
   push:
     branches: [master]
     tags:
-      - 'v*.*.*'
+      - v1.*.*
+      - v2.*.*
+      - v3.*.*
 
 jobs:
   build_and_test:

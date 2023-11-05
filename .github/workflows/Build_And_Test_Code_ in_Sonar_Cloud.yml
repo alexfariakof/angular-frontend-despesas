@@ -1,5 +1,10 @@
 name: Build And Test Code in Sonar Cloud
 on:
+  workflow_run:
+    workflows: ["Run Build and Unit Tests"]
+    types:
+      - completed
+
   push:
     branches:
       - develop
@@ -12,10 +17,6 @@ on:
       #- develop
       - hotfix/*
 
-  workflow_run:
-    workflows: ["Run Build and Unit Tests"]
-    types:
-      - completed
 
 jobs:
   Test_Code_in_Sonar_Cloud:
