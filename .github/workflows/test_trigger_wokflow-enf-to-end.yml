@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - feature/Create-workflow-to-trigger-e2e-tests
-
+      - master
 jobs:
   trigger_e2e_tests:
     name: Trigger Run End-to-End Tests
