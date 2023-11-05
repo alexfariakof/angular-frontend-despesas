@@ -70,6 +70,7 @@ jobs:
             else
               echo $conclusion
               echo "workflow_status=failure" >> $GITHUB_OUTPUT
+              exit(1)
             fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
