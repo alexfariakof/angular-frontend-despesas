@@ -32,7 +32,9 @@ jobs:
         continue-on-error: false
 
       - name: Trigger Workflow
-        run: |
+        uses: actions/github-script@v6
+        with:
+          script: |
             const { Octokit } = require("@octokit/core");
             const octokit = new Octokit({
               auth: process.env.GITHUB_TOKEN
