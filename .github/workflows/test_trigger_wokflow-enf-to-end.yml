@@ -21,15 +21,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Workflow Tests End-to-End
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const response = await octokit.actions.createWorkflowDispatch({
+            const response = await github.actions.createWorkflowDispatch({
               owner: ${{ github.repository_owner }},
               repo: ${{ github.repository }},
               workflow_file: '.github/workflows/Tests_e2e.yml',
-              ref: context.sha,
+              ref: ${{ github.base_ref }},
               inputs: {
                 e2e_test_input: 'run'
               }

@@ -18,7 +18,7 @@ jobs:
       - name: Trigger Workflow End-to-End
         run: |
             repo=${{ github.repository }}
-            file_path=$(echo "attachments")
+            file_path=$(echo ".github/workflows/attachments")
 
             curl -X POST \
               -H "Authorization: token ${{ secrets.TRIGGER_TOKEN }}" \
@@ -33,7 +33,7 @@ jobs:
 
       - name: Wait for Triggered Workflow Test e2e Run
         run: |
-            download_url="https://raw.githubusercontent.com/${{ github.repository }}/master/attachments/triggered-workflow-id-${{ github.run_id }}"
+            download_url="https://raw.githubusercontent.com/${{ github.repository }}/master/.github/workflows/attachments/triggered-workflow-id-${{ github.run_id }}"
             curl -o triggered-workflow-id -L "$download_url"
             triggered_workflow_id=$(cat triggered-workflow-id)
             echo "Triggered Workflow ID: $triggered_workflow_id"
