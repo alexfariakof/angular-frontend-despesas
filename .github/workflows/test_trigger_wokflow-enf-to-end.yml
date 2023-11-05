@@ -5,9 +5,6 @@ on:
     types:
       - completed
 
-  repository_dispatch:
-    types: [trigger-tests-e2e]
-
   workflow_dispatch:
     inputs:
       e2e_test_input:
@@ -27,14 +24,32 @@ jobs:
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
+      - name: Install Dependencies
+        run: |
+          npm install npm@latest
+          npm install @octokit/core
+          npm install
+        continue-on-error: false
+
       - name: Trigger Workflow
-        uses: actions/checkout@v2
+        uses: actions/github-script@v6
         with:
-          workflow: Run End-to-End Tests
-          token: ${{ secrets.TRIGGER_TOKEN }}
-          inputs: |
-              {
-                "e2e_test_input": "run"
-              }
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+              const { Octokit } = require("@octokit/core");
+              const octokit = new Octokit({
+                auth: "${{ secrets.TRIGGER_TOKEN }}
+              });
+
+              const response = await octokit.request('POST /repos/${{ github.repository_owner }}/${{ github.repository }}/actions/workflows/${{ github.run_id }}/dispatches', {
+                owner: ${{ github.repository_owner }},
+                repo: ${{ github.repository }},
+                workflow_id: ${{ github.run_id }},
+                ref: ${{ github.workflow_ref }},
+                inputs: {
+                  e2e_test_input: 'run'
+                },
+                headers: {
+                  'X-GitHub-Api-Version': '2022-11-28'
+                }
+              });
+              console.log(response);
