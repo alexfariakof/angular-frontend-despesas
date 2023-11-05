@@ -40,7 +40,7 @@ jobs:
                 auth: "${{ secrets.TRIGGER_TOKEN }}"
               });
 
-              const response = await octokit.request('POST /repos/${{ github.repository_owner }}/${{ github.repository }}/actions/workflows/${{ github.run_id }}/dispatches', {
+              const response = await octokit.request('POST /repos/${{ github.repository_owner }}/${{ github.repository }}/actions/workflows/Tests_e2e.yml/dispatches', {
                 owner: "${{ github.repository_owner }}",
                 repo: "${{ github.repository }}",
                 workflow_id: "${{ github.run_id }}",

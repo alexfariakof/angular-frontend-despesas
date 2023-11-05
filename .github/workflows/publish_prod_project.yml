@@ -15,7 +15,6 @@ jobs:
   deploy_prod:
     name: Build and Deploy In Production
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
