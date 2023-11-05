@@ -1,7 +1,7 @@
 name: Test Trigger Workflow End-to-End
 on:
   workflow_run:
-    workflows: Run Build and Unit Tests
+    workflows: [Run Build and Unit Tests]
     types:
       - completed
 
@@ -19,6 +19,7 @@ jobs:
   trigger_e2e_tests:
     name: Trigger Run End-to-End Tests
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -37,7 +38,7 @@ jobs:
           script: |
               const { Octokit } = require("@octokit/core");
               const octokit = new Octokit({
-                auth: "${{ secrets.TRIGGER_TOKEN }}
+                auth: "${{ secrets.TRIGGER_TOKEN }}"
               });
 
               const response = await octokit.request('POST /repos/${{ github.repository_owner }}/${{ github.repository }}/actions/workflows/${{ github.run_id }}/dispatches', {
