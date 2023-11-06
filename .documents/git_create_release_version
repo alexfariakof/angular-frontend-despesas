@@ -1,2 +1,14 @@
 #  Cria uma release usando git flow
 git flow release start v1.0.0
+
+
+# Cria uma tag no git "-a" inidicando que tem anotações "-m"
+#obs.: Padrão do projeto v*.*.*
+git tag -a <v*.*.*> -m "Version tag"
+
+# Envia as alterações(commits) e as tags locais para o repositório remoto
+git push --follow-tags
+
+
+#  Finaliza a release usando git flow
+git flow release finish v1.0.0
