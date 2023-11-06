@@ -4,6 +4,9 @@ on:
     secrets:
       ENV_PAT:
         required: true
+  push:
+    branches:
+      - feature/Create-workflow-to-trigger-e2e-tests
 
   pull_request:
     types: [opened, synchronize, reopened]
