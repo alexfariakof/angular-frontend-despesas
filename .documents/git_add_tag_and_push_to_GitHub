@@ -12,7 +12,10 @@ git tag -a <v*.*.*> -m "Version tag"
 git push --follow-tags
 
 # Deleta a tag localmente
-git tag -d <v*.*.*>
+git tag -d v1.0.0
 
 # Deleta a tag remotamente
 git push origin --delete <v*.*.*>
+
+
+git push origin --tags
