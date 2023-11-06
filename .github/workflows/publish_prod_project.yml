@@ -82,3 +82,4 @@ jobs:
             docker rmi --force $image_id
             docker pull $IMAGEM
             docker run -d -p 3000:3000 $IMAGEM
+
