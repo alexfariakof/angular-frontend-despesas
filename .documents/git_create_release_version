@@ -1,0 +1,2 @@
+#  Cria uma release usando git flow
+git flow release start v1.0.0
