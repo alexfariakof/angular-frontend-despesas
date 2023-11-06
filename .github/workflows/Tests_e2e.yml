@@ -2,7 +2,7 @@ name: Run End-to-End Tests
 on:
   workflow_call:
     secrets:
-      Authorization:
+      ENV_PAT:
         required: true
 
   pull_request:
@@ -14,10 +14,6 @@ jobs:
   trigger-tests-e2e:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/labeler@v4
-        with:
-          repo-token: ${{ secrets.ENV_PAT }}
-
       - name: Trigger Workflow End-to-End
         run: |
             repo=${{ github.repository }}
