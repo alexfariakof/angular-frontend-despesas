@@ -1,10 +1,10 @@
-<!-- Modal -->
-<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
-  <div class="modal-dialog alert alert-success" role="alert">
-    <div class="alert alert-success" role="alert">
-      {{message!}}
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-    </div>
+
+<div class="alert d-flex flex-column justify-content-around " role="alert">
+  <div class="modal-header">
+    <h1 class="modal-title fs-5" id="success">Mensagem</h1>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
   </div>
+  <div class="alert alert-success mt-2" role="alert">
+    {{message!}}
+  </div>
+ </div>
