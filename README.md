@@ -1,45 +1,96 @@
-# Fontend Angular Despesas Pessoais 
+# Frontend Angular Despesas Pessoais 
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.0.
+## Cloud Application in Production 
 
-## Application in Production 
+  > This project can be access at [Despesas Pessoais In Production](http://alexfariakof.com:3000).
 
-This project can be access at [Despesas Pessoais](http://alexfariakof.com:3000).
+## Cloud Application in Development 
 
-## Development server
+  > This project can be access at [Despesas Pessoais In Development](http://alexfariakof.com:4200).
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+![project_dashboard](https://github.com/alexfariakof/despesas-frontend-angular/assets/42475620/58fe0fc0-ae29-4720-b45e-bfca6dc3b571)
 
-## Code scaffolding
+## Run Local Development Server
+  > This server points the endpoint to the local application API.
+
+Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+
+## Run Development Server
+  > This server points the endpoint to the development application API.
+> 
+Run `npm run start:dev` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+
+## Run Production Server
+  > This server points the endpoint to the production application API.
+
+Run `npm run start:prod` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+
+## Run Local Development Server In Docker
+  > This build may take a little while, be patient.
+
+  > This server points the endpoint to the local application API.
+
+  > Make sure have instaled Docker Engine instaled, if not go to [Install Docker Engine](https://docs.docker.com/engine/install/).
+
+Run `docker-compose up --build` for a dev server in docker. Navigate to `http://localhost:4200/`. The application will not automatically reload if you change any of the source files.
+
+## Run Development Server In Docker
+  > This build may take a little while, be patient.
+
+  > This server points the endpoint to the development application API.
+
+  > Make sure have instaled Docker Engine instaled, if not go to [Install Docker Engine](https://docs.docker.com/engine/install/).
+
+Run `docker-compose -f .\docker-compose.dev.yml  up --build` for a dev server. Navigate to `http://localhost:4200/`. The application will not automatically reload if you change any of the source files.
+
+## Run Production Server In Docker
+  > This build may take a little while, be patient.
+
+  > This server points the endpoint to the production application API.
+
+  > Make sure have instaled Docker Engine instaled, if not go to [Install Docker Engine](https://docs.docker.com/engine/install/).
+
+Run `docker-compose -f .\docker-compose.prod.yml  up --build` for a dev server. Navigate to `http://localhost:3000/`. The application will not automatically reload if you change any of the source files.
+
+## Code Scaffolding New Components
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+## Builds 
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+* Development
+  
+  Run `npm run build:dev` to build the project with development configurations. The build artifacts will be stored in the `dist/` directory.
 
-## Running Project in Docker
+* Production
+  
+  Run `ng build` or `npm run build:prod` to build the project with production configurations. The build artifacts will be stored in the `dist/` directory.
 
-First Run `docker-compose -f docker-compose.prod.yml build` to build and create docker image. 
-After Run `docker-compose -f docker-compose.prod.yml up` to compile and running container in docker.
+## Run Unit Tests
 
-## Running unit tests
+Run `npm run test` or  `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Run Tests With Report Coverage
 
-## Running tests coverage
+Run `npm run test:coverage ` or `ng test --code-coverage --no-watch` to execute the tests and generate coverage report. The Report will not be open automatically.
 
-Run `ng test --code-coverage --no-watch` to execute the tests and generate coverage report lcov pages via [Coverage](http://127.0.0.1:3000/coverage/lcov-report/index.html).
+Run  `./generate_coverage_report.ps1` if using windows, or Run `./generate_coverage_report.sh` if using linux. The Report will open in default browser automatically.
 
-## Running end-to-end tests
+![report_Test_Coverage_Angular](https://github.com/alexfariakof/despesas-frontend-angular/assets/42475620/a8263791-b4dd-403c-8d5a-8da80c684c98)
 
-The end-to-end tests have not been implemented yet. In the future, we plan to use the Playwright framework.
-Playwright is an open-source framework for testing web applications. It offers powerful automation capabilities for web interactions and supports various browsers. Playwright is known for its flexibility, concise syntax, and speed. We intend to use Playwright to enhance the quality and reliability of our end-to-end tests in the near future."
+## Tests End-to-End With Python/Playwright
+> This project can be access at [Tests End-to-End With Python/Playwright](https://github.com/alexfariakof/despesas-frontend-angular-tests-e2e).
+
+The end-to-end tests have been implemented in a separate project using Python with Playwright and are integrated into the project's workflow. These tests are executed at two key points: when a push is made to the pre-release branch or any branch with the naming convention "release/*," and during pull requests to the pre-release branch. This setup ensures that the test executions are always aligned with the latest development environment, enhancing the quality and reliability of our end-to-end tests. Playwright, as an open-source framework for testing web applications, provides powerful automation capabilities for web interactions and supports various browsers. It is recognized for its flexibility, concise syntax, and speed. We have chosen to leverage Playwright to achieve these testing objectives, further strengthening the robustness of our application.
+
+![report_playwright](https://github.com/alexfariakof/despesas-frontend-angular/assets/42475620/e99a0471-ce74-42b4-8fb9-2e03f6679f87)
 
 ## Sonar Cloud
 
 SonarCloud is a cloud-based static code analysis platform that helps development teams maintain code quality and identify issues early in the software development process. It offers automated code review, continuous inspection, and code analytics. SonarCloud scans your code for bugs, vulnerabilities, and code smells, providing actionable feedback to improve code quality and security. It is an essential tool for ensuring that your software projects are maintainable, reliable, and secure. via [Sonar Cloud](https://sonarcloud.io/).
 
 [Overview Project in Sonar Cloud](https://sonarcloud.io/project/overview?id=alexfariakof_despesas-frontend-angular) 
+![sonar_cloud](https://github.com/alexfariakof/despesas-frontend-angular/assets/42475620/6001490b-74f5-4c28-a4d9-c16bd60f333b)
 
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=alexfariakof_despesas-frontend-angular&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=alexfariakof_despesas-frontend-angular) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=alexfariakof_despesas-frontend-angular&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=alexfariakof_despesas-frontend-angular) [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=alexfariakof_despesas-frontend-angular&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=alexfariakof_despesas-frontend-angular) [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=alexfariakof_despesas-frontend-angular&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=alexfariakof_despesas-frontend-angular) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=alexfariakof_despesas-frontend-angular&metric=coverage)](https://sonarcloud.io/summary/new_code?id=alexfariakof_despesas-frontend-angular) [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=alexfariakof_despesas-frontend-angular&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=alexfariakof_despesas-frontend-angular) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=alexfariakof_despesas-frontend-angular&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=alexfariakof_despesas-frontend-angular) [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=alexfariakof_despesas-frontend-angular&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=alexfariakof_despesas-frontend-angular) [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=alexfariakof_despesas-frontend-angular&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=alexfariakof_despesas-frontend-angular) [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=alexfariakof_despesas-frontend-angular&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=alexfariakof_despesas-frontend-angular) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=alexfariakof_despesas-frontend-angular&metric=bugs)](https://sonarcloud.io/summary/new_code?id=alexfariakof_despesas-frontend-angular)
+
