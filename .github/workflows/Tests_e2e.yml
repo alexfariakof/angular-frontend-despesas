@@ -17,7 +17,7 @@ jobs:
       - name: Trigger Workflow End-to-End
         run: |
             repo=${{ github.repository }}
-            file_path=$(echo "./")
+            file_path=$(echo "")
             echo ${{ secrets.ENV_PAT }}
 
             curl -X POST \
