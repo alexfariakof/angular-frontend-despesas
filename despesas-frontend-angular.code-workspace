@@ -4,7 +4,11 @@
       "path": "."
     }
   ],
-  "settings": {},
+  "settings": {
+    "recommendations": [
+      "esbenp.prettier-vscode"
+      ]
+  },
   "launch": {
     "version": "0.2.0",
     "configurations": [

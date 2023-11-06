@@ -7,11 +7,12 @@ import { LoginComponent } from './pages/login/login.component';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { MenuService } from './shared/services/menu.service';
-
+import { PrimeiroAcessoComponent } from './pages/primeiro-acesso/primeiro-acesso.component';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    PrimeiroAcessoComponent
   ],
   imports: [
     BrowserModule,

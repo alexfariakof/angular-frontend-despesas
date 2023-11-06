@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
+import { PrimeiroAcessoComponent } from './pages/primeiro-acesso/primeiro-acesso.component';
 
 describe('AppComponent', () => {
   let app: AppComponent;
@@ -14,7 +15,7 @@ describe('AppComponent', () => {
 
   beforeEach(() => {
      TestBed.configureTestingModule({
-          declarations: [AppComponent, LoginComponent],
+          declarations: [AppComponent, LoginComponent, PrimeiroAcessoComponent],
           imports: [RouterTestingModule, BrowserModule, AppRoutingModule, CommonModule,  ReactiveFormsModule, HttpClientModule, FormsModule ],
         providers: []
     });

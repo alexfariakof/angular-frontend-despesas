@@ -8,7 +8,7 @@ import { ConfiguracoesComponent } from './pages/configuracoes/configuracoes.comp
 const routes: Routes = [
   { path: '',  pathMatch: 'full', redirectTo: 'login' },
   { path: 'login', component: LoginComponent },
-  { path: "create_account", component: PrimeiroAcessoComponent},
+  { path: "createAccount", component: PrimeiroAcessoComponent},
   { path: 'dashboard', loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule), },
   { path: 'categoria', loadChildren: () => import('./pages/categorias/categorias.module').then(m => m.CategoriasdModule), },
   { path: 'despesa', loadChildren: () => import('./pages/despesas/despesas.module').then(m => m.DespesasModule), },
