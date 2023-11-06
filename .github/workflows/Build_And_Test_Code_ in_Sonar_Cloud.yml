@@ -1,10 +1,5 @@
 name: Build And Test Code in Sonar Cloud
 on:
-  workflow_run:
-    workflows: ["Run Build and Unit Tests"]
-    types:
-      - completed
-
   push:
     branches:
       - develop
@@ -14,12 +9,36 @@ on:
     types: [opened, synchronize, reopened]
     branches:
       - master
-      #- develop
+      - develop
       - hotfix/*
 
 
 jobs:
+  build_and_test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: Install dependencies
+        run: |
+          npm install npm@latest
+          npm install -g @angular/cli
+          npm install
+        continue-on-error: false
+
+      - name: Build
+        run: ng build
+        continue-on-error: false
+
+      - name: Test
+        run: ng test --no-watch
+        continue-on-error: false
+
   Test_Code_in_Sonar_Cloud:
+    needs: build_and_test
     name: Test Code in Sonar Cloud
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}

@@ -2,12 +2,7 @@ name: Deploy Development Project
 on:
   push:
     branches:
-      - release
-
-  pull_request:
-    types: [opened, synchronize, reopened]
-    branches:
-      - release
+      - pre-release
 
 jobs:
   build_and_test:
