@@ -5,10 +5,14 @@ on:
       ENV_PAT:
         required: true
 
+  push:
+    branches:
+      - release/*
+
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
-      - release
+      - pre-release
 
 jobs:
   trigger-tests-e2e:
@@ -17,7 +21,7 @@ jobs:
       - name: Trigger Workflow End-to-End
         run: |
             repo=${{ github.repository }}
-            file_path=$(echo "./")
+            file_path=$(echo "workflow_tests_e2e")
             echo ${{ secrets.ENV_PAT }}
 
             curl -X POST \
