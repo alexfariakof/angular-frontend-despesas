@@ -1,8 +1,7 @@
-name: Build, Test Unit and Test Analiysis Code in Sonar Cloud
+name: Build And Test Code in Sonar Cloud
 on:
   push:
     branches:
-      - master
       - develop
       - hotfix/*
 
@@ -13,8 +12,8 @@ on:
       - develop
       - hotfix/*
 
-jobs:
 
+jobs:
   build_and_test:
     name: Build and Test
     runs-on: ubuntu-latest
@@ -38,17 +37,11 @@ jobs:
         run: ng test --no-watch
         continue-on-error: false
 
-      - name: Build Docker image
-        env:
-          DOCKER_CLI_AGGREGATE: 1
-        run: |
-          docker-compose -f docker-compose.prod.yml build
-        continue-on-error: false
-
-  sonarcloud:
+  Test_Code_in_Sonar_Cloud:
     needs: build_and_test
     name: Test Code in Sonar Cloud
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -68,3 +61,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        continue-on-error: false
+

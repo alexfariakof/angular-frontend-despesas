@@ -1,17 +1,11 @@
-name: Build Test and Deploy Project In Production
+name: Deploy Production Project
 on:
   push:
-    branches:
-      - release/*
-
-  pull_request:
-    types: [opened, synchronize, reopened]
-    branches:
-      - release/*
-
+    tags:
+      - v*.*.*
 jobs:
-  build_test_unit_and_test_and__analyse_code_in_sonarcloud:
-    name: Build Test Unit and Test and Analyse Code In Sonar Cloud
+  build_and_test:
+    name: Build Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -29,9 +23,15 @@ jobs:
         run: ng build
         continue-on-error: false
 
-      - name: Test Unit
-        run: ng test --no-watch
+      - name: Test and coverage
+        run: npm run test:coverage
         continue-on-error: false
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Build Docker image
         env:
@@ -50,19 +50,10 @@ jobs:
             docker push ${{ secrets.DOCKER_IMAGE }}
         continue-on-error: false
 
-      - name: Test and coverage
-        run: npm run test:coverage
-        continue-on-error: false
-
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   deploy_prod:
-    needs: build_test_unit_and_test_and__analyse_code_in_sonarcloud
-    name: Production Build Deploy and Publish Docker Image
+    needs: build_and_test
+    name: Deploy Production Docker Image
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -91,3 +82,4 @@ jobs:
             docker rmi --force $image_id
             docker pull $IMAGEM
             docker run -d -p 3000:3000 $IMAGEM
+

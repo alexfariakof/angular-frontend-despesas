@@ -2,10 +2,11 @@ name: Deploy Development Project
 on:
   push:
     branches:
-      - develop
+      - pre-release
+
 jobs:
-  build_test_unit_and_test_and__analyse_code_in_sonarcloud:
-    name: Build Test Unit and Test and Analyse Code In Sonar Cloud
+  build_and_test:
+    name: Build And Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -23,9 +24,15 @@ jobs:
         run: ng build
         continue-on-error: false
 
-      - name: Test Unit
-        run: ng test --no-watch
+      - name: Test and coverage
+        run: npm run test:coverage
         continue-on-error: false
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Build Docker image
         env:
@@ -44,19 +51,10 @@ jobs:
             docker push ${{ secrets.DOCKER_IMAGE_DEV }}
         continue-on-error: false
 
-      - name: Test and coverage
-        run: npm run test:coverage
-        continue-on-error: false
-
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   deploy_dev:
-    needs: build_test_unit_and_test_and__analyse_code_in_sonarcloud
-    name: Developement Build Deploy and Publish Docker Image
+    needs: build_and_test
+    name: Deploy Developement Docker Image
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -86,3 +84,10 @@ jobs:
             docker pull $IMAGEM
             container_id=$(docker ps -a -q --filter "ancestor=$IMAGEM")
             docker run -d -p 4200:4200 $IMAGEM
+          continue-on-error: false
+
+  trigger_e2e_tests:
+    needs: deploy_dev
+    name: Trigger Run End-to-End Tests
+    uses: alexfariakof/despesas-frontend-angular/.github/workflows/Tests_e2e.yml@master
+    secrets: inherit
