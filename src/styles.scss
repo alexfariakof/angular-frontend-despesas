@@ -2,3 +2,15 @@ html, body {
   height: 100%;
   overflow: hidden;
 }
+
+h2 {
+  font-size: 5vw;
+  font-weight: bolder;
+  margin: 2vw;
+  color: white;
+}
+
+.max-height-scroll {
+  max-height: 68vh;
+  overflow-y: auto;
+}

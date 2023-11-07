@@ -1,8 +1,11 @@
 import { Component, EventEmitter, Input, Output,  } from "@angular/core";
 import { FormBuilder, FormGroup, Validators, FormsModule  } from "@angular/forms";
 import { Router } from "@angular/router";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { catchError, of, switchMap } from "rxjs";
+import { WarningAlertComponent } from "src/app/shared/components/warning-alert/warning-alert.component";
 import { ILogin } from "src/app/shared/interfaces/ILogin";
+import { IAuth } from "src/app/shared/interfaces/IAuth";
 import { LoginService } from "src/app/shared/services/login.service";
 
 @Component({
@@ -19,7 +22,8 @@ export class LoginComponent {
 
   constructor(public formbuilder: FormBuilder,
     private router: Router,
-    private loginService: LoginService ){
+    private loginService: LoginService,
+    private modalService: NgbModal ){
 
   }
 
@@ -37,17 +41,26 @@ export class LoginComponent {
 
   onLoginClick() {
     const { email, senha } = this.login;
-
+    let response;
     this.loginService.login({ email, senha }).pipe(
       switchMap(token => {
-        this.router.navigate(['/dashboard']);
         return of(token);
       }),
       catchError(err => {
-        console.log(new Error('Login failed'));
-        return of(err);
+        const modalRef = this.modalService.open(WarningAlertComponent);
+        modalRef.componentInstance.message = err.message;
+        return err;
       })
-    ).subscribe();
+    ).subscribe((token: any) => {
+      if (token.authenticated){
+        this.router.navigate(['/dashboard']);
+      }
+      else{
+        const modalRef = this.modalService.open(WarningAlertComponent);
+        modalRef.componentInstance.message = token.message;
+
+      }
+    });
   }
 
   onTooglePassword() {
@@ -56,3 +69,11 @@ export class LoginComponent {
   }
 
 }
+function token(value: unknown): void {
+  throw new Error("Function not implemented.");
+}
+
+function onTooglePassword() {
+  throw new Error("Function not implemented.");
+}
+
