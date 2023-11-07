@@ -18,7 +18,7 @@ describe('LoginComponent', () => {
     const loginServiceSpy = jasmine.createSpyObj('LoginService', ['login']);
     TestBed.configureTestingModule({
       declarations: [LoginComponent],
-      imports: [ReactiveFormsModule, LayoutRoutingModule, RouterTestingModule ],
+      imports: [ReactiveFormsModule, RouterTestingModule ],
       providers: [
          { provide: LoginService, useValue: loginServiceSpy },
       ],

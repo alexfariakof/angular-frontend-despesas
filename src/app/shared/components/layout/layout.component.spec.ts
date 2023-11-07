@@ -16,7 +16,7 @@ describe('LayoutComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [LayoutComponent],
-      imports:[ CommonModule, RouterTestingModule, LayoutRoutingModule],
+      imports:[ CommonModule, LayoutRoutingModule, RouterTestingModule],
       providers: [MenuService]
     });
     fixture = TestBed.createComponent(LayoutComponent);
