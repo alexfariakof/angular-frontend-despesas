@@ -2,7 +2,6 @@ import { Component, Input } from "@angular/core";
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
     selector:'app-warning-alert',
-    standalone: true,
     templateUrl:'./warning-alert.component.html',
     providers: [NgbModalConfig, NgbModal]
 })
