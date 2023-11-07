@@ -4,6 +4,7 @@ import { IControleAcesso } from "src/app/shared/interfaces/IControleAcesso";
 import { SuccessAlertComponent } from 'src/app/shared/components/success-alert/success-alert.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { WarningAlertComponent } from 'src/app/shared/components/warning-alert/warning-alert.component';
+
 @Component({
   selector: 'app-primeiro-acesso',
   templateUrl: './primeiro-acesso.component.html',
@@ -23,6 +24,7 @@ export class PrimeiroAcessoComponent  implements OnInit {
     this.createAccountFrom = this.formbuilder.group({
       txtEmail: ['', [Validators.required, Validators.email]],
       txtNome: ['', [Validators.required]],
+      txtSobreNome: ['', ],
       txtTelefone: ['', [Validators.required]],
       txtSenha: ['', [Validators.required]],
       txtConfirmaSenha: ['', Validators.required]
@@ -33,8 +35,6 @@ export class PrimeiroAcessoComponent  implements OnInit {
     const modalRef = this.modalService.open(SuccessAlertComponent);
     modalRef.componentInstance.message = "Cadastro realizado com sucesso!";
 
-    //const modalRef = this.modalService.open(WarningAlertComponent);
-    //modalRef.componentInstance.message = "Erro ao realizar Cadastro!";
    }
 
   onToogleSenha() {

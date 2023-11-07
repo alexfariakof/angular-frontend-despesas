@@ -3,7 +3,7 @@
 }
 
 .footer {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   width: 100%;
 }
@@ -25,6 +25,100 @@
 }
 
 .error-input {
-  border: 0.2rem solid red;
+  border: 0.1rem solid red;
   border-radius: 0.2rem;
 }
+
+
+.max-height-scroll {
+  overflow-y: auto;
+}
+
+form {
+  scrollbar-width: thin;
+  scrollbar-color: gray ;
+  border: 0;
+}
+
+/* Works on Chrome, Edge, and Safari */
+form::-webkit-scrollbar {
+  width: 0.2rem;
+}
+
+form::-webkit-scrollbar-track {
+  background-color: transparent ;
+  border: 0;
+}
+
+form::-webkit-scrollbar-thumb {
+  background-color: transparent ;
+  border-radius: 0.4rem;
+  border: 0.1rem solid gray;
+}
+
+
+.footer-elements {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+@media ((min-width:240px) and (max-width: 767px)) { // xs
+  .social-media a,
+  .social-media i {
+    font-size: 2vw;
+  }
+  h2 {
+    font-size: 0.8rem;
+    font-weight: bolder;
+    margin: 0.2rem;
+    color: white;
+  }
+  .copyright {
+    font-size: 0.8rem;
+  }
+}
+
+
+@media ((min-width:768px) and (max-width: 992px)) { // sm
+  .social-media a,
+  .social-media i {
+    font-size: 1rem;
+  }
+  h2 {
+    font-size: 1.4rem;
+    font-weight: bolder;
+    margin: 0;
+    color: white;
+  }
+  .copyright {
+    font-size: 0.8rem;
+  }
+
+}
+
+
+.social-media a, .social-media i {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.4rem;
+  font-weight: bolder;
+  margin: 0;
+  color: white;
+}
+
+.copyright {
+  font-size: 1.4rem;
+}
+
+footer {
+  .opacity-50 {
+    opacity: 0.5; // Ajusta a opacidade do texto de direitos autorais
+  }
+}
+
