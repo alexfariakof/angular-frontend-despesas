@@ -3,10 +3,10 @@ import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-success-alert',
-  standalone: true,
   templateUrl: './success-alert.component.html',
   providers: [NgbModalConfig, NgbModal],
 })
+
 export class SuccessAlertComponent {
   @Input() message:string ='';
 
