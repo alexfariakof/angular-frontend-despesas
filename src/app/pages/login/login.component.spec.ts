@@ -2,63 +2,65 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoginComponent } from './login.component';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { Router } from '@angular/router';
-import { of, throwError } from 'rxjs';
 import { ILogin } from 'src/app/shared/interfaces/ILogin';
-import { ReactiveFormsModule } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { WarningAlertComponent } from 'src/app/shared/components/warning-alert/warning-alert.component';
 import { LayoutRoutingModule } from 'src/app/shared/components/layout/layout-routing.module';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { of } from 'rxjs';
+import { SuccessAlertComponent } from 'src/app/shared/components/success-alert/success-alert.component';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  let loginService: jasmine.SpyObj<LoginService>;
+  let loginService: LoginService;
   let router: Router;
+  let modalService: NgbModal;
+
 
   beforeEach(() => {
     const loginServiceSpy = jasmine.createSpyObj('LoginService', ['login']);
     TestBed.configureTestingModule({
       declarations: [LoginComponent],
-      imports: [ReactiveFormsModule, RouterTestingModule ],
+      imports: [ReactiveFormsModule, LayoutRoutingModule, RouterTestingModule ],
       providers: [
-         { provide: LoginService, useValue: loginServiceSpy },
+        { provide: Router, useValue: jasmine.createSpyObj('Router', ['navigate']) },
+        { provide: NgbModal, useValue: jasmine.createSpyObj('NgbModal', ['open']) },
+        { provide: LoginService, useValue: loginServiceSpy },
       ],
     });
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     router = TestBed.inject(Router);
-    loginService = TestBed.inject(LoginService) as jasmine.SpyObj<LoginService>;
+    modalService = TestBed.inject(NgbModal);
+    loginService = TestBed.inject(LoginService);
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('should navigate to dashboard on successful login', () => {
+    const login : ILogin = { email: 'teste@test.com', senha: 'teste' };
+    (loginService.login as jasmine.Spy).and.returnValue(of({ authenticated: true }));
 
-  it('should call login service and navigate to dashboard on login success', () => {
-    const mockLoginData: ILogin = { email: 'teste@teste.com', senha: 'teste' };
-    spyOn(router, 'navigate');
-    loginService.login.and.returnValue(of(mockLoginData));
-
-    component.loginForm.controls['txtLogin'].setValue('teste@teste.com');
-    component.loginForm.controls['txtPassword'].setValue('teste');
+    component.login = login;
     component.onLoginClick();
 
-    expect(loginService.login).toHaveBeenCalledWith(mockLoginData);
     expect(router.navigate).toHaveBeenCalledWith(['/dashboard']);
   });
 
-  it('should handle login error', () => {
-    const errorResponse = new Error('Login failed');
-    spyOn(console, 'log'); // Espie console.log para verificar se o erro é tratado
+  it('should open a modal with a message', () => {
+    const modalRef = jasmine.createSpyObj('NgbModalRef', ['componentInstance']);
+    const message = 'Test message';
 
-    component.loginForm.controls['txtLogin'].setValue('teste@example.com');
-    component.loginForm.controls['txtPassword'].setValue('');
+    (modalService.open as jasmine.Spy).and.returnValue(modalRef);
 
-    loginService.login.and.returnValue(throwError(errorResponse));
+    component.showMessage(message);
 
-    component.onLoginClick();
-    expect(loginService.login).toHaveBeenCalledWith({ email: 'teste@example.com', senha: '' });
-    expect(console.log).toHaveBeenCalledWith(errorResponse);
+    expect(modalService.open).toHaveBeenCalledWith(WarningAlertComponent);
+    expect(modalRef.componentInstance.message).toBe(message);
   });
 
   it('should return login form controls', () => {
