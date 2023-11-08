@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IControleAcesso } from "src/app/shared/interfaces/IControleAcesso";
 import { SuccessAlertComponent } from 'src/app/shared/components/success-alert/success-alert.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { WarningAlertComponent } from 'src/app/shared/components/warning-alert/warning-alert.component';
 
 @Component({
@@ -12,6 +12,7 @@ import { WarningAlertComponent } from 'src/app/shared/components/warning-alert/w
 })
 export class PrimeiroAcessoComponent  implements OnInit {
   public controleAcesso: IControleAcesso = {   nome: '', sobreNome: '', telefone: '', email: '', senha: '', confirmaSenha: '' };
+  public modalRef : NgbModalRef;
   createAccountFrom : FormGroup;
   eyeIconClass: string = 'bi-eye';
   eyeIconClassConfirmaSenha: string = 'bi-eye';
@@ -32,8 +33,8 @@ export class PrimeiroAcessoComponent  implements OnInit {
   }
 
   onSaveClick() {
-    const modalRef = this.modalService.open(SuccessAlertComponent);
-    modalRef.componentInstance.message = "Cadastro realizado com sucesso!";
+    this.modalRef = this.modalService.open(SuccessAlertComponent);
+    this.modalRef.componentInstance.message = "Cadastro realizado com sucesso!";
 
    }
 
