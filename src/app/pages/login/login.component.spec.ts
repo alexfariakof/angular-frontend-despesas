@@ -41,6 +41,7 @@ describe('LoginComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
   it('should navigate to dashboard on successful login', () => {
     const login : ILogin = { email: 'teste@test.com', senha: 'teste' };
     (loginService.login as jasmine.Spy).and.returnValue(of({ authenticated: true }));
