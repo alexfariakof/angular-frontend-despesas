@@ -1,53 +1,58 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SuccessAlertComponent } from './success-alert.component';
-import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalConfig, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { SuccessAlertModule } from './success-alert.component.module';
+import { MockAlertComponent } from 'src/app/__mock__/mock-component/mock-alert.component';
 
 describe('SuccessAlertComponent', () => {
   let component: SuccessAlertComponent;
   let fixture: ComponentFixture<SuccessAlertComponent>;
   let modalService: NgbModal;
-  let modalServiceMock: jasmine.SpyObj<NgbModal>;
+
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SuccessAlertComponent],
+      declarations: [SuccessAlertComponent, MockAlertComponent],
       imports: [ SuccessAlertModule],
-      providers: [NgbModalConfig,  NgbModal, { provide: NgbModal, useValue: modalServiceMock } ],
+      providers: [NgbModalConfig,  NgbModal],
     });
 
     fixture = TestBed.createComponent(SuccessAlertComponent);
     component = fixture.componentInstance;
-    modalService = TestBed.inject(NgbModal); // Obtenha uma instância do serviço NgbModal
     fixture.detectChanges();
+    modalService = TestBed.inject(NgbModal);
   });
 
   it('should create', () => {
+    // Assert
     expect(component).toBeTruthy();
   });
 
   it('should open modal', () => {
     // Arrange
-    spyOn(component, 'open');
+    const content = MockAlertComponent;
+    spyOn(modalService, 'open').and.returnValue(modalService.open(content));
 
     // Act
-    component.open(SuccessAlertComponent);
-
+    component.open(content);
 
     // Assert
-    expect(component.open).toHaveBeenCalled();
-    expect(component.open).toHaveBeenCalledWith(SuccessAlertComponent);
+    expect(modalService.open).toHaveBeenCalled();
+    expect(modalService.open).toHaveBeenCalledWith(content);
   });
+
 
   it('should close modal', () => {
     // Arrange
-    spyOn(component, 'close');
+    const content = MockAlertComponent;
+    spyOn(modalService, 'open').and.returnValue(modalService.open(content));
+    spyOn(modalService, 'dismissAll').and.returnValue(modalService.dismissAll());
 
     // Act
     component.close();
 
     // Assert
-    expect(component.close).toHaveBeenCalled();
+    expect(modalService.dismissAll).toHaveBeenCalled();
   });
 
   it('should open SuccessAlertComponent and message been seted', () => {
@@ -58,10 +63,10 @@ describe('SuccessAlertComponent', () => {
 
     // Act
     modalRefMock.componentInstance.message = expectedMessage;
-    component.open(SuccessAlertComponent);
+    component.open(MockAlertComponent);
 
     // Assert
-    expect(openSpy).toHaveBeenCalledWith(SuccessAlertComponent);
+    expect(openSpy).toHaveBeenCalledWith(MockAlertComponent);
     expect(modalRefMock.componentInstance.message).toBe(expectedMessage);
   });
 
@@ -72,11 +77,11 @@ describe('SuccessAlertComponent', () => {
     const closeSpy = spyOn(component, 'close').and.returnValue(modalRefMock);
 
     // Act
-    component.open(SuccessAlertComponent);
+    component.open(MockAlertComponent);
     component.close();
 
     // Assert
-    expect(openSpy).toHaveBeenCalledWith(SuccessAlertComponent);
+    expect(openSpy).toHaveBeenCalledWith(MockAlertComponent);
     expect(closeSpy).toHaveBeenCalledWith();
   });
 
