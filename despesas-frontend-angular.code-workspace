@@ -13,6 +13,20 @@
     "version": "0.2.0",
     "configurations": [
       {
+        "name": "Debug Angular Tests",
+        "request": "launch",
+        "runtimeArgs": [
+          "run",
+          "test:debug"
+        ],
+        "runtimeExecutable": "npm",
+        "skipFiles": [
+          "<node_internals>/**"
+        ],
+        "type": "node",
+        "url":"http://localhost:9876/debug.html"
+      },
+      {
         "name": "Debug In Chrome",
         "type": "chrome",
         "request": "launch",

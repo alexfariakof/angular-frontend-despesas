@@ -9,8 +9,9 @@
     "build:dev": "ng build --configuration=development",
     "build:prod": "ng build --configuration=production",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test --no-watch",
-    "test:coverage": "ng test --code-coverage --no-watch"
+    "test": "ng test --browsers=ChromeHeadless --no-watch",
+    "test:debug": "ng test --browsers=Chrome",
+    "test:coverage": "ng test --code-coverage --browsers=ChromeHeadless --no-watch"
   },
   "private": true,
   "dependencies": {
