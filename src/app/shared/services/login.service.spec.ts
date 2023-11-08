@@ -24,20 +24,30 @@ describe('LoginService', () => {
         senha: 'teste',
       };
 
-      service.login(loginData).subscribe((response) => {
-        expect(response).toBeTruthy(); // Espera que seja verdadeiro que o requeste tenha sido realizado com sucesso!
+      const mockResponse = { message: true };
+
+      // Call the service method inside a subscribe to ensure the request is made
+      service.login(loginData).subscribe(response => {
+        // Expect that the response is a truthy value
+        expect(response).toBeTruthy();
       });
 
-      const req = httpMock.expectOne(
-        `${environment.endPoint}/ControleAcesso/SignIn`
-      );
+      // Define the expected URL for the POST request
+      const expectedUrl = `${environment.endPoint}/ControleAcesso/SignIn`;
+
+      // Expect a single request to the specified URL
+      const req = httpMock.expectOne(expectedUrl);
+
+      // Verify that the request method is POST
       expect(req.request.method).toBe('POST');
-      req.flush({}); // You can provide a mock response data here
 
-      // Add assertions for any additional checks you need
-      // For example, you can check the request headers, URL, etc.
+      // Respond to the request with the mock response data
+      req.flush(mockResponse);
 
-      httpMock.verify(); // Ensure that there are no outstanding requests
+      // Verify that there are no outstanding requests
+      httpMock.verify();
     }
   ));
+
+
 });

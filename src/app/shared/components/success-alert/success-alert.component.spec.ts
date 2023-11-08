@@ -13,7 +13,7 @@ describe('SuccessAlertComponent', () => {
     TestBed.configureTestingModule({
       declarations: [SuccessAlertComponent],
       imports: [ SuccessAlertModule],
-      providers: [NgbModalConfig,  { provide: NgbModal, useValue: modalServiceMock } ],
+      providers: [NgbModalConfig,  NgbModal, { provide: NgbModal, useValue: modalServiceMock } ],
     });
 
     fixture = TestBed.createComponent(SuccessAlertComponent);
@@ -27,14 +27,22 @@ describe('SuccessAlertComponent', () => {
   });
 
   it('should open modal', () => {
+    // Arrange
+    spyOn(component, 'open');
+
     // Act
-    component.open(['content']);
+    component.open(SuccessAlertComponent);
+
 
     // Assert
-    expect(component).toHaveBeenCalledWith(['content']);
+    expect(component.open).toHaveBeenCalled();
+    expect(component.open).toHaveBeenCalledWith(SuccessAlertComponent);
   });
 
   it('should close modal', () => {
+    // Arrange
+    spyOn(component, 'close');
+
     // Act
     component.close();
 

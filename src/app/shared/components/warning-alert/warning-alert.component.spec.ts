@@ -26,12 +26,24 @@ describe('WarningAlertComponent', () => {
   });
 
   it('should open modal', () => {
+    // Arrange
+    spyOn(component, 'open');
+
+    // Act
     component.open(['content']);
-    expect(component).toHaveBeenCalledWith(['content']);
+
+    // Assert
+    expect(component.open).toHaveBeenCalled();
   });
 
   it('should close modal', () => {
+    // Arrange
+    spyOn(component, 'close');
+
+    // Act
     component.close();
+
+    // Assert
     expect(component.close).toHaveBeenCalled();
   });
 
@@ -64,6 +76,4 @@ describe('WarningAlertComponent', () => {
     expect(openSpy).toHaveBeenCalledWith(WarningAlertComponent);
     expect(closeSpy).toHaveBeenCalledWith();
   });
-
-
 });

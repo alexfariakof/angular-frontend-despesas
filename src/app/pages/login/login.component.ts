@@ -1,24 +1,23 @@
-import { Component, EventEmitter, Input, Output,  } from "@angular/core";
-import { FormBuilder, FormGroup, Validators, FormsModule  } from "@angular/forms";
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators  } from "@angular/forms";
 import { Router } from "@angular/router";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { catchError, of, switchMap } from "rxjs";
+import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
 import { WarningAlertComponent } from "src/app/shared/components/warning-alert/warning-alert.component";
-import { ILogin } from "src/app/shared/interfaces/ILogin";
 import { IAuth } from "src/app/shared/interfaces/IAuth";
+import { ILogin } from "src/app/shared/interfaces/ILogin";
 import { LoginService } from "src/app/shared/services/login.service";
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   public login: ILogin = { email: 'teste@teste.com', senha: 'teste' };
   loginForm: FormGroup;
   showPassword = false;
   eyeIconClass: string = 'bi-eye';
+  public modalRef: NgbModalRef;
 
   constructor(public formbuilder: FormBuilder,
     private router: Router,
@@ -40,25 +39,19 @@ export class LoginComponent {
   }
 
   onLoginClick() {
-    const { email, senha } = this.login;
-    let response;
-    this.loginService.login({ email, senha }).pipe(
-      switchMap(token => {
-        return of(token);
-      }),
-      catchError(err => {
-        const modalRef = this.modalService.open(WarningAlertComponent);
-        modalRef.componentInstance.message = err.message;
-        return err;
-      })
-    ).subscribe((token: any) => {
-      if (token.authenticated){
-        this.router.navigate(['/dashboard']);
-      }
-      else{
-        const modalRef = this.modalService.open(WarningAlertComponent);
-        modalRef.componentInstance.message = token.message;
 
+    this.loginService.login(this.login).subscribe((response: IAuth | any) => {
+      try{
+        if (response.authenticated){
+          this.router.navigate(['/dashboard']);
+        }
+        else {
+          this.showMessage(response.message);
+        }
+
+      }
+      catch (error) {
+        this.showMessage(error.message)
       }
     });
   }
@@ -68,12 +61,9 @@ export class LoginComponent {
     this.eyeIconClass = (this.eyeIconClass === 'bi-eye') ? 'bi-eye-slash' : 'bi-eye';
   }
 
-}
-function token(value: unknown): void {
-  throw new Error("Function not implemented.");
-}
+  showMessage(message:string){
+    this.modalRef = this.modalService.open(WarningAlertComponent);
+    this.modalRef.componentInstance.message = message;
 
-function onTooglePassword() {
-  throw new Error("Function not implemented.");
+  }
 }
-
