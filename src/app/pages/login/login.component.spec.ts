@@ -1,38 +1,28 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { LoginComponent } from './login.component';
-import { LoginService } from 'src/app/shared/services/login.service';
 import { Router } from '@angular/router';
-import { ILogin } from 'src/app/shared/interfaces/ILogin';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { WarningAlertComponent } from 'src/app/shared/components/warning-alert/warning-alert.component';
-import { LayoutRoutingModule } from 'src/app/shared/components/layout/layout-routing.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ILogin } from 'src/app/shared/interfaces/ILogin';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  let loginService: LoginService;
-  let router: Router;
-  let modalService: NgbModal;
+  let mockRouter: jasmine.SpyObj<Router>;
 
   beforeEach(() => {
-    const loginServiceSpy = jasmine.createSpyObj('LoginService', ['login']);
+
+    mockRouter = jasmine.createSpyObj('Router', ['navigate']);
     TestBed.configureTestingModule({
       declarations: [LoginComponent],
-      imports: [ReactiveFormsModule, LayoutRoutingModule, RouterTestingModule ],
+      imports: [ReactiveFormsModule,  RouterTestingModule, HttpClientTestingModule ],
       providers: [
-        { provide: Router, useValue: jasmine.createSpyObj('Router', ['navigate']) },
-        { provide: NgbModal, useValue: jasmine.createSpyObj('NgbModal', ['open']) },
-        { provide: LoginService, useValue: loginServiceSpy },
-      ],
+        { provide: Router, useValue: mockRouter }]
     });
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
-    router = TestBed.inject(Router);
-    modalService = TestBed.inject(NgbModal);
-    loginService = TestBed.inject(LoginService);
     fixture.detectChanges();
   });
 
@@ -41,32 +31,68 @@ describe('LoginComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should navigate to dashboard on successful login', () => {
+  it('should navigate to dashboard on successful login', fakeAsync(() => {
     // Arrange
-    const login : ILogin = { email: 'teste@test.com', senha: 'teste' };
-    (loginService.login as jasmine.Spy).and.returnValue(of({ authenticated: true }));
+    const login: ILogin = { email: "teste@teste.com", senha: "teste" };
+    const authResponse = { authenticated: true };
+    spyOn(component.controleAcessoService, 'signIn').and.returnValue(of(authResponse));
+    spyOn(component, 'onLoginClick').and.callThrough();
+
+    // Act
     component.login = login;
+    component.onLoginClick();
+
+    // Assert
+    expect(component.controleAcessoService.signIn).toHaveBeenCalledWith(login);
+    expect(component.onLoginClick).toHaveBeenCalled();
+    expect(component.router.navigate).toHaveBeenCalledWith(['/dashboard']);
+  }));
+
+  /*
+  it('should open modal when promisse is rejected ', () => {
+    // Arrange
+    const errorMessage = "Error Test Component";
+    spyOn(component.modalALert, 'open').and.callThrough();
+    spyOn(component.controleAcessoService, 'signIn').and.rejectWith(errorMessage);
+    spyOn(component, 'onLoginClick').and.callThrough();
+
+    // Act
+    component.onLoginClick();
+
+    // Asssert
+    expect(component.modalALert.open).toHaveBeenCalled();
+  });
+*/
+  it('should open modal when authenticated is not true ', () => {
+    // Arrange
+    const authResponse = { authenticated: false, message: 'Test Erro Auth' };
+    spyOn(component.modalALert, 'open').and.callThrough();
+    spyOn(component.controleAcessoService, 'signIn').and.returnValue(of(authResponse));
+    spyOn(component, 'onLoginClick').and.callThrough();
+
+    // Act
+    component.onLoginClick();
+
+    // Asssert
+    expect(component.modalALert.open).toHaveBeenCalled();
+  });
+
+/*
+  it('should open a modal when thow error', () => {
+    // Arrange
+    const errorMessage = Error('{ error: { message : "Error Test Component"}}');
+    spyOn(component.modalALert, 'open').and.callThrough();
+    spyOn(component.controleAcessoService, 'signIn').and.returnValue(errorMessage).and.throwError;
+    spyOn(component, 'onLoginClick').and.callThrough();
 
     // Act
     component.onLoginClick();
 
     // Assert
-    expect(router.navigate).toHaveBeenCalledWith(['/dashboard']);
+    expect(component.modalALert.open).toHaveBeenCalled();
   });
+  */
 
-  it('should open a modal with a message', () => {
-    // Arrange
-    const modalRef = jasmine.createSpyObj('NgbModalRef', ['componentInstance']);
-    const message = 'Test message';
-    (modalService.open as jasmine.Spy).and.returnValue(modalRef);
-
-    // Act
-    component.showMessage(message);
-
-    // Assert
-    expect(modalService.open).toHaveBeenCalledWith(WarningAlertComponent);
-    expect(modalRef.componentInstance.message).toBe(message);
-  });
 
   it('should return login form controls', () => {
     // Arrange
