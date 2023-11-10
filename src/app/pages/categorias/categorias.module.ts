@@ -4,10 +4,9 @@ import { CategoriasComponent } from './categorias.component';
 import { CategoriaRoutingModule } from './categorias-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 
-
 @NgModule({
   providers: [],
   declarations: [CategoriasComponent ],
-  imports: [CommonModule, CategoriaRoutingModule, SharedModule]  
+  imports: [CommonModule, CategoriaRoutingModule, SharedModule]
 })
 export class CategoriasdModule {}
