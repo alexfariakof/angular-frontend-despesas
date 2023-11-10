@@ -4,7 +4,7 @@ import { PerfilComponent } from './perfil.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MenuService } from '../../shared/services/menu.service';
+import { MenuService } from '../../shared/services/menu-service/menu.service';
 import { PerfilRoutingModule } from './perfil-routing.module';
 
 describe('PerfilComponent', () => {

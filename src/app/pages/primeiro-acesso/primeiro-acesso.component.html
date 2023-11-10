@@ -1,1 +1,98 @@
-<p>primeiro-acesso works!</p>
+<div class="d-flex flex-column h-100 ">
+  <div class="flex-grow-0 bg-info w-100 h-15">
+    <nav id="navBrand" class="bg-dark navbar navbar-dark navbar-expand-sm  navbar-expand-md">
+      <div class="container-fluid">
+        <div class="d-flex justify-content-start">
+          <a class="navbar-brand tituloHeader align-text-lg-start fs-6 fs-sm-5 fs-md-4 fs-lg-3" href="/"> DESPESA$
+            PESSOAI$</a>
+        </div>
+        <div class="d-flex justify-content-end">
+          <ul class="navbar-nav ms-auto mt-2 ">
+            <li class="nav-item"><a class="nav-link fs-6 fs-sm-5 fs-md-4 fs-lg-3 textBtnHeader" href="/login">Fazer
+                login</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <div class="h-100 flex-fill flex-grow-1 flex-fill m-2  border-end-0 border-start-0  border-primary  rounded-4">
+    <div class="bg-primary w-100 d-flex flex-column align-items-center justify-content-center  rounded-top-4">
+      <h2 class="text-white m-2 fw-bolder ">Crie sua Conta de Acesso</h2>
+    </div>
+    <div class="form-content p-2 overflow-y-auto  max-height-scroll">
+      <form (submit)="onSaveClick()" [formGroup]="createAccountFrom" >
+        <div class="input-group mt-1 rounded-2">
+          <span class="input-group-text" id="labelEmail" >E-mail</span>
+          <input id="txtEmail" [(ngModel)]="controleAcesso.email" name="txtEmail" formControlName="txtEmail" required="" type="text" class="form-control "
+            placeholder="Entre com seu e-mail" aria-label="labelEmail" aria-describedby="labelEmail"
+            [ngClass]="{ 'error-input': createAccountFrom.get('txtEmail')?.errors?.['required'] &&  createAccountFrom.get('txtEmail')?.touched }"
+            />
+        </div>
+        <div class="input-group mt-3 rounded-2">
+          <span class="input-group-text" id="labelNome" >Nome</span>
+          <input id="txtNome" [(ngModel)]="controleAcesso.nome" name="txtNome" formControlName="txtNome" required="" type="text" class="form-control"
+            placeholder="Entre com seu nome" aria-label="nome" aria-describedby="labelNome"
+            [ngClass]="{ 'error-input': createAccountFrom.get('txtNome')?.errors?.['required'] &&  createAccountFrom.get('txtNome')?.touched }"
+          />
+        </div>
+        <div class="input-group mt-3 rounded-2" >
+          <span class="input-group-text" id="labelSobreNome" >Sobre Nome</span>
+          <input id="txtSobreNome" [(ngModel)]="controleAcesso.sobreNome" name="txtSobreNome" formControlName="txtSobreNome" required="" type="text" class="form-control"
+            placeholder="Entre com seu sobre nome (opcional)" aria-label="labelSobreNome" aria-describedby="labelSobreNome" />
+        </div>
+        <div class="input-group mt-3 rounded-2 ">
+          <span class="input-group-text" id="labelTelefone" >Telefone</span>
+          <input id="txtTelefone" [(ngModel)]="controleAcesso.telefone" name="txtTelefone" formControlName="txtTelefone" required="" type="text" class="form-control"
+            placeholder="Entre com seu telefone" aria-label="Telefone" aria-describedby="Telefone"
+            [ngClass]="{ 'error-input': createAccountFrom.get('txtTelefone')?.errors?.['required'] &&  createAccountFrom.get('txtTelefone')?.touched }" />
+        </div>
+        <div class="input-group mt-3  rounded-2 " id="senha">
+          <span class="input-group-text"><i class="bi bi-lock"></i></span>
+          <input id="txtSenha" [(ngModel)]="controleAcesso.senha" name="txtSenha" formControlName="txtSenha" required="" type="password"
+                  [type]="showSenha ? 'text' : 'password'" class="form-control" placeholder="Senha" aria-label="Senha" aria-describedby="Senha"
+                  [ngClass]="{ 'error-input': createAccountFrom.get('txtSenha')?.errors?.['required'] &&  createAccountFrom.get('txtSenha')?.touched }" />
+          <span class="input-group-text" (click)="onToogleSenha()" ><i [ngClass]="eyeIconClass" ></i></span>
+        </div>
+        <div class="input-group mt-3 rounded-2 " id="confirmaSenha">
+          <span class="input-group-text"><i class="bi bi-lock"></i></span>
+          <input id="txtConfirmaSenha" [(ngModel)]="controleAcesso.confirmaSenha" name="txtConfirmaSenha" formControlName="txtConfirmaSenha" required="" type="password"
+                  [type]="showConfirmaSenha ? 'text' : 'password'" class="form-control" placeholder="Confirme a senha" aria-label="Confirme a senha" aria-describedby="Confirme a senha"
+                  [ngClass]="{ 'error-input': createAccountFrom.get('txtConfirmaSenha')?.errors?.['required'] &&  createAccountFrom.get('txtConfirmaSenha')?.touched && isPasswordValid() }" />
+          <span class="input-group-text" (click)="onToogleConfirmaSenha()" ><i [ngClass]="eyeIconClassConfirmaSenha" ></i></span>
+        </div>
+        <div class="input-group mt-3  d-flex flex-column align-items-center justify-content-center">
+          <button type="submit" class="btn btn-primary w-responsive"
+                [ngClass]="{'disabled' : !createAccountFrom.valid}"  [disabled]="!createAccountFrom.valid" >Criar Conta</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="h-10 ">
+    <footer class="bg-dark text-center text-white footer navbar-fixed-bottom" sty>
+      <div class="container p-1 pb-0">
+        <section class="mb-2">
+          <!-- Facebook -->
+          <a class="btn text-white btn-floating m-1 bg-primary" target="_blank" rel="noopener"
+            href="https://www.facebook.com/alex.ribeiro.noeh/" role="button">
+            <i class="bi bi-facebook btnSocialMedia"></i>
+          </a>
+          <!-- Linkedin -->
+          <a class="btn text-white btn-floating m-1" target="_blank" rel="noopener"
+            href="https://www.linkedin.com/in/alex-ribeiro-de-faria-b3376b26/" role="button">
+            <i class="bi bi-linkedin btnSocialMedia"></i>
+          </a>
+          <!-- Github -->
+          <a class="btn text-white btn-floating m-1 bg-black" target="_blank" rel="noopener"
+            href="https://github.com/alexfariakof" role="button">
+            <i class="bi bi-github btnSocialMedia"></i>
+          </a>
+        </section>
+      </div>
+      <div class="text-center fs-sm-4 fs-md-4 fs-lg-3 bg-black opacity-50">
+        © 2023 Copyright Honey TI. Todos os direitos reservados - Desenvolvido por Alex Ribeiro de Faria
+      </div>
+  </footer>
+</div>
+</div>
+
