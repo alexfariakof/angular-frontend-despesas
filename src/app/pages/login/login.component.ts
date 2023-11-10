@@ -1,25 +1,29 @@
-import { Component, EventEmitter, Input, Output,  } from "@angular/core";
-import { FormBuilder, FormGroup, Validators, FormsModule  } from "@angular/forms";
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators  } from "@angular/forms";
 import { Router } from "@angular/router";
-import { catchError, of, switchMap } from "rxjs";
+import { map, catchError } from "rxjs";
+import { AlertComponent } from "src/app/shared/components/alert-component/alert.component";
+import { IAuth } from "src/app/shared/interfaces/IAuth";
 import { ILogin } from "src/app/shared/interfaces/ILogin";
-import { LoginService } from "src/app/shared/services/login.service";
+import { ControleAcessoService } from "src/app/shared/services/controle-acesso/controle-acesso.service";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  providers: [ControleAcessoService, AlertComponent]
 })
 
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   public login: ILogin = { email: 'teste@teste.com', senha: 'teste' };
   loginForm: FormGroup;
   showPassword = false;
   eyeIconClass: string = 'bi-eye';
 
-  constructor(public formbuilder: FormBuilder,
-    private router: Router,
-    private loginService: LoginService ){
+  constructor(private formbuilder: FormBuilder,
+    public router: Router,
+    public controleAcessoService: ControleAcessoService,
+    public modalALert: AlertComponent ){
 
   }
 
@@ -27,8 +31,7 @@ export class LoginComponent {
     this.loginForm = this.formbuilder.group({
         txtLogin: ['', [Validators.required, Validators.email]],
         txtPassword: ['', Validators.required]
-    })
-
+    });
   }
 
   get getLoginDados(){
@@ -36,23 +39,33 @@ export class LoginComponent {
   }
 
   onLoginClick() {
-    const { email, senha } = this.login;
-
-    this.loginService.login({ email, senha }).pipe(
-      switchMap(token => {
-        this.router.navigate(['/dashboard']);
-        return of(token);
+    this.controleAcessoService.signIn(this.login).pipe(
+      map((response: IAuth | any) => {
+        if (response.authenticated) {
+          return response.authenticated;
+        }
+        else {
+          throw (response);
+        }
       }),
-      catchError(err => {
-        console.log(new Error('Login failed'));
-        return of(err);
+      catchError((error) => {
+        throw (error);
       })
-    ).subscribe();
+    )
+    .subscribe({
+      next: (result) => {
+        if (result)
+          this.router.navigate(['/dashboard']);
+      },
+      error: (response) => this.modalALert.open(AlertComponent, response.message, 'Warning'),
+      complete() {
+
+      }
+    });
   }
 
   onTooglePassword() {
     this.showPassword = !this.showPassword;
     this.eyeIconClass = (this.eyeIconClass === 'bi-eye') ? 'bi-eye-slash' : 'bi-eye';
   }
-
 }

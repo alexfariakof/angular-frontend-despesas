@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LancamentosComponent } from './lancamentos.component';
-import { CategoriaRoutingModule } from '../categorias/categorias-routing.module';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { MenuService } from 'src/app/shared/services/menu.service';
+import { MenuService } from 'src/app/shared/services/menu-service/menu.service';
+import { LancamentosRoutingModule } from './lancamentos-routing.module';
 
 describe('LancamentosComponent', () => {
   let component: LancamentosComponent;
@@ -12,7 +12,7 @@ describe('LancamentosComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [LancamentosComponent],
-      imports: [CommonModule, CategoriaRoutingModule, SharedModule],
+      imports: [CommonModule, LancamentosRoutingModule, SharedModule],
       providers: [MenuService]
     });
     fixture = TestBed.createComponent(LancamentosComponent);
