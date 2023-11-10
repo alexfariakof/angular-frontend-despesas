@@ -49,7 +49,7 @@ export class PrimeiroAcessoComponent  implements OnInit {
         }
       }),
       catchError((error) => {
-        throw error;
+        throw error.error || error;
       })
     )
     .subscribe({
