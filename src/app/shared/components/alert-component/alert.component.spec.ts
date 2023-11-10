@@ -1,23 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SuccessAlertComponent } from './success-alert.component';
 import { NgbModal, NgbModalConfig, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { SuccessAlertModule } from './success-alert.component.module';
-import { MockAlertComponent } from 'src/app/__mock__/mock-component/mock-alert.component';
+import { AlertComponent } from './alert.component';
+import { AlertModule } from './alert.component.module';
+import { MockAlertComponent } from '___mock__/mock.alert.component';
 
-describe('SuccessAlertComponent', () => {
-  let component: SuccessAlertComponent;
-  let fixture: ComponentFixture<SuccessAlertComponent>;
+describe('Test AlertComponent', () => {
+  let component: AlertComponent;
+  let fixture: ComponentFixture<AlertComponent>;
   let modalService: NgbModal;
-
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SuccessAlertComponent, MockAlertComponent],
-      imports: [ SuccessAlertModule],
+      declarations: [AlertComponent, MockAlertComponent],
+      imports: [ AlertModule ],
       providers: [NgbModalConfig,  NgbModal],
     });
 
-    fixture = TestBed.createComponent(SuccessAlertComponent);
+    fixture = TestBed.createComponent(AlertComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
     modalService = TestBed.inject(NgbModal);
@@ -34,7 +33,7 @@ describe('SuccessAlertComponent', () => {
     spyOn(modalService, 'open').and.returnValue(modalService.open(content));
 
     // Act
-    component.open(content);
+    component.open(content, "Test Alert Component", 'Success');
 
     // Assert
     expect(modalService.open).toHaveBeenCalled();
@@ -63,10 +62,10 @@ describe('SuccessAlertComponent', () => {
 
     // Act
     modalRefMock.componentInstance.message = expectedMessage;
-    component.open(MockAlertComponent);
+    component.open(MockAlertComponent, expectedMessage, 'Warning');
 
     // Assert
-    expect(openSpy).toHaveBeenCalledWith(MockAlertComponent);
+    expect(openSpy).toHaveBeenCalledWith(MockAlertComponent, expectedMessage, 'Warning');
     expect(modalRefMock.componentInstance.message).toBe(expectedMessage);
   });
 
@@ -77,11 +76,11 @@ describe('SuccessAlertComponent', () => {
     const closeSpy = spyOn(component, 'close').and.returnValue(modalRefMock);
 
     // Act
-    component.open(MockAlertComponent);
+    component.open(MockAlertComponent, "Test Alert Component", 'Success');
     component.close();
 
     // Assert
-    expect(openSpy).toHaveBeenCalledWith(MockAlertComponent);
+    expect(openSpy).toHaveBeenCalledWith(MockAlertComponent, "Test Alert Component", 'Success');
     expect(closeSpy).toHaveBeenCalledWith();
   });
 

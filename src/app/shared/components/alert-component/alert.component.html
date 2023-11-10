@@ -1,10 +1,10 @@
-
 <div class="alert d-flex flex-column justify-content-around " role="alert">
   <div class="modal-header">
-    <h1 class="modal-title fs-5" id="warning">Atenção</h1>
+    <h1 class="modal-title fs-5" id="success">{{header}}</h1>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
   </div>
-  <div class="alert alert-danger mt-2" role="alert">
+  <div [ngClass]="alertTypeClass" role="alert">
     {{message!}}
   </div>
 </div>
+
