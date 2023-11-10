@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ConfiguracoesComponent } from './configuracoes.component';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { MenuService } from 'src/app/shared/services/menu.service';
+import { MenuService } from 'src/app/shared/services/menu-service/menu.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ConfiguracoesRoutingModule } from './configuracoes-routing.module';
 

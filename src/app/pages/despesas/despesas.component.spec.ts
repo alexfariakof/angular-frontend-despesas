@@ -2,8 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DespesasComponent } from './despesas.component';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { CategoriaRoutingModule } from '../categorias/categorias-routing.module';
-import { MenuService } from 'src/app/shared/services/menu.service';
+import { MenuService } from 'src/app/shared/services/menu-service/menu.service';
+import { RouterTestingModule } from '@angular/router/testing';
+import { DespesasRoutingModule } from './despesas-routing.module';
 
 describe('DespesasComponent', () => {
   let component: DespesasComponent;
@@ -12,7 +13,7 @@ describe('DespesasComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [DespesasComponent],
-      imports: [CommonModule, CategoriaRoutingModule, SharedModule],
+      imports: [CommonModule, DespesasRoutingModule, RouterTestingModule, SharedModule],
       providers: [MenuService]
     });
     fixture = TestBed.createComponent(DespesasComponent);

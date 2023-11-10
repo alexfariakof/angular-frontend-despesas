@@ -3,7 +3,7 @@ import { CategoriasComponent } from './categorias.component';
 import { CategoriaRoutingModule } from './categorias-routing.module';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { MenuService } from 'src/app/shared/services/menu.service';
+import { MenuService } from 'src/app/shared/services/menu-service/menu.service';
 
 describe('CategoriasComponent', () => {
   let component: CategoriasComponent;

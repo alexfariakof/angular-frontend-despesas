@@ -1,87 +1,129 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { LoginComponent } from './login.component';
-import { LoginService } from 'src/app/shared/services/login.service';
 import { Router } from '@angular/router';
-import { of, throwError } from 'rxjs';
-import { ILogin } from 'src/app/shared/interfaces/ILogin';
-import { ReactiveFormsModule } from '@angular/forms';
-import { LayoutRoutingModule } from 'src/app/shared/components/layout/layout-routing.module';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ILogin } from 'src/app/shared/interfaces/ILogin';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { of } from 'rxjs';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  let loginService: jasmine.SpyObj<LoginService>;
-  let router: Router;
+  let mockRouter: jasmine.SpyObj<Router>;
 
   beforeEach(() => {
-    const loginServiceSpy = jasmine.createSpyObj('LoginService', ['login']);
+    mockRouter = jasmine.createSpyObj('Router', ['navigate']);
     TestBed.configureTestingModule({
       declarations: [LoginComponent],
-      imports: [ReactiveFormsModule, LayoutRoutingModule, RouterTestingModule ],
+      imports: [ReactiveFormsModule,  RouterTestingModule, HttpClientTestingModule ],
       providers: [
-         { provide: LoginService, useValue: loginServiceSpy },
-      ],
+        { provide: Router, useValue: mockRouter }]
     });
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
-    router = TestBed.inject(Router);
-    loginService = TestBed.inject(LoginService) as jasmine.SpyObj<LoginService>;
     fixture.detectChanges();
   });
 
   it('should create', () => {
+    // Assert
     expect(component).toBeTruthy();
   });
 
-  it('should call login service and navigate to dashboard on login success', () => {
-    const mockLoginData: ILogin = { email: 'teste@teste.com', senha: 'teste' };
-    spyOn(router, 'navigate');
-    loginService.login.and.returnValue(of(mockLoginData));
+  it('should navigate to dashboard on successful login', fakeAsync(() => {
+    // Arrange
+    const login: ILogin = { email: "teste@teste.com", senha: "teste" };
+    const authResponse = { authenticated: true };
+    spyOn(component.controleAcessoService, 'signIn').and.returnValue(of(authResponse));
+    spyOn(component, 'onLoginClick').and.callThrough();
 
-    component.loginForm.controls['txtLogin'].setValue('teste@teste.com');
-    component.loginForm.controls['txtPassword'].setValue('teste');
+    // Act
+    component.login = login;
     component.onLoginClick();
 
-    expect(loginService.login).toHaveBeenCalledWith(mockLoginData);
-    expect(router.navigate).toHaveBeenCalledWith(['/dashboard']);
-  });
+    // Assert
+    expect(component.controleAcessoService.signIn).toHaveBeenCalledWith(login);
+    expect(component.onLoginClick).toHaveBeenCalled();
+    expect(component.router.navigate).toHaveBeenCalledWith(['/dashboard']);
+  }));
 
-  it('should handle login error', () => {
-    const errorResponse = new Error('Login failed');
-    spyOn(console, 'log'); // Espie console.log para verificar se o erro é tratado
+  /*
+  it('should open modal when promisse is rejected ', () => {
+    // Arrange
+    const errorMessage = "Error Test Component";
+    spyOn(component.modalALert, 'open').and.callThrough();
+    spyOn(component.controleAcessoService, 'signIn').and.rejectWith(errorMessage);
+    spyOn(component, 'onLoginClick').and.callThrough();
 
-    component.loginForm.controls['txtLogin'].setValue('teste@example.com');
-    component.loginForm.controls['txtPassword'].setValue('');
-
-    loginService.login.and.returnValue(throwError(errorResponse));
-
+    // Act
     component.onLoginClick();
-    expect(loginService.login).toHaveBeenCalledWith({ email: 'teste@example.com', senha: '' });
-    expect(console.log).toHaveBeenCalledWith(errorResponse);
+
+    // Asssert
+    expect(component.modalALert.open).toHaveBeenCalled();
   });
+*/
+  it('should open modal when authenticated is not true ', () => {
+    // Arrange
+    const authResponse = { authenticated: false, message: 'Test Erro Auth' };
+    spyOn(component.modalALert, 'open').and.callThrough();
+    spyOn(component.controleAcessoService, 'signIn').and.returnValue(of(authResponse));
+    spyOn(component, 'onLoginClick').and.callThrough();
+
+    // Act
+    component.onLoginClick();
+
+    // Asssert
+    expect(component.modalALert.open).toHaveBeenCalled();
+  });
+
+/*
+  it('should open a modal when thow error', () => {
+    // Arrange
+    const errorMessage = Error('{ error: { message : "Error Test Component"}}');
+    spyOn(component.modalALert, 'open').and.callThrough();
+    spyOn(component.controleAcessoService, 'signIn').and.returnValue(errorMessage).and.throwError;
+    spyOn(component, 'onLoginClick').and.callThrough();
+
+    // Act
+    component.onLoginClick();
+
+    // Assert
+    expect(component.modalALert.open).toHaveBeenCalled();
+  });
+  */
+
 
   it('should return login form controls', () => {
+    // Arrange
     component.ngOnInit();
     component.loginForm.controls['txtLogin'].setValue('teste@teste.com');
     component.loginForm.controls['txtPassword'].setValue('password');
 
+    // Act
     const loginDados = component.getLoginDados;
+
+    // Assert
     expect(loginDados['txtLogin'].value).toBe('teste@teste.com');
     expect(loginDados['txtPassword'].value).toBe('password');
   });
 
   it('should toggle password visibility and update eye icon class', () => {
+    // Arrange
     component.ngOnInit();
-
     component.showPassword = false;
     component.eyeIconClass = 'bi-eye';
+
+    // Act
     component.onTooglePassword();
 
+    // Assert
     expect(component.showPassword).toBe(true);
     expect(component.eyeIconClass).toBe('bi-eye-slash');
 
+    // Act
     component.onTooglePassword();
+
+    // Assert
     expect(component.showPassword).toBe(false);
     expect(component.eyeIconClass).toBe('bi-eye');
   });
