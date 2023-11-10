@@ -2,7 +2,7 @@ import { Router, Routes } from '@angular/router';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LayoutComponent } from './layout.component';
 import { CommonModule } from '@angular/common';
-import { MenuService } from '../../services/menu.service';
+import { MenuService } from '../../services/menu-service/menu.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LayoutRoutingModule } from './layout-routing.module';
 import { PerfilComponent } from 'src/app/pages/perfil/perfil.component';

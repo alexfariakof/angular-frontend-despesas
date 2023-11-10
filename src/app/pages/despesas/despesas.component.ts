@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { MenuService } from 'src/app/shared/services/menu.service';
+import { MenuService } from 'src/app/shared/services/menu-service/menu.service';
 
 @Component({
   selector: 'app-despesas',

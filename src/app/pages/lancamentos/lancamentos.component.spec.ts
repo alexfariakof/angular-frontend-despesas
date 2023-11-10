@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LancamentosComponent } from './lancamentos.component';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { MenuService } from 'src/app/shared/services/menu.service';
+import { MenuService } from 'src/app/shared/services/menu-service/menu.service';
 import { LancamentosRoutingModule } from './lancamentos-routing.module';
 
 describe('LancamentosComponent', () => {
