@@ -16,15 +16,20 @@ h2 {
 }
 
 .content-header-max-height {
-  max-height: 10%;
+  height: 10vh;
 }
 
 .content-barra-ferramenta-max-height {
-  max-height: 10%;
+  height: 10vh;
+  padding: 1vh;
+  padding-bottom: 0;
+  margin-bottom: 1vh;
 }
 .content-body-max-height {
+  height: 80vh;
   max-width: 98vw;
-  max-height: 84vh;
+  max-height: 78vh;
+  margin-bottom: 1.4vh;
 }
 
 .scroll-content {
