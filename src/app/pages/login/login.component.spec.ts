@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { LoginComponent } from './login.component';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -13,7 +13,6 @@ describe('LoginComponent', () => {
   let mockRouter: jasmine.SpyObj<Router>;
 
   beforeEach(() => {
-
     mockRouter = jasmine.createSpyObj('Router', ['navigate']);
     TestBed.configureTestingModule({
       declarations: [LoginComponent],

@@ -32,6 +32,7 @@
           <span class="input-group-text" id="labelNome" >Nome</span>
           <input id="txtNome" [(ngModel)]="controleAcesso.nome" name="txtNome" formControlName="txtNome" required="" type="text" class="form-control"
             placeholder="Entre com seu nome" aria-label="nome" aria-describedby="labelNome"
+            [ngClass]="{ 'error-input': createAccountFrom.get('txtNome')?.errors?.['required'] &&  createAccountFrom.get('txtNome')?.touched }"
           />
         </div>
         <div class="input-group mt-3 rounded-2" >
@@ -56,11 +57,12 @@
           <span class="input-group-text"><i class="bi bi-lock"></i></span>
           <input id="txtConfirmaSenha" [(ngModel)]="controleAcesso.confirmaSenha" name="txtConfirmaSenha" formControlName="txtConfirmaSenha" required="" type="password"
                   [type]="showConfirmaSenha ? 'text' : 'password'" class="form-control" placeholder="Confirme a senha" aria-label="Confirme a senha" aria-describedby="Confirme a senha"
-                  [ngClass]="{ 'error-input': createAccountFrom.get('txtConfirmaSenha')?.errors?.['required'] &&  createAccountFrom.get('txtConfirmaSenha')?.touched }" />
+                  [ngClass]="{ 'error-input': createAccountFrom.get('txtConfirmaSenha')?.errors?.['required'] &&  createAccountFrom.get('txtConfirmaSenha')?.touched && isPasswordValid() }" />
           <span class="input-group-text" (click)="onToogleConfirmaSenha()" ><i [ngClass]="eyeIconClassConfirmaSenha" ></i></span>
         </div>
         <div class="input-group mt-3  d-flex flex-column align-items-center justify-content-center">
-          <button type="submit" class="btn btn-primary w-responsive ">Criar Conta</button>
+          <button type="submit" class="btn btn-primary w-responsive"
+                [ngClass]="{'disabled' : !createAccountFrom.valid}"  [disabled]="!createAccountFrom.valid" >Criar Conta</button>
         </div>
       </form>
     </div>

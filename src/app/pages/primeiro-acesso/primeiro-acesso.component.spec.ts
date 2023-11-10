@@ -1,26 +1,28 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { PrimeiroAcessoComponent } from './primeiro-acesso.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgbModal, NgbModalConfig, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MockAlertComponent } from 'src/app/__mock__/mock-component/mock-alert.component';
-import { SuccessAlertComponent } from 'src/app/shared/components/success-alert/success-alert.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { IControleAcesso } from 'src/app/shared/interfaces/IControleAcesso';
+import { of } from 'rxjs';
 
 describe('PrimeiroAcessoComponent', () => {
   let component: PrimeiroAcessoComponent;
   let fixture: ComponentFixture<PrimeiroAcessoComponent>;
-  let modalService: NgbModal;
+  let mockRouter: jasmine.SpyObj<Router>;
 
   beforeEach(() => {
+    mockRouter = jasmine.createSpyObj('Router', ['navigate']);
     TestBed.configureTestingModule({
       declarations: [PrimeiroAcessoComponent],
-      imports: [ReactiveFormsModule, NgbModalModule,  RouterTestingModule],
-      providers: [NgbModalConfig,  { provide: NgbModal, useValue: jasmine.createSpyObj('NgbModal', ['open']) },],
+      imports: [ReactiveFormsModule,  RouterTestingModule, HttpClientTestingModule ],
+      providers: [
+        { provide: Router, useValue: mockRouter }]
     });
     fixture = TestBed.createComponent(PrimeiroAcessoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    modalService = TestBed.inject(NgbModal);
   });
 
   it('should create', () => {
@@ -28,19 +30,82 @@ describe('PrimeiroAcessoComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('onSaveClick should open a modal with a message', () => {
+  it('onSaveClick should open a modal with success message', fakeAsync(() => {
     // Arrange
-    const modalRef = jasmine.createSpyObj('NgbModalRef', ['componentInstance', 'message']);
-    const message = 'Cadastro realizado com sucesso!';
-    (modalService.open as jasmine.Spy).and.returnValue(modalRef);
+    const controleAcesso: IControleAcesso = {
+      nome: 'Teste Usuário',
+      sobreNome: 'Usuário',
+      telefone: '(21) 9999-9999',
+      email: 'teste@teste.com',
+      senha: '!12345',
+      confirmaSenha: '!12345'
+    };
+    const response = { message: true };
+
+    spyOn(component.modalALert, 'open').and.callThrough();
+    spyOn(component.controleAcessoService, 'createUsuario').and.returnValue(of(response));
+    spyOn(component, 'onSaveClick').and.callThrough();
 
     // Act
+    component.controleAcesso = controleAcesso;
     component.onSaveClick();
 
     // Assert
-    expect(modalService.open).toHaveBeenCalled();
-    expect(modalRef.componentInstance.message).toBe(message);
+    expect(component.controleAcessoService.createUsuario).toHaveBeenCalledWith(controleAcesso);
+    expect(component.onSaveClick).toHaveBeenCalled();
+    expect(component.modalALert.open).toHaveBeenCalled();
+    //expect(component.router.navigate).toHaveBeenCalledWith(['/dashboard']);
+  }));
+
+
+  it('should open modal when when error comes from api ', () => {
+    // Arrange
+    const controleAcesso: IControleAcesso = {
+      nome: 'Teste Usuário',
+      sobreNome: 'Usuário',
+      telefone: '(21) 9999-9999',
+      email: 'teste@teste.com',
+      senha: '!12345',
+      confirmaSenha: '!12345'
+    };
+
+    const response = {  message: "Teste Erro Message From API" };
+    spyOn(component.modalALert, 'open').and.callThrough();
+    spyOn(component.controleAcessoService, 'createUsuario').and.returnValue(of(response));
+    spyOn(component, 'onSaveClick').and.callThrough();
+
+    // Act
+    component.controleAcesso = controleAcesso;
+    component.onSaveClick();
+
+    // Asssert
+    expect(component.modalALert.open).toHaveBeenCalled();
   });
+
+  it('should open modal when when throws error ', () => {
+    // Arrange
+    const controleAcesso: IControleAcesso = {
+      nome: 'Teste Usuário',
+      sobreNome: 'Usuário',
+      telefone: '(21) 9999-9999',
+      email: 'teste@teste.com',
+      senha: '!12345',
+      confirmaSenha: '!12345'
+    };
+
+    const response = {  message: "Teste Throws Error" };
+    spyOn(component.modalALert, 'open').and.callThrough();
+    spyOn(component.controleAcessoService, 'createUsuario').and.returnValue(of(response)).and.throwError;
+    spyOn(component, 'onSaveClick').and.callThrough();
+
+    // Act
+    component.controleAcesso = controleAcesso;
+    component.onSaveClick();
+
+    // Asssert
+    expect(component.modalALert.open).toHaveBeenCalled();
+  });
+
 
   it('should toggle senha visibility and update eye icon class', () => {
     // Arrange

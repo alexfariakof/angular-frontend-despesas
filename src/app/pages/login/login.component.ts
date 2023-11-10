@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit{
   showPassword = false;
   eyeIconClass: string = 'bi-eye';
 
-  constructor(public formbuilder: FormBuilder,
+  constructor(private formbuilder: FormBuilder,
     public router: Router,
     public controleAcessoService: ControleAcessoService,
     public modalALert: AlertComponent ){
@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit{
       error: (response) => this.modalALert.open(AlertComponent, response.message, 'Warning'),
       complete() {
 
-      },
+      }
     });
   }
 
