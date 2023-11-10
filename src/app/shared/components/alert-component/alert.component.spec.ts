@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NgbModal, NgbModalConfig, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { AlertComponent } from './alert.component';
 import { AlertModule } from './alert.component.module';
-import { MockAlertComponent } from '___mock__/mock.alert.component';
+import { MockAlertComponent } from '__mock__/mock.alert.component';
 
 describe('Test AlertComponent', () => {
   let component: AlertComponent;
