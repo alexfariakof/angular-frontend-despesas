@@ -17,14 +17,11 @@ export class ReceitasComponent {
   }
 
   onClickNovo = () => {
-    this.modalAlert.open(AlertComponent, "Clicou em Novo da Receitas", 'Success');
   }
 
   onClickExcluir = () =>  {
-    this.modalAlert.open(AlertComponent, "Clicou em Excluir da Receitas", 'Warning');
   }
 
   onClickCancelar = () => {
-    this.modalAlert.open(AlertComponent, "Clicou em Cancelar da Receitas", 'Warning');
   }
 }

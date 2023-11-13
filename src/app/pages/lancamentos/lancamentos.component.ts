@@ -18,14 +18,11 @@ export class LancamentosComponent {
   }
 
   onClickNovo = () => {
-    this.modalAlert.open(AlertComponent, "Clicou em Novo da Lançamentos", 'Success');
   }
 
   onClickExcluir = () =>  {
-    this.modalAlert.open(AlertComponent, "Clicou em Excluir da Lançamentos", 'Warning');
   }
 
   onClickCancelar = () => {
-    this.modalAlert.open(AlertComponent, "Clicou em Cancelar da Lançamentos", 'Warning');
   }
 }
