@@ -1,0 +1,53 @@
+<div class="flex-column w-100 h-100 pb-2 flex-fill p-4  border-black  rounded-4 " style="width:50%; height: 50%;">
+  <div class="modal-header">
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+  </div>
+  <div class="overflow-y-auto scroll-content  ">
+    <form (submit)="onSaveClick()" [formGroup]="createCategoriatForm" >
+      <div class="input-group mt-1 rounded-2">
+        <span class="input-group-text" id="labelEmail" >E-mail</span>
+        <input id="txtEmail" [(ngModel)]="controleAcesso.email" name="txtEmail" formControlName="txtEmail" required="" type="text" class="form-control "
+          placeholder="Entre com seu e-mail" aria-label="labelEmail" aria-describedby="labelEmail"
+          [ngClass]="{ 'error-input': createCategoriatForm.get('txtEmail')?.errors?.['required'] &&  createCategoriatForm.get('txtEmail')?.touched }"
+          />
+      </div>
+      <div class="input-group mt-3 rounded-2">
+        <span class="input-group-text" id="labelNome" >Nome</span>
+        <input id="txtNome" [(ngModel)]="controleAcesso.nome" name="txtNome" formControlName="txtNome" required="" type="text" class="form-control"
+          placeholder="Entre com seu nome" aria-label="nome" aria-describedby="labelNome"
+          [ngClass]="{ 'error-input': createCategoriatForm.get('txtNome')?.errors?.['required'] &&  createCategoriatForm.get('txtNome')?.touched }"
+        />
+      </div>
+      <div class="input-group mt-3 rounded-2" >
+        <span class="input-group-text" id="labelSobreNome" >Sobre Nome</span>
+        <input id="txtSobreNome" [(ngModel)]="controleAcesso.sobreNome" name="txtSobreNome" formControlName="txtSobreNome" required="" type="text" class="form-control"
+          placeholder="Entre com seu sobre nome (opcional)" aria-label="labelSobreNome" aria-describedby="labelSobreNome" />
+      </div>
+      <div class="input-group mt-3 rounded-2 ">
+        <span class="input-group-text" id="labelTelefone" >Telefone</span>
+        <input id="txtTelefone" [(ngModel)]="controleAcesso.telefone" name="txtTelefone" formControlName="txtTelefone" required="" type="text" class="form-control"
+          placeholder="Entre com seu telefone" aria-label="Telefone" aria-describedby="Telefone"
+          [ngClass]="{ 'error-input': createCategoriatForm.get('txtTelefone')?.errors?.['required'] &&  createCategoriatForm.get('txtTelefone')?.touched }" />
+      </div>
+      <div class="input-group mt-3  rounded-2 " id="senha">
+        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+        <input id="txtSenha" [(ngModel)]="controleAcesso.senha" name="txtSenha" formControlName="txtSenha" required="" type="password"
+                [type]="showSenha ? 'text' : 'password'" class="form-control" placeholder="Senha" aria-label="Senha" aria-describedby="Senha"
+                [ngClass]="{ 'error-input': createCategoriatForm.get('txtSenha')?.errors?.['required'] &&  createCategoriatForm.get('txtSenha')?.touched }" />
+        <span class="input-group-text" (click)="onToogleSenha()" ><i [ngClass]="eyeIconClass" ></i></span>
+      </div>
+      <div class="input-group mt-3 rounded-2 " id="confirmaSenha">
+        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+        <input id="txtConfirmaSenha" [(ngModel)]="controleAcesso.confirmaSenha" name="txtConfirmaSenha" formControlName="txtConfirmaSenha" required="" type="password"
+                [type]="showConfirmaSenha ? 'text' : 'password'" class="form-control" placeholder="Confirme a senha" aria-label="Confirme a senha" aria-describedby="Confirme a senha"
+                [ngClass]="{ 'error-input': createCategoriatForm.get('txtConfirmaSenha')?.errors?.['required'] &&  createCategoriatForm.get('txtConfirmaSenha')?.touched  }" />
+        <span class="input-group-text" (click)="onToogleConfirmaSenha()" ><i [ngClass]="eyeIconClassConfirmaSenha" ></i></span>
+      </div>
+      <div class="input-group mt-3  d-flex flex-column align-items-center justify-content-center">
+        <button type="submit" class="btn btn-primary w-responsive"
+              [ngClass]="{'disabled' : !createCategoriatForm.valid}"  [disabled]="!createCategoriatForm.valid" >Criar Conta</button>
+      </div>
+    </form>
+
+  </div>
+</div>

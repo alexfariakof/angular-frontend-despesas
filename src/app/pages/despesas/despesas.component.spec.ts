@@ -5,6 +5,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { MenuService } from 'src/app/shared/services/menu-service/menu.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DespesasRoutingModule } from './despesas-routing.module';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 describe('DespesasComponent', () => {
   let component: DespesasComponent;
@@ -14,7 +15,7 @@ describe('DespesasComponent', () => {
     TestBed.configureTestingModule({
       declarations: [DespesasComponent],
       imports: [CommonModule, DespesasRoutingModule, RouterTestingModule, SharedModule],
-      providers: [MenuService]
+      providers: [MenuService, NgbActiveModal]
     });
     fixture = TestBed.createComponent(DespesasComponent);
     component = fixture.componentInstance;

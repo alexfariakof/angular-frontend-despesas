@@ -9,11 +9,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { MenuService } from './shared/services/menu-service/menu.service';
 import { PrimeiroAcessoComponent } from './pages/primeiro-acesso/primeiro-acesso.component';
 import { AlertModule } from './shared/components/alert-component/alert.component.module';
+import { CategoriasFormComponent } from './pages/categorias/categorias-form/categorias.form.component';
+import { AlertComponent } from './shared/components/alert-component/alert.component';
+import { ModalFormComponent } from './shared/components/modal-form/modal.form.component';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    PrimeiroAcessoComponent
+    PrimeiroAcessoComponent,
+    CategoriasFormComponent
   ],
   imports: [
     BrowserModule,
@@ -21,10 +27,9 @@ import { AlertModule } from './shared/components/alert-component/alert.component
     CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FormsModule,
-    AlertModule
+    FormsModule
   ],
-  providers: [MenuService],
+  providers: [MenuService, AlertComponent, ModalFormComponent, NgbActiveModal],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

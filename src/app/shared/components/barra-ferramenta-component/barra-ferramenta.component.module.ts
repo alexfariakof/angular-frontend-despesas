@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
-import { BarraFerramentaComponent } from './barra-ferramenta/barra-ferramenta.component';
-
+import { BarraFerramentaComponent } from './barra-ferramenta.component';
+import { CommonModule } from '@angular/common';
 @NgModule({
   declarations: [BarraFerramentaComponent],
-  exports: [BarraFerramentaComponent]
+  exports: [BarraFerramentaComponent],
+  imports: [CommonModule ]
 })
 export class BarraFerramentaModule { }

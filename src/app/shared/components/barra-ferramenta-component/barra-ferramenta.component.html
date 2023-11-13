@@ -1,0 +1,14 @@
+<div class="d-flex flex-row-reverse content-barra-ferramenta-max-height" >
+  <div >
+    <button type="submit" class="btn btn-primary w-responsive btn-barra-ferramenta" (click)="clickBtnVoltar()" >Voltar</button>
+  </div>
+  <div [ngClass]="{ 'd-none': !btnCancelar }">
+    <button type="submit" class="btn btn-primary w-responsive btn-barra-ferramenta" (click)="clickBtnCancelar()" >Cancelar</button>
+  </div>
+  <div [ngClass]="{ 'd-none': !btnExcluir }">
+    <button type="submit" class="btn btn-primary w-responsive btn-barra-ferramenta" (click)="clickBtnExcluir()"  >Excluir</button>
+  </div>
+  <div [ngClass]="{ 'd-none': !btnNovo }">
+    <button type="submit" class="btn btn-primary w-responsive btn-barra-ferramenta" (click)="clickBtnNovo()"  >Novo</button>
+  </div>
+</div>

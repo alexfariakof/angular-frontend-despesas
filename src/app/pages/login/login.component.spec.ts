@@ -6,6 +6,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ILogin } from 'src/app/shared/interfaces/ILogin';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
+import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -17,7 +19,7 @@ describe('LoginComponent', () => {
     TestBed.configureTestingModule({
       declarations: [LoginComponent],
       imports: [ReactiveFormsModule,  RouterTestingModule, HttpClientTestingModule ],
-      providers: [
+      providers: [AlertComponent, NgbActiveModal,
         { provide: Router, useValue: mockRouter }]
     });
     fixture = TestBed.createComponent(LoginComponent);

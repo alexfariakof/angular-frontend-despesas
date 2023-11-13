@@ -6,8 +6,7 @@ import { SharedModule } from '../../shared/shared.module';
 
 
 @NgModule({
-  providers: [],
   declarations: [DespesasComponent ],
-  imports: [CommonModule, DespesasRoutingModule, SharedModule]  
+  imports: [CommonModule, DespesasRoutingModule, SharedModule]
 })
 export class DespesasModule {}

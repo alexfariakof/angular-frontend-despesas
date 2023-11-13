@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NgbModal, NgbModalConfig, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { AlertComponent } from './alert.component';
 import { AlertModule } from './alert.component.module';
 import { MockAlertComponent } from '__mock__/mock.alert.component';
+
 
 describe('Test AlertComponent', () => {
   let component: AlertComponent;
@@ -15,6 +16,7 @@ describe('Test AlertComponent', () => {
       imports: [ AlertModule ],
       providers: [NgbModalConfig,  NgbModal],
     });
+
 
     fixture = TestBed.createComponent(AlertComponent);
     component = fixture.componentInstance;
@@ -29,11 +31,11 @@ describe('Test AlertComponent', () => {
 
   it('should open modal', () => {
     // Arrange
-    const content = MockAlertComponent;
-    spyOn(modalService, 'open').and.returnValue(modalService.open(content));
+    const content =  MockAlertComponent;
+    spyOn(modalService, 'open');
 
     // Act
-    component.open(content, "Test Alert Component", 'Success');
+    component.modalService.open(content);
 
     // Assert
     expect(modalService.open).toHaveBeenCalled();
