@@ -84,5 +84,4 @@ describe('Test AlertComponent', () => {
     expect(openSpy).toHaveBeenCalledWith(MockAlertComponent, "Test Alert Component", 'Success');
     expect(closeSpy).toHaveBeenCalledWith();
   });
-
 });

@@ -33,5 +33,4 @@ export class CategoriasComponent {
   onClickCancelar = () => {
     this.modalAlert.open(AlertComponent, "Clicou em Cancelar da Categoria", 'Warning');
   }
-
 }

@@ -27,6 +27,4 @@ export class ReceitasComponent {
   onClickCancelar = () => {
     this.modalAlert.open(AlertComponent, "Clicou em Cancelar da Receitas", 'Warning');
   }
-
-
 }

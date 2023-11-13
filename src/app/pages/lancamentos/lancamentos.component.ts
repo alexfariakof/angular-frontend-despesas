@@ -28,6 +28,4 @@ export class LancamentosComponent {
   onClickCancelar = () => {
     this.modalAlert.open(AlertComponent, "Clicou em Cancelar da Lançamentos", 'Warning');
   }
-
-
 }

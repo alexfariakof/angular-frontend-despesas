@@ -151,5 +151,4 @@ describe('PrimeiroAcessoComponent', () => {
     expect(component.showConfirmaSenha).toBe(false);
     expect(component.eyeIconClassConfirmaSenha).toBe('bi-eye');
   });
-
 });

@@ -23,6 +23,7 @@ describe('LancamentosComponent', () => {
   });
 
   it('should create', () => {
+    // Assert
     expect(component).toBeTruthy();
   });
 });

@@ -25,7 +25,6 @@ export class AlertComponent {
   close(){
     this.activeModal.close();
   }
-
 }
 
 type AlertType = 'Success' | 'Warning';
