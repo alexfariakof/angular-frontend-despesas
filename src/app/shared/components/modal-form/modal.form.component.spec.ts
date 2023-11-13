@@ -20,23 +20,31 @@ describe('ModalFormComponent', () => {
   });
 
   it('should create', () => {
+    // Assert
     expect(component).toBeTruthy();
   });
 
   it('should open modal', () => {
-
+    // Arrange
     const content = ['<div></div>'];
     spyOn(component.modalService, 'open');
+
+    // Act
     component.open(content);
+
+    // Assert
     expect(component.modalService.open).toHaveBeenCalled();
     expect(component.modalService.open).toHaveBeenCalledWith(content, { centered: true });
   });
 
   it('should close modal', () => {
+    // Arrange
     spyOn(component.modalService, 'dismissAll');
 
+    // Act
     component.close();
 
+    // Assert
     expect(component.modalService.dismissAll).toHaveBeenCalled();
   });
 });

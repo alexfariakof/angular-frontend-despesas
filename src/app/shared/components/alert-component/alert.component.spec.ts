@@ -4,7 +4,6 @@ import { AlertComponent } from './alert.component';
 import { AlertModule } from './alert.component.module';
 import { MockAlertComponent } from '__mock__/mock.alert.component';
 
-
 describe('Test AlertComponent', () => {
   let component: AlertComponent;
   let fixture: ComponentFixture<AlertComponent>;
