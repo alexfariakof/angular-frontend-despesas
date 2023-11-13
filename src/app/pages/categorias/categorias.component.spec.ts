@@ -4,6 +4,9 @@ import { CategoriaRoutingModule } from './categorias-routing.module';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MenuService } from 'src/app/shared/services/menu-service/menu.service';
+import { ModalFormComponent } from 'src/app/shared/components/modal-form/modal.form.component';
+import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 describe('CategoriasComponent', () => {
   let component: CategoriasComponent;
@@ -12,8 +15,8 @@ describe('CategoriasComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [CategoriasComponent],
-      imports: [CommonModule, CategoriaRoutingModule, SharedModule],
-      providers: [MenuService]
+      imports: [CommonModule, CategoriaRoutingModule, SharedModule ],
+      providers: [MenuService, AlertComponent, ModalFormComponent, NgbActiveModal]
     });
     fixture = TestBed.createComponent(CategoriasComponent);
     component = fixture.componentInstance;

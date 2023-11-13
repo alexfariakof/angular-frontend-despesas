@@ -57,7 +57,9 @@ export class LoginComponent implements OnInit{
         if (result)
           this.router.navigate(['/dashboard']);
       },
-      error: (response) => this.modalALert.open(AlertComponent, response.message, 'Warning'),
+      error :(response) =>  {
+        this.modalALert.open(AlertComponent, response.message, 'Warning');
+      },
       complete() {
 
       }

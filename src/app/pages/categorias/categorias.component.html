@@ -1,4 +1,17 @@
 <app-layout>
-    <span>Categorias</span>
+  <div class="flex-column h-100 pb-2">
+    <div class="flex-grow-0 bg-info w-100 ">
+      <app-barra-ferramenta
+      [onClickNovo]="onClickNovo"
+      [onClickExcluir]="onClickExcluir"
+      [onClickCancelar]="onClickCancelar"
+      [btnNovo]="true"
+      [btnExcluir]=true
+      [btnCancelar]=true
+      >
+    </app-barra-ferramenta>
+    </div>
+    <div class="h-100 flex-grow-1 flex-fill mt-0 m-1  bg-primary  border-primary  rounded-8 overflow-y-auto content-body-max-height scroll-content">
+    </div>
+  </div>
 </app-layout>
-

@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MenuService } from 'src/app/shared/services/menu-service/menu.service';
 import { LancamentosRoutingModule } from './lancamentos-routing.module';
+import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 describe('LancamentosComponent', () => {
   let component: LancamentosComponent;
@@ -13,7 +15,7 @@ describe('LancamentosComponent', () => {
     TestBed.configureTestingModule({
       declarations: [LancamentosComponent],
       imports: [CommonModule, LancamentosRoutingModule, SharedModule],
-      providers: [MenuService]
+      providers: [MenuService, AlertComponent, NgbActiveModal ]
     });
     fixture = TestBed.createComponent(LancamentosComponent);
     component = fixture.componentInstance;
@@ -21,6 +23,7 @@ describe('LancamentosComponent', () => {
   });
 
   it('should create', () => {
+    // Assert
     expect(component).toBeTruthy();
   });
 });

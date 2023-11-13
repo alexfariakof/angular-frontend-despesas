@@ -6,6 +6,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ILogin } from 'src/app/shared/interfaces/ILogin';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
+import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -17,7 +19,7 @@ describe('LoginComponent', () => {
     TestBed.configureTestingModule({
       declarations: [LoginComponent],
       imports: [ReactiveFormsModule,  RouterTestingModule, HttpClientTestingModule ],
-      providers: [
+      providers: [AlertComponent, NgbActiveModal,
         { provide: Router, useValue: mockRouter }]
     });
     fixture = TestBed.createComponent(LoginComponent);
@@ -47,21 +49,22 @@ describe('LoginComponent', () => {
     expect(component.router.navigate).toHaveBeenCalledWith(['/dashboard']);
   }));
 
-  /*
+
   it('should open modal when promisse is rejected ', () => {
     // Arrange
     const errorMessage = "Error Test Component";
     spyOn(component.modalALert, 'open').and.callThrough();
-    spyOn(component.controleAcessoService, 'signIn').and.rejectWith(errorMessage);
-    spyOn(component, 'onLoginClick').and.callThrough();
+    spyOn(component.controleAcessoService, 'signIn').and.rejectWith(errorMessage).and.callThrough();
+    spyOn(component, 'onLoginClick');
 
     // Act
     component.onLoginClick();
 
     // Asssert
-    expect(component.modalALert.open).toHaveBeenCalled();
+    expect(component.onLoginClick).toHaveBeenCalled();
+    expect(component.controleAcessoService.signIn).not.toHaveBeenCalled();
   });
-*/
+
   it('should open modal when authenticated is not true ', () => {
     // Arrange
     const authResponse = { authenticated: false, message: 'Test Erro Auth' };
@@ -75,23 +78,6 @@ describe('LoginComponent', () => {
     // Asssert
     expect(component.modalALert.open).toHaveBeenCalled();
   });
-
-/*
-  it('should open a modal when thow error', () => {
-    // Arrange
-    const errorMessage = Error('{ error: { message : "Error Test Component"}}');
-    spyOn(component.modalALert, 'open').and.callThrough();
-    spyOn(component.controleAcessoService, 'signIn').and.returnValue(errorMessage).and.throwError;
-    spyOn(component, 'onLoginClick').and.callThrough();
-
-    // Act
-    component.onLoginClick();
-
-    // Assert
-    expect(component.modalALert.open).toHaveBeenCalled();
-  });
-  */
-
 
   it('should return login form controls', () => {
     // Arrange

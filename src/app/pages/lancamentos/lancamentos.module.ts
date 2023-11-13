@@ -5,8 +5,7 @@ import { LancamentosRoutingModule } from './lancamentos-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
-  providers: [],
   declarations: [LancamentosComponent ],
-  imports: [CommonModule, LancamentosRoutingModule, SharedModule]  
+  imports: [CommonModule, LancamentosRoutingModule, SharedModule]
 })
 export class LancamentosModule {}

@@ -1,10 +1,9 @@
 import { Component, Input, NgModule } from '@angular/core';
-import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalConfig, NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-alert-component',
-  templateUrl: './alert.component.html',
-  providers: [NgbModalConfig, NgbModal],
+  templateUrl: './alert.component.html'
 })
 
 export class AlertComponent {
@@ -12,7 +11,7 @@ export class AlertComponent {
   @Input() message:string ='';
   alertTypeClass : string = 'alert alert-success mt-2';
 
-  constructor(config: NgbModalConfig, private modalService: NgbModal) {
+  constructor(config: NgbModalConfig, public modalService: NgbModal, public activeModal: NgbActiveModal) {
 		config.backdrop = 'static';
     config.keyboard = false;
 	}
@@ -24,9 +23,8 @@ export class AlertComponent {
 	}
 
   close(){
-    this.modalService.dismissAll();
+    this.activeModal.close();
   }
-
 }
 
 type AlertType = 'Success' | 'Warning';

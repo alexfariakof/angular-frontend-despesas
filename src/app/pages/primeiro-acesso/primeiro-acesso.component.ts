@@ -10,7 +10,7 @@ import { AlertComponent } from 'src/app/shared/components/alert-component/alert.
   selector: 'app-primeiro-acesso',
   templateUrl: './primeiro-acesso.component.html',
   styleUrls: ['./primeiro-acesso.component.scss'],
-  providers: [ControleAcessoService, AlertComponent]
+  providers: [ControleAcessoService]
 })
 export class PrimeiroAcessoComponent  implements OnInit {
   public controleAcesso: IControleAcesso = {   nome: '', sobreNome: '', telefone: '', email: '', senha: '', confirmaSenha: '' };
@@ -82,4 +82,3 @@ export class PrimeiroAcessoComponent  implements OnInit {
     }
   }
 }
-
