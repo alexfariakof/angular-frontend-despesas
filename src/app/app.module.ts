@@ -13,10 +13,6 @@ import { AlertComponent } from './shared/components/alert-component/alert.compon
 import { ModalFormComponent } from './shared/components/modal-form/modal.form.component';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertModule } from './shared/components/alert-component/alert.component.module';
-import { CategoriasFormComponent } from './pages/categorias/categorias-form/categorias.form.component';
-import { AlertComponent } from './shared/components/alert-component/alert.component';
-import { ModalFormComponent } from './shared/components/modal-form/modal.form.component';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -31,7 +27,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
     CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    AlertModule
   ],
   providers: [MenuService, AlertComponent, ModalFormComponent, NgbActiveModal],
   bootstrap: [AppComponent]

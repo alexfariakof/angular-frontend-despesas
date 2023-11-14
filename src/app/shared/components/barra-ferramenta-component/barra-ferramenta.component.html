@@ -1,8 +1,14 @@
 <div class="d-flex flex-row-reverse pt-2 pb-2" >
   <div class="btn-barra-ferramenta">
-    <button type="submit" class="btn btn-primary " (click)="clickBtnVoltar()" >Voltar</button>
+    <button type="submit" class="btn btn-primary " (click)="clickBtnVoltar()" >
+      <i class="bi bi-arrow-left-circle"></i>
+      Voltar
+    </button>
   </div>
   <div class="btn-barra-ferramenta" [ngClass]="{ 'd-none': !btnNovo }">
-    <button type="submit" class="btn btn-primary " (click)="clickBtnNovo()"  >Novo</button>
+    <button type="submit" class="btn btn-primary " (click)="clickBtnNovo()"  >
+      <i class="bi bi-plus-circle"></i>
+      Novo
+    </button>
   </div>
 </div>
