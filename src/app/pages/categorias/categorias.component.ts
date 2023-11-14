@@ -10,7 +10,9 @@ import { BarraFerramentaClass } from 'src/app/shared/components/barra-ferramenta
   templateUrl: './categorias.component.html',
   styleUrls: ['./categorias.component.scss']
 })
+
 export class CategoriasComponent implements BarraFerramentaClass {
+  dtOptions: DataTables.Settings = {};
 
   constructor(
     private menuService: MenuService,
@@ -20,6 +22,20 @@ export class CategoriasComponent implements BarraFerramentaClass {
 
   ngOnInit() {
     this.menuService.menuSelecionado = 2;
+    this.dtOptions = {
+      ajax: 'data/data.json',
+      columns: [{
+        title: 'ID',
+        data: 'id'
+      }, {
+        title: 'First name',
+        data: 'firstName'
+      }, {
+        title: 'Last name',
+        data: 'lastName'
+      }]
+    };
+
   }
 
   onClickNovo = () => {

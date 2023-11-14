@@ -3,9 +3,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LayoutComponent } from './components/layout/layout.component';
 import { BarraFerramentaComponent } from './components/barra-ferramenta-component/barra-ferramenta.component';
+import { DataTablesModule } from "angular-datatables";
+
 @NgModule({
   declarations: [LayoutComponent ],
-  exports: [LayoutComponent, BarraFerramentaComponent],
-  imports: [CommonModule, BarraFerramentaModule]
+  exports: [LayoutComponent, BarraFerramentaComponent, DataTablesModule],
+  imports: [CommonModule, BarraFerramentaModule ]
 })
 export class SharedModule { }
