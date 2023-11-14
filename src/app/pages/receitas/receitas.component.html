@@ -1,9 +1,8 @@
 <app-layout>
-  <div class="flex-column h-100 pb-2">
-    <div class="flex-grow-0 bg-info w-100 ">
-      <app-barra-ferramenta></app-barra-ferramenta>
-    </div>
-    <div class="h-100 flex-grow-1 flex-fill mt-0 m-1  bg-primary  border-primary  rounded-8 overflow-y-auto content-body-max-height scroll-content">
-    </div>
+  <div class="flex-grow-0 bg-info w-100 ">
+    <app-barra-ferramenta  [onClickNovo]="onClickNovo" [btnNovo]="true"  >
+    </app-barra-ferramenta>
   </div>
+  <div class="h-100 d-flex flex-column flex-grow-1 flex-fill m-1 bg-primary  border-primary  rounded-4 overflow-scroll-hidden">
+ </div>
 </app-layout>

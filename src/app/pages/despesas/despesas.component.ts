@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { BarraFerramentaClass } from 'src/app/shared/components/barra-ferramenta-component/barra-ferramenta.abstract';
 import { MenuService } from 'src/app/shared/services/menu-service/menu.service';
 
 @Component({
@@ -7,13 +8,16 @@ import { MenuService } from 'src/app/shared/services/menu-service/menu.service';
   templateUrl: './despesas.component.html',
   styleUrls: ['./despesas.component.scss']
 })
-export class DespesasComponent {
+export class DespesasComponent implements BarraFerramentaClass {
 
   constructor(public menuService: MenuService, public formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
     this.menuService.menuSelecionado = 3;
+  }
+
+  onClickNovo = () => {
   }
 
 }

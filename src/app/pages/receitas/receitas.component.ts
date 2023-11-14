@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
+import { BarraFerramentaClass } from 'src/app/shared/components/barra-ferramenta-component/barra-ferramenta.abstract';
 import { MenuService } from 'src/app/shared/services/menu-service/menu.service';
-
 @Component({
   selector: 'app-receitas',
   templateUrl: './receitas.component.html',
   styleUrls: ['./receitas.component.scss']
 })
-export class ReceitasComponent {
+export class ReceitasComponent implements BarraFerramentaClass {
   constructor(public menuService: MenuService, public formBuilder: FormBuilder, public modalAlert: AlertComponent) {
   }
 
@@ -17,11 +17,5 @@ export class ReceitasComponent {
   }
 
   onClickNovo = () => {
-  }
-
-  onClickExcluir = () =>  {
-  }
-
-  onClickCancelar = () => {
   }
 }

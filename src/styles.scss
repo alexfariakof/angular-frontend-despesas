@@ -10,9 +10,34 @@ h2 {
   color: white;
 }
 
-.max-height-scroll {
-  max-height: 68vh;
-  overflow-y: auto;
+.scroll-content {
+  scrollbar-width: 0;
+  scrollbar-color: gray ;
+  scroll-margin: 0;
+  border: 0;
+}
+
+.scroll-content::-webkit-scrollbar-corner {
+  width: 0;
+}
+
+/* Works on Chrome, Edge, and Safari */
+.scroll-content::-webkit-scrollbar {
+  width: 0.2rem;
+  scroll-margin: 0;
+}
+
+.scroll-content::-webkit-scrollbar-track {
+  scroll-margin: 0;
+  background-color: transparent ;
+  border: 0;
+}
+
+.scroll-content::-webkit-scrollbar-thumb {
+  scroll-margin: 0;
+  background-color: transparent ;
+  border-radius: 0.4rem;
+  border: 0.1rem solid gray;
 }
 
 .content-header-max-height {

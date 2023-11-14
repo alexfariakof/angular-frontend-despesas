@@ -1,8 +1,7 @@
-import { Component, OnInit, NgModule } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
-import { IControleAcesso } from 'src/app/shared/interfaces/IControleAcesso';
 
 @Component({
   selector: 'app-categorias.form',
@@ -23,7 +22,7 @@ export class CategoriasFormComponent implements OnInit {
 
 
   onSaveClick = () => {
-    //this.modalALert.open(AlertComponent, 'Teste Modal Alert In Moadl Form', 'Success');
+    this.modalALert.open(AlertComponent, 'Teste Modal Alert In Moadl Form', 'Warning');
   }
 
 

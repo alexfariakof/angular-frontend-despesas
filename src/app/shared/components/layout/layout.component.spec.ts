@@ -5,8 +5,6 @@ import { CommonModule } from '@angular/common';
 import { MenuService } from '../../services/menu-service/menu.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LayoutRoutingModule } from './layout-routing.module';
-import { PerfilComponent } from 'src/app/pages/perfil/perfil.component';
-import { ConfiguracoesComponent } from 'src/app/pages/configuracoes/configuracoes.component';
 
 describe('LayoutComponent', () => {
   let component: LayoutComponent;

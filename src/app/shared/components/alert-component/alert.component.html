@@ -3,8 +3,6 @@
     <h1 class="modal-title fs-5" id="success">{{header}}</h1>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
   </div>
-  <div [ngClass]="alertTypeClass" role="alert">
-    {{message!}}
-  </div>
+  <i [ngClass]="alertTypeClass" role="alert">  {{message!}}</i>
 </div>
 
