@@ -2,8 +2,6 @@ import { PrimeiroAcessoComponent } from './pages/primeiro-acesso/primeiro-acesso
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
-import { PerfilComponent } from './pages/perfil/perfil.component';
-import { ConfiguracoesComponent } from './pages/configuracoes/configuracoes.component';
 
 const routes: Routes = [
   { path: '',  pathMatch: 'full', redirectTo: 'login' },
@@ -14,8 +12,8 @@ const routes: Routes = [
   { path: 'despesa', loadChildren: () => import('./pages/despesas/despesas.module').then(m => m.DespesasModule), },
   { path: 'receita', loadChildren: () => import('./pages/receitas/receitas.module').then(m => m.ReceitasModule), },
   { path: 'lancamento', loadChildren: () => import('./pages/lancamentos/lancamentos.module').then(m => m.LancamentosModule),},
-  { path: 'perfil', component: PerfilComponent },
-  { path: 'configuracoes', component: ConfiguracoesComponent }
+  { path: 'perfil', loadChildren: () => import('./pages/perfil/perfil.module').then(m => m.PerfilModule), },
+  { path: 'configuracoes', loadChildren: () => import('./pages/configuracoes/configuracoes.module').then(m => m.ConfiguracoesModule),}
 ];
 
 @NgModule({
