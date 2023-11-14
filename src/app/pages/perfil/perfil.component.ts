@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
-import { BarraFerramentaClass } from 'src/app/shared/components/barra-ferramenta-component/barra-ferramenta.abstract';
 import { BarraFerramentaModule } from 'src/app/shared/components/barra-ferramenta-component/barra-ferramenta.component.module';
 import { MenuService } from 'src/app/shared/services/menu-service/menu.service';
 
