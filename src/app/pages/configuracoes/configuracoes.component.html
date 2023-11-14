@@ -1,5 +1,5 @@
-<div class="d-flex flex-column h-100">
-  <div class="flex-grow-0 bg-info w-100 content-header-max-height">
+<div class="d-flex flex-column h-100  ">
+  <div class="flex-grow-0 bg-info w-100">
     <nav class="navbar navbar-dark bg-dark navbar-dark navbar navbar-expand-md navbar-expand-lg">
       <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar"
@@ -59,7 +59,7 @@
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                <li><button class="nav-link dropdown-item"><i class="bi bi-power"></i> Sair</button></li>
+                <li><button (click)="onLogoutClick()" class="nav-link dropdown-item" ><i class="bi bi-power"></i> Sair</button></li>
               </ul>
             </li>
           </ul>
@@ -67,7 +67,11 @@
       </div>
     </nav>
   </div>
-  <div class="h-98 flex-grow-1 flex-fill m-1 bg-primary  border-primary  rounded-8 overflow-y-auto ">
-    <span>Configurações</span>
+  <div class="flex-grow-0 bg-info w-100 ">
+    <app-barra-ferramenta  >
+    </app-barra-ferramenta>
+  </div>
+  <div class="h-100 d-flex flex-column flex-grow-1 flex-fill m-1 bg-primary  border-primary  rounded-4 overflow-scroll-hidden">
   </div>
 </div>
+

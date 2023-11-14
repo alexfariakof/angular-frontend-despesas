@@ -1,4 +1,27 @@
 .btn-barra-ferramenta {
-  width: auto;
-  margin-right: 0.2rem;
+  margin-right: 4px;
+}
+
+@media (min-width: 768px) {
+  .btn-barra-ferramenta {
+    width: auto;
+  }
+
+  .btn-barra-ferramenta button {
+    width: auto;
+    margin-right: 4px;
+  }
+
+  @media screen and (max-width: 540px) {
+    .btn-barra-ferramenta {
+      width: auto;
+    }
+
+    .btn-barra-ferramenta button {
+      width: 10px;
+      height: 10px;
+      margin-right: 4px;
+      font-size: small;
+    }
+  }
 }
