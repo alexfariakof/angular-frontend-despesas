@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PerfilRoutingModule } from './perfil.routing.module';
-import { FormsModule } from '@angular/forms';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { PerfilComponent } from './perfil.component';
 @NgModule({
-  imports: [ CommonModule, FormsModule, PerfilRoutingModule ]
+  declarations: [PerfilComponent],
+  imports: [ CommonModule, PerfilRoutingModule, SharedModule ]
 })
 export class PerfilModule {}
