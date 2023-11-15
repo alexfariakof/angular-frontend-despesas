@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-import { ConfiguracoesRoutingModule } from 'src/app/pages/configuracoes/configuracoes-routing.module';
-import { PerfilRoutingModule } from 'src/app/pages/perfil/perfil-routing.module';
-import { LayoutRoutingModule } from '../../components/layout/layout-routing.module';
+import { ConfiguracoesRoutingModule } from 'src/app/pages/configuracoes/configuracoes.routing.module';
+import { PerfilRoutingModule } from 'src/app/pages/perfil/perfil.routing.module';
+import { LayoutRoutingModule } from '../../components/layout/layout.routing.module';
 import { MenuService } from './menu.service';
 import { Router } from "@angular/router";
 

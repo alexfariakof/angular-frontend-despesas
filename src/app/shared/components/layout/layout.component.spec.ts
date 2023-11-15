@@ -1,12 +1,12 @@
-import { Router, Routes } from '@angular/router';
+import { Router } from '@angular/router';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LayoutComponent } from './layout.component';
 import { CommonModule } from '@angular/common';
 import { MenuService } from '../../services/menu-service/menu.service';
 import { RouterTestingModule } from '@angular/router/testing';
-import { LayoutRoutingModule } from './layout-routing.module';
+import { LayoutRoutingModule } from './layout.routing.module';
 
-describe('LayoutComponent', () => {
+describe('Unit Test LayoutComponent', () => {
   let component: LayoutComponent;
   let fixture: ComponentFixture<LayoutComponent>;
   let router: Router;
@@ -23,15 +23,25 @@ describe('LayoutComponent', () => {
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
+
   it('should create', () => {
+    // Assert
     expect(component).toBeTruthy();
   });
 
   it('should navigate to dashboard when menu is 1', () => {
+    // Arrange
     spyOn(router, 'navigate');
+
+    // Act
     component.selectMenu(1);
+
+    // Assert
     expect(router.navigate).toHaveBeenCalledWith(['/dashboard']);
-   });
+  });
 
   it('should navigate to categoria when menu is 2', () => {
     spyOn(router, 'navigate');

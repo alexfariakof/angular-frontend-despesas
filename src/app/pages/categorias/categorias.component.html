@@ -3,6 +3,7 @@
     <app-barra-ferramenta  [onClickNovo]="onClickNovo" [btnNovo]="true"  >
     </app-barra-ferramenta>
   </div>
-  <div class="h-100 d-flex flex-column flex-grow-1 flex-fill m-1 bg-primary  border-primary  rounded-4 overflow-scroll-hidden">
+  <div class="h-100 d-flex flex-column flex-grow-1 flex-fill m-1 p-2 border border-2 border-primary rounded-4 overflow-scroll-hidden">
+    <app-data-table [columns]="columns" [data]="getCategoriasData()" [editAction]="onEdit" [deleteAction]="onDelete" ></app-data-table>
   </div>
 </app-layout>

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MenuService } from '../../shared/services/menu-service/menu.service';
-import { PerfilRoutingModule } from './perfil-routing.module';
+import { PerfilRoutingModule } from './perfil.routing.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';

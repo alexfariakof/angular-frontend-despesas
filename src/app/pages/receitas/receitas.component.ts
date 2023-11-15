@@ -9,6 +9,8 @@ import { MenuService } from 'src/app/shared/services/menu-service/menu.service';
   styleUrls: ['./receitas.component.scss']
 })
 export class ReceitasComponent implements BarraFerramentaClass {
+  dtOptions: DataTables.Settings = {};
+
   constructor(public menuService: MenuService, public formBuilder: FormBuilder, public modalAlert: AlertComponent) {
   }
 
