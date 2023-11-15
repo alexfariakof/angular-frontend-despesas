@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CategoriasComponent } from './categorias.component';
-import { CategoriaRoutingModule } from './categorias-routing.module';
+import { CategoriaRoutingModule } from './categorias.routing.module';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MenuService } from 'src/app/shared/services/menu-service/menu.service';

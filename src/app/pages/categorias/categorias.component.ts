@@ -33,7 +33,7 @@ export class CategoriasComponent implements BarraFerramentaClass {
       }, {
         title: 'Last name',
         data: 'lastName'
-      }]
+      }],
     };
 
   }

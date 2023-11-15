@@ -4,7 +4,7 @@ import { ConfiguracoesComponent } from './configuracoes.component';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MenuService } from 'src/app/shared/services/menu-service/menu.service';
-import { ConfiguracoesRoutingModule } from './configuracoes-routing.module';
+import { ConfiguracoesRoutingModule } from './configuracoes.routing.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
