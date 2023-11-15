@@ -1,5 +1,3 @@
-import { ITipoCategoria } from "./ITipoCategoria";
-
 export interface ICategoria {
   id:number;
   descricao: string;
