@@ -9,8 +9,8 @@ import { Subject } from 'rxjs';
 
 export class DataTableComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
-  @Input() editAction: Function;
-  @Input() deleteAction: Function;
+  @Input() editAction: Function = () => {};
+  @Input() deleteAction: Function = () => {};
   @Input() columns: { title: string; data: string }[] = [];
   @Input() data: any[] = [];
   Trigger: any;
