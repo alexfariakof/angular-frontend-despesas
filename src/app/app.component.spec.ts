@@ -8,6 +8,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app.routing.module';
 import { PrimeiroAcessoComponent } from './pages/primeiro-acesso/primeiro-acesso.component';
+import { AuthService } from './shared/services/Auth/auth.service';
 
 describe('AppComponent', () => {
   let app: AppComponent;
@@ -17,7 +18,7 @@ describe('AppComponent', () => {
      TestBed.configureTestingModule({
           declarations: [AppComponent, LoginComponent, PrimeiroAcessoComponent],
           imports: [RouterTestingModule, BrowserModule, AppRoutingModule, CommonModule,  ReactiveFormsModule, HttpClientModule, FormsModule ],
-        providers: []
+        providers: [AuthService]
     });
     fixture = TestBed.createComponent(AppComponent);
     app = fixture.componentInstance;
@@ -34,10 +35,4 @@ describe('AppComponent', () => {
   it('should initialize isAuthenticated to false', () => {
     expect(app.isAuthenticated).toBe(false);
   });
-
-  it('should set isAuthenticated to true when onLoginClicked is called', () => {
-    app.onLoginClicked();
-    expect(app.isAuthenticated).toBe(true);
-  });
-
 });

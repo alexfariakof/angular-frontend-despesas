@@ -8,7 +8,8 @@
 
   export class CategoriaService {
 
-    constructor(private httpClient: HttpClient) { }
+    constructor(private httpClient: HttpClient) {
+    }
 
     private readonly baseUrl = environment["endPoint"];
 

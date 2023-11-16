@@ -16,7 +16,7 @@ export class AlertComponent {
     config.keyboard = false;
 	}
 
-	open(content, _message: string, typeAlert: AlertType ) {
+	open(content: any, _message: string, typeAlert: AlertType ) {
 		const modalRef = this.modalService.open(content);
     modalRef.componentInstance.alertTypeClass = AlertTypeClass[typeAlert];
     modalRef.componentInstance.message = _message;

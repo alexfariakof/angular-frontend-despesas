@@ -1,5 +1,5 @@
-export const ITipoCategoria = {
-  0: 'Todos',
-  1: 'Despesas',
-  2: 'Receitas'
+export enum ITipoCategoria  {
+  Todos = 0,
+  Despesas = 1,
+  Receitas = 2
 }

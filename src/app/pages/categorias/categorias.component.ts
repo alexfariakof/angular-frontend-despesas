@@ -85,11 +85,11 @@ export class CategoriasComponent implements BarraFerramentaClass {
     };
   });
 
-  onEdit = (message) => {
+  onEdit = (message: String) => {
     this.modalAlert.open(AlertComponent, 'Editar Categortia: ' + message, 'Success');
   }
 
-  onDelete = (message) => {
+  onDelete = (message: String) => {
     this.modalAlert.open(AlertComponent, 'Deletar Categoria:' + message, 'Warning');
   }
 

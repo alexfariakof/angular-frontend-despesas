@@ -13,7 +13,7 @@ export class ModalFormComponent {
     config.keyboard = false;
 	}
 
-	open(content) {
+	open(content: any) {
 		this.modalService.open(content, { centered: true });
 	}
 

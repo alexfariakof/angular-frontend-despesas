@@ -13,6 +13,8 @@ import { AlertComponent } from './shared/components/alert-component/alert.compon
 import { ModalFormComponent } from './shared/components/modal-form/modal.form.component';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertModule } from './shared/components/alert-component/alert.component.module';
+import { ControleAcessoService } from './shared/services/controle-acesso/controle-acesso.service';
+import { AuthService } from './shared/services/Auth/auth.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,7 @@ import { AlertModule } from './shared/components/alert-component/alert.component
     FormsModule,
     AlertModule
   ],
-  providers: [MenuService, AlertComponent, ModalFormComponent, NgbActiveModal],
+  providers: [AuthService, ControleAcessoService, MenuService, AlertComponent, ModalFormComponent, NgbActiveModal],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

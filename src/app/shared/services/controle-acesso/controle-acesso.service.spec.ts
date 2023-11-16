@@ -29,7 +29,7 @@ describe('Unit Test ControleAcessoService', () => {
       const mockResponse = { message: true };
 
       // Call the service method inside a subscribe to ensure the request is made
-      service.signIn(loginData).subscribe(response => {
+      service.signIn(loginData).subscribe((response: any) => {
         // Expect that the response is a truthy value
         expect(response).toBeTruthy();
       });
@@ -66,7 +66,7 @@ describe('Unit Test ControleAcessoService', () => {
       const mockResponse = { message: true };
 
       // Call the service method inside a subscribe to ensure the request is made
-      service.createUsuario(controleAcessoData).subscribe(response => {
+      service.createUsuario(controleAcessoData).subscribe((response: any) => {
         // Expect that the response is a truthy value
         expect(response).toBeTruthy();
       });

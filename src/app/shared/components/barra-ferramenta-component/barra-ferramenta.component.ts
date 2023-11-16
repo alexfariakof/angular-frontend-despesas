@@ -7,8 +7,8 @@ import { BarraFerramentaClass } from './barra-ferramenta.abstract';
 })
 
 export class BarraFerramentaComponent implements BarraFerramentaClass{
-  @Input() onClickNovo: Function;
-  @Input() btnNovo: boolean;
+  @Input() onClickNovo: Function = () => {};
+  @Input() btnNovo: boolean =  false;
 
   clickBtnNovo() {
     if (this.onClickNovo) {
