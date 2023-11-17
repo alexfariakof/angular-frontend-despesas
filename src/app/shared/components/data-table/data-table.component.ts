@@ -12,7 +12,7 @@ export class DataTableComponent implements OnInit {
   @Input() editAction: Function = () => {};
   @Input() deleteAction: Function = () => {};
   @Input() columns: { title: string; data: string }[];
-  @Input() data: any[];
+  @Input() data: any[] = [];
   Trigger: any;
 
   ngOnInit() {
@@ -25,12 +25,16 @@ export class DataTableComponent implements OnInit {
       searching: false,
       paging: false,
       ordering: false,
+      info: false,
       language: {
         search: 'Pesquisar :',
         lengthMenu: 'Mostrando _MENU_ registros por página',
-        zeroRecords: 'Nada encontrado',
-        info: 'Total de _MAX_ registros.',
-        infoEmpty: 'Mostrando página _PAGE_ de _PAGES_',
+        zeroRecords: ' ',
+        info: ' ',
+        infoEmpty: 'Total de _MAX_ registros. ',
+        //zeroRecords: 'Nada encontrado',
+        //info: 'Total de _MAX_ registros.',
+        //infoEmpty: 'Mostrando página _PAGE_ de _PAGES_',
         infoFiltered: '(filtrado de _MAX_ registros no total)',
         paginate: {
           previous: 'Anterior',
