@@ -5,8 +5,8 @@ import { map, catchError } from "rxjs";
 import { AlertComponent } from "src/app/shared/components/alert-component/alert.component";
 import { IAuth } from "src/app/shared/interfaces/IAuth";
 import { ILogin } from "src/app/shared/interfaces/ILogin";
-import { AuthService } from "src/app/shared/services/Auth/auth.service";
-import { ControleAcessoService } from "src/app/shared/services/controle-acesso/controle-acesso.service";
+import { AuthService } from "src/app/shared/services/auth/auth.service";
+import { ControleAcessoService } from "src/app/shared/services/api/controle-acesso/controle-acesso.service";
 
 @Component({
   selector: 'app-login',

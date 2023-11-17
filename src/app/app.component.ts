@@ -1,4 +1,4 @@
-import { AuthService } from 'src/app/shared/services/Auth/auth.service';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-root',
@@ -7,9 +7,6 @@ import { Component, OnInit } from '@angular/core';
   providers: [AuthService]
 })
 export class AppComponent  implements OnInit {
-  title = 'despesas-frontend-angular';
-  isAuthenticated:Boolean = false;
-  message:string= '';
 
   constructor(private authProviderService: AuthService) {}
 

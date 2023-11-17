@@ -2,7 +2,7 @@ import { PrimeiroAcessoComponent } from './pages/primeiro-acesso/primeiro-acesso
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
-import { AuthProvider } from './shared/services/Auth/auth.provider';
+import { AuthProvider } from './shared/services/auth/auth.provider';
 
 const routes: Routes = [
   { path: '',  pathMatch: 'full', redirectTo: 'login' },

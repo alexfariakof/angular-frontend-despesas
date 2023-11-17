@@ -8,9 +8,8 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AuthService } from 'src/app/shared/services/Auth/auth.service';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { IAuth } from 'src/app/shared/interfaces/IAuth';
-import { AuthProvider } from 'src/app/shared/services/Auth/auth.provider';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -55,6 +54,7 @@ describe('LoginComponent', () => {
     spyOn(component, 'onLoginClick').and.callThrough();
     mockAuthService.createAccessToken.and.returnValue(true);
     mockAuthService.isAuthenticated.and.returnValue(true);
+
     // Act
     component.login = login;
     component.onLoginClick();

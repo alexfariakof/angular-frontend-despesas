@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IControleAcesso } from "src/app/shared/interfaces/IControleAcesso";
 import { Router } from '@angular/router';
-import { ControleAcessoService } from 'src/app/shared/services/controle-acesso/controle-acesso.service';
+import { ControleAcessoService } from 'src/app/shared/services/api/controle-acesso/controle-acesso.service';
 import { map, catchError } from 'rxjs';
 import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
 

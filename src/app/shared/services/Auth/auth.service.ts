@@ -1,4 +1,4 @@
-import { ControleAcessoService } from 'src/app/shared/services/controle-acesso/controle-acesso.service';
+import { ControleAcessoService } from 'src/app/shared/services/api/controle-acesso/controle-acesso.service';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { IAuth } from '../../interfaces/IAuth';
@@ -17,7 +17,7 @@ export class AuthService  {
 
     try {
       if (accessToken) {
-        this.setAccessToken(JSON.parse(accessToken));
+        this.setAccessToken(accessToken);
       } else {
         this.clearLocalStorage();
       }
@@ -26,7 +26,7 @@ export class AuthService  {
     }
   }
 
-  private clearLocalStorage() {
+  public clearLocalStorage() {
     this.setAccessToken(undefined);
     localStorage.clear();
   }
@@ -43,7 +43,7 @@ export class AuthService  {
   createAccessToken(auth: IAuth): Boolean {
     try {
       localStorage.setItem('idUsuario', auth.usuario.id);
-      localStorage.setItem('@dpApiAccess', JSON.stringify(auth.accessToken));
+      localStorage.setItem('@dpApiAccess', auth.accessToken);
       localStorage.setItem('@expiration', auth.expiration);
       this.setAccessToken(auth.accessToken);
       return true;

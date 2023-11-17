@@ -1,9 +1,9 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { ControleAcessoService } from './controle-acesso.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { ILogin } from '../../interfaces/ILogin';
-import { environment } from '../../environments/environment';
-import { IControleAcesso } from '../../interfaces/IControleAcesso';
+import { ILogin } from '../../../interfaces/ILogin';
+import { environment } from '../../../environments/environment';
+import { IControleAcesso } from '../../../interfaces/IControleAcesso';
 
 describe('Unit Test ControleAcessoService', () => {
 
