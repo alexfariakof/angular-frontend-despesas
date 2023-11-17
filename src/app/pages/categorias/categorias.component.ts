@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
 import { ModalFormComponent } from 'src/app/shared/components/modal-form/modal.form.component';
 import { MenuService } from 'src/app/shared/services/menu-service/menu.service';
@@ -8,6 +7,7 @@ import { BarraFerramentaClass } from 'src/app/shared/components/barra-ferramenta
 import { ICategoria } from './../../shared/interfaces/ICategoria';
 import { ITipoCategoria } from './../../shared/interfaces/ITipoCategoria';
 import { DataTableComponent } from 'src/app/shared/components/data-table/data-table.component';
+import { CategoriaService } from 'src/app/shared/services/api/categorias/categoria.service';
 @Component({
   selector: 'app-categorias',
   templateUrl: './categorias.component.html',
@@ -15,41 +15,8 @@ import { DataTableComponent } from 'src/app/shared/components/data-table/data-ta
 })
 
 export class CategoriasComponent implements BarraFerramentaClass {
-  catgorias: ICategoria[] =
-  [
-    {
-      id: 1,
-      descricao: 'Categoria 1',
-      idUsuario: 1,
-      idTipoCategoria: 1
-    },
-    {
-      id: 2,
-      descricao: 'Categoria 2',
-      idUsuario: 1,
-      idTipoCategoria: 2,
-    },
-    {
-      id: 3,
-      descricao: 'Categoria 3',
-      idUsuario: 2,
-      idTipoCategoria: 1,
-    }
-  ];
-
+  catgorias: ICategoria[];
   columns = [
-    {
-      title:'',
-      data: 'edit',
-    },
-    {
-      title:'',
-      data: 'delete',
-    },
-    {
-      title: 'ID',
-      data: 'id'
-    },
     {
       title: 'Descrição',
       data: 'descricao'
@@ -62,15 +29,26 @@ export class CategoriasComponent implements BarraFerramentaClass {
 
   constructor(
     private menuService: MenuService,
-    private formBuilder: FormBuilder,
     public modalAlert: AlertComponent,
     public modalForm: ModalFormComponent,
-    public dataTable: DataTableComponent
+    public dataTable: DataTableComponent,
+    public categoriaService: CategoriaService,
     ) { }
 
   ngOnInit() {
     this.menuService.menuSelecionado = 2;
-    this.dataTable.ngOnInit();
+    this.categoriaService.getCategorias()
+    .subscribe({
+      next: (result: ICategoria[]) => {
+        if (result)
+          this.catgorias = result;
+
+      },
+      error :(response : any) =>  {
+        this.modalAlert.open(AlertComponent, response.message, 'Warning');
+      }
+    });
+
   }
 
   onClickNovo = () => {
@@ -79,17 +57,16 @@ export class CategoriasComponent implements BarraFerramentaClass {
 
   getCategoriasData = () => this.catgorias.map((categoria: ICategoria) => {
     return {
-      id: categoria.id,
       descricao: categoria.descricao,
-      tipoCategoria: ITipoCategoria[categoria.idTipoCategoria]
+      tipoCategoria: ITipoCategoria[categoria.idTipoCategoria] as String
     };
   });
 
-  onEdit = (message) => {
+  onEdit = (message: String) => {
     this.modalAlert.open(AlertComponent, 'Editar Categortia: ' + message, 'Success');
   }
 
-  onDelete = (message) => {
+  onDelete = (message: String) => {
     this.modalAlert.open(AlertComponent, 'Deletar Categoria:' + message, 'Warning');
   }
 

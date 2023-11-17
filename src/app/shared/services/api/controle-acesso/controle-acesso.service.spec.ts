@@ -1,9 +1,9 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { ControleAcessoService } from './controle-acesso.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { ILogin } from '../../interfaces/ILogin';
-import { environment } from '../../environments/environment';
-import { IControleAcesso } from '../../interfaces/IControleAcesso';
+import { ILogin } from '../../../interfaces/ILogin';
+import { environment } from '../../../environments/environment';
+import { IControleAcesso } from '../../../interfaces/IControleAcesso';
 
 describe('Unit Test ControleAcessoService', () => {
 
@@ -29,7 +29,7 @@ describe('Unit Test ControleAcessoService', () => {
       const mockResponse = { message: true };
 
       // Call the service method inside a subscribe to ensure the request is made
-      service.signIn(loginData).subscribe(response => {
+      service.signIn(loginData).subscribe((response: any) => {
         // Expect that the response is a truthy value
         expect(response).toBeTruthy();
       });
@@ -66,7 +66,7 @@ describe('Unit Test ControleAcessoService', () => {
       const mockResponse = { message: true };
 
       // Call the service method inside a subscribe to ensure the request is made
-      service.createUsuario(controleAcessoData).subscribe(response => {
+      service.createUsuario(controleAcessoData).subscribe((response: any) => {
         // Expect that the response is a truthy value
         expect(response).toBeTruthy();
       });

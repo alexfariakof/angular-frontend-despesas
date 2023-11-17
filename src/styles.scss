@@ -3,6 +3,12 @@ html, body {
   overflow: hidden;
 }
 
+footer {
+  .opacity-50 {
+    opacity: 0.5;
+  }
+}
+
 h2 {
   font-size: 5vw;
   font-weight: bolder;

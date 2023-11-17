@@ -11,35 +11,35 @@ export class DataTableComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   @Input() editAction: Function = () => {};
   @Input() deleteAction: Function = () => {};
-  @Input() columns: { title: string; data: string }[] = [];
-  @Input() data: any[] = [];
+  @Input() columns: { title: string; data: string }[];
+  @Input() data: any[];
   Trigger: any;
 
   ngOnInit() {
+    this.initializeDataTable();
+
+  }
+
+  private initializeDataTable() {
     this.dtOptions = {
-      data: this.data,
-      columns: this.columns,
-      lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, 'Todos'], ],
-      pageLength: -1,
-      paging: true,
-      scrollCollapse: true,
+      searching: false,
+      paging: false,
+      ordering: false,
       language: {
-        search: "Pesquisar :",
-        lengthMenu: "Mostrando _MENU_ registros por página",
-        zeroRecords: "Nada encontrado",
-        info: "Mostrando página _PAGE_ de _PAGES_",
-        infoEmpty: "Nenhum registro disponível",
-        infoFiltered: "(filtrado de _MAX_ registros no total)",
-        paginate:{
-          previous: "Anterior",
+        search: 'Pesquisar :',
+        lengthMenu: 'Mostrando _MENU_ registros por página',
+        zeroRecords: 'Nada encontrado',
+        info: 'Total de _MAX_ registros.',
+        infoEmpty: 'Mostrando página _PAGE_ de _PAGES_',
+        infoFiltered: '(filtrado de _MAX_ registros no total)',
+        paginate: {
+          previous: 'Anterior',
           first: 'Primeiro',
           last: 'Último',
-          next: 'Proxímo'
-        }
-      }
+          next: 'Proxímo',
+        },
+      },
     };
-
-    this.Trigger = new Subject();
   }
 
   handleAction(action: string, id: string) {

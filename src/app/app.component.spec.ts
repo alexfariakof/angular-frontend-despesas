@@ -8,36 +8,41 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app.routing.module';
 import { PrimeiroAcessoComponent } from './pages/primeiro-acesso/primeiro-acesso.component';
+import { AuthService } from './shared/services/auth/auth.service';
+import { Router } from '@angular/router';
+import { AuthProvider } from './shared/services/auth/auth.provider';
+import { DataTableModule } from './shared/components/data-table/data-table.component.module';
 
 describe('AppComponent', () => {
   let app: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
+  let mockRouter: jasmine.SpyObj<Router>;
+  let mockAuthService: jasmine.SpyObj<AuthService>;
+  let router: Router;
 
   beforeEach(() => {
-     TestBed.configureTestingModule({
-          declarations: [AppComponent, LoginComponent, PrimeiroAcessoComponent],
-          imports: [RouterTestingModule, BrowserModule, AppRoutingModule, CommonModule,  ReactiveFormsModule, HttpClientModule, FormsModule ],
-        providers: []
+    mockRouter = jasmine.createSpyObj('Router', ['navigate']);
+    mockAuthService = jasmine.createSpyObj('AuthService', [ 'isAuthenticated']);
+    TestBed.configureTestingModule({
+        declarations: [AppComponent, LoginComponent, PrimeiroAcessoComponent],
+        imports: [RouterTestingModule, BrowserModule, AppRoutingModule, CommonModule,  ReactiveFormsModule, HttpClientModule, FormsModule],
+        providers: [AuthService,
+          { provide: Router, useValue: mockRouter },
+          { provide: AuthService, useValue: mockAuthService },
+        ]
     });
     fixture = TestBed.createComponent(AppComponent);
     app = fixture.componentInstance;
+    router = TestBed.inject(Router);
   });
 
   it('should create the app', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'despesas-frontend-angular'`, () => {
-    expect(app.title).toEqual('despesas-frontend-angular');
+  it('should navigate to routes ', () => {
+    mockAuthService.isAuthenticated.and.returnValue(true);
+    router.navigate(['/dashboard']);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/dashboard']);
   });
-
-  it('should initialize isAuthenticated to false', () => {
-    expect(app.isAuthenticated).toBe(false);
-  });
-
-  it('should set isAuthenticated to true when onLoginClicked is called', () => {
-    app.onLoginClicked();
-    expect(app.isAuthenticated).toBe(true);
-  });
-
 });

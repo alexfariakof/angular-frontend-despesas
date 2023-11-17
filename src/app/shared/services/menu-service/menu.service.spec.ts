@@ -25,6 +25,13 @@ describe('MenuService', () => {
     expect(menuService).toBeTruthy();
   });
 
+  it('should navigate to dashboard for menu 0', () => {
+    spyOn(router, 'navigate');
+    menuService.selectMenu(0, router);
+    expect(router.navigate).toHaveBeenCalledWith(['/login']);
+    expect(menuService.menuSelecionado).toBe(0);
+  });
+
   it('should navigate to dashboard for menu 1', () => {
     spyOn(router, 'navigate');
     menuService.selectMenu(1, router);

@@ -3,10 +3,14 @@ export class MenuService {
     constructor() {
     }
 
-    menuSelecionado: number;
+    menuSelecionado: number = 0;
 
     selectMenu(menu: number, router : Router) {
       switch (menu) {
+          case 0:
+            router.navigate(['/login']);
+            break;
+
           case 1:
               router.navigate(['/dashboard']);
               break;

@@ -2,19 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IControleAcesso } from "src/app/shared/interfaces/IControleAcesso";
 import { Router } from '@angular/router';
-import { ControleAcessoService } from 'src/app/shared/services/controle-acesso/controle-acesso.service';
+import { ControleAcessoService } from 'src/app/shared/services/api/controle-acesso/controle-acesso.service';
 import { map, catchError } from 'rxjs';
 import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
 
 @Component({
   selector: 'app-primeiro-acesso',
   templateUrl: './primeiro-acesso.component.html',
-  styleUrls: ['./primeiro-acesso.component.scss'],
-  providers: [ControleAcessoService]
+  styleUrls: ['./primeiro-acesso.component.scss']
 })
 export class PrimeiroAcessoComponent  implements OnInit {
   public controleAcesso: IControleAcesso = {   nome: '', sobreNome: '', telefone: '', email: '', senha: '', confirmaSenha: '' };
-  createAccountFrom : FormGroup;
+  createAccountFrom : FormGroup = this.formbuilder.group({});
   eyeIconClass: string = 'bi-eye';
   eyeIconClassConfirmaSenha: string = 'bi-eye';
   showSenha = false;
@@ -53,12 +52,12 @@ export class PrimeiroAcessoComponent  implements OnInit {
       })
     )
     .subscribe({
-      next: (result) => {
+      next: (result: Boolean) => {
         if (result === true){
           this.modalALert.open(AlertComponent, "Cadastro realizado com sucesso!", 'Success');
         }
       },
-      error: (response) =>  this.modalALert.open(AlertComponent, response.message, 'Warning'),
+      error: (response: any) =>  this.modalALert.open(AlertComponent, response.message, 'Warning'),
       complete() {}
     });
   }
