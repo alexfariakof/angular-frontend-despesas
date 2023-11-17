@@ -10,8 +10,7 @@ import { AppRoutingModule } from './app.routing.module';
 import { PrimeiroAcessoComponent } from './pages/primeiro-acesso/primeiro-acesso.component';
 import { AuthService } from './shared/services/auth/auth.service';
 import { Router } from '@angular/router';
-import { AuthProvider } from './shared/services/auth/auth.provider';
-import { DataTableModule } from './shared/components/data-table/data-table.component.module';
+import { AuthProvider } from './shared/services/provider/auth.provider';
 
 describe('AppComponent', () => {
   let app: AppComponent;
@@ -26,7 +25,7 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
         declarations: [AppComponent, LoginComponent, PrimeiroAcessoComponent],
         imports: [RouterTestingModule, BrowserModule, AppRoutingModule, CommonModule,  ReactiveFormsModule, HttpClientModule, FormsModule],
-        providers: [AuthService,
+        providers: [AuthService, AuthProvider,
           { provide: Router, useValue: mockRouter },
           { provide: AuthService, useValue: mockAuthService },
         ]

@@ -22,7 +22,7 @@ describe('LoginComponent', () => {
     mockAuthService = jasmine.createSpyObj('AuthService', ['createAccessToken', 'isAuthenticated']);
     TestBed.configureTestingModule({
       declarations: [LoginComponent],
-      imports: [ReactiveFormsModule,  RouterTestingModule, HttpClientTestingModule,  ],
+      imports: [ReactiveFormsModule,  RouterTestingModule, HttpClientTestingModule  ],
       providers: [AlertComponent, NgbActiveModal,
         { provide: Router, useValue: mockRouter },
         { provide: AuthService, useValue: mockAuthService },

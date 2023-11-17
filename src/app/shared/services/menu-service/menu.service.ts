@@ -1,7 +1,6 @@
 import { Router } from "@angular/router";
 export class MenuService {
-    constructor() {
-    }
+    constructor() { }
 
     menuSelecionado: number = 0;
 
