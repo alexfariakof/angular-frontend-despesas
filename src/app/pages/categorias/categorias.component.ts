@@ -15,7 +15,7 @@ import { CategoriaService } from 'src/app/shared/services/api/categorias/categor
 })
 
 export class CategoriasComponent implements BarraFerramentaClass {
-  catgorias: ICategoria[];
+  catgorias: ICategoria[] = [];
   columns = [
     {
       title: 'Descrição',

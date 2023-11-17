@@ -1,7 +1,6 @@
   import { HttpClient } from '@angular/common/http';
   import { Injectable } from '@angular/core';
   import { ILogin } from '../../../interfaces/ILogin';
-  import { environment } from '../../../environments/environment';
   import { IControleAcesso } from 'src/app/shared/interfaces/IControleAcesso';
 
   @Injectable({

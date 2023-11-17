@@ -1,8 +1,6 @@
-import { ControleAcessoService } from 'src/app/shared/services/api/controle-acesso/controle-acesso.service';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { IAuth } from '../../interfaces/IAuth';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -12,16 +10,15 @@ export class AuthService  {
 
   accessToken$ = this.accessTokenSubject.asObservable();
 
-  constructor(private authService: ControleAcessoService) {
-    const accessToken = localStorage.getItem('@dpApiAccess');
-
+  constructor() {
     try {
+      const accessToken = localStorage.getItem('@dpApiAccess');
       if (accessToken) {
         this.setAccessToken(accessToken);
       } else {
         this.clearLocalStorage();
       }
-    } catch {
+    } catch{
       this.clearLocalStorage();
     }
   }
@@ -37,7 +34,7 @@ export class AuthService  {
 
   isAuthenticated(): boolean {
     const accessToken = this.accessTokenSubject.getValue();
-    return !!accessToken; // Check if accessToken is truthy
+    return !!accessToken;
   }
 
   createAccessToken(auth: IAuth): Boolean {
