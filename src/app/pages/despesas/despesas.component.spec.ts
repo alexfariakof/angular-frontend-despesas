@@ -3,19 +3,23 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MenuService } from 'src/app/shared/services/menu-service/menu.service';
 import { RouterTestingModule } from '@angular/router/testing';
-import { DespesasRoutingModule } from './despesas.routing.module';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { DespesasComponent } from './despesas.component';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 describe('DespesasComponent', () => {
   let component: DespesasComponent;
   let fixture: ComponentFixture<DespesasComponent>;
+  let mockAuthService: jasmine.SpyObj<AuthService>;
 
   beforeEach(() => {
+    mockAuthService = jasmine.createSpyObj('AuthService', ['isAuthenticated']);
+    mockAuthService.isAuthenticated.and.returnValue(true);
     TestBed.configureTestingModule({
       declarations: [DespesasComponent],
-      imports: [CommonModule, DespesasRoutingModule, RouterTestingModule, SharedModule],
-      providers: [MenuService, NgbActiveModal]
+      imports: [CommonModule, RouterTestingModule, SharedModule],
+      providers: [MenuService, NgbActiveModal,
+        { provide: AuthService, useValue: mockAuthService } ]
     });
     fixture = TestBed.createComponent(DespesasComponent);
     component = fixture.componentInstance;

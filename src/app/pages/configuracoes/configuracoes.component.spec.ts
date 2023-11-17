@@ -4,7 +4,6 @@ import { ConfiguracoesComponent } from './configuracoes.component';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MenuService } from 'src/app/shared/services/menu-service/menu.service';
-import { ConfiguracoesRoutingModule } from './configuracoes.routing.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
@@ -19,7 +18,7 @@ describe('Unit Test ConfiguracoesComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [CommonModule, RouterTestingModule, ReactiveFormsModule],
-      providers: [MenuService, ConfiguracoesRoutingModule, AlertComponent, NgbActiveModal]
+      providers: [MenuService, AlertComponent, NgbActiveModal]
     });
 
     router = TestBed.inject(Router);
@@ -80,11 +79,6 @@ describe('Unit Test ConfiguracoesComponent', () => {
     spyOn(router, 'navigate');
     component.selectMenu(8); // Valor fora do intervalo válido
     expect(router.navigate).toHaveBeenCalledWith(['/dashboard']);
-  });
-
-  it('should create the ConfiguracoesRoutingModule', () => {
-    const routingModule: ConfiguracoesRoutingModule = TestBed.inject(ConfiguracoesRoutingModule);
-    expect(routingModule).toBeTruthy();
   });
 
   it('should logout', () => {

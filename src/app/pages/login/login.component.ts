@@ -5,22 +5,24 @@ import { map, catchError } from "rxjs";
 import { AlertComponent } from "src/app/shared/components/alert-component/alert.component";
 import { IAuth } from "src/app/shared/interfaces/IAuth";
 import { ILogin } from "src/app/shared/interfaces/ILogin";
-import { ControleAcessoService } from "src/app/shared/services/controle-acesso/controle-acesso.service";
+import { AuthService } from "src/app/shared/services/auth/auth.service";
+import { ControleAcessoService } from "src/app/shared/services/api/controle-acesso/controle-acesso.service";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  providers: [ControleAcessoService, AlertComponent]
+  styleUrls: ['./login.component.scss']
 })
 
 export class LoginComponent implements OnInit{
   public login: ILogin = { email: 'teste@teste.com', senha: 'teste' };
-  loginForm: FormGroup;
+  loginForm: FormGroup = this.formbuilder.group({});
   showPassword = false;
   eyeIconClass: string = 'bi-eye';
 
-  constructor(private formbuilder: FormBuilder,
+  constructor(
+    public authProviderService: AuthService,
+    private formbuilder: FormBuilder,
     public router: Router,
     public controleAcessoService: ControleAcessoService,
     public modalALert: AlertComponent ){
@@ -42,7 +44,7 @@ export class LoginComponent implements OnInit{
     this.controleAcessoService.signIn(this.login).pipe(
       map((response: IAuth | any) => {
         if (response.authenticated) {
-          return response.authenticated;
+          return this.authProviderService.createAccessToken(response);
         }
         else {
           throw (response);
@@ -53,11 +55,11 @@ export class LoginComponent implements OnInit{
       })
     )
     .subscribe({
-      next: (result) => {
-        if (result)
+      next: (result: Boolean) => {
+        if (result === true)
           this.router.navigate(['/dashboard']);
       },
-      error :(response) =>  {
+      error :(response : any) =>  {
         this.modalALert.open(AlertComponent, response.message, 'Warning');
       },
       complete() {

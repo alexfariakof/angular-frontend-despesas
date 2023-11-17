@@ -1,7 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { CategoriaService } from './categoria.service';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 describe('Unit Test CategoriaService', () => {
 

@@ -1,9 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-import { ConfiguracoesRoutingModule } from 'src/app/pages/configuracoes/configuracoes.routing.module';
-import { PerfilRoutingModule } from 'src/app/pages/perfil/perfil.routing.module';
-import { LayoutRoutingModule } from '../../components/layout/layout.routing.module';
 import { MenuService } from './menu.service';
 import { Router } from "@angular/router";
+import { AppRoutingModule } from 'src/app/app.routing.module';
 
 describe('MenuService', () => {
   let menuService: jasmine.SpyObj<MenuService>;
@@ -11,10 +9,7 @@ describe('MenuService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        ConfiguracoesRoutingModule,
-        PerfilRoutingModule,
-        LayoutRoutingModule],
+      imports: [ AppRoutingModule],
       providers: [MenuService]
     });
     router = TestBed.inject(Router);
@@ -23,6 +18,13 @@ describe('MenuService', () => {
 
   it('should be created', () => {
     expect(menuService).toBeTruthy();
+  });
+
+  it('should navigate to dashboard for menu 0', () => {
+    spyOn(router, 'navigate');
+    menuService.selectMenu(0, router);
+    expect(router.navigate).toHaveBeenCalledWith(['/login']);
+    expect(menuService.menuSelecionado).toBe(0);
   });
 
   it('should navigate to dashboard for menu 1', () => {
