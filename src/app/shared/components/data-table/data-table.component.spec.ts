@@ -22,6 +22,9 @@ describe('Unit Test DataTableComponent', () => {
       { id: 1, name: 'Teste 1' },
       { id: 2, name: 'Teste 2' },
     ];
+    const dataTableDirective = jasmine.createSpyObj('DataTableDirective', ['rerender', 'destroy']);
+    component.dtElement = dataTableDirective as DataTableDirective;
+
     fixture.detectChanges();
   });
 
@@ -75,20 +78,18 @@ describe('Unit Test DataTableComponent', () => {
     expect(spyRerender).toHaveBeenCalled();
   });
 
-  it('should call rerender with dtElement', () => {
-    /* Deve sert MOckado tambem request realizada pela diretiva Data table
+  it('should call refresh and fill property adta ', () => {
     // Arrange
-    component = new DataTableComponent();
-
-    jasmine.createSpyObj(component.dtElement).and.returnValue(component.dtElement.dtInstance);
+    const mockData = [
+      { id: 1, name: 'Teste Refresh 1' },
+      { id: 2, name: 'Teste Refresh 2' },
+    ];
 
     // Act
-    const spyRerender = spyOn(component, 'rerender').and.callThrough();
-    component.rerender();
+    component.refresh(mockData);
 
     // Assert
-    expect(spyRerender).toHaveBeenCalled();
-    */
+    expect(component.data).not.toBeNull();
+    expect(component.data).toEqual(mockData);
   });
-
 });

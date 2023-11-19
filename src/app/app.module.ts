@@ -14,7 +14,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertModule } from './shared/components/alert-component/alert.component.module';
 import { ControleAcessoService } from './shared/services/api/controle-acesso/controle-acesso.service';
 import { AuthService } from './shared/services/auth/auth.service';
-import { CustomInterceptor } from './shared/services/interceptors/http.Interceptor.service';
+import { CustomInterceptor } from './shared/services/interceptors/http.interceptor.service';
 
 @NgModule({
   declarations: [ AppComponent, LoginComponent, PrimeiroAcessoComponent ],

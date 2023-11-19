@@ -45,6 +45,7 @@ export class DataTableComponent implements AfterViewInit, OnDestroy, OnChanges {
 
   private initializeDataTable() {
     this.dtOptions = {
+      autoWidth: true,
       retrieve: true,
       searching: true,
       paging: true,

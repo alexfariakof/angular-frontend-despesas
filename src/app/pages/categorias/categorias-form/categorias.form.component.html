@@ -1,12 +1,27 @@
-<div class="flex-column w-100 h-100 pb-2 flex-fill p-4  border-black  rounded-4 " style="width:50%; height: 50%;">
-  <div class="modal-header">
-    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+<div class="h-100 d-flex flex-column table-responsive flex-grow-1 flex-fill m-1 p-2 border border-2 border-primary rounded-4 overflow-scroll-hidden">
+  <div class="modal-header bg-primary text-light p-2">
+    <h3 class="m-0 border-0 ">Categorias</h3>
+    <button type="button" class="btn-close " aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
   </div>
   <div class="overflow-y-auto scroll-content  ">
     <form (submit)="onSaveClick()" [formGroup]="createCategoriatForm" >
+      <div class="input-group mt-2 rounded-2">
+        <span class="input-group-text" style="height: 2.5rem" id="labelTipoCategoria" >Tipo Categoria</span>
+        <select id="tipoCategoria"  name="tipoCategoria" class="form-select" aria-label="Tipo de Categoria"  aria-describedby="labelTipoCategoria" formControlName="tipoCategoria">
+          <option value="1">Despesas</option>
+          <option value="2">Receitas</option>
+        </select>
+      </div>
+      <div class="input-group mt-3 rounded-2">
+        <span class="input-group-text" id="labelDescricao" style="height: 2.5rem" >Descrição</span>
+        <input id="txtDescricao"  name="txtDescricao" formControlName="descricao" required="" type="text" class="form-control" style="height: 2.5rem"
+          placeholder="Entre com a descrição" aria-label="nome" aria-describedby="labelDescricao"
+          [ngClass]="{ 'error-input': createCategoriatForm.get('txtDescricao')?.errors?.['required'] &&  createCategoriatForm.get('txtDescricao')?.touched }"
+        />
+      </div>
       <div class="input-group mt-3  d-flex flex-column align-items-center justify-content-center">
         <button type="submit" class="btn btn-primary w-responsive"
-              [ngClass]="{'disabled' : !createCategoriatForm.valid}"  [disabled]="!createCategoriatForm.valid" >Salvar Categoria</button>
+              [ngClass]="{'disabled' : !createCategoriatForm.valid}"  [disabled]="!createCategoriatForm.valid" >Salvar</button>
       </div>
     </form>
   </div>

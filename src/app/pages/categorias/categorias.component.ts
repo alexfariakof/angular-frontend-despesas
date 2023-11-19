@@ -17,15 +17,16 @@ import { DataTableComponent } from 'src/app/shared/components/data-table/data-ta
 
 export class CategoriasComponent implements BarraFerramentaClass, OnInit, OnChanges {
   @ViewChild(DataTableComponent) dataTable: DataTableComponent;
+
   catgorias: ICategoria[] = [];
   columns = [
     {
-      title: 'Descrição',
-      data: 'descricao'
-    },
-    {
       title: 'Tipo Catategoria',
       data: 'tipoCategoria'
+    },
+    {
+      title: 'Descrição',
+      data: 'descricao'
     }
   ];
 
@@ -33,7 +34,8 @@ export class CategoriasComponent implements BarraFerramentaClass, OnInit, OnChan
     private menuService: MenuService,
     public modalAlert: AlertComponent,
     public modalForm: ModalFormComponent,
-    public categoriaService: CategoriaService,
+    public categoriaService: CategoriaService
+
     ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -72,7 +74,7 @@ export class CategoriasComponent implements BarraFerramentaClass, OnInit, OnChan
   });
 
   onEdit = (message: String) => {
-    this.modalAlert.open(AlertComponent, 'Editar Categortia: ' + message, 'Success');
+    this.modalForm.open(CategoriasFormComponent);
   }
 
   onDelete = (message: String) => {
