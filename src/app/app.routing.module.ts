@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: "createAccount", component: PrimeiroAcessoComponent},
   { path: 'dashboard',  canActivate: [AuthProvider], loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule), },
-  { path: 'categoria', canActivate: [AuthProvider], loadChildren: () => import('./pages/categorias/categorias.module').then(m => m.CategoriasdModule), },
+  { path: 'categoria', canActivate: [AuthProvider], loadChildren: () => import('./pages/categorias/categorias.module').then(m => m.CategoriasModule), },
   { path: 'despesa', canActivate: [AuthProvider], loadChildren: () => import('./pages/despesas/despesas.module').then(m => m.DespesasModule), },
   { path: 'receita', canActivate: [AuthProvider], loadChildren: () => import('./pages/receitas/receitas.module').then(m => m.ReceitasModule), },
   { path: 'lancamento', canActivate: [AuthProvider], loadChildren: () => import('./pages/lancamentos/lancamentos.module').then(m => m.LancamentosModule),},

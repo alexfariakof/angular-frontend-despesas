@@ -1,6 +1,6 @@
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import { CategoriasdModule } from './../pages/categorias/categorias.module';
+import { CategoriasModule } from './../pages/categorias/categorias.module';
 import { CommonModule } from '@angular/common';
 import { LayoutComponent } from './components/layout/layout.component';
 import { BarraFerramentaModule } from './components/barra-ferramenta-component/barra-ferramenta.component.module';

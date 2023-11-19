@@ -35,6 +35,8 @@ describe('CategoriasComponent', () => {
   });
 
   it('should create', () => {
+
+    // Assert
     expect(component).toBeTruthy();
   });
 });

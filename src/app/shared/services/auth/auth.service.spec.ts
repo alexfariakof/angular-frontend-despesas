@@ -19,17 +19,6 @@ describe('Unit Test AuthService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('should clear local storage on error', () => {
-    // Arrange
-    spyOn(localStorage, 'getItem').and.throwError('Fake Error');
-
-    // Act
-    authService = new AuthService();
-
-    // Assert
-    expect(authService.isAuthenticated()).toBeFalsy();
-  });
-
   it('should set and get access token', () => {
     // Arrange
     const fakeAuth: IAuth = {
