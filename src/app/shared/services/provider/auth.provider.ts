@@ -8,10 +8,10 @@ import { AuthService } from '../auth/auth.service';
 
 export class AuthProvider implements CanActivate {
 
-  constructor(private authProviderService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot ): boolean {
-    const isAuthenticated = this.authProviderService.isAuthenticated();
+    const isAuthenticated = this.authService.isAuthenticated();
 
     if (isAuthenticated) {
       return true;

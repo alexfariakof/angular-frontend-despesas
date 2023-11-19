@@ -12,4 +12,4 @@ import { ReactiveFormsModule } from '@angular/forms';
     providers: [CategoriaService]
 })
 
-export class CategoriasdModule {}
+export class CategoriasModule {}

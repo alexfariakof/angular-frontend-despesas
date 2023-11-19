@@ -1,40 +1,64 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, OnDestroy, SimpleChanges, ViewChild } from '@angular/core';
+import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-data-table',
   templateUrl: './data-table.component.html',
-  styleUrls: ['./data-table.component.scss'],
+  styleUrls: ['./data-table.component.scss']
 })
 
-export class DataTableComponent implements OnInit {
+export class DataTableComponent implements AfterViewInit, OnDestroy, OnChanges {
+  @ViewChild(DataTableDirective, {static: false})
+  dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
   @Input() editAction: Function = () => {};
   @Input() deleteAction: Function = () => {};
   @Input() columns: { title: string; data: string }[];
-  @Input() data: any[] = [];
-  Trigger: any;
+  @Input() data: any[] = null;
+  dtTrigger: any = new Subject();
 
-  ngOnInit() {
+  constructor(){
     this.initializeDataTable();
+  }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    this.rerender();
+  }
+
+  ngAfterViewInit(): void {
+    this.dtTrigger.next();
+  }
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
+
+  rerender(): void {
+    if (this.dtElement != undefined){
+      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        dtInstance.destroy();
+        this.dtTrigger.next();
+      });
+    }
   }
 
   private initializeDataTable() {
     this.dtOptions = {
-      searching: false,
-      paging: false,
-      ordering: false,
-      info: false,
+      autoWidth: true,
+      retrieve: true,
+      searching: true,
+      paging: true,
+      ordering: true,
+      info: true,
+      lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, 'Todos'], ],
+      pageLength: 5,
       language: {
         search: 'Pesquisar :',
         lengthMenu: 'Mostrando _MENU_ registros por página',
-        zeroRecords: ' ',
-        info: ' ',
-        infoEmpty: 'Total de _MAX_ registros. ',
-        //zeroRecords: 'Nada encontrado',
-        //info: 'Total de _MAX_ registros.',
-        //infoEmpty: 'Mostrando página _PAGE_ de _PAGES_',
+        zeroRecords: 'Nada encontrado',
+        info: 'Total de _MAX_ registros.',
+        infoEmpty: 'Mostrando página _PAGE_ de _PAGES_',
         infoFiltered: '(filtrado de _MAX_ registros no total)',
         paginate: {
           previous: 'Anterior',
@@ -44,6 +68,10 @@ export class DataTableComponent implements OnInit {
         },
       },
     };
+  }
+
+  refresh(newData: any[]) {
+    this.data = newData;
   }
 
   handleAction(action: string, id: string) {

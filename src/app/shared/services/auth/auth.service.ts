@@ -33,8 +33,12 @@ export class AuthService  {
   }
 
   isAuthenticated(): boolean {
-    const accessToken = this.accessTokenSubject.getValue();
-    return !!accessToken;
+    const accessToken = this.accessTokenSubject.getValue() || localStorage.getItem('@dpApiAccess');
+    if (accessToken === null || accessToken === undefined) {
+      this.clearLocalStorage();
+      return false;
+    }
+    return true;
   }
 
   createAccessToken(auth: IAuth): Boolean {

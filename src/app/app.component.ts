@@ -6,6 +6,7 @@ import { AuthService } from './shared/services/auth/auth.service';
   styleUrls: ['./app.component.scss'],
   providers: [AuthService]
 })
+
 export class AppComponent  implements OnInit {
 
   constructor(private authProviderService: AuthService) {}
