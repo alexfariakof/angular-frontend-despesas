@@ -20,7 +20,7 @@ export class CustomInterceptor implements HttpInterceptor {
           const modifiedRequest = request.clone({
           url: `${baseUrl}/${request.url}`,
           setHeaders: {
-            Authorization: `Bearer ${accessToken}`
+            Authorization: `Bearer ${accessToken || localStorage.getItem('@dpApiAccess')}`
           }
         });
 

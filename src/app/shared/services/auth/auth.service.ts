@@ -33,7 +33,7 @@ export class AuthService  {
   }
 
   isAuthenticated(): boolean {
-    const accessToken = this.accessTokenSubject.getValue();
+    const accessToken = this.accessTokenSubject.getValue() || localStorage.getItem('@dpApiAccess');
     return !!accessToken;
   }
 
