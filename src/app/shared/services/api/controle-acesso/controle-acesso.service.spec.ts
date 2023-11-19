@@ -14,7 +14,7 @@ describe('Unit Test ControleAcessoService', () => {
       imports: [HttpClientTestingModule],
       providers:[ControleAcessoService,
         { provide: HTTP_INTERCEPTORS, useClass: CustomInterceptor, multi: true, }
-       ]
+      ]
     });
   });
 
