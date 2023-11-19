@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
 import { ModalFormComponent } from 'src/app/shared/components/modal-form/modal.form.component';
 import { MenuService } from 'src/app/shared/services/menu-service/menu.service';
@@ -6,15 +6,17 @@ import { CategoriasFormComponent } from './categorias-form/categorias.form.compo
 import { BarraFerramentaClass } from 'src/app/shared/components/barra-ferramenta-component/barra-ferramenta.abstract';
 import { ICategoria } from './../../shared/interfaces/ICategoria';
 import { ITipoCategoria } from './../../shared/interfaces/ITipoCategoria';
-import { DataTableComponent } from 'src/app/shared/components/data-table/data-table.component';
 import { CategoriaService } from 'src/app/shared/services/api/categorias/categoria.service';
+import { DataTableComponent } from 'src/app/shared/components/data-table/data-table.component';
+
 @Component({
   selector: 'app-categorias',
   templateUrl: './categorias.component.html',
   styleUrls: ['./categorias.component.scss']
 })
 
-export class CategoriasComponent implements BarraFerramentaClass {
+export class CategoriasComponent implements BarraFerramentaClass, OnInit, OnChanges {
+  @ViewChild(DataTableComponent) dataTable: DataTableComponent;
   catgorias: ICategoria[] = [];
   columns = [
     {
@@ -31,9 +33,12 @@ export class CategoriasComponent implements BarraFerramentaClass {
     private menuService: MenuService,
     public modalAlert: AlertComponent,
     public modalForm: ModalFormComponent,
-    public dataTable: DataTableComponent,
     public categoriaService: CategoriaService,
     ) { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.dataTable.refresh(this.getCategoriasData());
+  }
 
   ngOnInit() {
     this.menuService.menuSelecionado = 2;
@@ -41,7 +46,10 @@ export class CategoriasComponent implements BarraFerramentaClass {
     .subscribe({
       next: (result: ICategoria[]) => {
         if (result)
+        {
           this.catgorias = result;
+          this.initializeDataTable();
+        }
 
       },
       error :(response : any) =>  {
@@ -57,6 +65,7 @@ export class CategoriasComponent implements BarraFerramentaClass {
 
   getCategoriasData = () => this.catgorias.map((categoria: ICategoria) => {
     return {
+      id: categoria.id,
       descricao: categoria.descricao,
       tipoCategoria: ITipoCategoria[categoria.idTipoCategoria] as String
     };
@@ -70,4 +79,9 @@ export class CategoriasComponent implements BarraFerramentaClass {
     this.modalAlert.open(AlertComponent, 'Deletar Categoria:' + message, 'Warning');
   }
 
+  initializeDataTable() {
+    setTimeout(() => {
+      this.dataTable.refresh(this.getCategoriasData());
+    });
+  }
 }
