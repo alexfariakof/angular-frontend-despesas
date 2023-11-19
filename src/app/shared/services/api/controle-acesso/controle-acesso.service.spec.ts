@@ -4,7 +4,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { ILogin } from '../../../interfaces/ILogin';
 import { environment } from '../../../environments/environment';
 import { IControleAcesso } from '../../../interfaces/IControleAcesso';
-import { CustomInterceptor } from '../../interceptors/http.Interceptor.service';
+import { CustomInterceptor } from '../../interceptors/http.interceptor.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 describe('Unit Test ControleAcessoService', () => {
