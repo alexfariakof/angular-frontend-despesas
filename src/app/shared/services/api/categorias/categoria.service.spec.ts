@@ -21,7 +21,7 @@ describe('Unit Test CategoriaService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('should send a GET request to the Categoria endpoint', inject(
+  it('should send a getCategorias request to the Categoria endpoint', inject(
     [CategoriaService, HttpTestingController],
     (service: CategoriaService, httpMock: HttpTestingController) => {
 
@@ -53,7 +53,33 @@ describe('Unit Test CategoriaService', () => {
     }
   ));
 
-  it('should send a POST request to the Categoria endpoint', inject(
+  it('should send a getCategoriaById request to the Categoria endpoint', inject(
+    [CategoriaService, HttpTestingController],
+    (service: CategoriaService, httpMock: HttpTestingController) => {
+
+      const idCategoria = 1;
+      const mockResponse: ICategoria =
+      {
+          id: idCategoria,
+          descricao: "Teste categoria despesa",
+          idUsuario: 1,
+          idTipoCategoria: 1
+      };
+
+      service.getCategoriaById(1).subscribe((response: any) => {
+        expect(response).toBeTruthy();
+      });
+
+      const expectedUrl = `${environment.endPoint}/Categoria/GetById/${idCategoria}`;
+      const req = httpMock.expectOne(expectedUrl);
+      expect(req.request.method).toBe('GET');
+
+      req.flush(mockResponse);
+      httpMock.verify();
+    }
+  ));
+
+  it('should send a postCategoria request to the Categoria endpoint', inject(
     [CategoriaService, HttpTestingController],
     (service: CategoriaService, httpMock: HttpTestingController) => {
       const categoria : ICategoria = {
@@ -64,7 +90,7 @@ describe('Unit Test CategoriaService', () => {
       };
 
       const mockResponse = { message: true, Categoria: categoria  };
-      service.createCategoria(categoria).subscribe((response: any) => {
+      service.postCategoria(categoria).subscribe((response: any) => {
         expect(response).toBeTruthy();
       });
 
@@ -76,4 +102,49 @@ describe('Unit Test CategoriaService', () => {
       httpMock.verify();
     }
   ));
+
+  it('should send a putCategoria request to the Categoria endpoint', inject(
+    [CategoriaService, HttpTestingController],
+    (service: CategoriaService, httpMock: HttpTestingController) => {
+      const categoria : ICategoria = {
+        id: 1,
+        descricao: "Teste categoria",
+        idUsuario: 1,
+        idTipoCategoria: 2
+      };
+
+      const mockResponse = { message: true, Categoria: categoria  };
+      service.putCategoria(categoria).subscribe((response: any) => {
+        expect(response).toBeTruthy();
+      });
+
+      const expectedUrl = `${environment.endPoint}/Categoria`;
+      const req = httpMock.expectOne(expectedUrl);
+      expect(req.request.method).toBe('PUT');
+
+      req.flush(mockResponse);
+      httpMock.verify();
+    }
+  ));
+
+  it('should send a deleteCategoria request to the Categoria endpoint', inject(
+    [CategoriaService, HttpTestingController],
+    (service: CategoriaService, httpMock: HttpTestingController) => {
+
+      const idCategoria = 1;
+      const mockResponse = true;
+
+      service.deleteCategoria(1).subscribe((response: any) => {
+        expect(response).toBeTruthy();
+      });
+
+      const expectedUrl = `${environment.endPoint}/Categoria/${idCategoria}`;
+      const req = httpMock.expectOne(expectedUrl);
+      expect(req.request.method).toBe('DELETE');
+
+      req.flush(mockResponse);
+      httpMock.verify();
+    }
+  ));
+
 });
