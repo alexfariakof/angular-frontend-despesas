@@ -35,7 +35,6 @@ export class CategoriasComponent implements BarraFerramentaClass, OnInit, OnChan
     public modalAlert: AlertComponent,
     public modalForm: ModalFormComponent,
     public categoriaService: CategoriaService
-
     ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -58,7 +57,6 @@ export class CategoriasComponent implements BarraFerramentaClass, OnInit, OnChan
         this.modalAlert.open(AlertComponent, response.message, 'Warning');
       }
     });
-
   }
 
   onClickNovo = () => {

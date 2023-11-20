@@ -6,15 +6,18 @@
   <div class="overflow-y-auto scroll-content  ">
     <form (submit)="onSaveClick()" [formGroup]="createCategoriatForm" >
       <div class="input-group mt-2 rounded-2">
-        <span class="input-group-text" style="height: 2.5rem" id="labelTipoCategoria" >Tipo Categoria</span>
-        <select id="tipoCategoria"  name="tipoCategoria" class="form-select" aria-label="Tipo de Categoria"  aria-describedby="labelTipoCategoria" formControlName="tipoCategoria">
-          <option value="1">Despesas</option>
-          <option value="2">Receitas</option>
+        <span class="input-group-text" style=" width:8rem;height: 2.5rem" id="labelTipoCategoria" >Tipo Categoria</span>
+        <select id="slctTipoCategoria"  name="slctTipoCategoria" class="form-select" aria-label="Tipo de Categoria"  aria-describedby="labelTipoCategoria" formControlName="slctTipoCategoria"
+        [ngClass]="{ 'error-input': createCategoriatForm.get('slctTipoCategoria')?.errors?.['required'] &&  createCategoriatForm.get('slctTipoCategoria')?.touched }"
+        >
+          <option disabled [selected]="true" >Nenhuma categoria selecionada</option>
+          <option value=1 >Despesas</option>
+          <option value=2>Receitas</option>
         </select>
       </div>
       <div class="input-group mt-3 rounded-2">
-        <span class="input-group-text" id="labelDescricao" style="height: 2.5rem" >Descrição</span>
-        <input id="txtDescricao"  name="txtDescricao" formControlName="descricao" required="" type="text" class="form-control" style="height: 2.5rem"
+        <span class="input-group-text " id="labelDescricao" style="width:8rem;height: 2.5rem" >Descrição</span>
+        <input id="txtDescricao"  name="txtDescricao" formControlName="txtDescricao" required="" type="text" class="form-control" style="height: 2.5rem"
           placeholder="Entre com a descrição" aria-label="nome" aria-describedby="labelDescricao"
           [ngClass]="{ 'error-input': createCategoriatForm.get('txtDescricao')?.errors?.['required'] &&  createCategoriatForm.get('txtDescricao')?.touched }"
         />
