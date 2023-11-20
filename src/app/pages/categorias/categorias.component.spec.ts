@@ -1,4 +1,3 @@
-import { ICategoria } from 'src/app/shared/interfaces/ICategoria';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CategoriasComponent } from './categorias.component';
 import { CommonModule } from '@angular/common';
@@ -17,6 +16,8 @@ describe('CategoriasComponent', () => {
   let component: CategoriasComponent;
   let fixture: ComponentFixture<CategoriasComponent>;
   let mockAuthService: jasmine.SpyObj<AuthService>;
+  let mockcategoriasData;
+  let categoriaService: CategoriaService;
 
   beforeEach(() => {
     mockAuthService = jasmine.createSpyObj('AuthService', ['isAuthenticated']);
@@ -30,13 +31,28 @@ describe('CategoriasComponent', () => {
     });
     fixture = TestBed.createComponent(CategoriasComponent);
     component = fixture.componentInstance;
-    spyOn(component, 'getCategoriasData').and.returnValue(null);
+    component.catgorias = [{id:0, descricao: 'Teste Categoria', idUsuario: 1, idTipoCategoria: 1}];
+    categoriaService = TestBed.inject(CategoriaService);
+
+    spyOn(component, 'getCategoriasData').and.returnValue([{ id: 1, descricao: 'Teste Categoria', tipoCategoria: 'Despesa' }]);
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should Test All ', () => {
+    // Arrange
+    //const spyOnGetCategorias = spyOn(categoriaService, 'getCategorias').and.returnValues([{id:0, descricao: 'Teste Categoria', idUsuario: 1, idTipoCategoria: 1}]);
+   //const spyOnGetCategoriaById = spyOn(categoriaService, 'getCategoriaById').and.returnValue(1);
+    //const spyOnDeleteCategoria = spyOn(categoriaService, 'deleteCategoria').and.returnValue(1);
+
+    // Act
+    component.ngOnInit();
+    component.initializeDataTable();
+    component.onEdit(1);
+    //component.onDelete(1);
+    mockcategoriasData = component.getCategoriasData();
 
     // Assert
     expect(component).toBeTruthy();
+    expect(mockAuthService).not.toBeNull();
   });
 });

@@ -6,8 +6,10 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CategoriaService } from 'src/app/shared/services/api/categorias/categoria.service';
 import { of } from 'rxjs';
+import { IAction } from 'src/app/shared/interfaces/IAction';
+import { ICategoria } from 'src/app/shared/interfaces/ICategoria';
 
-describe('CategoriasFormComponent', () => {
+describe('Unit Test CategoriasFormComponent', () => {
   let component: CategoriasFormComponent;
   let fixture: ComponentFixture<CategoriasFormComponent>;
   let categoriaService: CategoriaService;
@@ -23,6 +25,8 @@ describe('CategoriasFormComponent', () => {
     component = fixture.componentInstance;
     categoriaService = TestBed.inject(CategoriaService);
     alertComponent = TestBed.inject(AlertComponent);
+    localStorage.setItem('idUsuario', '1');
+
     //fixture.detectChanges();
   });
 
@@ -36,20 +40,19 @@ describe('CategoriasFormComponent', () => {
 
   it('should create categoria and show successfully message', fakeAsync(() => {
     // Arrange
-    const categoriaServiceSpy = spyOn(categoriaService, 'createCategoria').and.returnValue(of({ message: true }));
+    const categoriaServiceSpy = spyOn(categoriaService, 'postCategoria').and.returnValue(of({ message: true }));
     const modalCloseSpy = spyOn(component.activeModal, 'close').and.callThrough();;
     const alertOpenSpy = spyOn(alertComponent, 'open').and.callThrough();
-
-
     spyOn(component, 'onSaveClick').and.callThrough();
-
     spyOn(component, "refresh").and.callFake(function () {
       console.log("fake reload");
     });
 
     // Act
     component.ngOnInit();
-    component.createCategoriatForm.setValue({
+    component.setAction(IAction.Create);
+    component.categoriatForm.setValue({
+      idCategoria: 0,
       slctTipoCategoria: '1',
       txtDescricao: 'Teste categoria Despesa.',
     });
@@ -64,15 +67,53 @@ describe('CategoriasFormComponent', () => {
     expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, 'Categoria cadastrada com Sucesso.', 'Success');
   }));
 
+  it('should edit categoria and show successfully message', fakeAsync(() => {
+    // Arrange
+    const categoria : ICategoria = {
+      id: 1,
+      descricao: "Teste categoria",
+      idUsuario: 1,
+      idTipoCategoria: 2
+    };
+    const categoriaServiceSpy = spyOn(categoriaService, 'putCategoria').and.returnValue(of(categoria));
+    const modalCloseSpy = spyOn(component.activeModal, 'close').and.callThrough();;
+    const alertOpenSpy = spyOn(alertComponent, 'open').and.callThrough();
+    spyOn(localStorage, 'getItem').and.returnValue('123');
+    spyOn(component, 'onSaveClick').and.callThrough();
+    spyOn(component, "refresh").and.callFake(function () {
+      console.log("fake reload");
+    });
+
+    // Act
+    component.ngOnInit();
+    component.setAction(IAction.Edit);
+
+    component.categoriatForm.setValue({
+      idCategoria: categoria.id,
+      slctTipoCategoria: categoria.idTipoCategoria,
+      txtDescricao: categoria.descricao,
+    });
+
+    component.onSaveClick();
+    tick();
+    flush();
+
+    // Assert
+    expect(categoriaServiceSpy).toHaveBeenCalledWith(jasmine.objectContaining(categoria));
+    expect(modalCloseSpy).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, 'Categoria alterada com Sucesso.', 'Success');
+  }));
+
   it('should call try create categoria throw error and show error message', fakeAsync(() => {
     // Arrange
     const errorMessage = 'Fake Error Message';
-    spyOn(categoriaService, 'createCategoria').and.callFake(()=>{ throw Error}).and.throwError(errorMessage);
+    spyOn(categoriaService, 'postCategoria').and.callFake(()=>{ throw Error}).and.throwError(errorMessage);
     const alertOpenSpy = spyOn(alertComponent, 'open');
 
     // Act
     component.ngOnInit();
-    component.createCategoriatForm.setValue({
+    component.categoriatForm.setValue({
+      idCategoria: 0,
       slctTipoCategoria: '1',
       txtDescricao: 'Teste categoria Despesa.',
     });
@@ -82,6 +123,18 @@ describe('CategoriasFormComponent', () => {
     // Assert
     expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, 'Warning');
   }));
+
+  it('should return FormGroup', () => {
+    // Arrange
+    const spyFormGroup = spyOn(component, 'getCategoriaForm').and.callThrough();;
+
+    // Act
+    component.ngOnInit();
+    const formGroup = component.getCategoriaForm();
+
+    // Assert
+    expect(spyFormGroup).toHaveBeenCalled();
+  });
 
 });
 
