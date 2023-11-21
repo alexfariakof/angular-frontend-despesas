@@ -86,7 +86,7 @@ describe('Unit Test DataTableComponent', () => {
     ];
 
     // Act
-    component.refresh(mockData);
+    component.loadData(mockData);
 
     // Assert
     expect(component.data).not.toBeNull();
