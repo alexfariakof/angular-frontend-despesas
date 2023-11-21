@@ -13,14 +13,27 @@ import { CategoriaService } from 'src/app/shared/services/api/categorias/categor
 
 export class CategoriasFormComponent implements OnInit {
   private idUsuario : number = Number(localStorage.getItem('idUsuario')) || 0;
-  private action: IAction = IAction.Create;
+
   categoriatForm: FormGroup;
+  getCategoriaForm(): FormGroup{
+    return this.categoriatForm;
+  }
+
+  private action: IAction = IAction.Create;
+  setAction(_action: IAction){
+    this.action = _action;
+  }
+
+  private refresh: Function = () => {};
+  setRefresh(_refresh: Function) {
+    this.refresh = _refresh;
+  }
 
   constructor(
     public formbuilder: FormBuilder,
     public modalAlert: AlertComponent,
     public activeModal:NgbActiveModal,
-    public categoriaService: CategoriaService,
+    public categoriaService: CategoriaService
     ) { }
 
   ngOnInit(): void{
@@ -33,7 +46,7 @@ export class CategoriasFormComponent implements OnInit {
 
   onSaveClick = () => {
     let categoria : ICategoria = {
-      id: null,
+      id: 0,
       descricao: this.categoriatForm.get('txtDescricao').value,
       idUsuario: this.idUsuario,
       idTipoCategoria: Number(this.categoriatForm.get('slctTipoCategoria').value)
@@ -47,11 +60,9 @@ export class CategoriasFormComponent implements OnInit {
           next: (result: any ) => {
             if (result.message == true)
             {
-              this.modalAlert.open(AlertComponent, "Categoria cadastrada com Sucesso.", 'Success');
               this.activeModal.close();
-              setTimeout(() => {
-                this.refresh();
-              }, 3000);
+              this.refresh();
+              this.modalAlert.open(AlertComponent, "Categoria cadastrada com Sucesso.", 'Success');
             }
           },
           error :(error : any) =>  {
@@ -66,11 +77,9 @@ export class CategoriasFormComponent implements OnInit {
           next: (result: ICategoria ) => {
             if (!result !== undefined || result !== null)
             {
-              this.modalAlert.open(AlertComponent, "Categoria alterada com Sucesso.", 'Success');
               this.activeModal.close();
-              setTimeout(() => {
-                this.refresh();
-              }, 3000);
+              this.refresh();
+              this.modalAlert.open(AlertComponent, "Categoria alterada com Sucesso.", 'Success');
             }
           },
           error :(error : any) =>  {
@@ -82,17 +91,5 @@ export class CategoriasFormComponent implements OnInit {
     catch(error){
       this.modalAlert.open(AlertComponent, error.message, 'Warning');
     }
-  }
-
-  getCategoriaForm(): FormGroup{
-    return this.categoriatForm;
-  }
-
-  setAction(_action: IAction){
-    this.action = _action;
-  }
-
-  refresh(): void {
-      window.location.reload();
   }
 }

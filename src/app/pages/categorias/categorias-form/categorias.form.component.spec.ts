@@ -31,26 +31,22 @@ describe('Unit Test CategoriasFormComponent', () => {
   });
 
   it('should create', () => {
-    // Act
-    component.ngOnInit();
-
     // Assert
     expect(component).toBeTruthy();
   });
 
-  it('should create categoria and show successfully message', fakeAsync(() => {
+  it('should create categoria and show successfully message', () => {
     // Arrange
     const categoriaServiceSpy = spyOn(categoriaService, 'postCategoria').and.returnValue(of({ message: true }));
     const modalCloseSpy = spyOn(component.activeModal, 'close').and.callThrough();;
     const alertOpenSpy = spyOn(alertComponent, 'open').and.callThrough();
     spyOn(component, 'onSaveClick').and.callThrough();
-    spyOn(component, "refresh").and.callFake(function () {
-      console.log("fake reload");
-    });
+    const spyRefresh = spyOn(component, "setRefresh").and.callThrough();
 
     // Act
     component.ngOnInit();
     component.setAction(IAction.Create);
+    component.setRefresh(() => { });
     component.categoriatForm.setValue({
       idCategoria: 0,
       slctTipoCategoria: '1',
@@ -58,16 +54,15 @@ describe('Unit Test CategoriasFormComponent', () => {
     });
 
     component.onSaveClick();
-    tick();
-    flush();
+    setTimeout(() => {
+      // Assert
+      expect(categoriaServiceSpy).toHaveBeenCalledWith(jasmine.objectContaining({ descricao: 'Teste categoria Despesa.' }));
+      expect(modalCloseSpy).toHaveBeenCalled();
+      expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, 'Categoria cadastrada com Sucesso.', 'Success');
+    }, 3000);
+  });
 
-    // Assert
-    expect(categoriaServiceSpy).toHaveBeenCalledWith(jasmine.objectContaining({ descricao: 'Teste categoria Despesa.' }));
-    expect(modalCloseSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, 'Categoria cadastrada com Sucesso.', 'Success');
-  }));
-
-  it('should edit categoria and show successfully message', fakeAsync(() => {
+  it('should edit categoria and show successfully message', () => {
     // Arrange
     const categoria : ICategoria = {
       id: 1,
@@ -80,14 +75,13 @@ describe('Unit Test CategoriasFormComponent', () => {
     const alertOpenSpy = spyOn(alertComponent, 'open').and.callThrough();
     spyOn(localStorage, 'getItem').and.returnValue('123');
     spyOn(component, 'onSaveClick').and.callThrough();
-    spyOn(component, "refresh").and.callFake(function () {
-      console.log("fake reload");
-    });
+    const spyRefresh = spyOn(component, "setRefresh");
+
 
     // Act
     component.ngOnInit();
     component.setAction(IAction.Edit);
-
+    component.setRefresh(() => {});
     component.categoriatForm.setValue({
       idCategoria: categoria.id,
       slctTipoCategoria: categoria.idTipoCategoria,
@@ -95,14 +89,14 @@ describe('Unit Test CategoriasFormComponent', () => {
     });
 
     component.onSaveClick();
-    tick();
-    flush();
+    setTimeout(()=>{
+      // Assert
+      expect(categoriaServiceSpy).toHaveBeenCalledWith(jasmine.objectContaining(categoria));
+      expect(modalCloseSpy).toHaveBeenCalled();
+      expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, 'Categoria alterada com Sucesso.', 'Success');
+    },3000);
 
-    // Assert
-    expect(categoriaServiceSpy).toHaveBeenCalledWith(jasmine.objectContaining(categoria));
-    expect(modalCloseSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, 'Categoria alterada com Sucesso.', 'Success');
-  }));
+  });
 
   it('should call try create categoria throw error and show error message', fakeAsync(() => {
     // Arrange

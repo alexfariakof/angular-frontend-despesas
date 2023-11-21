@@ -5,7 +5,7 @@
   </div>
   <div class="overflow-y-auto scroll-content  ">
     <form (submit)="onSaveClick()" [formGroup]="categoriatForm" >
-      <input id="idCategoria"  name="idCategoria" formControlName="idCategoria" type="hidden" class="form-control" [value]="0" />
+      <input id="idCategoria"  name="idCategoria" formControlName="idCategoria" type="hidden" class="form-control" value="0" />
       <div class="input-group mt-2 rounded-2">
         <span class="input-group-text" style=" width:8rem;height: 2.5rem" id="labelTipoCategoria" >Tipo Categoria</span>
         <select id="slctTipoCategoria"  name="slctTipoCategoria" class="form-select" aria-label="Tipo de Categoria"  aria-describedby="labelTipoCategoria" formControlName="slctTipoCategoria"
