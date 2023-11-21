@@ -20,6 +20,7 @@ export class AlertComponent {
 		const modalRef = this.modalService.open(content);
     modalRef.componentInstance.alertTypeClass = AlertTypeClass[typeAlert];
     modalRef.componentInstance.message = _message;
+    return modalRef;
 	}
 
   close(){
