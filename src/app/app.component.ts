@@ -12,6 +12,6 @@ export class AppComponent  implements OnInit {
   constructor(private authProviderService: AuthService) {}
 
   ngOnInit(): void {
-    $.fn.dataTable.ext.errMode = 'throw';
+    //$.fn.dataTable.ext.errMode = 'throw';
   }
 }
