@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { ConfiguracoesComponent } from './configuracoes.component';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { MenuService } from 'src/app/shared/services/menu-service/menu.service';
+import { MenuService } from 'src/app/shared/services/utils/menu-service/menu.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';

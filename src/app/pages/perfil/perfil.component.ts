@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
-import { MenuService } from 'src/app/shared/services/menu-service/menu.service';
+import { MenuService } from 'src/app/shared/services/utils/menu-service/menu.service';
 
 @Component({
   selector: 'app-perfil',
