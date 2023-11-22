@@ -1,29 +1,35 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { TestBed } from '@angular/core/testing';
 import { ConfiguracoesComponent } from './configuracoes.component';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { MenuService } from 'src/app/shared/services/menu-service/menu.service';
-import { SharedModule } from 'src/app/shared/shared.module';
-import { ConfiguracoesRoutingModule } from './configuracoes-routing.module';
+import { MenuService } from 'src/app/shared/services/utils/menu-service/menu.service';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
 
-describe('ConfiguracoesComponent', () => {
+describe('Unit Test ConfiguracoesComponent', () => {
   let component: ConfiguracoesComponent;
-  let fixture: ComponentFixture<ConfiguracoesComponent>;
   let router: Router;
+  let menuService: MenuService;
+  let formBuilder: FormBuilder;
+  let modalAlert: AlertComponent;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ConfiguracoesComponent],
-      imports: [CommonModule, ConfiguracoesRoutingModule, SharedModule],
-      providers: [MenuService]
+      imports: [CommonModule, RouterTestingModule, ReactiveFormsModule],
+      providers: [MenuService, AlertComponent, NgbActiveModal]
     });
-    fixture = TestBed.createComponent(ConfiguracoesComponent);
-    component = fixture.componentInstance;
+
     router = TestBed.inject(Router);
-    fixture.detectChanges();
+    menuService = TestBed.inject(MenuService);
+    formBuilder = TestBed.inject(FormBuilder);
+    modalAlert = TestBed.inject(AlertComponent);
+    component = new ConfiguracoesComponent(router, menuService, formBuilder, modalAlert);
   });
 
   it('should create', () => {
+    component.ngOnInit();
     expect(component).toBeTruthy();
   });
 
@@ -75,9 +81,10 @@ describe('ConfiguracoesComponent', () => {
     expect(router.navigate).toHaveBeenCalledWith(['/dashboard']);
   });
 
-  it('should create the ConfiguracoesRoutingModule', () => {
-    const routingModule: ConfiguracoesRoutingModule = TestBed.inject(ConfiguracoesRoutingModule);
-    expect(routingModule).toBeTruthy();
+  it('should logout', () => {
+    spyOn(router, 'navigate');
+    component.onLogoutClick();
+    expect(router.navigate).toHaveBeenCalledWith(['/']);
   });
 
 });

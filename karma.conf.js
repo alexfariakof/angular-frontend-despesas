@@ -32,10 +32,8 @@ module.exports = function (config) {
       reporters: [
         { type: 'lcov' },
         { type: 'clover' },
-        { type: 'json' }
-      ],
-      exclude: [
-        '**/*.spec.ts', // Exclui todos os arquivos .spec.ts
+        { type: 'json' },
+        { exclude: [/\.*\.routing\.module\.ts$/],}
       ],
     },
     reporters: ['progress', 'kjhtml', 'coverage'],

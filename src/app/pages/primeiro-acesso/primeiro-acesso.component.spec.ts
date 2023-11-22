@@ -6,6 +6,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { IControleAcesso } from 'src/app/shared/interfaces/IControleAcesso';
 import { of } from 'rxjs';
+import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 describe('PrimeiroAcessoComponent', () => {
   let component: PrimeiroAcessoComponent;
@@ -17,8 +19,9 @@ describe('PrimeiroAcessoComponent', () => {
     TestBed.configureTestingModule({
       declarations: [PrimeiroAcessoComponent],
       imports: [ReactiveFormsModule,  RouterTestingModule, HttpClientTestingModule ],
-      providers: [
-        { provide: Router, useValue: mockRouter }]
+      providers: [AlertComponent, NgbActiveModal,
+        { provide: Router, useValue: mockRouter }],
+
     });
     fixture = TestBed.createComponent(PrimeiroAcessoComponent);
     component = fixture.componentInstance;
@@ -148,5 +151,4 @@ describe('PrimeiroAcessoComponent', () => {
     expect(component.showConfirmaSenha).toBe(false);
     expect(component.eyeIconClassConfirmaSenha).toBe('bi-eye');
   });
-
 });

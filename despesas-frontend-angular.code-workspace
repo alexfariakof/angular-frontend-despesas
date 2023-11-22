@@ -15,7 +15,7 @@
       {
         "type": "chrome",
         "request": "launch",
-        "name": "Karma Attach",
+        "name": "Karma Attach Debugger",
         "url": "http://localhost:9876/debug.html",
         "webRoot": "${workspaceFolder}",
         "pathMapping": {
@@ -23,7 +23,7 @@
         }
       },
       {
-        "name": "Debug Angular Tests",
+        "name": "Run Debug Unit Tests",
         "request": "launch",
         "runtimeArgs": [
           "run",
@@ -37,7 +37,7 @@
         "url":"http://localhost:9876/debug.html"
       },
       {
-        "name": "Debug In Chrome",
+        "name": "Chrome Attach Debugger",
         "type": "chrome",
         "request": "launch",
         "url": "http://localhost:4200",

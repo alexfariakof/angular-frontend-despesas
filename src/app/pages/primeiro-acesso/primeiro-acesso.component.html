@@ -15,33 +15,33 @@
       </div>
     </nav>
   </div>
-  <div class="h-100 flex-fill flex-grow-1 flex-fill m-2  border-end-0 border-start-0  border-primary  rounded-4">
-    <div class="bg-primary w-100 d-flex flex-column align-items-center justify-content-center  rounded-top-4">
+  <div class="h-100 flex-fill flex-grow-1 flex-fill m-2  border border-2 border-top-0 border-primary rounded-bottom-4  border-primary rounded-8">
+    <div class="bg-primary w-100 d-flex flex-column align-items-center justify-content-center  rounded-top-4 " style="position: relative; bottom: 0.1rem;">
       <h2 class="text-white m-2 fw-bolder ">Crie sua Conta de Acesso</h2>
     </div>
     <div class="form-content p-2 overflow-y-auto  max-height-scroll">
       <form (submit)="onSaveClick()" [formGroup]="createAccountFrom" >
         <div class="input-group mt-1 rounded-2">
-          <span class="input-group-text" id="labelEmail" >E-mail</span>
+          <span class="input-group-text input-width" id="labelEmail" >E-mail</span>
           <input id="txtEmail" [(ngModel)]="controleAcesso.email" name="txtEmail" formControlName="txtEmail" required="" type="text" class="form-control "
             placeholder="Entre com seu e-mail" aria-label="labelEmail" aria-describedby="labelEmail"
             [ngClass]="{ 'error-input': createAccountFrom.get('txtEmail')?.errors?.['required'] &&  createAccountFrom.get('txtEmail')?.touched }"
             />
         </div>
         <div class="input-group mt-3 rounded-2">
-          <span class="input-group-text" id="labelNome" >Nome</span>
+          <span class="input-group-text input-width" id="labelNome" >Nome</span>
           <input id="txtNome" [(ngModel)]="controleAcesso.nome" name="txtNome" formControlName="txtNome" required="" type="text" class="form-control"
             placeholder="Entre com seu nome" aria-label="nome" aria-describedby="labelNome"
             [ngClass]="{ 'error-input': createAccountFrom.get('txtNome')?.errors?.['required'] &&  createAccountFrom.get('txtNome')?.touched }"
           />
         </div>
         <div class="input-group mt-3 rounded-2" >
-          <span class="input-group-text" id="labelSobreNome" >Sobre Nome</span>
+          <span class="input-group-text input-width" id="labelSobreNome" >Sobre Nome</span>
           <input id="txtSobreNome" [(ngModel)]="controleAcesso.sobreNome" name="txtSobreNome" formControlName="txtSobreNome" required="" type="text" class="form-control"
             placeholder="Entre com seu sobre nome (opcional)" aria-label="labelSobreNome" aria-describedby="labelSobreNome" />
         </div>
         <div class="input-group mt-3 rounded-2 ">
-          <span class="input-group-text" id="labelTelefone" >Telefone</span>
+          <span class="input-group-text input-width" id="labelTelefone" >Telefone</span>
           <input id="txtTelefone" [(ngModel)]="controleAcesso.telefone" name="txtTelefone" formControlName="txtTelefone" required="" type="text" class="form-control"
             placeholder="Entre com seu telefone" aria-label="Telefone" aria-describedby="Telefone"
             [ngClass]="{ 'error-input': createAccountFrom.get('txtTelefone')?.errors?.['required'] &&  createAccountFrom.get('txtTelefone')?.touched }" />
