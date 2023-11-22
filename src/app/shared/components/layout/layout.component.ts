@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
-import { MenuService } from "../../services/menu-service/menu.service";
+import { MenuService } from "../../services/utils/menu-service/menu.service";
 import { AuthService } from "../../services/auth/auth.service";
 @Component({
     selector: 'app-layout',

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnChanges, OnDestroy, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 
@@ -8,17 +8,20 @@ import { Subject } from 'rxjs';
   styleUrls: ['./data-table.component.scss']
 })
 
-export class DataTableComponent implements AfterViewInit, OnDestroy, OnChanges {
+export class DataTableComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   @ViewChild(DataTableDirective, {static: false})
   dtElement: DataTableDirective;
-  dtOptions: DataTables.Settings = {};
+  dtOptions: any = {};
   @Input() editAction: Function = () => {};
   @Input() deleteAction: Function = () => {};
   @Input() columns: { title: string; data: string }[];
   @Input() data: any[] = null;
   dtTrigger: any = new Subject();
+  row: any = [];
 
-  constructor(){
+  constructor(){ }
+
+  ngOnInit(): void {
     this.initializeDataTable();
   }
 
@@ -51,6 +54,7 @@ export class DataTableComponent implements AfterViewInit, OnDestroy, OnChanges {
       paging: true,
       ordering: true,
       info: true,
+      select: true,
       lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, 'Todos'], ],
       pageLength: 5,
       language: {
@@ -70,11 +74,12 @@ export class DataTableComponent implements AfterViewInit, OnDestroy, OnChanges {
     };
   }
 
-  refresh(newData: any[]) {
+  loadData(newData: any[]) {
     this.data = newData;
   }
 
-  handleAction(action: string, id: string) {
+  handleAction(action: string, id: Number, _row) {
+    this.row = _row;
     if (action === 'edit') {
       this.editAction(id);
     } else if (action === 'delete') {

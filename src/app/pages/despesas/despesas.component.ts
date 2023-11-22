@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { BarraFerramentaClass } from 'src/app/shared/components/barra-ferramenta-component/barra-ferramenta.abstract';
-import { MenuService } from 'src/app/shared/services/menu-service/menu.service';
+import { MenuService } from 'src/app/shared/services/utils/menu-service/menu.service';
 
 @Component({
   selector: 'app-despesas',

@@ -4,24 +4,28 @@
     <button type="button" class="btn-close " aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
   </div>
   <div class="overflow-y-auto scroll-content  ">
-    <form (submit)="onSaveClick()" [formGroup]="createCategoriatForm" >
+    <form (submit)="onSaveClick()" [formGroup]="categoriatForm" >
+      <input id="idCategoria"  name="idCategoria" formControlName="idCategoria" type="hidden" class="form-control" value="0" />
       <div class="input-group mt-2 rounded-2">
-        <span class="input-group-text" style="height: 2.5rem" id="labelTipoCategoria" >Tipo Categoria</span>
-        <select id="tipoCategoria"  name="tipoCategoria" class="form-select" aria-label="Tipo de Categoria"  aria-describedby="labelTipoCategoria" formControlName="tipoCategoria">
-          <option value="1">Despesas</option>
-          <option value="2">Receitas</option>
+        <span class="input-group-text" style=" width:8rem;height: 2.5rem" id="labelTipoCategoria" >Tipo Categoria</span>
+        <select id="slctTipoCategoria"  name="slctTipoCategoria" class="form-select" aria-label="Tipo de Categoria"  aria-describedby="labelTipoCategoria" formControlName="slctTipoCategoria"
+        [ngClass]="{ 'error-input': categoriatForm.get('slctTipoCategoria')?.errors?.['required'] &&  categoriatForm.get('slctTipoCategoria')?.touched }"
+        >
+          <option disabled [selected]="true" >Nenhuma categoria selecionada</option>
+          <option value=1 >Despesas</option>
+          <option value=2>Receitas</option>
         </select>
       </div>
       <div class="input-group mt-3 rounded-2">
-        <span class="input-group-text" id="labelDescricao" style="height: 2.5rem" >Descrição</span>
-        <input id="txtDescricao"  name="txtDescricao" formControlName="descricao" required="" type="text" class="form-control" style="height: 2.5rem"
+        <span class="input-group-text " id="labelDescricao" style="width:8rem;height: 2.5rem" >Descrição</span>
+        <input id="txtDescricao"  name="txtDescricao" formControlName="txtDescricao" required="" type="text" class="form-control" style="height: 2.5rem"
           placeholder="Entre com a descrição" aria-label="nome" aria-describedby="labelDescricao"
-          [ngClass]="{ 'error-input': createCategoriatForm.get('txtDescricao')?.errors?.['required'] &&  createCategoriatForm.get('txtDescricao')?.touched }"
+          [ngClass]="{ 'error-input': categoriatForm.get('txtDescricao')?.errors?.['required'] &&  categoriatForm.get('txtDescricao')?.touched }"
         />
       </div>
       <div class="input-group mt-3  d-flex flex-column align-items-center justify-content-center">
         <button type="submit" class="btn btn-primary w-responsive"
-              [ngClass]="{'disabled' : !createCategoriatForm.valid}"  [disabled]="!createCategoriatForm.valid" >Salvar</button>
+              [ngClass]="{'disabled' : !categoriatForm.valid}"  [disabled]="!categoriatForm.valid" >Salvar</button>
       </div>
     </form>
   </div>

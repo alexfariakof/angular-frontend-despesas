@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { NgChartsModule } from 'ng2-charts';
 import { BarChartComponent } from 'src/app/shared/components/bar-chart/bar-chart.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { MenuService } from 'src/app/shared/services/menu-service/menu.service';
+import { MenuService } from 'src/app/shared/services/utils/menu-service/menu.service';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 describe('DashboardComponent', () => {

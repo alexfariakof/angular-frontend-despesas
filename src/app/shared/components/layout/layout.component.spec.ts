@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LayoutComponent } from './layout.component';
 import { CommonModule } from '@angular/common';
-import { MenuService } from '../../services/menu-service/menu.service';
+import { MenuService } from '../../services/utils/menu-service/menu.service';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
