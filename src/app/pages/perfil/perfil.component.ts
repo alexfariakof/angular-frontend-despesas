@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MenuService } from 'src/app/shared/services/menu-service/menu.service';
-
+import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
+import { MenuService } from 'src/app/shared/services/utils/menu-service/menu.service';
 
 @Component({
   selector: 'app-perfil',
@@ -10,9 +11,23 @@ import { MenuService } from 'src/app/shared/services/menu-service/menu.service';
 })
 export class PerfilComponent {
 
-  constructor(private router: Router, public menuService: MenuService) {  }
+  constructor(
+    public router: Router,
+    public menuService: MenuService,
+    public formBuilder: FormBuilder,
+    public modalAlert: AlertComponent)  {
+  }
 
   selectMenu(menu: number) {
     this.menuService.selectMenu(menu, this.router);
   }
+
+  ngOnInit() {
+    this.menuService.menuSelecionado = 6;
+  }
+
+  onLogoutClick(){
+    this.router.navigate(['/']);
+  }
+
 }

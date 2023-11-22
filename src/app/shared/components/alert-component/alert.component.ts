@@ -1,10 +1,9 @@
-import { Component, Input, NgModule } from '@angular/core';
-import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, Input } from '@angular/core';
+import { NgbModalConfig, NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-alert-component',
-  templateUrl: './alert.component.html',
-  providers: [NgbModalConfig, NgbModal],
+  templateUrl: './alert.component.html'
 })
 
 export class AlertComponent {
@@ -12,25 +11,25 @@ export class AlertComponent {
   @Input() message:string ='';
   alertTypeClass : string = 'alert alert-success mt-2';
 
-  constructor(config: NgbModalConfig, private modalService: NgbModal) {
+  constructor(config: NgbModalConfig, public modalService: NgbModal, public activeModal: NgbActiveModal) {
 		config.backdrop = 'static';
     config.keyboard = false;
 	}
 
-	open(content, _message: string, typeAlert: AlertType ) {
+	open(content: any, _message: string, typeAlert: AlertType ) {
 		const modalRef = this.modalService.open(content);
     modalRef.componentInstance.alertTypeClass = AlertTypeClass[typeAlert];
     modalRef.componentInstance.message = _message;
+    return modalRef;
 	}
 
   close(){
-    this.modalService.dismissAll();
+    this.activeModal.close();
   }
-
 }
 
 type AlertType = 'Success' | 'Warning';
 const AlertTypeClass: Record<AlertType, string> = {
-  Success: 'alert alert-success mt-2',
-  Warning: 'alert alert-danger mt-2',
+  Success: 'alert alert-success mt-2 bi bi-emoji-smile',
+  Warning: 'alert alert-danger mt-2 bi bi-exclamation-circle',
 };

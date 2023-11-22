@@ -1,33 +1,34 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { TestBed } from '@angular/core/testing';
 import { PerfilComponent } from './perfil.component';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MenuService } from '../../shared/services/menu-service/menu.service';
-import { PerfilRoutingModule } from './perfil-routing.module';
+import { MenuService } from '../../shared/services/utils/menu-service/menu.service';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 describe('PerfilComponent', () => {
   let component: PerfilComponent;
-  let fixture: ComponentFixture<PerfilComponent>;
   let router: Router;
+  let menuService: MenuService;
+  let formBuilder: FormBuilder;
+  let modalAlert: AlertComponent;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PerfilComponent],
-      imports: [
-        CommonModule,
-        PerfilRoutingModule,
-        FormsModule],
-      providers: [MenuService]
+      imports: [ CommonModule, RouterTestingModule, FormsModule],
+      providers: [MenuService, AlertComponent, NgbActiveModal]
     });
-    fixture = TestBed.createComponent(PerfilComponent);
-    component = fixture.componentInstance;
     router = TestBed.inject(Router);
-    fixture.detectChanges();
+    menuService = TestBed.inject(MenuService);
+    formBuilder = TestBed.inject(FormBuilder);
+    modalAlert = TestBed.inject(AlertComponent);
+    component = new PerfilComponent(router, menuService, formBuilder, modalAlert);
   });
 
   it('should create', () => {
+    component.ngOnInit();
     expect(component).toBeTruthy();
   });
 
@@ -79,8 +80,10 @@ describe('PerfilComponent', () => {
     expect(router.navigate).toHaveBeenCalledWith(['/dashboard']);
   });
 
-  it('should create the PerfilRoutingModule', () => {
-    const routingModule: PerfilRoutingModule = TestBed.inject(PerfilRoutingModule);
-    expect(routingModule).toBeTruthy();
+  it('should logout', () => {
+    spyOn(router, 'navigate');
+    component.onLogoutClick();
+    expect(router.navigate).toHaveBeenCalledWith(['/']);
   });
+
 });

@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ConfiguracoesRoutingModule } from './configuracoes.routing.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { ConfiguracoesComponent } from './configuracoes.component';
-import { SharedModule } from '../../shared/shared.module';
 @NgModule({
-  providers: [],
-  declarations: [ConfiguracoesComponent ],
-  imports: [CommonModule, ConfiguracoesModule, SharedModule]  
+  declarations : [ConfiguracoesComponent],
+  imports: [CommonModule, ConfiguracoesRoutingModule, SharedModule]
 })
 export class ConfiguracoesModule {}
