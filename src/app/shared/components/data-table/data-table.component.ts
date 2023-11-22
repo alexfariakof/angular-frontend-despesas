@@ -17,7 +17,7 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnDestroy, OnC
   @Input() columns: { title: string; data: string }[];
   @Input() data: any[] = null;
   dtTrigger: any = new Subject();
-  row: any;
+  row: any = [];
 
   constructor(){ }
 
@@ -34,7 +34,6 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnDestroy, OnC
   }
 
   ngOnDestroy(): void {
-    $.fn.dataTable.ext.search.pop();
     this.dtTrigger.unsubscribe();
   }
 
@@ -79,12 +78,12 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnDestroy, OnC
     this.data = newData;
   }
 
-  handleAction(action: string, row: any, _row) {
+  handleAction(action: string, id: Number, _row) {
     this.row = _row;
     if (action === 'edit') {
-      this.editAction(row);
+      this.editAction(id);
     } else if (action === 'delete') {
-      this.deleteAction(row);
+      this.deleteAction(id);
     }
   }
 }

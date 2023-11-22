@@ -75,7 +75,7 @@ export class CategoriasFormComponent implements OnInit {
         this.categoriaService.putCategoria(categoria)
         .subscribe({
           next: (result: ICategoria ) => {
-            if (!result !== undefined || result !== null)
+            if (result !== undefined || result !== null)
             {
               this.activeModal.close();
               this.refresh();

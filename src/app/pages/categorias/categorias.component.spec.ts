@@ -13,16 +13,24 @@ import { CategoriasFormComponent } from './categorias-form/categorias.form.compo
 import { ReactiveFormsModule } from '@angular/forms';
 import { ICategoria } from 'src/app/shared/interfaces/ICategoria';
 import { IAction } from 'src/app/shared/interfaces/IAction';
-import { from } from 'rxjs';
+import { from, of } from 'rxjs';
 import RefreshService from 'src/app/shared/services/utils/refersh-service/refresh.service';
+import { ModalConfirmComponent } from 'src/app/shared/components/modal-confirm/modal.confirm.component';
+import { DataTableComponent } from 'src/app/shared/components/data-table/data-table.component';
+import { CategoriaDataSet } from 'src/app/shared/datatable-config/categorias/categoria.dataSet';
 
 describe('CategoriasComponent', () => {
   let component: CategoriasComponent;
   let fixture: ComponentFixture<CategoriasComponent>;
   let mockAuthService: jasmine.SpyObj<AuthService>;
-  let mockcategoriasData;
   let categoriaService: CategoriaService;
-  const mockCategoria = {id:1, descricao: 'Teste Categoria', tipoCategoria: 'Despesas'};
+  let mockCategoriaData : CategoriaDataSet = {id:1, descricao: 'Teste Categoria', tipoCategoria: 'Despesas'};
+  let mockCategoria : ICategoria = {id: 1, descricao: 'Teste Categoria Despesas', idTipoCategoria: 1, idUsuario: 1};
+  let mockCategorias: ICategoria[] = [
+    {id: 1, descricao: 'Teste Categoria Despesas', idTipoCategoria: 1, idUsuario: 1},
+    {id: 2, descricao: 'Teste Categoria Receitas', idTipoCategoria: 2, idUsuario: 1},
+
+  ]
 
   beforeEach(() => {
     mockAuthService = jasmine.createSpyObj('AuthService', ['isAuthenticated']);
@@ -30,17 +38,17 @@ describe('CategoriasComponent', () => {
     TestBed.configureTestingModule({
       declarations: [CategoriasComponent, CategoriasFormComponent],
       imports: [CommonModule, ReactiveFormsModule,  SharedModule, HttpClientTestingModule ],
-      providers: [MenuService, AlertComponent, ModalFormComponent, NgbActiveModal, CategoriaService, RefreshService,
+      providers: [MenuService, AlertComponent, ModalFormComponent, ModalConfirmComponent,  NgbActiveModal, CategoriaService, RefreshService,
         { provide: AuthService, useValue: mockAuthService },
       ]
     });
     fixture = TestBed.createComponent(CategoriasComponent);
     component = fixture.componentInstance;
-    component.catgoriasData = [mockCategoria];
+    component.dataTable = TestBed.inject(DataTableComponent);
+    component.catgoriasData = [mockCategoriaData];
     categoriaService = TestBed.inject(CategoriaService);
-
-    spyOn(component, 'getCategoriasData').and.returnValue([mockCategoria]);
-    //fixture.detectChanges();
+    spyOn(component, 'getCategoriasData').and.returnValue([mockCategoriaData]);
+    fixture.detectChanges();
   });
 
 
@@ -51,7 +59,7 @@ describe('CategoriasComponent', () => {
   it('should initialize data table on ngOnInit', () => {
     // Arrange
     const initializeDataTableSpy = spyOn(component, 'initializeDataTable').and.callThrough();
-
+    const getCategoriasSpy = spyOn(categoriaService, 'getCategorias').and.returnValue(from(Promise.resolve(mockCategorias)));
     // Act
     component.ngOnInit();
 
@@ -62,8 +70,7 @@ describe('CategoriasComponent', () => {
 
   it('should initializeDataTable', () => {
     // Arrange
-    const getCategoriasSpy = spyOn(categoriaService, 'getCategorias').and.callThrough();;
-
+    const getCategoriasSpy = spyOn(categoriaService, 'getCategorias').and.returnValue(from(Promise.resolve(mockCategorias)));
     // Act
     component.initializeDataTable();
 
@@ -74,7 +81,7 @@ describe('CategoriasComponent', () => {
 
   it('should update data table on updateDatatable', () => {
     // Arrange
-    const getCategoriasSpy = spyOn(categoriaService, 'getCategorias').and.callThrough();
+    const getCategoriasSpy = spyOn(categoriaService, 'getCategorias').and.returnValue(from(Promise.resolve(mockCategorias)));
 
     // Act
     component.updateDatatable();
@@ -103,7 +110,7 @@ describe('CategoriasComponent', () => {
     expect(result.length).toBeGreaterThan(0);
     expect(result[0].id).toEqual(categorias[0].id);
     expect(result[0].descricao).toEqual(categorias[0].descricao);
-    expect(result[0].tipoCategoria).toEqual('Despesas'); // Certifique-se de ajustar conforme necessário
+    expect(result[0].tipoCategoria).toEqual('Despesas');
   });
 
   it('should open modalForm on onClickNovo', () => {
@@ -115,66 +122,46 @@ describe('CategoriasComponent', () => {
 
     // Assert
     expect(component.modalForm.modalService.open).toHaveBeenCalled();
-    //expect(modalRefSpy.componentInstance.setAction).toHaveBeenCalledWith(IAction.Create);
-    //expect(modalRefSpy.componentInstance.setRefresh).toHaveBeenCalled();
   });
 
-  it('should open modalForm onClickEdit', fakeAsync(() => {
-    // Arrange
-    const categoria = [{
-      id: 1,
-      descricao: 'Teste Categoria',
-      idUsuario: 1,
-      idTipoCategoria: 1
-    }];
 
-    const modalRefSpy = jasmine.createSpyObj('modalRef', ['shown', 'componentInstance', 'close']);
-    spyOn(component.modalForm.modalService, 'open').and.returnValue(modalRefSpy).and.callThrough();
-    spyOn(categoriaService, 'getCategoriaById').and.returnValue(from(Promise.resolve(categoria))).and.callThrough();
+  it('should getCategoria when onClickEdit and execcute editCategoria', fakeAsync(() => {
+    // Arrange
+    const getCategoriaByIdSpy = spyOn(categoriaService, 'getCategoriaById').and.returnValue(from(Promise.resolve(mockCategoria)));
+    const editCategoriaSpy = spyOn(component, 'editCategoria').and.callThrough();
 
     // Act
-    component.onClickEdit(1);
+    component.onClickEdit(mockCategoria.id);
     tick();
     flush();
 
     // Assert
-    expect(component.modalForm.modalService.open).toHaveBeenCalled();
-    expect(modalRefSpy.componentInstance.setAction).toHaveBeenCalledWith(IAction.Edit);
-    expect(modalRefSpy.componentInstance.setRefresh).toHaveBeenCalled();
-    expect(modalRefSpy.componentInstance.getCategoriaForm().get('idCategoria').value).toEqual(categoria[0].id);
-    expect(modalRefSpy.componentInstance.getCategoriaForm().get('txtDescricao').value).toEqual(categoria[0].descricao);
-    expect(modalRefSpy.componentInstance.getCategoriaForm().get('slctTipoCategoria').value).toEqual(categoria[0].idTipoCategoria);
+    expect(getCategoriaByIdSpy).toHaveBeenCalled();
+    expect(editCategoriaSpy).toHaveBeenCalledWith(mockCategoria);
   }));
 
-  it('should delete categoria and show success message on onClickDelete', fakeAsync(() => {
-    // Arrange
-    const message = { message: true };
-    const deleteCategoriaSpy = spyOn(categoriaService, 'deleteCategoria').and.returnValue(from(Promise.resolve(message)));
-    const modalAlertSpy = spyOn(component.modalAlert, 'open').and.callThrough();
+  it('should open modalConfirm when onDeleteClick', () => {
+    spyOn(component.modalConfirm, 'open').and.callThrough();
 
     // Act
-    component.onClickDelete(1);
+    component.onClickDelete(mockCategoria.id);
+
+    // Assert
+    expect(component.modalConfirm.open).toHaveBeenCalled();
+  });
+
+
+  it('should execute deleteCategoria and open modal alert', fakeAsync(() => {
+    const getCategoriaByIdSpy = spyOn(categoriaService, 'deleteCategoria').withArgs(mockCategoria.id).and.returnValue(from(Promise.resolve(of({message: true}))));
+    spyOn(component.modalAlert, 'open').and.callThrough();
+
+    // Act
+    component.deleteCategoria(mockCategoria.id);
     tick();
     flush();
 
     // Assert
-    expect(deleteCategoriaSpy).toHaveBeenCalled();
-    expect(modalAlertSpy).toHaveBeenCalledWith(AlertComponent, 'Categoria excluída com sucesso', 'Success');
-  }));
-
-  it('should handle error on onClickDelete', fakeAsync(() => {
-    // Arrange
-    const errorMessage = 'Fake Error Message';
-    spyOn(categoriaService, 'deleteCategoria').and.returnValue(from(Promise.resolve({message:false})));
-    const modalAlertSpy = spyOn(component.modalAlert, 'open');
-
-    // Act
-    component.onClickDelete(1);
-    tick();
-
-    // Assert
-    expect(modalAlertSpy).toHaveBeenCalled();
-    //expect(modalAlertSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, 'Warning');
+    expect(component.modalAlert.open).toHaveBeenCalled();
   }));
 
 

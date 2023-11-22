@@ -112,16 +112,7 @@ export class CategoriasComponent implements BarraFerramentaClass, OnInit, OnDest
     .subscribe({
       next: (categoria: ICategoria) => {
         if (categoria !== undefined || categoria !== null)
-        {
-          const modalRef = this.modalForm.modalService.open(CategoriasFormComponent, { centered: true });
-          modalRef.shown.subscribe(() => {
-            modalRef.componentInstance.setAction(IAction.Edit);
-            modalRef.componentInstance.setRefresh(() => { this.refreshService.refresh(); });
-            modalRef.componentInstance.getCategoriaForm().get('idCategoria').setValue(categoria.id);
-            modalRef.componentInstance.getCategoriaForm().get('txtDescricao').setValue(categoria.descricao);
-            modalRef.componentInstance.getCategoriaForm().get('slctTipoCategoria').setValue(categoria.idTipoCategoria);
-          });
-        }
+          this.editCategoria(categoria);
       },
       error :(response : any) =>  {
         this.modalAlert.open(AlertComponent, response.message, 'Warning');
@@ -129,24 +120,37 @@ export class CategoriasComponent implements BarraFerramentaClass, OnInit, OnDest
     });
   }
 
-  onClickDelete = (idCategoria: Number) => {
+  editCategoria = (categoria: ICategoria) => {
+    const modalRef = this.modalForm.modalService.open(CategoriasFormComponent, { centered: true });
+    modalRef.shown.subscribe(() => {
+      modalRef.componentInstance.setAction(IAction.Edit);
+      modalRef.componentInstance.setRefresh(() => { this.refreshService.refresh(); });
+      modalRef.componentInstance.getCategoriaForm().get('idCategoria').setValue(categoria.id);
+      modalRef.componentInstance.getCategoriaForm().get('txtDescricao').setValue(categoria.descricao);
+      modalRef.componentInstance.getCategoriaForm().get('slctTipoCategoria').setValue(categoria.idTipoCategoria);
+    });
+  }
 
-    this.modalConfirm.open(ModalConfirmComponent, `Deseja excluir a categoria ${ this.dataTable.row.descricao } ?`, () => {
-      this.categoriaService.deleteCategoria(idCategoria)
-      .subscribe({
-        next: (categoria: any) => {
-          if (categoria.message === true){
-            this.refreshService.refresh();
-            this.modalAlert.open(AlertComponent, "Categoria excluída com sucesso", 'Success');
-          }
-          else{
-            this.modalAlert.open(ModalConfirmComponent, 'Erro ao excluír categoria', 'Warning');
-          }
-        },
-        error :(response : any) =>  {
-          this.modalAlert.open(ModalConfirmComponent, response.message, 'Warning');
+  onClickDelete = (idCategoria: Number) => {
+    const modalRef = this.modalConfirm.open(ModalConfirmComponent, `Deseja excluir a categoria ${ this.dataTable.row.descricao } ?`);
+    modalRef.componentInstance.setConfirmButton(() => { this.deleteCategoria(idCategoria); });
+  }
+
+  deleteCategoria = (idCategoria: Number) => {
+    this.categoriaService.deleteCategoria(idCategoria)
+    .subscribe({
+      next: (categoria: any) => {
+        if (categoria.message === true){
+          this.refreshService.refresh();
+          this.modalAlert.open(AlertComponent, "Categoria excluída com sucesso", 'Success');
         }
-      });
+        else{
+          this.modalAlert.open(ModalConfirmComponent, 'Erro ao excluír categoria', 'Warning');
+        }
+      },
+      error :(response : any) =>  {
+        this.modalAlert.open(ModalConfirmComponent, response.message, 'Warning');
+      }
     });
   }
 
