@@ -1,4 +1,3 @@
-
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
 import { ModalFormComponent } from 'src/app/shared/components/modal-form/modal.form.component';
@@ -15,7 +14,6 @@ import { Subscription } from 'rxjs';
 import { CategoriaColumns } from 'src/app/shared/datatable-config/categorias/categoria.columns';
 import { CategoriaDataSet } from 'src/app/shared/datatable-config/categorias/categoria.dataSet';
 import { ModalConfirmComponent } from 'src/app/shared/components/modal-confirm/modal.confirm.component';
-
 @Component({
   selector: 'app-categorias',
   templateUrl: './categorias.component.html',
@@ -34,7 +32,7 @@ export class CategoriasComponent implements BarraFerramentaClass, OnInit, OnDest
     public modalForm: ModalFormComponent,
     public modalConfirm: ModalConfirmComponent,
     public categoriaService: CategoriaService,
-    private refreshService: RefreshService
+    public refreshService: RefreshService
     ) { }
 
   ngOnInit() {
@@ -125,9 +123,7 @@ export class CategoriasComponent implements BarraFerramentaClass, OnInit, OnDest
     modalRef.shown.subscribe(() => {
       modalRef.componentInstance.setAction(IAction.Edit);
       modalRef.componentInstance.setRefresh(() => { this.refreshService.refresh(); });
-      modalRef.componentInstance.getCategoriaForm().get('idCategoria').setValue(categoria.id);
-      modalRef.componentInstance.getCategoriaForm().get('txtDescricao').setValue(categoria.descricao);
-      modalRef.componentInstance.getCategoriaForm().get('slctTipoCategoria').setValue(categoria.idTipoCategoria);
+      modalRef.componentInstance.setCategoria(categoria);
     });
   }
 
@@ -139,19 +135,18 @@ export class CategoriasComponent implements BarraFerramentaClass, OnInit, OnDest
   deleteCategoria = (idCategoria: Number) => {
     this.categoriaService.deleteCategoria(idCategoria)
     .subscribe({
-      next: (categoria: any) => {
-        if (categoria.message === true){
+      next: (response: any) => {
+        if (response.message === true){
           this.refreshService.refresh();
           this.modalAlert.open(AlertComponent, "Categoria excluída com sucesso", 'Success');
         }
         else{
-          this.modalAlert.open(ModalConfirmComponent, 'Erro ao excluír categoria', 'Warning');
+          this.modalAlert.open(AlertComponent, 'Erro ao excluír categoria', 'Warning');
         }
       },
       error :(response : any) =>  {
-        this.modalAlert.open(ModalConfirmComponent, response.message, 'Warning');
+        this.modalAlert.open(AlertComponent, response.message, 'Warning');
       }
     });
   }
-
 }
