@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
 import { ModalFormComponent } from 'src/app/shared/components/modal-form/modal.form.component';
 import { MenuService } from 'src/app/shared/services/utils/menu-service/menu.service';
@@ -9,8 +9,6 @@ import { ITipoCategoria } from './../../shared/interfaces/ITipoCategoria';
 import { CategoriaService } from 'src/app/shared/services/api/categorias/categoria.service';
 import { DataTableComponent } from 'src/app/shared/components/data-table/data-table.component';
 import { IAction } from 'src/app/shared/interfaces/IAction';
-import RefreshService from 'src/app/shared/services/utils/refersh-service/refresh.service';
-import { Subscription } from 'rxjs';
 import { CategoriaColumns } from 'src/app/shared/datatable-config/categorias/categoria.columns';
 import { CategoriaDataSet } from 'src/app/shared/datatable-config/categorias/categoria.dataSet';
 import { ModalConfirmComponent } from 'src/app/shared/components/modal-confirm/modal.confirm.component';
@@ -20,9 +18,8 @@ import { ModalConfirmComponent } from 'src/app/shared/components/modal-confirm/m
   styleUrls: ['./categorias.component.scss']
 })
 
-export class CategoriasComponent implements BarraFerramentaClass, OnInit, OnDestroy {
+export class CategoriasComponent implements BarraFerramentaClass, OnInit {
   @ViewChild(DataTableComponent) dataTable: DataTableComponent;
-  private refreshSubscription: Subscription;
   catgoriasData: CategoriaDataSet[] = [];
   columns = CategoriaColumns;
 
@@ -31,24 +28,12 @@ export class CategoriasComponent implements BarraFerramentaClass, OnInit, OnDest
     public modalAlert: AlertComponent,
     public modalForm: ModalFormComponent,
     public modalConfirm: ModalConfirmComponent,
-    public categoriaService: CategoriaService,
-    public refreshService: RefreshService
+    public categoriaService: CategoriaService
     ) { }
 
   ngOnInit() {
     this.menuService.menuSelecionado = 2;
-    this.refreshSubscription = this.refreshService.onRefresh().subscribe(() => {
-      this.updateDatatable();
-    });
     this.initializeDataTable();
-  }
-
-  ngOnDestroy(): void {
-    /*
-    if (this.refreshSubscription) {
-      this.refreshSubscription.unsubscribe();
-    }
-    */
   }
 
   initializeDataTable = () => {
@@ -101,7 +86,7 @@ export class CategoriasComponent implements BarraFerramentaClass, OnInit, OnDest
     const modalRef = this.modalForm.modalService.open(CategoriasFormComponent, { centered: true });
     modalRef.shown.subscribe(() => {
       modalRef.componentInstance.setAction(IAction.Create);
-      modalRef.componentInstance.setRefresh(() => { this.refreshService.refresh(); });
+      modalRef.componentInstance.setRefresh(() => { this.updateDatatable(); });
     });
   }
 
@@ -122,7 +107,7 @@ export class CategoriasComponent implements BarraFerramentaClass, OnInit, OnDest
     const modalRef = this.modalForm.modalService.open(CategoriasFormComponent, { centered: true });
     modalRef.shown.subscribe(() => {
       modalRef.componentInstance.setAction(IAction.Edit);
-      modalRef.componentInstance.setRefresh(() => { this.refreshService.refresh(); });
+      modalRef.componentInstance.setRefresh(() => { this.updateDatatable(); });
       modalRef.componentInstance.setCategoria(categoria);
     });
   }
@@ -137,7 +122,7 @@ export class CategoriasComponent implements BarraFerramentaClass, OnInit, OnDest
     .subscribe({
       next: (response: any) => {
         if (response.message === true){
-          this.refreshService.refresh();
+          this.updateDatatable();
           this.modalAlert.open(AlertComponent, "Categoria excluída com sucesso", 'Success');
         }
         else{

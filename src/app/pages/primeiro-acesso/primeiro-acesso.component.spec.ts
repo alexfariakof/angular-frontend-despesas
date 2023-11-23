@@ -20,8 +20,8 @@ describe('PrimeiroAcessoComponent', () => {
       declarations: [PrimeiroAcessoComponent],
       imports: [ReactiveFormsModule,  RouterTestingModule, HttpClientTestingModule ],
       providers: [AlertComponent, NgbActiveModal,
-        { provide: Router, useValue: mockRouter }],
-
+        { provide: Router, useValue: mockRouter }
+      ]
     });
     fixture = TestBed.createComponent(PrimeiroAcessoComponent);
     component = fixture.componentInstance;
@@ -59,7 +59,6 @@ describe('PrimeiroAcessoComponent', () => {
     expect(component.modalALert.open).toHaveBeenCalled();
     //expect(component.router.navigate).toHaveBeenCalledWith(['/dashboard']);
   }));
-
 
   it('should open modal when when error comes from api ', () => {
     // Arrange

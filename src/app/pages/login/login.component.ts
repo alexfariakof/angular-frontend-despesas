@@ -21,10 +21,10 @@ export class LoginComponent implements OnInit{
   eyeIconClass: string = 'bi-eye';
 
   constructor(
-    public authProviderService: AuthService,
     private formbuilder: FormBuilder,
     public router: Router,
     public controleAcessoService: ControleAcessoService,
+    public authProviderService: AuthService,
     public modalALert: AlertComponent ){
 
   }

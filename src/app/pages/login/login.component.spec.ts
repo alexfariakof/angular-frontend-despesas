@@ -58,7 +58,6 @@ describe('LoginComponent', () => {
     // Act
     component.login = login;
     component.onLoginClick();
-    component.controleAcessoService.createUsuario
     flush();
 
     // Assert

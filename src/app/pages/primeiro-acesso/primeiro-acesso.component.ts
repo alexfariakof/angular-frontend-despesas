@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { ControleAcessoService } from 'src/app/shared/services/api/controle-acesso/controle-acesso.service';
 import { map, catchError } from 'rxjs';
 import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
-
 @Component({
   selector: 'app-primeiro-acesso',
   templateUrl: './primeiro-acesso.component.html',
@@ -24,7 +23,6 @@ export class PrimeiroAcessoComponent  implements OnInit {
     public router: Router,
     public controleAcessoService: ControleAcessoService,
     public modalALert: AlertComponent) {
-
   }
 
   ngOnInit(): void{

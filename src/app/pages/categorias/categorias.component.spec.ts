@@ -13,7 +13,6 @@ import { CategoriasFormComponent } from './categorias-form/categorias.form.compo
 import { ReactiveFormsModule } from '@angular/forms';
 import { ICategoria } from 'src/app/shared/interfaces/ICategoria';
 import { from, of, throwError } from 'rxjs';
-import RefreshService from 'src/app/shared/services/utils/refersh-service/refresh.service';
 import { ModalConfirmComponent } from 'src/app/shared/components/modal-confirm/modal.confirm.component';
 import { DataTableComponent } from 'src/app/shared/components/data-table/data-table.component';
 import { CategoriaDataSet } from 'src/app/shared/datatable-config/categorias/categoria.dataSet';
@@ -36,7 +35,7 @@ describe('Unit Test CategoriasComponent', () => {
     TestBed.configureTestingModule({
       declarations: [CategoriasComponent, CategoriasFormComponent],
       imports: [CommonModule, ReactiveFormsModule,  SharedModule, HttpClientTestingModule ],
-      providers: [MenuService, AlertComponent, ModalFormComponent, ModalConfirmComponent,  NgbActiveModal, CategoriaService, RefreshService,
+      providers: [MenuService, AlertComponent, ModalFormComponent, ModalConfirmComponent,  NgbActiveModal, CategoriaService,
         { provide: AuthService, useValue: mockAuthService },
       ]
     });
@@ -202,7 +201,6 @@ describe('Unit Test CategoriasComponent', () => {
     // Arrange
     const getDeleteCategoria = spyOn(categoriaService, 'deleteCategoria').withArgs(mockCategoria.id).and.returnValue(of({message: true}));
     spyOn(component.modalAlert, 'open').and.callThrough();
-    spyOn(component.refreshService, 'refresh').and.callFake(() => {});
 
     // Act
     component.deleteCategoria(mockCategoria.id);
