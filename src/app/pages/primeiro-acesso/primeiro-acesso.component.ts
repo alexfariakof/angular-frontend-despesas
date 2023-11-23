@@ -8,11 +8,11 @@ import { AlertComponent } from 'src/app/shared/components/alert-component/alert.
 @Component({
   selector: 'app-primeiro-acesso',
   templateUrl: './primeiro-acesso.component.html',
-  styleUrls: ['./primeiro-acesso.component.scss']
+  styleUrls: ['./primeiro-acesso.component.scss'],
+
 })
 export class PrimeiroAcessoComponent  implements OnInit {
-  public controleAcesso: IControleAcesso = {   nome: '', sobreNome: '', telefone: '', email: '', senha: '', confirmaSenha: '' };
-  createAccountFrom : FormGroup = this.formbuilder.group({});
+  createAccountFrom : FormGroup & IControleAcesso;
   eyeIconClass: string = 'bi-eye';
   eyeIconClassConfirmaSenha: string = 'bi-eye';
   showSenha = false;
@@ -27,17 +27,18 @@ export class PrimeiroAcessoComponent  implements OnInit {
 
   ngOnInit(): void{
     this.createAccountFrom = this.formbuilder.group({
-      txtEmail: ['', [Validators.required, Validators.email]],
-      txtNome: ['', [Validators.required]],
-      txtSobreNome: ['', ],
-      txtTelefone: ['', [Validators.required]],
-      txtSenha: ['', [Validators.required]],
-      txtConfirmaSenha: ['', [Validators.required]]
-    })
+      email: ['', [Validators.required, Validators.email]],
+      nome: ['', [Validators.required]],
+      sobreNome: '',
+      telefone: ['', [Validators.required]],
+      senha: ['', [Validators.required]],
+      confirmaSenha: ['', [Validators.required]]
+    })as FormGroup & IControleAcesso;
   }
 
   onSaveClick() {
-    this.controleAcessoService.createUsuario(this.controleAcesso).pipe(
+    let controleAcesso: IControleAcesso = this.createAccountFrom.getRawValue();
+    this.controleAcessoService.createUsuario(controleAcesso).pipe(
       map((response: IControleAcesso | any) => {
         if (response.message === true) {
           return response.message;
@@ -71,8 +72,9 @@ export class PrimeiroAcessoComponent  implements OnInit {
   }
 
   isPasswordValid(): boolean {
-
-    if (this.controleAcesso.senha !== this.controleAcesso.confirmaSenha) {
+    let senha = this.createAccountFrom.get('senha').value;
+    let confirmaSenha = this.createAccountFrom.get('confirmaSenha').value;
+    if (senha !== confirmaSenha) {
       return true;
     } else {
       return false;

@@ -37,6 +37,7 @@
     "datatables.net-select-dt": "^1.7.0",
     "install": "^0.13.0",
     "jquery": "^3.7.1",
+    "mdb-angular-ui-kit": "^5.1.0",
     "mdb-ui-kit": "^6.4.0",
     "ng2-charts": "^4.1.1",
     "npm": "^10.2.1",

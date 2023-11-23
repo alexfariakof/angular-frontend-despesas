@@ -8,6 +8,7 @@ import { IControleAcesso } from 'src/app/shared/interfaces/IControleAcesso';
 import { of } from 'rxjs';
 import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 
 describe('PrimeiroAcessoComponent', () => {
   let component: PrimeiroAcessoComponent;
@@ -18,7 +19,7 @@ describe('PrimeiroAcessoComponent', () => {
     mockRouter = jasmine.createSpyObj('Router', ['navigate']);
     TestBed.configureTestingModule({
       declarations: [PrimeiroAcessoComponent],
-      imports: [ReactiveFormsModule,  RouterTestingModule, HttpClientTestingModule ],
+      imports: [ReactiveFormsModule,  RouterTestingModule, HttpClientTestingModule, MdbFormsModule ],
       providers: [AlertComponent, NgbActiveModal,
         { provide: Router, useValue: mockRouter }
       ]
@@ -50,7 +51,7 @@ describe('PrimeiroAcessoComponent', () => {
     spyOn(component, 'onSaveClick').and.callThrough();
 
     // Act
-    component.controleAcesso = controleAcesso;
+    component.createAccountFrom.patchValue(controleAcesso);
     component.onSaveClick();
 
     // Assert
@@ -77,7 +78,7 @@ describe('PrimeiroAcessoComponent', () => {
     spyOn(component, 'onSaveClick').and.callThrough();
 
     // Act
-    component.controleAcesso = controleAcesso;
+    component.createAccountFrom.patchValue(controleAcesso);
     component.onSaveClick();
 
     // Asssert
@@ -101,7 +102,7 @@ describe('PrimeiroAcessoComponent', () => {
     spyOn(component, 'onSaveClick').and.callThrough();
 
     // Act
-    component.controleAcesso = controleAcesso;
+    component.createAccountFrom.patchValue(controleAcesso);
     component.onSaveClick();
 
     // Asssert
