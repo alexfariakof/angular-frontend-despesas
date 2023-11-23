@@ -71,7 +71,7 @@
           [ngClass]=" { 'error-bi-input': createAccountFrom.get('confirmaSenha')?.hasError('required') && createAccountFrom.get('confirmaSenha')?.touched,
                         'not-error-input': !createAccountFrom.get('confirmaSenha')?.hasError('required') || !createAccountFrom.get('confirmaSenha')?.touched }">
         </i>
-        <span class="input-group-text position-absolute border-0  mx-0 top-0 end-0" (click)="onToogleConfirmaSenha()" ><i [ngClass]="eyeIconClassConfirmaSenha" ></i></span>
+        <span class="input-group-text position-absolute border-0 mx-0 top-0 end-0" (click)="onToogleConfirmaSenha()" ><i [ngClass]="eyeIconClassConfirmaSenha" ></i></span>
       </mdb-form-control>
       <div class="input-group mt-3  d-flex flex-column align-items-center justify-content-center">
         <button type="submit" class="btn btn-primary w-responsive" disabled  data-mdb-ripple-init

@@ -75,9 +75,9 @@ export class PrimeiroAcessoComponent  implements OnInit {
     let senha = this.createAccountFrom.get('senha').value;
     let confirmaSenha = this.createAccountFrom.get('confirmaSenha').value;
     if (senha !== confirmaSenha) {
-      return true;
-    } else {
       return false;
+    } else {
+      return true;
     }
   }
 }

@@ -8,6 +8,7 @@ import { CategoriaService } from 'src/app/shared/services/api/categorias/categor
 import { of, throwError } from 'rxjs';
 import { IAction } from 'src/app/shared/interfaces/IAction';
 import { ICategoria } from 'src/app/shared/interfaces/ICategoria';
+import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 
 describe('Unit Test CategoriasFormComponent', () => {
   let component: CategoriasFormComponent;
@@ -18,7 +19,7 @@ describe('Unit Test CategoriasFormComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [CategoriasFormComponent],
-      imports: [ReactiveFormsModule, HttpClientTestingModule ],
+      imports: [ReactiveFormsModule, HttpClientTestingModule, MdbFormsModule ],
       providers: [FormBuilder, AlertComponent, NgbActiveModal, CategoriaService]
     });
     fixture = TestBed.createComponent(CategoriasFormComponent);

@@ -16,6 +16,7 @@ import { from, of, throwError } from 'rxjs';
 import { ModalConfirmComponent } from 'src/app/shared/components/modal-confirm/modal.confirm.component';
 import { DataTableComponent } from 'src/app/shared/components/data-table/data-table.component';
 import { CategoriaDataSet } from 'src/app/shared/datatable-config/categorias/categoria.dataSet';
+import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 
 describe('Unit Test CategoriasComponent', () => {
   let component: CategoriasComponent;
@@ -34,7 +35,7 @@ describe('Unit Test CategoriasComponent', () => {
     mockAuthService.isAuthenticated.and.returnValue(true);
     TestBed.configureTestingModule({
       declarations: [CategoriasComponent, CategoriasFormComponent],
-      imports: [CommonModule, ReactiveFormsModule,  SharedModule, HttpClientTestingModule ],
+      imports: [CommonModule, ReactiveFormsModule, MdbFormsModule, SharedModule, HttpClientTestingModule ],
       providers: [MenuService, AlertComponent, ModalFormComponent, ModalConfirmComponent,  NgbActiveModal, CategoriaService,
         { provide: AuthService, useValue: mockAuthService },
       ]
