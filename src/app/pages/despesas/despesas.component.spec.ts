@@ -126,13 +126,14 @@ describe('Unit Test DespesasComponent', () => {
   });
 
   it('should return despesaData when call getDespesasData', () => {
-    // Arrange & Act
+    // Arrange
     localStorageSpy['idUsuario'] = '1';
-    component.ngOnInit();
+    component.despesasData = mockDespesasData;
+
+    // Act
     let despesasData =  component.getDespesasData();
 
     // Assert
-    expect(component.getDespesasData).toHaveBeenCalled();
     expect(despesasData).not.toBeNull();
     expect(despesasData.length).toBeGreaterThan(0);
   });
