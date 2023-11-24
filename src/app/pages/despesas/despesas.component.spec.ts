@@ -50,9 +50,7 @@ describe('Unit Test DespesasComponent', () => {
     component = fixture.componentInstance;
     localStorage.setItem('idUsuario', '1');
     component.dataTable = TestBed.inject(DataTableComponent);
-    component.despesasData = mockDespesasData;
     despesaService = TestBed.inject(DespesaService);
-    spyOn(component, 'getDespesasData').and.returnValue(mockDespesasData);
     localStorageSpy.getItem.and.callFake((key: string) => localStorageSpy[key]);
     localStorageSpy.setItem.and.callFake((key: string, value: string) => localStorageSpy[key] = value);
     localStorageSpy.removeItem.and.callFake((key: string) => delete localStorageSpy[key]);
@@ -80,6 +78,7 @@ describe('Unit Test DespesasComponent', () => {
     let mockIdUsuario = 1;
     let despesas = mockDespesas.filter(despesa => despesa.idUsuario === mockIdUsuario);
     const getDespesasByIdUsuarioSpy = spyOn(despesaService, 'getDespesaByIdUsuario').and.returnValue(from(Promise.resolve(despesas)));
+    spyOn(component, 'getDespesasData').and.returnValue(mockDespesasData);
     localStorageSpy['idUsuario'] = mockIdUsuario.toString();
 
     // Act
@@ -95,6 +94,7 @@ describe('Unit Test DespesasComponent', () => {
     // Arrange
     const errorMessage = { message: 'Fake Error Message'};
     const getDespesasByIdUsuarioSpy = spyOn(despesaService, 'getDespesaByIdUsuario').and.returnValue(throwError(errorMessage));
+    spyOn(component, 'getDespesasData').and.returnValue(mockDespesasData);
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
     localStorageSpy['idUsuario'] = '2';
 
@@ -127,6 +127,8 @@ describe('Unit Test DespesasComponent', () => {
 
   it('should return despesaData when call getDespesasData', () => {
     // Arrange & Act
+    localStorageSpy['idUsuario'] = '1';
+    component.ngOnInit();
     let despesasData =  component.getDespesasData();
 
     // Assert
