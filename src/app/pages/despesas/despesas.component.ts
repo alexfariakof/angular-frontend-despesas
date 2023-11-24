@@ -10,6 +10,8 @@ import { DespesaDataSet } from 'src/app/shared/datatable-config/despesas/despesa
 import { IDespesa } from 'src/app/shared/interfaces/IDespesa';
 import { DespesaService } from 'src/app/shared/services/api/despesas/despesa.service';
 import { MenuService } from 'src/app/shared/services/utils/menu-service/menu.service';
+import { DespesasFormComponent } from './despesas-form/despesas.form.component';
+import { IAction } from 'src/app/shared/interfaces/IAction';
 
 @Component({
   selector: 'app-despesas',
@@ -54,6 +56,22 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
     });
   }
 
+  updateDatatable = () => {
+    this.despesaService.getDespesaByIdUsuario(this.idUsuario)
+    .subscribe({
+      next: (result: any) => {
+        if (result)
+        {
+          this.despesasData = this.parseToDespeasData(result);
+          this.dataTable.rerender();
+        }
+      },
+      error :(response : any) =>  {
+        this.modalAlert.open(AlertComponent, response.message, 'Warning');
+      }
+    });
+  }
+
   getDespesasData = () =>{
     return this.despesasData;
   }
@@ -69,13 +87,16 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
       }) }`,
-      dataVencimento: dayjs(despesa.dataVencimento).format('DD/MM/YYYY')
+      dataVencimento: (despesa.dataVencimento && dayjs(despesa.dataVencimento).isValid()) ? dayjs(despesa.dataVencimento).format('DD/MM/YYYY') : null
     }));
   }
 
-
-
   onClickNovo = () => {
+    const modalRef = this.modalForm.modalService.open(DespesasFormComponent, { centered: true });
+    modalRef.shown.subscribe(() => {
+      modalRef.componentInstance.setAction(IAction.Create);
+      modalRef.componentInstance.setRefresh(() => { this.updateDatatable(); });
+    });
   }
 
   onClickEdit = () =>{
