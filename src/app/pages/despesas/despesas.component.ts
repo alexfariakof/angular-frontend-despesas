@@ -63,10 +63,16 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
       id: despesa.id,
       data: dayjs(despesa.data).format('DD/MM/YYYY'),
       descricao: despesa.descricao,
-      valor: `R$ ${ despesa.valor.toFixed(2) }`,
+      valor: `${ despesa.valor.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }) }`,
       dataVencimento: dayjs(despesa.dataVencimento).format('DD/MM/YYYY')
     }));
   }
+
 
 
   onClickNovo = () => {
