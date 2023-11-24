@@ -44,7 +44,8 @@
               "node_modules/mdb-ui-kit/js/mdb.min.js",
               "node_modules/jquery/dist/jquery.js",
               "node_modules/datatables.net/js/jquery.dataTables.js",
-              "node_modules/datatables.net-select/js/dataTables.select.js"
+              "node_modules/datatables.net-select/js/dataTables.select.js",
+              "node_modules/dayjs/dayjs.min.js"
             ]
           },
           "configurations": {
