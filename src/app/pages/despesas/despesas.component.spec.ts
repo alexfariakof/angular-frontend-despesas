@@ -138,4 +138,51 @@ describe('Unit Test DespesasComponent', () => {
     expect(despesasData.length).toBeGreaterThan(0);
   });
 
+
+  it('should updateDatatable when is called', fakeAsync(() => {
+    // Arrange
+    let mockIdUsuario = 2;
+    let despesas = mockDespesas.filter(despesa => despesa.idUsuario === mockIdUsuario);
+    const getDespesasByIdUsuarioSpy = spyOn(despesaService, 'getDespesaByIdUsuario').and.returnValue(from(Promise.resolve(despesas)));
+    spyOn(component, 'getDespesasData').and.returnValue(mockDespesasData);
+    localStorageSpy['idUsuario'] = mockIdUsuario.toString();
+
+    // Act
+    component.updateDatatable();
+    flush();
+
+    // Assert
+    expect(getDespesasByIdUsuarioSpy).toHaveBeenCalled();
+    expect(component.despesasData.length).toBeGreaterThan(0);
+
+  }));
+
+  it('should throw error when try to updateDataTable', () => {
+    // Arrange
+    const errorMessage = { message: 'Fake Error Message'};
+    const getDespesasByIdUsuarioSpy = spyOn(despesaService, 'getDespesaByIdUsuario').and.returnValue(throwError(errorMessage));
+    const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
+    localStorageSpy['idUsuario'] = '4';
+
+    // Act
+    component.updateDatatable();
+
+    // Assert
+    expect(getDespesasByIdUsuarioSpy).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+  });
+
+  it('should open modalForm on onClickNovo', fakeAsync(() => {
+    // Arrange
+    spyOn(component.modalForm.modalService, 'open').and.callThrough();
+
+    // Act
+    component.onClickNovo();
+    flush();
+
+    // Assert
+    expect(component.modalForm.modalService.open).toHaveBeenCalled();
+  }));
+
 });

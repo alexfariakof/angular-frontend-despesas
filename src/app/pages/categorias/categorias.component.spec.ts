@@ -28,7 +28,7 @@ describe('Unit Test CategoriasComponent', () => {
   let mockCategorias: ICategoria[] = [
     { id: 1, descricao: 'Teste Categoria Despesas', idTipoCategoria: 1, idUsuario: 1 },
     { id: 2, descricao: 'Teste Categoria Receitas', idTipoCategoria: 2, idUsuario: 1 }
-  ]
+  ];
 
   beforeEach(() => {
     mockAuthService = jasmine.createSpyObj('AuthService', ['isAuthenticated']);
