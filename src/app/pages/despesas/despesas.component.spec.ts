@@ -16,6 +16,7 @@ import * as dayjs from 'dayjs';
 import { from, throwError } from 'rxjs';
 import { DespesaDataSet } from 'src/app/shared/datatable-config/despesas/despesas.dataSet';
 import { DataTableComponent } from 'src/app/shared/components/data-table/data-table.component';
+import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 
 describe('Unit Test DespesasComponent', () => {
   let component: DespesasComponent;
@@ -41,7 +42,7 @@ describe('Unit Test DespesasComponent', () => {
     TestBed.configureTestingModule({
       declarations: [DespesasComponent],
       imports: [CommonModule, RouterTestingModule, SharedModule, HttpClientTestingModule],
-      providers: [MenuService, AlertComponent, ModalFormComponent, ModalConfirmComponent, NgbActiveModal, DespesaService,
+      providers: [MenuService, AlertComponent, ModalFormComponent, ModalConfirmComponent, NgbActiveModal, DespesaService, MdbFormsModule, SharedModule,
         { provide: Storage, useValue: localStorageSpy },
         { provide: AuthService, useValue: mockAuthService }
       ]
