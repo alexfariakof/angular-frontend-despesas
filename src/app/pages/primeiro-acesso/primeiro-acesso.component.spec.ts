@@ -8,6 +8,7 @@ import { IControleAcesso } from 'src/app/shared/interfaces/IControleAcesso';
 import { of } from 'rxjs';
 import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 
 describe('PrimeiroAcessoComponent', () => {
   let component: PrimeiroAcessoComponent;
@@ -18,10 +19,10 @@ describe('PrimeiroAcessoComponent', () => {
     mockRouter = jasmine.createSpyObj('Router', ['navigate']);
     TestBed.configureTestingModule({
       declarations: [PrimeiroAcessoComponent],
-      imports: [ReactiveFormsModule,  RouterTestingModule, HttpClientTestingModule ],
+      imports: [ReactiveFormsModule,  RouterTestingModule, HttpClientTestingModule, MdbFormsModule ],
       providers: [AlertComponent, NgbActiveModal,
-        { provide: Router, useValue: mockRouter }],
-
+        { provide: Router, useValue: mockRouter }
+      ]
     });
     fixture = TestBed.createComponent(PrimeiroAcessoComponent);
     component = fixture.componentInstance;
@@ -50,7 +51,7 @@ describe('PrimeiroAcessoComponent', () => {
     spyOn(component, 'onSaveClick').and.callThrough();
 
     // Act
-    component.controleAcesso = controleAcesso;
+    component.createAccountFrom.patchValue(controleAcesso);
     component.onSaveClick();
 
     // Assert
@@ -59,7 +60,6 @@ describe('PrimeiroAcessoComponent', () => {
     expect(component.modalALert.open).toHaveBeenCalled();
     //expect(component.router.navigate).toHaveBeenCalledWith(['/dashboard']);
   }));
-
 
   it('should open modal when when error comes from api ', () => {
     // Arrange
@@ -78,7 +78,7 @@ describe('PrimeiroAcessoComponent', () => {
     spyOn(component, 'onSaveClick').and.callThrough();
 
     // Act
-    component.controleAcesso = controleAcesso;
+    component.createAccountFrom.patchValue(controleAcesso);
     component.onSaveClick();
 
     // Asssert
@@ -102,7 +102,7 @@ describe('PrimeiroAcessoComponent', () => {
     spyOn(component, 'onSaveClick').and.callThrough();
 
     // Act
-    component.controleAcesso = controleAcesso;
+    component.createAccountFrom.patchValue(controleAcesso);
     component.onSaveClick();
 
     // Asssert
@@ -150,5 +150,43 @@ describe('PrimeiroAcessoComponent', () => {
     // Assert
     expect(component.showConfirmaSenha).toBe(false);
     expect(component.eyeIconClassConfirmaSenha).toBe('bi-eye');
+  });
+
+  it('should return true if passwords do not match', () => {
+    // Arrange
+    const controleAcesso: IControleAcesso = {
+      nome: 'Teste Usuário',
+      sobreNome: 'Usuário',
+      telefone: '(21) 9999-9999',
+      email: 'teste@teste.com',
+      senha: '!12345',
+      confirmaSenha: '!12345'
+    };
+
+    // Act
+    component.ngOnInit();
+    component.createAccountFrom.patchValue(controleAcesso);
+
+    // Assert
+    expect(component.isPasswordValid()).toBeTruthy();
+  });
+
+  it('should return false if passwords match', () => {
+    // Arrange
+    const controleAcesso: IControleAcesso = {
+      nome: 'Teste Usuário',
+      sobreNome: 'Usuário',
+      telefone: '(21) 9999-9999',
+      email: 'teste@teste.com',
+      senha: '!12345',
+      confirmaSenha: '!1234'
+    };
+
+    // Act
+    component.ngOnInit();
+    component.createAccountFrom.patchValue(controleAcesso);
+
+    //Assert
+    expect(component.isPasswordValid()).toBeFalsy();
   });
 });

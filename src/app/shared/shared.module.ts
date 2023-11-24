@@ -12,4 +12,5 @@ import { DataTableModule } from './components/data-table/data-table.component.mo
   imports: [CommonModule, FormsModule, BarraFerramentaModule ],
   providers: [DataTableComponent]
  })
+
 export class SharedModule { }

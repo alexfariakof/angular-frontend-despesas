@@ -32,8 +32,13 @@ describe('BarraFerramentaComponent', () => {
   });
 
   it('should call window.history.back when clickBtnVoltar is called', () => {
+    // Arrange
     const spy = spyOn(window.history, 'back');
+
+    // Act
     component.clickBtnVoltar();
+
+    // Assert
     expect(spy).toHaveBeenCalled();
   });
 });

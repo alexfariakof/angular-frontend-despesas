@@ -16,10 +16,11 @@ import { ControleAcessoService } from './shared/services/api/controle-acesso/con
 import { AuthService } from './shared/services/auth/auth.service';
 import { CustomInterceptor } from './shared/services/interceptors/http.interceptor.service';
 import { ModalConfirmComponent } from './shared/components/modal-confirm/modal.confirm.component';
+import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 
 @NgModule({
   declarations: [ AppComponent, LoginComponent, PrimeiroAcessoComponent ],
-  imports: [ BrowserModule, AppRoutingModule, CommonModule, ReactiveFormsModule, HttpClientModule, AlertModule ],
+  imports: [ BrowserModule, AppRoutingModule, CommonModule, MdbFormsModule, ReactiveFormsModule, HttpClientModule, AlertModule ],
   providers: [AuthService, ControleAcessoService, MenuService, AlertComponent, ModalFormComponent, ModalConfirmComponent, NgbActiveModal,
     { provide: HTTP_INTERCEPTORS, useClass: CustomInterceptor, multi: true, }
   ],
