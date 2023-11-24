@@ -83,7 +83,7 @@ describe('Unit Test CategoriasComponent', () => {
   it('should throws error when try to initializeDataTable', () => {
     // Arrange
     const errorMessage = { message: 'Fake Error Message'};
-    const getCategoriasSpy = spyOn(categoriaService, 'getCategorias').and.returnValue(throwError(errorMessage));;
+    const getCategoriasSpy = spyOn(categoriaService, 'getCategorias').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
     // Act
