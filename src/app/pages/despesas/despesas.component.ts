@@ -100,8 +100,26 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
   }
 
   onClickEdit = () =>{
-
+    this.editDespesa({
+      id: 1,
+      idUsuario: 1,
+      idCategoria: 2,
+      data: dayjs(),
+      descricao: 'Teste Edição',
+      valor: 89.25,
+      dataVencimento: dayjs()
+    })
   }
+
+  editDespesa = (despesa: IDespesa) => {
+    const modalRef = this.modalForm.modalService.open(DespesasFormComponent, { centered: true });
+    modalRef.shown.subscribe(() => {
+      modalRef.componentInstance.setAction(IAction.Edit);
+      modalRef.componentInstance.setRefresh(() => { this.updateDatatable(); });
+      modalRef.componentInstance.setDespesa(despesa);
+    });
+  }
+
 
   onClickDelete = ( )=> {
 
