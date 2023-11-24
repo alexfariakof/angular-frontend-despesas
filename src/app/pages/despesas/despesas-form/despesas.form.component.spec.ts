@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, flush, tick } from '@angular/core/testing';
 import { DespesasFormComponent } from './despesas.form.component';
 import { DespesaService } from 'src/app/shared/services/api/despesas/despesa.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -15,7 +15,6 @@ import { IAction } from 'src/app/shared/interfaces/IAction';
 
 describe('Unit Test DespesasFormComponent', () => {
   let component: DespesasFormComponent;
-  let localStorageSpy: jasmine.SpyObj<Storage>;
   let fixture: ComponentFixture<DespesasFormComponent>;
   let mockAuthService: jasmine.SpyObj<AuthService>;
   let despesaService: DespesaService;
@@ -25,35 +24,20 @@ describe('Unit Test DespesasFormComponent', () => {
   ];
 
   beforeEach(() => {
-    localStorageSpy = jasmine.createSpyObj('localStorage', ['getItem', 'setItem', 'removeItem', 'clear']);
     mockAuthService = jasmine.createSpyObj('AuthService', ['isAuthenticated']);
     mockAuthService.isAuthenticated.and.returnValue(true);
     TestBed.configureTestingModule({
       declarations: [DespesasFormComponent],
       imports: [ReactiveFormsModule, HttpClientTestingModule, MdbFormsModule ],
       providers: [FormBuilder, AlertComponent, NgbActiveModal, DespesaService,
-        { provide: Storage, useValue: localStorageSpy },
         { provide: AuthService, useValue: mockAuthService },
       ]
     });
     fixture = TestBed.createComponent(DespesasFormComponent);
     component = fixture.componentInstance;
     despesaService = TestBed.inject(DespesaService);
-    localStorageSpy.getItem.and.callFake((key: string) => localStorageSpy[key]);
-    localStorageSpy.setItem.and.callFake((key: string, value: string) => localStorageSpy[key] = value);
-    localStorageSpy.removeItem.and.callFake((key: string) => delete localStorageSpy[key]);
-    localStorageSpy.clear.and.callFake(() => {
-      for (const key in localStorageSpy) {
-        if (localStorageSpy.hasOwnProperty(key)) {
-          delete localStorageSpy[key];
-        }
-      }
-    });
+    localStorage.setItem('idUsuario', '1');
     fixture.detectChanges();
-  });
-
-  afterEach(() => {
-    localStorageSpy = jasmine.createSpyObj('localStorage', ['getItem', 'setItem', 'removeItem', 'clear']);
   });
 
   it('should create', () => {
@@ -65,14 +49,12 @@ describe('Unit Test DespesasFormComponent', () => {
     // Arrange
     const mockIdUsuario = 1;
     const getCategoriasSpy = spyOn(despesaService, 'getCategorias').and.returnValue(from(Promise.resolve(mockCategorias)));
-    localStorageSpy.getItem.and.returnValue('1');
 
     // Act
     component.ngOnInit();
-    localStorageSpy['idUsuario'] = mockIdUsuario.toString();
     component.getCatgeorias();
     flush();
-
+    fixture.detectChanges();
     // Assert
     expect(getCategoriasSpy).toHaveBeenCalled();
     expect(getCategoriasSpy).toHaveBeenCalledWith(mockIdUsuario);
@@ -84,7 +66,6 @@ describe('Unit Test DespesasFormComponent', () => {
     const errorMessage = { message: 'Fake Error Message'};
     const mockIdUsuario = 1;
     const getCategoriasSpy = spyOn(despesaService, 'getCategorias').and.returnValue(throwError(errorMessage));
-    localStorageSpy['idUsuario'] = mockIdUsuario.toString();
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
     // Act
@@ -94,7 +75,6 @@ describe('Unit Test DespesasFormComponent', () => {
     expect(getCategoriasSpy).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
-
   });
 
   it('should create despesa onSaveClick and show successfully message', fakeAsync(() => {
@@ -161,7 +141,6 @@ describe('Unit Test DespesasFormComponent', () => {
     // Arrange
     const onChangeIdCategoria = spyOn(component, 'onCategoriaChangeConvertValueToNumber').and.callThrough();
     spyOn(despesaService, 'getCategorias').and.returnValue(from(Promise.resolve(mockCategorias)));
-    localStorageSpy['idUsuario'] = '1';
 
     // Act
     component.ngOnInit();
@@ -176,5 +155,3 @@ describe('Unit Test DespesasFormComponent', () => {
     expect(component.despesatForm.value.idCategoria).toBe(1);
   }));
 });
-
-

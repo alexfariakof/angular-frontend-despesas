@@ -8,6 +8,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 @NgModule({
   declarations: [DespesasComponent, DespesasFormComponent ],
-  imports: [CommonModule, DespesasRoutingModule, ReactiveFormsModule, MdbFormsModule, SharedModule]
+  imports: [CommonModule, DespesasRoutingModule, ReactiveFormsModule, SharedModule]
 })
 export class DespesasModule {}

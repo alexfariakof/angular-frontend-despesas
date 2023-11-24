@@ -42,8 +42,8 @@ describe('Unit Test DespesasComponent', () => {
     mockAuthService.isAuthenticated.and.returnValue(true);
     TestBed.configureTestingModule({
       declarations: [DespesasComponent, DespesasFormComponent],
-      imports: [CommonModule, RouterTestingModule, SharedModule, HttpClientTestingModule],
-      providers: [MenuService, AlertComponent, ModalFormComponent, ModalConfirmComponent, NgbActiveModal, DespesaService, MdbFormsModule, SharedModule,
+      imports: [CommonModule, RouterTestingModule, SharedModule, HttpClientTestingModule, MdbFormsModule],
+      providers: [MenuService, AlertComponent, ModalFormComponent, ModalConfirmComponent, NgbActiveModal, DespesaService,
         { provide: Storage, useValue: localStorageSpy },
         { provide: AuthService, useValue: mockAuthService }
       ]
