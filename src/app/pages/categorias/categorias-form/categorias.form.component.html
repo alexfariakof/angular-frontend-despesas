@@ -10,7 +10,7 @@
         <select id="idTipoCategoria"  name="idTipoCategoria" class="form-control" formControlName="idTipoCategoria" mdbValidate mdbInput
           [ngClass]="{ 'is-invalid': categoriatForm.get('idTipoCategoria')?.errors?.['required'] &&  categoriatForm.get('idTipoCategoria')?.touched }"
           mdbValidate mdbSelect readonly>
-          <option disabled [selected]="true" >Nenhuma categoria selecionada</option>
+          <option disabled [selected]="true" >Nenhum Tipo selecionado</option>
           <option value=1 >Despesas</option>
           <option value=2>Receitas</option>
         </select>

@@ -1,7 +1,7 @@
 import { Dayjs } from "dayjs";
 
 export interface IDespesa {
-  id:number;
+  id: number | null;
   idUsuario: number;
   idCategoria: number;
   data: Dayjs | null;

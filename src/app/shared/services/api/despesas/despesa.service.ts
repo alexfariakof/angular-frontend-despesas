@@ -13,23 +13,27 @@ export class DespesaService {
     return this.httpClient.get(`Despesa`);
   }
 
-  getDespesaById(idCategoria: Number) : any {
-    return this.httpClient.get(`Despesa/GetById/${idCategoria}`);
+  getDespesaById(idDespesa: Number) : any {
+    return this.httpClient.get(`Despesa/GetById/${idDespesa}`);
+  }
+
+  getCategorias(idUsuario: number): any {
+    return this.httpClient.get(`Categoria/GetByTipoCategoria/${idUsuario}/1`);
   }
 
   getDespesaByIdUsuario(idUsuario: Number) : any {
     return this.httpClient.get(`Despesa/GetByIdUsuario/${idUsuario}`);
   }
 
-  postDespesa(categoria: IDespesa): any {
-    return this.httpClient.post<IDespesa>(`Despesa`, categoria);
+  postDespesa(despesa: IDespesa): any {
+    return this.httpClient.post<IDespesa>(`Despesa`, despesa);
   }
 
-  putEespesa(categoria: IDespesa): any {
-    return this.httpClient.put<IDespesa>(`Despesa`, categoria);
+  putDespesa(despesa: IDespesa): any {
+    return this.httpClient.put<IDespesa>(`Despesa`, despesa);
   }
 
-  deleteDespesa(idCategoria: Number): any {
-    return this.httpClient.delete(`Despesa/${idCategoria}`);
+  deleteDespesa(idDespesa: Number): any {
+    return this.httpClient.delete(`Despesa/${idDespesa}`);
   }
 }

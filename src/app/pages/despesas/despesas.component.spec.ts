@@ -16,6 +16,7 @@ import * as dayjs from 'dayjs';
 import { from, throwError } from 'rxjs';
 import { DespesaDataSet } from 'src/app/shared/datatable-config/despesas/despesas.dataSet';
 import { DataTableComponent } from 'src/app/shared/components/data-table/data-table.component';
+import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 
 describe('Unit Test DespesasComponent', () => {
   let component: DespesasComponent;
@@ -41,7 +42,7 @@ describe('Unit Test DespesasComponent', () => {
     TestBed.configureTestingModule({
       declarations: [DespesasComponent],
       imports: [CommonModule, RouterTestingModule, SharedModule, HttpClientTestingModule],
-      providers: [MenuService, AlertComponent, ModalFormComponent, ModalConfirmComponent, NgbActiveModal, DespesaService,
+      providers: [MenuService, AlertComponent, ModalFormComponent, ModalConfirmComponent, NgbActiveModal, DespesaService, MdbFormsModule, SharedModule,
         { provide: Storage, useValue: localStorageSpy },
         { provide: AuthService, useValue: mockAuthService }
       ]
@@ -137,5 +138,52 @@ describe('Unit Test DespesasComponent', () => {
     expect(despesasData).not.toBeNull();
     expect(despesasData.length).toBeGreaterThan(0);
   });
+
+
+  it('should updateDatatable when is called', fakeAsync(() => {
+    // Arrange
+    let mockIdUsuario = 2;
+    let despesas = mockDespesas.filter(despesa => despesa.idUsuario === mockIdUsuario);
+    const getDespesasByIdUsuarioSpy = spyOn(despesaService, 'getDespesaByIdUsuario').and.returnValue(from(Promise.resolve(despesas)));
+    spyOn(component, 'getDespesasData').and.returnValue(mockDespesasData);
+    localStorageSpy['idUsuario'] = mockIdUsuario.toString();
+
+    // Act
+    component.updateDatatable();
+    flush();
+
+    // Assert
+    expect(getDespesasByIdUsuarioSpy).toHaveBeenCalled();
+    expect(component.despesasData.length).toBeGreaterThan(0);
+
+  }));
+
+  it('should throw error when try to updateDataTable', () => {
+    // Arrange
+    const errorMessage = { message: 'Fake Error Message'};
+    const getDespesasByIdUsuarioSpy = spyOn(despesaService, 'getDespesaByIdUsuario').and.returnValue(throwError(errorMessage));
+    const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
+    localStorageSpy['idUsuario'] = '4';
+
+    // Act
+    component.updateDatatable();
+
+    // Assert
+    expect(getDespesasByIdUsuarioSpy).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+  });
+
+  it('should open modalForm on onClickNovo', fakeAsync(() => {
+    // Arrange
+    spyOn(component.modalForm.modalService, 'open').and.callThrough();
+
+    // Act
+    component.onClickNovo();
+    flush();
+
+    // Assert
+    expect(component.modalForm.modalService.open).toHaveBeenCalled();
+  }));
 
 });
