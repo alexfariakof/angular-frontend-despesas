@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
 import { IAction } from 'src/app/shared/interfaces/IAction';
@@ -12,11 +12,11 @@ import { CategoriaService } from 'src/app/shared/services/api/categorias/categor
 })
 
 export class CategoriasFormComponent implements OnInit {
-  private idUsuario : number = Number(localStorage.getItem('idUsuario')) || 0;
+  private idUsuario: number = Number(localStorage.getItem('idUsuario')) || 0;
 
-  categoriatForm: FormGroup;
-  getCategoriaForm(): FormGroup{
-    return this.categoriatForm;
+  categoriatForm: FormGroup & ICategoria;
+  setCategoria(categoria): void {
+    this.categoriatForm.patchValue(categoria);
   }
 
   private action: IAction = IAction.Create;
@@ -34,24 +34,19 @@ export class CategoriasFormComponent implements OnInit {
     public modalAlert: AlertComponent,
     public activeModal:NgbActiveModal,
     public categoriaService: CategoriaService
-    ) { }
+    ) {}
 
   ngOnInit(): void{
     this.categoriatForm = this.formbuilder.group({
-      idCategoria: new FormControl('idCategoria'),
-      slctTipoCategoria: ['', [Validators.required ]],
-      txtDescricao: ['', Validators.required]
-  });
+      id: [0, Validators.required],
+      descricao: ['', Validators.required],
+      idUsuario: this.idUsuario,
+      idTipoCategoria: ['', Validators.required]
+      }) as FormGroup & ICategoria;
   }
 
   onSaveClick = () => {
-    let categoria : ICategoria = {
-      id: 0,
-      descricao: this.categoriatForm.get('txtDescricao').value,
-      idUsuario: this.idUsuario,
-      idTipoCategoria: Number(this.categoriatForm.get('slctTipoCategoria').value)
-    };
-
+    let categoria = this.categoriatForm.getRawValue();
     try {
       if (this.action === IAction.Create){
 
@@ -71,7 +66,6 @@ export class CategoriasFormComponent implements OnInit {
         });
       }
       else if (this.action === IAction.Edit) {
-        categoria.id = Number(this.categoriatForm.get('idCategoria').value)
         this.categoriaService.putCategoria(categoria)
         .subscribe({
           next: (result: ICategoria ) => {

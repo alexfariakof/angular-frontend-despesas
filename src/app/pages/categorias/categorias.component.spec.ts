@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, fakeAsync, flush, tick, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, flush, tick } from '@angular/core/testing';
 import { CategoriasComponent } from './categorias.component';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -12,33 +12,31 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CategoriasFormComponent } from './categorias-form/categorias.form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ICategoria } from 'src/app/shared/interfaces/ICategoria';
-import { IAction } from 'src/app/shared/interfaces/IAction';
-import { from, of } from 'rxjs';
-import RefreshService from 'src/app/shared/services/utils/refersh-service/refresh.service';
+import { from, of, throwError } from 'rxjs';
 import { ModalConfirmComponent } from 'src/app/shared/components/modal-confirm/modal.confirm.component';
 import { DataTableComponent } from 'src/app/shared/components/data-table/data-table.component';
 import { CategoriaDataSet } from 'src/app/shared/datatable-config/categorias/categoria.dataSet';
+import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 
-describe('CategoriasComponent', () => {
+describe('Unit Test CategoriasComponent', () => {
   let component: CategoriasComponent;
   let fixture: ComponentFixture<CategoriasComponent>;
   let mockAuthService: jasmine.SpyObj<AuthService>;
   let categoriaService: CategoriaService;
-  let mockCategoriaData : CategoriaDataSet = {id:1, descricao: 'Teste Categoria', tipoCategoria: 'Despesas'};
-  let mockCategoria : ICategoria = {id: 1, descricao: 'Teste Categoria Despesas', idTipoCategoria: 1, idUsuario: 1};
+  let mockCategoriaData: CategoriaDataSet = { id: 1, descricao: 'Teste Categoria', tipoCategoria: 'Despesas' };
+  let mockCategoria: ICategoria = { id: 1, descricao: 'Teste Categoria Despesas', idTipoCategoria: 1, idUsuario: 1 };
   let mockCategorias: ICategoria[] = [
-    {id: 1, descricao: 'Teste Categoria Despesas', idTipoCategoria: 1, idUsuario: 1},
-    {id: 2, descricao: 'Teste Categoria Receitas', idTipoCategoria: 2, idUsuario: 1},
-
-  ]
+    { id: 1, descricao: 'Teste Categoria Despesas', idTipoCategoria: 1, idUsuario: 1 },
+    { id: 2, descricao: 'Teste Categoria Receitas', idTipoCategoria: 2, idUsuario: 1 }
+  ];
 
   beforeEach(() => {
     mockAuthService = jasmine.createSpyObj('AuthService', ['isAuthenticated']);
     mockAuthService.isAuthenticated.and.returnValue(true);
     TestBed.configureTestingModule({
       declarations: [CategoriasComponent, CategoriasFormComponent],
-      imports: [CommonModule, ReactiveFormsModule,  SharedModule, HttpClientTestingModule ],
-      providers: [MenuService, AlertComponent, ModalFormComponent, ModalConfirmComponent,  NgbActiveModal, CategoriaService, RefreshService,
+      imports: [CommonModule, ReactiveFormsModule, MdbFormsModule, SharedModule, HttpClientTestingModule ],
+      providers: [MenuService, AlertComponent, ModalFormComponent, ModalConfirmComponent,  NgbActiveModal, CategoriaService,
         { provide: AuthService, useValue: mockAuthService },
       ]
     });
@@ -51,8 +49,8 @@ describe('CategoriasComponent', () => {
     fixture.detectChanges();
   });
 
-
   it('should create', () => {
+    // Assert
     expect(component).toBeTruthy();
   });
 
@@ -60,23 +58,41 @@ describe('CategoriasComponent', () => {
     // Arrange
     const initializeDataTableSpy = spyOn(component, 'initializeDataTable').and.callThrough();
     const getCategoriasSpy = spyOn(categoriaService, 'getCategorias').and.returnValue(from(Promise.resolve(mockCategorias)));
+
     // Act
     component.ngOnInit();
 
     // Assert
     expect(initializeDataTableSpy).toHaveBeenCalled();
+    expect(getCategoriasSpy).toHaveBeenCalled();
     expect(component.catgoriasData.length).toBeGreaterThan(0);
   });
 
   it('should initializeDataTable', () => {
     // Arrange
     const getCategoriasSpy = spyOn(categoriaService, 'getCategorias').and.returnValue(from(Promise.resolve(mockCategorias)));
+
     // Act
     component.initializeDataTable();
 
     // Assert
     expect(getCategoriasSpy).toHaveBeenCalled();
     expect(component.catgoriasData.length).toBeGreaterThan(0);
+  });
+
+  it('should throws error when try to initializeDataTable', () => {
+    // Arrange
+    const errorMessage = { message: 'Fake Error Message'};
+    const getCategoriasSpy = spyOn(categoriaService, 'getCategorias').and.returnValue(throwError(errorMessage));
+    const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
+
+    // Act
+    component.initializeDataTable();
+
+    // Assert
+    expect(getCategoriasSpy).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
   });
 
   it('should update data table on updateDatatable', () => {
@@ -91,8 +107,23 @@ describe('CategoriasComponent', () => {
     expect(component.catgoriasData.length).toBeGreaterThan(0);
   });
 
-  it('should return categoriasData on getCategoriasData', () => {
+  it('should throws error when try to updateDatatable', () => {
+    // Arrange
+    const errorMessage = { message: 'Fake Error Message'};
+    const getCategoriasSpy = spyOn(categoriaService, 'getCategorias').and.returnValue(throwError(errorMessage));;
+    const alertOpenSpy = spyOn(component.modalAlert, 'open').and.callThrough();
+
     // Act
+    component.updateDatatable();
+
+    // Assert
+    expect(getCategoriasSpy).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+  });
+
+  it('should return categoriasData on getCategoriasData', () => {
+    // Arrange & Act
     const result = component.getCategoriasData();
 
     // Assert
@@ -124,8 +155,7 @@ describe('CategoriasComponent', () => {
     expect(component.modalForm.modalService.open).toHaveBeenCalled();
   });
 
-
-  it('should getCategoria when onClickEdit and execcute editCategoria', fakeAsync(() => {
+  it('should getCategoriaById when onClickEdit and call editCategoria', fakeAsync(() => {
     // Arrange
     const getCategoriaByIdSpy = spyOn(categoriaService, 'getCategoriaById').and.returnValue(from(Promise.resolve(mockCategoria)));
     const editCategoriaSpy = spyOn(component, 'editCategoria').and.callThrough();
@@ -140,7 +170,25 @@ describe('CategoriasComponent', () => {
     expect(editCategoriaSpy).toHaveBeenCalledWith(mockCategoria);
   }));
 
+  it('should throw error when onClickEdit ', fakeAsync(() => {
+    // Arrange
+    const errorMessage = { message: 'Fake Error Message' };
+    const getCategoriaByIdSpy = spyOn(categoriaService, 'getCategoriaById').and.returnValue(throwError(errorMessage));;
+    const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
+
+    // Act
+    component.onClickEdit(mockCategoria.id);
+    tick();
+    flush();
+
+    // Assert
+    expect(getCategoriaByIdSpy).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+  }));
+
   it('should open modalConfirm when onDeleteClick', () => {
+    // Arrange
     spyOn(component.modalConfirm, 'open').and.callThrough();
 
     // Act
@@ -150,9 +198,9 @@ describe('CategoriasComponent', () => {
     expect(component.modalConfirm.open).toHaveBeenCalled();
   });
 
-
-  it('should execute deleteCategoria and open modal alert', fakeAsync(() => {
-    const getCategoriaByIdSpy = spyOn(categoriaService, 'deleteCategoria').withArgs(mockCategoria.id).and.returnValue(from(Promise.resolve(of({message: true}))));
+  it('should  deleteCategoria and open modal alert success', fakeAsync(() => {
+    // Arrange
+    const getDeleteCategoria = spyOn(categoriaService, 'deleteCategoria').withArgs(mockCategoria.id).and.returnValue(of({message: true}));
     spyOn(component.modalAlert, 'open').and.callThrough();
 
     // Act
@@ -161,8 +209,41 @@ describe('CategoriasComponent', () => {
     flush();
 
     // Assert
+    expect(getDeleteCategoria).toHaveBeenCalled();
     expect(component.modalAlert.open).toHaveBeenCalled();
+    expect(component.modalAlert.open).toHaveBeenCalledWith(AlertComponent, 'Categoria excluída com sucesso', 'Success');
   }));
 
+  it('should try deleteCategoria throw error and open modal alert warning', fakeAsync(() => {
+    // Arrange
+    const getDeleteCategoria = spyOn(categoriaService, 'deleteCategoria').withArgs(mockCategoria.id).and.returnValue(of({message: false}));
+    spyOn(component.modalAlert, 'open').and.callThrough();
 
+    // Act
+    component.deleteCategoria(mockCategoria.id);
+    tick();
+    flush();
+
+    // Assert
+    expect(getDeleteCategoria).toHaveBeenCalled();
+    expect(component.modalAlert.open).toHaveBeenCalled();
+    expect(component.modalAlert.open).toHaveBeenCalledWith(AlertComponent, 'Erro ao excluír categoria', 'Warning');
+  }));
+
+  it('should throw error when deleteCategoria ', fakeAsync(() => {
+    // Arrange
+    const errorMessage = { message: 'Fake Error Message' };
+    const getDeleteCategoria = spyOn(categoriaService, 'deleteCategoria').and.returnValue(throwError(errorMessage));;
+    const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
+
+    // Act
+    component.deleteCategoria(mockCategoria.id);
+    tick();
+    flush();
+
+    // Assert
+    expect(getDeleteCategoria).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+  }));
 });

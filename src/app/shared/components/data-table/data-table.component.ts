@@ -54,7 +54,8 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnDestroy, OnC
       paging: true,
       ordering: true,
       info: true,
-      select: true,
+      select: 'single',
+      stateSave: true,
       lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, 'Todos'], ],
       pageLength: 5,
       language: {

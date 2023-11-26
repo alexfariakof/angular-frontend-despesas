@@ -1,0 +1,60 @@
+<div class="h-100 d-flex flex-column table-responsive flex-grow-1 flex-fill m-1 p-2 border border-2 border-primary rounded-4 overflow-scroll-hidden">
+  <div class="modal-header bg-primary text-light p-2">
+    <h3 class="m-0 border-0 ">Despesas</h3>
+    <button type="button" class="btn-close " aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+  </div>
+  <form (ngSubmit)="onSaveClick()" [formGroup]="despesatForm" >
+    <input id="id"  name="id" formControlName="id" type="hidden" class="form-control" [value]=0 />
+    <mat-form-field appearance="outline" class="w-100 mt-2" readonly>
+      <mat-label>Categoria</mat-label>
+      <mat-select matInput id="idCategoria" name="idCategoria" formControlName="idCategoria" >
+        <mat-option [value]="null" disabled selected >Nenhuma categoria selecionada</mat-option>
+        <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.descricao }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100 "  >
+      <mat-label>Data</mat-label>
+      <input matInput [matDatepicker]="data" id="data" name="data" formControlName="data" type="text" placeholder="Entre com uma data válida"
+        [ngClass]="{ 'is-invalid': despesatForm.get('data')?.errors?.['required'] &&  despesatForm.get('data')?.touched }" />
+      <mat-datepicker-toggle matIconSuffix [for]="data"
+        [ngClass]="{'text-danger': despesatForm.get('data')?.hasError('required') && despesatForm.get('data')?.touched,
+                    '': !despesatForm.get('data')?.hasError('required')  || !despesatForm.get('data')?.touched }">
+      </mat-datepicker-toggle>
+      <mat-datepicker touchUi #data></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100 "  >
+      <mat-label>Descrição</mat-label>
+      <input matInput id="descricao" name="descricao" formControlName="descricao" type="text" placeholder="Entre com uma descrição"
+        [ngClass]="{ 'is-invalid': despesatForm.get('descricao')?.errors?.['required'] &&  despesatForm.get('descricao')?.touched }" />
+      <mat-icon matSuffix>
+        <i class="text-danger bi bi-exclamation-circle position-absolute mx-2 my-1 top-0 end-0"
+          [ngClass]="{'error-bi-input': despesatForm.get('descricao')?.hasError('required') && despesatForm.get('descricao')?.touched,
+          'not-error-input': !despesatForm.get('descricao')?.hasError('required')  || !despesatForm.get('descricao')?.touched }">
+        </i>
+      </mat-icon>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100 ">
+      <mat-label>Valor</mat-label>
+      <input matInput currencyMask  id="valor" name="valor" formControlName="valor" type="text"  placeholder="Entre com um valor > 0" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" class="text-start"
+        [ngClass]="{ 'is-invalid': (despesatForm.get('valor')?.errors?.['required'] || despesatForm.get('valor')?.errors?.['greaterThanZero']) &&  despesatForm.get('valor')?.touched }" />
+      <mat-icon matSuffix>
+        <i class="text-danger bi bi-exclamation-circle position-absolute mx-2 my-1 top-0 end-0"
+          [ngClass]="{'error-bi-input': despesatForm.get('valor')?.hasError('required') && despesatForm.get('valor')?.touched,
+                    'not-error-input': (!despesatForm.get('valor')?.hasError('required') && !despesatForm.get('valor')?.hasError('greaterThanZero'))  || !despesatForm.get('valor')?.touched }">
+        </i>
+      </mat-icon>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100 "  >
+      <mat-label>Data de Vencimento</mat-label>
+      <input matInput [matDatepicker]="dataVencimento" disablePast="true" data-mdb-toggle="datepicker"  id="dataVencimento" name="dataVencimento" formControlName="dataVencimento" type="text" placeholder="Data de Vencimento (opcional)">
+      <mat-datepicker-toggle matIconSuffix [for]="dataVencimento"></mat-datepicker-toggle>
+      <mat-datepicker #dataVencimento></mat-datepicker>
+    </mat-form-field>
+    <div class="input-group mt-3  d-flex flex-column align-items-center justify-content-center">
+      <button type="submit" class="btn btn-primary w-responsive"
+        [ngClass]="{'disabled' : !despesatForm.valid}"  [disabled]="!despesatForm.valid" >
+        Salvar</button>
+    </div>
+  </form>
+</div>
+

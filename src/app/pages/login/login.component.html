@@ -24,22 +24,22 @@
       </div>
       <form class="p-4 " (submit)="onLoginClick()" [formGroup]="loginForm">
         <div class="input-group mt-3">
-          <span class="input-group-text" id="login">@</span>
-          <input id="txtLogin" [(ngModel)]="login.email" name="txtLogin" formControlName="txtLogin" required="" type="text" class="form-control"
-            placeholder="email" aria-label="email" aria-describedby="login" />
+          <span class="input-group-text" id="email">@</span>
+          <input id="email" name="email" formControlName="email" required="" type="text" class="form-control"
+            placeholder="E-mail" aria-label="email" aria-describedby="email" />
         </div>
-        <label *ngIf="loginForm.get('txtLogin')?.errors?.['required'] &&  loginForm.get('txtLogin')?.touched"
+        <label *ngIf="loginForm.get('email')?.errors?.['required'] &&  loginForm.get('email')?.touched"
           class="error-input">
           Campo Obrigatório!
         </label>
 
         <div class="input-group mt-3" id="password">
           <span class="input-group-text"><i class="bi bi-lock"></i></span>
-          <input id="txtPassword" [(ngModel)]="login.senha" name="txtPassword" formControlName="txtPassword" required="" type="password"
+          <input id="senha"  name="senha" formControlName="senha" required="" type="password" autocomplete="section-red current-password"
                 [type]="showPassword ? 'text' : 'password'" class="form-control" placeholder="Senha" aria-label="Senha" aria-describedby="password">
           <span class="input-group-text" (click)="onTooglePassword()" ><i [ngClass]="eyeIconClass" ></i></span>
         </div>
-        <label *ngIf="loginForm.get('txtPassword')?.errors?.['required'] &&  loginForm.get('txtPassword')?.touched"
+        <label *ngIf="loginForm.get('senha')?.errors?.['required'] &&  loginForm.get('senha')?.touched"
           class="error-input">
           Campo Obrigatório!
         </label>
