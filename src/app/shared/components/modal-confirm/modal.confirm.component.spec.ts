@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NgbModalConfig, NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalConfirmComponent } from './modal.confirm.component';
-import { ConfiguracoesComponent } from 'src/app/pages/configuracoes/configuracoes.component';
 
 describe('Unit Test ModalConfirmComponent', () => {
   let component: ModalConfirmComponent;

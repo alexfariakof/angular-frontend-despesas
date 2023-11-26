@@ -1,7 +1,6 @@
 name: Deploy Production Project
 on:
   push:
-    branches: [master]
     tags:
       - v*.*.*
 jobs:

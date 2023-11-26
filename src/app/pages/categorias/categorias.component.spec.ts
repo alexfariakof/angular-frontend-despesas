@@ -28,7 +28,7 @@ describe('Unit Test CategoriasComponent', () => {
   let mockCategorias: ICategoria[] = [
     { id: 1, descricao: 'Teste Categoria Despesas', idTipoCategoria: 1, idUsuario: 1 },
     { id: 2, descricao: 'Teste Categoria Receitas', idTipoCategoria: 2, idUsuario: 1 }
-  ]
+  ];
 
   beforeEach(() => {
     mockAuthService = jasmine.createSpyObj('AuthService', ['isAuthenticated']);
@@ -83,7 +83,7 @@ describe('Unit Test CategoriasComponent', () => {
   it('should throws error when try to initializeDataTable', () => {
     // Arrange
     const errorMessage = { message: 'Fake Error Message'};
-    const getCategoriasSpy = spyOn(categoriaService, 'getCategorias').and.returnValue(throwError(errorMessage));;
+    const getCategoriasSpy = spyOn(categoriaService, 'getCategorias').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
     // Act

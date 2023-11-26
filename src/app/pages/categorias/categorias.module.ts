@@ -9,7 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 @NgModule({
     declarations: [CategoriasComponent, CategoriasFormComponent ],
-    imports: [CommonModule, ReactiveFormsModule,MdbFormsModule, CategoriaRoutingModule, SharedModule],
+    imports: [CommonModule, CategoriaRoutingModule,  ReactiveFormsModule, MdbFormsModule, SharedModule],
     providers: [CategoriaService]
 })
 

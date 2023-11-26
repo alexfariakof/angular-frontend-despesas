@@ -11,6 +11,8 @@ import { PrimeiroAcessoComponent } from './pages/primeiro-acesso/primeiro-acesso
 import { AuthService } from './shared/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { AuthProvider } from './shared/services/provider/auth.provider';
+import { MatDatepickerIntl } from '@angular/material/datepicker';
+import { DateAdapter } from '@angular/material/core';
 
 describe('AppComponent', () => {
   let app: AppComponent;
@@ -28,6 +30,8 @@ describe('AppComponent', () => {
         providers: [AuthService, AuthProvider,
           { provide: Router, useValue: mockRouter },
           { provide: AuthService, useValue: mockAuthService },
+            DateAdapter,
+            MatDatepickerIntl
         ]
     });
     fixture = TestBed.createComponent(AppComponent);

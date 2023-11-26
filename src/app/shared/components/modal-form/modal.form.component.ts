@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
-
 @Component({
   selector: 'app-modal-form',
   template: ''

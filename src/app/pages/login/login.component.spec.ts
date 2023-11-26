@@ -56,7 +56,7 @@ describe('LoginComponent', () => {
     mockAuthService.isAuthenticated.and.returnValue(true);
 
     // Act
-    component.login = login;
+    component.loginForm.patchValue(login);
     component.onLoginClick();
     flush();
 
@@ -101,15 +101,15 @@ describe('LoginComponent', () => {
   it('should return login form controls', () => {
     // Arrange
     component.ngOnInit();
-    component.loginForm.controls['txtLogin'].setValue('teste@teste.com');
-    component.loginForm.controls['txtPassword'].setValue('password');
+    component.loginForm.controls['email'].setValue('teste@teste.com');
+    component.loginForm.controls['senha'].setValue('password');
 
     // Act
-    const loginDados = component.getLoginDados;
+    const loginDados = component.loginForm.getRawValue();
 
     // Assert
-    expect(loginDados['txtLogin'].value).toBe('teste@teste.com');
-    expect(loginDados['txtPassword'].value).toBe('password');
+    expect(loginDados.email).toBe('teste@teste.com');
+    expect(loginDados.senha).toBe('password');
   });
 
   it('should toggle password visibility and update eye icon class', () => {
