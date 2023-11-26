@@ -108,8 +108,8 @@ describe('LoginComponent', () => {
     const loginDados = component.loginForm.getRawValue();
 
     // Assert
-    expect(loginDados['email'].value).toBe('teste@teste.com');
-    expect(loginDados['senha'].value).toBe('password');
+    expect(loginDados.email).toBe('teste@teste.com');
+    expect(loginDados.senha).toBe('password');
   });
 
   it('should toggle password visibility and update eye icon class', () => {
