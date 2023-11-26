@@ -135,3 +135,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .cdk-overlay-container {
   z-index: 1999;
 }
+
+
+.loading-modal .modal-content {
+  background-color: transparent;
+  text-align: center;
+}
+
+
