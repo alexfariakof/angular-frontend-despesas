@@ -90,8 +90,8 @@ export class DespesasFormComponent {
       else if (this.action === IAction.Edit) {
         this.despesaService.putDespesa(despesa)
         .subscribe({
-          next: (result: IDespesa ) => {
-            if (result !== undefined || result !== null)
+          next: (response: any ) => {
+            if ((response !== undefined || response !== null) && response.message == true)
             {
               this.activeModal.close();
               this.refresh();

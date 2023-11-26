@@ -189,4 +189,56 @@ describe('Unit Test DespesasComponent', () => {
     expect(component.modalForm.modalService.open).toHaveBeenCalled();
   }));
 
+  it('should open call editDespesa onClickEdit', fakeAsync(() => {
+    // Arrange
+    const mockDespesa: IDespesa = mockDespesas[0];
+    const mockResponse: any = { message: true, despesa: mockDespesa };
+    const getDespesasById = spyOn(despesaService, 'getDespesaById').and.returnValue(from(Promise.resolve(mockResponse)));
+    const editDespesa = spyOn(component, 'editDespesa').and.callThrough();
+
+    // Act
+    component.onClickEdit(mockDespesa.idUsuario);
+    flush();
+
+    // Assert
+    expect(getDespesasById).toHaveBeenCalled();
+    expect(editDespesa).toHaveBeenCalled();
+    expect(editDespesa).toHaveBeenCalledWith(mockDespesa);
+  }));
+
+  it('should throws error in onClickEdit', fakeAsync(() => {
+    // Arrange
+    const errorMessage = { message: 'Fake Error Message'};
+    const mockDespesa: IDespesa = mockDespesas[1];
+    const getDespesasById = spyOn(despesaService, 'getDespesaById').and.returnValue(throwError(errorMessage));
+    const editDespesa = spyOn(component, 'editDespesa').and.callThrough();
+    const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
+
+    // Act
+    component.onClickEdit(mockDespesa.idUsuario);
+    flush();
+
+    // Assert
+    expect(getDespesasById).toHaveBeenCalled();
+    expect(editDespesa).not.toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+  }));
+
+
+  it('should open call editDespesa ', () => {
+    // Arrange
+    const mockDespesa: IDespesa = mockDespesas[2];
+    const editDespesa = spyOn(component, 'editDespesa').and.callThrough();
+    spyOn(component.modalForm.modalService, 'open').and.callThrough();
+
+    // Act
+    component.editDespesa(mockDespesa);
+
+    // Assert
+    expect(editDespesa).toHaveBeenCalled();
+    expect(editDespesa).toHaveBeenCalledWith(mockDespesa);
+    expect(component.modalForm.modalService.open).toHaveBeenCalled();
+  });
+
 });
