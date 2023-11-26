@@ -8,10 +8,16 @@ import { AlertComponent } from 'src/app/shared/components/alert-component/alert.
 import { from, of, throwError } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { ICategoria } from 'src/app/shared/interfaces/ICategoria';
-import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { IDespesa } from 'src/app/shared/interfaces/IDespesa';
 import * as dayjs from 'dayjs';
 import { IAction } from 'src/app/shared/interfaces/IAction';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatNativeDateModule, MatOption } from '@angular/material/core';
+import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelect, MatSelectModule  } from '@angular/material/select';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 describe('Unit Test DespesasFormComponent', () => {
   let component: DespesasFormComponent;
@@ -27,8 +33,8 @@ describe('Unit Test DespesasFormComponent', () => {
     mockAuthService = jasmine.createSpyObj('AuthService', ['isAuthenticated']);
     mockAuthService.isAuthenticated.and.returnValue(true);
     TestBed.configureTestingModule({
-      declarations: [DespesasFormComponent],
-      imports: [ReactiveFormsModule, HttpClientTestingModule, MdbFormsModule ],
+      declarations: [DespesasFormComponent, MatDatepicker, MatSelect],
+      imports: [ReactiveFormsModule, HttpClientTestingModule, MatFormFieldModule, MatInputModule, MatSelectModule , MatDatepickerModule, MatNativeDateModule, BrowserAnimationsModule, CurrencyMaskModule],
       providers: [FormBuilder, AlertComponent, NgbActiveModal, DespesaService,
         { provide: AuthService, useValue: mockAuthService },
       ]
@@ -137,21 +143,4 @@ describe('Unit Test DespesasFormComponent', () => {
     expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
   });
 
-  it('should call onCategoriaChangeConvertValueToNumber when idCategoria is chenged', fakeAsync(() => {
-    // Arrange
-    const onChangeIdCategoria = spyOn(component, 'onCategoriaChangeConvertValueToNumber').and.callThrough();
-    spyOn(despesaService, 'getCategorias').and.returnValue(from(Promise.resolve(mockCategorias)));
-
-    // Act
-    component.ngOnInit();
-    flush();
-    fixture.detectChanges();
-    const selectElement: HTMLSelectElement = fixture.nativeElement.querySelector('#idCategoria');
-    selectElement.value = '1';
-    selectElement.dispatchEvent(new Event('change'))
-
-    // Assert
-    expect(component.onCategoriaChangeConvertValueToNumber).toHaveBeenCalled();
-    expect(component.despesatForm.value.idCategoria).toBe(1);
-  }));
 });

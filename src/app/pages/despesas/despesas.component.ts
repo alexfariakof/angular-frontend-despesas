@@ -1,3 +1,4 @@
+import { CategoriaDataSet } from 'src/app/shared/datatable-config/categorias/categoria.dataSet';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import * as dayjs from 'dayjs';
 import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
@@ -12,6 +13,7 @@ import { DespesaService } from 'src/app/shared/services/api/despesas/despesa.ser
 import { MenuService } from 'src/app/shared/services/utils/menu-service/menu.service';
 import { DespesasFormComponent } from './despesas-form/despesas.form.component';
 import { IAction } from 'src/app/shared/interfaces/IAction';
+import { ITipoCategoria } from 'src/app/shared/interfaces/ITipoCategoria';
 
 @Component({
   selector: 'app-despesas',
@@ -99,16 +101,17 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
     });
   }
 
-  onClickEdit = () =>{
-    this.editDespesa({
-      id: 1,
-      idUsuario: 1,
-      idCategoria: 2,
-      data: dayjs(),
-      descricao: 'Teste Edição',
-      valor: 89.25,
-      dataVencimento: dayjs()
-    })
+  onClickEdit = (idDespesa: Number) =>{
+    this.despesaService.getDespesaById(idDespesa)
+    .subscribe({
+      next: (response: any) => {
+        if (response.message === true && (response.despesa !== undefined || response.despesa !== null))
+          this.editDespesa(response.despesa);
+      },
+      error :(response : any) =>  {
+        this.modalAlert.open(AlertComponent, response.message, 'Warning');
+      }
+    });
   }
 
   editDespesa = (despesa: IDespesa) => {

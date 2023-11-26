@@ -16,8 +16,10 @@ import * as dayjs from 'dayjs';
 import { from, throwError } from 'rxjs';
 import { DespesaDataSet } from 'src/app/shared/datatable-config/despesas/despesas.dataSet';
 import { DataTableComponent } from 'src/app/shared/components/data-table/data-table.component';
-import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { DespesasFormComponent } from './despesas-form/despesas.form.component';
+import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
+import { MatNativeDateModule } from '@angular/material/core';
 
 describe('Unit Test DespesasComponent', () => {
   let component: DespesasComponent;
@@ -41,8 +43,8 @@ describe('Unit Test DespesasComponent', () => {
     mockAuthService = jasmine.createSpyObj('AuthService', ['isAuthenticated']);
     mockAuthService.isAuthenticated.and.returnValue(true);
     TestBed.configureTestingModule({
-      declarations: [DespesasComponent, DespesasFormComponent],
-      imports: [CommonModule, RouterTestingModule, SharedModule, HttpClientTestingModule, MdbFormsModule],
+      declarations: [DespesasComponent, DespesasFormComponent, MatDatepicker, MatSelect],
+      imports: [CommonModule, RouterTestingModule, SharedModule, HttpClientTestingModule, MatSelectModule , MatDatepickerModule, MatNativeDateModule],
       providers: [MenuService, AlertComponent, ModalFormComponent, ModalConfirmComponent, NgbActiveModal, DespesaService,
         { provide: Storage, useValue: localStorageSpy },
         { provide: AuthService, useValue: mockAuthService }
