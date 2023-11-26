@@ -23,12 +23,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule} from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
-import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS,} from '@angular/material-moment-adapter';
-import 'dayjs/locale/pt-br';
+import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter, MomentDateModule,  MAT_MOMENT_DATE_ADAPTER_OPTIONS,} from '@angular/material-moment-adapter';
+
 @NgModule({
   declarations: [ AppComponent, LoginComponent, PrimeiroAcessoComponent ],
   imports: [ BrowserModule, AppRoutingModule, CommonModule, MdbFormsModule, ReactiveFormsModule, HttpClientModule, AlertModule,
-            MatFormFieldModule, MatInputModule, MatSelectModule , MatDatepickerModule, MatNativeDateModule,  BrowserAnimationsModule ],
+            MatFormFieldModule, MatInputModule, MatSelectModule , MatDatepickerModule, MatNativeDateModule,  BrowserAnimationsModule, MomentDateModule  ],
   providers: [AuthService, ControleAcessoService, MenuService, AlertComponent, ModalFormComponent,  ModalConfirmComponent, NgbActiveModal,
     { provide: HTTP_INTERCEPTORS, useClass: CustomInterceptor, multi: true, },
     {provide: MAT_DATE_LOCALE, useValue: 'pt-br'},
