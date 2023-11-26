@@ -226,7 +226,7 @@ describe('Unit Test DespesasComponent', () => {
   }));
 
 
-  it('should open call editDespesa ', () => {
+  it('should open call editDespesa', () => {
     // Arrange
     const mockDespesa: IDespesa = mockDespesas[2];
     const editDespesa = spyOn(component, 'editDespesa').and.callThrough();
@@ -240,5 +240,65 @@ describe('Unit Test DespesasComponent', () => {
     expect(editDespesa).toHaveBeenCalledWith(mockDespesa);
     expect(component.modalForm.modalService.open).toHaveBeenCalled();
   });
+
+  it('should open Modal Confirm when onClickDelete', () => {
+    // Arrange
+    spyOn(component.modalConfirm, 'open').and.callThrough();
+
+    // Act
+    component.onClickDelete(mockDespesas[0].id);
+
+    // Assert
+    expect(component.modalConfirm.open).toHaveBeenCalled();
+  });
+
+  it('should  deleteDespesa and open modal alert success', fakeAsync(() => {
+    // Arrange
+    const mockResponse = { message: true };
+    const getDeleteDespesa = spyOn(despesaService, 'deleteDespesa').and.returnValue(from(Promise.resolve(mockResponse)));
+    spyOn(component.modalAlert, 'open').and.callThrough();
+
+    // Act
+    component.deleteDespesa(mockDespesas[1].id);
+    flush();
+
+    // Assert
+    expect(getDeleteDespesa).toHaveBeenCalled();
+    expect(component.modalAlert.open).toHaveBeenCalled();
+    expect(component.modalAlert.open).toHaveBeenCalledWith(AlertComponent, 'Despesa excluída com sucesso', 'Success');
+  }));
+
+  it('should try to deleteDespesa and open modal alert warning', fakeAsync(() => {
+    // Arrange
+    const mockResponse = { message: false };
+    const getDeleteDespesa = spyOn(despesaService, 'deleteDespesa').and.returnValue(from(Promise.resolve(mockResponse)));
+    spyOn(component.modalAlert, 'open').and.callThrough();
+
+    // Act
+    component.deleteDespesa(mockDespesas[2].id);
+    flush();
+
+    // Assert
+    expect(getDeleteDespesa).toHaveBeenCalled();
+    expect(component.modalAlert.open).toHaveBeenCalled();
+    expect(component.modalAlert.open).toHaveBeenCalledWith(AlertComponent, 'Erro ao excluír despesa', 'Warning');
+  }));
+
+  it('should throws error when try to deleteDespesa and open modal alert warning', fakeAsync(() => {
+    // Arrange
+    const errorMessage = { message: 'Fake Error Message Delete Despesa'};
+    const spyOnDeleteDespesa = spyOn(despesaService, 'deleteDespesa').and.returnValue(throwError(errorMessage));
+    const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
+
+    // Act
+    component.deleteDespesa(mockDespesas[1].id);
+    flush();
+
+    // Assert
+    expect(spyOnDeleteDespesa).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+  }));
+
 
 });
