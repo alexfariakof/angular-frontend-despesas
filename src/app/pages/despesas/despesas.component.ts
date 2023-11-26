@@ -1,4 +1,3 @@
-import { CategoriaDataSet } from 'src/app/shared/datatable-config/categorias/categoria.dataSet';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import * as dayjs from 'dayjs';
 import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
@@ -13,7 +12,6 @@ import { DespesaService } from 'src/app/shared/services/api/despesas/despesa.ser
 import { MenuService } from 'src/app/shared/services/utils/menu-service/menu.service';
 import { DespesasFormComponent } from './despesas-form/despesas.form.component';
 import { IAction } from 'src/app/shared/interfaces/IAction';
-import { ITipoCategoria } from 'src/app/shared/interfaces/ITipoCategoria';
 
 @Component({
   selector: 'app-despesas',
@@ -38,7 +36,6 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
     this.menuService.menuSelecionado = 3;
     this.initializeDataTable();
   }
-
 
   initializeDataTable = () => {
     this.despesaService.getDespesaByIdUsuario(this.idUsuario)
@@ -123,17 +120,21 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
     });
   }
 
-
   onClickDelete = (idDespesa: Number) => {
+    const modalRef = this.modalConfirm.open(ModalConfirmComponent, `Deseja excluir a despesa ${ this.dataTable.row.descricao } ?`);
+    modalRef.componentInstance.setConfirmButton(() => { this.deleteDespesa(idDespesa); });
+  }
+
+  deleteDespesa = (idDespesa: Number) => {
     this.despesaService.deleteDespesa(idDespesa)
     .subscribe({
       next: (response: any) => {
         if (response.message === true){
           this.updateDatatable();
-          this.modalAlert.open(AlertComponent, "Categoria excluída com sucesso", 'Success');
+          this.modalAlert.open(AlertComponent, "Despesa excluída com sucesso", 'Success');
         }
         else{
-          this.modalAlert.open(AlertComponent, 'Erro ao excluír categoria', 'Warning');
+          this.modalAlert.open(AlertComponent, 'Erro ao excluír despesa', 'Warning');
         }
       },
       error :(response : any) =>  {
@@ -141,5 +142,4 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
       }
     });
   }
-
 }
