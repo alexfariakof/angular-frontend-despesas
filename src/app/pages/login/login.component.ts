@@ -15,8 +15,7 @@ import { ControleAcessoService } from "src/app/shared/services/api/controle-aces
 })
 
 export class LoginComponent implements OnInit{
-  public login: ILogin = { email: 'teste@teste.com', senha: 'teste' };
-  loginForm: FormGroup = this.formbuilder.group({});
+  loginForm: FormGroup & ILogin;
   showPassword = false;
   eyeIconClass: string = 'bi-eye';
 
@@ -31,17 +30,15 @@ export class LoginComponent implements OnInit{
 
   ngOnInit(): void{
     this.loginForm = this.formbuilder.group({
-        txtLogin: ['', [Validators.required, Validators.email]],
-        txtPassword: ['', Validators.required]
-    });
-  }
-
-  get getLoginDados(){
-    return this, this.loginForm.controls;
+        email: ['teste@teste.com', [Validators.required, Validators.email]],
+        senha: ['teste', Validators.required]
+    }) as FormGroup & ILogin;
   }
 
   onLoginClick() {
-    this.controleAcessoService.signIn(this.login).pipe(
+    let login: ILogin = this.loginForm.getRawValue();
+
+    this.controleAcessoService.signIn(login).pipe(
       map((response: IAuth | any) => {
         if (response.authenticated) {
           return this.authProviderService.createAccessToken(response);
