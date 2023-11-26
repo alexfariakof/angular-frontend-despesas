@@ -8,10 +8,16 @@ import { AlertComponent } from 'src/app/shared/components/alert-component/alert.
 import { from, of, throwError } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { ICategoria } from 'src/app/shared/interfaces/ICategoria';
-import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { IDespesa } from 'src/app/shared/interfaces/IDespesa';
 import * as dayjs from 'dayjs';
 import { IAction } from 'src/app/shared/interfaces/IAction';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatNativeDateModule, MatOption } from '@angular/material/core';
+import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelect, MatSelectModule  } from '@angular/material/select';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 describe('Unit Test DespesasFormComponent', () => {
   let component: DespesasFormComponent;
@@ -27,8 +33,8 @@ describe('Unit Test DespesasFormComponent', () => {
     mockAuthService = jasmine.createSpyObj('AuthService', ['isAuthenticated']);
     mockAuthService.isAuthenticated.and.returnValue(true);
     TestBed.configureTestingModule({
-      declarations: [DespesasFormComponent],
-      imports: [ReactiveFormsModule, HttpClientTestingModule, MdbFormsModule ],
+      declarations: [DespesasFormComponent, MatDatepicker, MatSelect],
+      imports: [ReactiveFormsModule, HttpClientTestingModule, MatFormFieldModule, MatInputModule, MatSelectModule , MatDatepickerModule, MatNativeDateModule, BrowserAnimationsModule, CurrencyMaskModule],
       providers: [FormBuilder, AlertComponent, NgbActiveModal, DespesaService,
         { provide: AuthService, useValue: mockAuthService },
       ]
@@ -77,7 +83,7 @@ describe('Unit Test DespesasFormComponent', () => {
     expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
   });
 
-  it('should create despesa onSaveClick and show successfully message', fakeAsync(() => {
+  it('should Save despesa onSaveClick with Action is Create and show successfully message', fakeAsync(() => {
     // Arrange
     const despesa: IDespesa = {
       id: 0,
@@ -111,7 +117,7 @@ describe('Unit Test DespesasFormComponent', () => {
 
   it('should throws error when try to create despesa and show error message', () => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message'};
+    const errorMessage = { message: 'Fake Error Message Create Despesa'};
     const despesa: IDespesa = {
       id: 0,
       idUsuario: 1,
@@ -137,21 +143,79 @@ describe('Unit Test DespesasFormComponent', () => {
     expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
   });
 
-  it('should call onCategoriaChangeConvertValueToNumber when idCategoria is chenged', fakeAsync(() => {
+  it('should Save despesa onSaveClick with Action is Edit', fakeAsync(() => {
     // Arrange
-    const onChangeIdCategoria = spyOn(component, 'onCategoriaChangeConvertValueToNumber').and.callThrough();
-    spyOn(despesaService, 'getCategorias').and.returnValue(from(Promise.resolve(mockCategorias)));
+    const mockDespesa: IDespesa = {
+      id: 1,
+      idUsuario: 1,
+      idCategoria: 1,
+      data: dayjs().format('YYYY-MM-DD'),
+      descricao: 'Teste Edit Despesas',
+      valor: 10.58,
+      dataVencimento: null
+    };
+    const despesaPutServiceSpy = spyOn(despesaService, 'putDespesa').and.returnValue(of({ message: true, despesa: mockDespesa }));
+    const modalCloseSpy = spyOn(component.activeModal, 'close').and.callThrough();
+    const spyRefresh = spyOn(component, "setRefresh");
+    const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open').and.callThrough();
+    spyOn(component, 'onSaveClick').and.callThrough();
 
     // Act
     component.ngOnInit();
+    component.setAction(IAction.Edit);
+    component.setRefresh(() => { });
+    component.despesatForm.patchValue(mockDespesa);
+    component.onSaveClick();
     flush();
-    fixture.detectChanges();
-    const selectElement: HTMLSelectElement = fixture.nativeElement.querySelector('#idCategoria');
-    selectElement.value = '1';
-    selectElement.dispatchEvent(new Event('change'))
 
     // Assert
-    expect(component.onCategoriaChangeConvertValueToNumber).toHaveBeenCalled();
-    expect(component.despesatForm.value.idCategoria).toBe(1);
+    expect(despesaPutServiceSpy).toHaveBeenCalledWith(jasmine.objectContaining(mockDespesa));
+    expect(modalCloseSpy).toHaveBeenCalled();
+    expect(spyRefresh).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, 'Despesa alterada com Sucesso.', 'Success');
   }));
+
+
+  it('should throws error when try to edit despesa and show error message', () => {
+    // Arrange
+    const errorMessage = { message: 'Fake Error Message Edit Despesa'};
+    const despesa: IDespesa = {
+      id: 1,
+      idUsuario: 2,
+      idCategoria: 2,
+      data: dayjs().format('YYYY-MM-DD'),
+      descricao: 'Teste Edit Despesas',
+      valor: 20.42,
+      dataVencimento: dayjs().format('YYYY-MM-DD')
+    };
+    const despesaPutServiceSpy = spyOn(despesaService, 'putDespesa').and.returnValue(throwError(errorMessage));
+    const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open').and.callThrough();
+    spyOn(component, 'onSaveClick').and.callThrough();
+
+    // Act
+    component.ngOnInit();
+    component.setAction(IAction.Edit);
+    component.setRefresh(() => { });
+    component.despesatForm.patchValue(despesa);
+    component.onSaveClick();
+
+    // Assert
+    expect(despesaPutServiceSpy).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+  });
+
+  it('should throws error when onClickSave and show error message', () => {
+    // Arrange
+    const errorMessage = Error('Fake Error Message Edit Despesa');
+    spyOn(despesaService, 'postDespesa').and.throwError(errorMessage);
+    const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open').and.callThrough();
+
+    // Act
+    component.ngOnInit();
+    component.onSaveClick();
+
+    // Assert
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+  });
+
 });

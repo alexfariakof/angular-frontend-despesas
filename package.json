@@ -17,10 +17,13 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^16.1.0",
+    "@angular/cdk": "^16.1.2",
     "@angular/common": "^16.1.0",
     "@angular/compiler": "^16.1.0",
     "@angular/core": "^16.1.0",
     "@angular/forms": "^16.1.0",
+    "@angular/material": "^16.1.2",
+    "@angular/material-moment-adapter": "^16.2.12",
     "@angular/platform-browser": "^16.1.0",
     "@angular/platform-browser-dynamic": "^16.1.0",
     "@angular/router": "^16.1.0",
@@ -41,6 +44,7 @@
     "mdb-angular-ui-kit": "^5.1.0",
     "mdb-ui-kit": "^6.4.0",
     "ng2-charts": "^4.1.1",
+    "ng2-currency-mask": "^13.0.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"

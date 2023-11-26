@@ -3,9 +3,9 @@ import { Dayjs } from "dayjs";
 export interface IDespesa {
   id: number | null;
   idUsuario: number;
-  idCategoria: number;
-  data: Dayjs | null;
+  idCategoria: number | string;
+  data: Dayjs | string | null;
   descricao: String;
-  valor: number;
-  dataVencimento: Dayjs | null;
+  valor: number ;
+  dataVencimento: Dayjs | string | null;
 }

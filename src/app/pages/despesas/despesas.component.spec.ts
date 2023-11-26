@@ -16,8 +16,10 @@ import * as dayjs from 'dayjs';
 import { from, throwError } from 'rxjs';
 import { DespesaDataSet } from 'src/app/shared/datatable-config/despesas/despesas.dataSet';
 import { DataTableComponent } from 'src/app/shared/components/data-table/data-table.component';
-import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { DespesasFormComponent } from './despesas-form/despesas.form.component';
+import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
+import { MatNativeDateModule } from '@angular/material/core';
 
 describe('Unit Test DespesasComponent', () => {
   let component: DespesasComponent;
@@ -41,8 +43,8 @@ describe('Unit Test DespesasComponent', () => {
     mockAuthService = jasmine.createSpyObj('AuthService', ['isAuthenticated']);
     mockAuthService.isAuthenticated.and.returnValue(true);
     TestBed.configureTestingModule({
-      declarations: [DespesasComponent, DespesasFormComponent],
-      imports: [CommonModule, RouterTestingModule, SharedModule, HttpClientTestingModule, MdbFormsModule],
+      declarations: [DespesasComponent, DespesasFormComponent, MatDatepicker, MatSelect],
+      imports: [CommonModule, RouterTestingModule, SharedModule, HttpClientTestingModule, MatSelectModule , MatDatepickerModule, MatNativeDateModule],
       providers: [MenuService, AlertComponent, ModalFormComponent, ModalConfirmComponent, NgbActiveModal, DespesaService,
         { provide: Storage, useValue: localStorageSpy },
         { provide: AuthService, useValue: mockAuthService }
@@ -186,5 +188,57 @@ describe('Unit Test DespesasComponent', () => {
     // Assert
     expect(component.modalForm.modalService.open).toHaveBeenCalled();
   }));
+
+  it('should open call editDespesa onClickEdit', fakeAsync(() => {
+    // Arrange
+    const mockDespesa: IDespesa = mockDespesas[0];
+    const mockResponse: any = { message: true, despesa: mockDespesa };
+    const getDespesasById = spyOn(despesaService, 'getDespesaById').and.returnValue(from(Promise.resolve(mockResponse)));
+    const editDespesa = spyOn(component, 'editDespesa').and.callThrough();
+
+    // Act
+    component.onClickEdit(mockDespesa.idUsuario);
+    flush();
+
+    // Assert
+    expect(getDespesasById).toHaveBeenCalled();
+    expect(editDespesa).toHaveBeenCalled();
+    expect(editDespesa).toHaveBeenCalledWith(mockDespesa);
+  }));
+
+  it('should throws error in onClickEdit', fakeAsync(() => {
+    // Arrange
+    const errorMessage = { message: 'Fake Error Message'};
+    const mockDespesa: IDespesa = mockDespesas[1];
+    const getDespesasById = spyOn(despesaService, 'getDespesaById').and.returnValue(throwError(errorMessage));
+    const editDespesa = spyOn(component, 'editDespesa').and.callThrough();
+    const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
+
+    // Act
+    component.onClickEdit(mockDespesa.idUsuario);
+    flush();
+
+    // Assert
+    expect(getDespesasById).toHaveBeenCalled();
+    expect(editDespesa).not.toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+  }));
+
+
+  it('should open call editDespesa ', () => {
+    // Arrange
+    const mockDespesa: IDespesa = mockDespesas[2];
+    const editDespesa = spyOn(component, 'editDespesa').and.callThrough();
+    spyOn(component.modalForm.modalService, 'open').and.callThrough();
+
+    // Act
+    component.editDespesa(mockDespesa);
+
+    // Assert
+    expect(editDespesa).toHaveBeenCalled();
+    expect(editDespesa).toHaveBeenCalledWith(mockDespesa);
+    expect(component.modalForm.modalService.open).toHaveBeenCalled();
+  });
 
 });

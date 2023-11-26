@@ -3,65 +3,58 @@
     <h3 class="m-0 border-0 ">Despesas</h3>
     <button type="button" class="btn-close " aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
   </div>
-  <div class="overflow-y-auto scroll-content  ">
-    <form (ngSubmit)="onSaveClick()" [formGroup]="despesatForm" >
-      <input id="id"  name="id" formControlName="id" type="hidden" class="form-control" [value]=0 />
-      <mdb-form-control class="mt-3 position-relative" >
-        <select id="idCategoria"  name="idCategoria" class="form-control" formControlName="idCategoria" mdbValidate mdbInput
-          [ngClass]="{ 'is-invalid': despesatForm.get('idCategoria')?.errors?.['required'] &&  despesatForm.get('idCategoria')?.touched }"
-          mdbValidate mdbSelect readonly
-          (change)="onCategoriaChangeConvertValueToNumber($event)"
-          >
-          <option [value]=null disabled [selected]="true" >Nenhuma categoria selecionada</option>
-          <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.descricao }}</option>
-        </select>
-        <label mdbLabel class="form-label" for="idCategoria">Categoria</label>
-        <i class="text-danger bi bi-exclamation-circle position-absolute mx-2 my-1 top-0 end-0"
-          [ngClass]="{'error-bi-input': despesatForm.get('idCategoria')?.hasError('required') && despesatForm.get('idCategoria')?.touched,
-                      'not-error-input': !despesatForm.get('idCategoria')?.hasError('required')  || !despesatForm.get('idCategoria')?.touched }">
-        </i>
-      </mdb-form-control>
-      <mdb-form-control class="mt-3 position-relative" >
-        <input id="data" name="data" formControlName="data" type="date" class="form-control" placeholder="Entre com a data" mdbValidate mdbInput
-          [ngClass]="{ 'is-invalid': despesatForm.get('data')?.errors?.['required'] &&  despesatForm.get('data')?.touched }" />
-        <label mdbLabel class="form-label" for="data">Data</label>
-        <i class="text-danger bi bi-exclamation-circle position-absolute mx-2  my-1 top-0 end-0"
-          [ngClass]="{'error-bi-input': despesatForm.get('data')?.hasError('required') && despesatForm.get('data')?.touched,
-                      'not-error-input': !despesatForm.get('data')?.hasError('required')  || !despesatForm.get('data')?.touched }">
-        </i>
-      </mdb-form-control>
-      <mdb-form-control class="mt-3 position-relative" >
-        <input id="descricao" name="descricao" formControlName="descricao" type="text" class="form-control" placeholder="   Entre com a descricao" mdbValidate mdbInput
-          [ngClass]="{ 'is-invalid': despesatForm.get('descricao')?.errors?.['required'] &&  despesatForm.get('descricao')?.touched }" />
-        <label mdbLabel class="form-label" for="descricao" >Descrição</label>
+  <form (ngSubmit)="onSaveClick()" [formGroup]="despesatForm" >
+    <input id="id"  name="id" formControlName="id" type="hidden" class="form-control" [value]=0 />
+    <mat-form-field appearance="outline" class="w-100 mt-2" readonly>
+      <mat-label>Categoria</mat-label>
+      <mat-select matInput id="idCategoria" name="idCategoria" formControlName="idCategoria" >
+        <mat-option [value]="null" disabled selected >Nenhuma categoria selecionada</mat-option>
+        <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.descricao }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100 "  >
+      <mat-label>Data</mat-label>
+      <input matInput [matDatepicker]="data" id="data" name="data" formControlName="data" type="text" placeholder="Entre com uma data válida"
+        [ngClass]="{ 'is-invalid': despesatForm.get('data')?.errors?.['required'] &&  despesatForm.get('data')?.touched }" />
+      <mat-datepicker-toggle matIconSuffix [for]="data"
+        [ngClass]="{'text-danger': despesatForm.get('data')?.hasError('required') && despesatForm.get('data')?.touched,
+                    '': !despesatForm.get('data')?.hasError('required')  || !despesatForm.get('data')?.touched }">
+      </mat-datepicker-toggle>
+      <mat-datepicker touchUi #data></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100 "  >
+      <mat-label>Descrição</mat-label>
+      <input matInput id="descricao" name="descricao" formControlName="descricao" type="text" placeholder="Entre com uma descrição"
+        [ngClass]="{ 'is-invalid': despesatForm.get('descricao')?.errors?.['required'] &&  despesatForm.get('descricao')?.touched }" />
+      <mat-icon matSuffix>
         <i class="text-danger bi bi-exclamation-circle position-absolute mx-2 my-1 top-0 end-0"
           [ngClass]="{'error-bi-input': despesatForm.get('descricao')?.hasError('required') && despesatForm.get('descricao')?.touched,
-                      'not-error-input': !despesatForm.get('descricao')?.hasError('required')  || !despesatForm.get('descricao')?.touched }">
+          'not-error-input': !despesatForm.get('descricao')?.hasError('required')  || !despesatForm.get('descricao')?.touched }">
         </i>
-      </mdb-form-control>
-      <mdb-form-control class="mt-3 position-relative" >
-        <input id="valor" name="valor" formControlName="valor" type="number" class="form-control" placeholder="Entre com um valor > 0" mdbValidate mdbInput
-          [ngClass]="{ 'is-invalid': (despesatForm.get('valor')?.errors?.['required'] || despesatForm.get('valor')?.errors?.['greaterThanZero']) &&  despesatForm.get('valor')?.touched }" />
-        <label mdbLabel class="form-label" for="valor">Valor</label>
+      </mat-icon>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100 ">
+      <mat-label>Valor</mat-label>
+      <input matInput currencyMask  id="valor" name="valor" formControlName="valor" type="text"  placeholder="Entre com um valor > 0" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" class="text-start"
+        [ngClass]="{ 'is-invalid': (despesatForm.get('valor')?.errors?.['required'] || despesatForm.get('valor')?.errors?.['greaterThanZero']) &&  despesatForm.get('valor')?.touched }" />
+      <mat-icon matSuffix>
         <i class="text-danger bi bi-exclamation-circle position-absolute mx-2 my-1 top-0 end-0"
           [ngClass]="{'error-bi-input': despesatForm.get('valor')?.hasError('required') && despesatForm.get('valor')?.touched,
-                      'not-error-input': (!despesatForm.get('valor')?.hasError('required') && !despesatForm.get('valor')?.hasError('greaterThanZero'))  || !despesatForm.get('valor')?.touched }">
+                    'not-error-input': (!despesatForm.get('valor')?.hasError('required') && !despesatForm.get('valor')?.hasError('greaterThanZero'))  || !despesatForm.get('valor')?.touched }">
         </i>
-      </mdb-form-control>
-      <mdb-form-control class="mt-3 position-relative" >
-        <input id="dataVencimento" name="dataVencimento" formControlName="dataVencimento" type="date" class="form-control" placeholder="Entre com a Data de Vencimento" mdbValidate mdbInput
-          [ngClass]="{ 'is-invalid': despesatForm.get('dataVencimento')?.errors?.['required'] &&  despesatForm.get('dataVencimento')?.touched }" />
-        <label mdbLabel class="form-label" for="dataVencimento">Data de Vencimento</label>
-        <i class="text-danger bi bi-exclamation-circle position-absolute mx-2 my-1 top-0 end-0"
-          [ngClass]="{'error-bi-input': despesatForm.get('dataVencimento')?.hasError('required') && despesatForm.get('dataVencimento')?.touched,
-                      'not-error-input': !despesatForm.get('dataVencimento')?.hasError('required')  || !despesatForm.get('dataVencimento')?.touched }">
-        </i>
-      </mdb-form-control>
-      <div class="input-group mt-3  d-flex flex-column align-items-center justify-content-center">
-        <button type="submit" class="btn btn-primary w-responsive"
-          [ngClass]="{'disabled' : !despesatForm.valid}"  [disabled]="!despesatForm.valid" >
-          Salvar</button>
-      </div>
-    </form>
-  </div>
+      </mat-icon>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100 "  >
+      <mat-label>Data de Vencimento</mat-label>
+      <input matInput [matDatepicker]="dataVencimento" disablePast="true" data-mdb-toggle="datepicker"  id="dataVencimento" name="dataVencimento" formControlName="dataVencimento" type="text" placeholder="Data de Vencimento (opcional)">
+      <mat-datepicker-toggle matIconSuffix [for]="dataVencimento"></mat-datepicker-toggle>
+      <mat-datepicker #dataVencimento></mat-datepicker>
+    </mat-form-field>
+    <div class="input-group mt-3  d-flex flex-column align-items-center justify-content-center">
+      <button type="submit" class="btn btn-primary w-responsive"
+        [ngClass]="{'disabled' : !despesatForm.valid}"  [disabled]="!despesatForm.valid" >
+        Salvar</button>
+    </div>
+  </form>
 </div>
+
