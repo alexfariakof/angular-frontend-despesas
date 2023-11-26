@@ -124,8 +124,22 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
   }
 
 
-  onClickDelete = ( )=> {
-
+  onClickDelete = (idDespesa: Number) => {
+    this.despesaService.deleteDespesa(idDespesa)
+    .subscribe({
+      next: (response: any) => {
+        if (response.message === true){
+          this.updateDatatable();
+          this.modalAlert.open(AlertComponent, "Categoria excluída com sucesso", 'Success');
+        }
+        else{
+          this.modalAlert.open(AlertComponent, 'Erro ao excluír categoria', 'Warning');
+        }
+      },
+      error :(response : any) =>  {
+        this.modalAlert.open(AlertComponent, response.message, 'Warning');
+      }
+    });
   }
 
 }
