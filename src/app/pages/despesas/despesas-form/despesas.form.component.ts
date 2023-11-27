@@ -47,6 +47,7 @@ export class DespesasFormComponent {
       id: [0],
       idUsuario: this.idUsuario,
       idCategoria: [null, Validators.required],
+      categoria: null,
       data: [dayjs().format('YYYY-MM-DD'), Validators.required],
       descricao: ['', Validators.required],
       valor: ['', [Validators.required, this.greaterThanZero]],
