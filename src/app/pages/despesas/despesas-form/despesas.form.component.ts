@@ -51,7 +51,7 @@ export class DespesasFormComponent {
       data: [dayjs().format('YYYY-MM-DD'), Validators.required],
       descricao: ['', Validators.required],
       valor: ['', [Validators.required, this.greaterThanZero]],
-      dataVencimento: ['']
+      dataVencimento: null
     }) as FormGroup & IDespesa;
   }
 
