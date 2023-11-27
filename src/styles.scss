@@ -33,9 +33,14 @@ $despesas-frontend-angular-theme: mat.define-light-theme((
 // that you are using.
 @include mat.all-component-themes($despesas-frontend-angular-theme);
 
+
 html, body {
   height: 100%;
   overflow: hidden;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 footer {
@@ -128,10 +133,14 @@ h2 {
   border: 0.1rem solid gray;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-// Classe  Responsável por abrir elementos a frente do modalformComponent
+// Classe Responsável por Abrir elementos a frente do modalformComponent ex.: Mat-Select, Mat-Datepicker
 .cdk-overlay-container {
   z-index: 1999;
 }
+
+.loading-modal .modal-content {
+  background-color: transparent;
+  text-align: center;
+}
+
+

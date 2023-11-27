@@ -79,6 +79,7 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
     return despesas.map((despesa: IDespesa) => ({
       id: despesa.id,
       data: dayjs(despesa.data).format('DD/MM/YYYY'),
+      categoria: despesa.categoria,
       descricao: despesa.descricao,
       valor: `${ despesa.valor.toLocaleString('pt-BR', {
         style: 'currency',
@@ -98,7 +99,7 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
     });
   }
 
-  onClickEdit = (idDespesa: Number) =>{
+  onClickEdit = (idDespesa: number) =>{
     this.despesaService.getDespesaById(idDespesa)
     .subscribe({
       next: (response: any) => {
@@ -120,12 +121,12 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
     });
   }
 
-  onClickDelete = (idDespesa: Number) => {
+  onClickDelete = (idDespesa: number) => {
     const modalRef = this.modalConfirm.open(ModalConfirmComponent, `Deseja excluir a despesa ${ this.dataTable.row.descricao } ?`);
     modalRef.componentInstance.setConfirmButton(() => { this.deleteDespesa(idDespesa); });
   }
 
-  deleteDespesa = (idDespesa: Number) => {
+  deleteDespesa = (idDespesa: number) => {
     this.despesaService.deleteDespesa(idDespesa)
     .subscribe({
       next: (response: any) => {

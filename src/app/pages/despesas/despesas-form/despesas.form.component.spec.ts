@@ -92,7 +92,8 @@ describe('Unit Test DespesasFormComponent', () => {
       data: dayjs(),
       descricao: 'Teste Create Despesas',
       valor: 100.88,
-      dataVencimento: null
+      dataVencimento: null,
+      categoria: ''
     };
     const despesaPostServiceSpy = spyOn(despesaService, 'postDespesa').and.returnValue(of({ message: true }));
     const modalCloseSpy = spyOn(component.activeModal, 'close').and.callThrough();
@@ -125,7 +126,8 @@ describe('Unit Test DespesasFormComponent', () => {
       data: dayjs(),
       descricao: 'Teste Create Despesas',
       valor: 100.88,
-      dataVencimento: null
+      dataVencimento: null,
+      categoria: ''
     };
     const despesaPostServiceSpy = spyOn(despesaService, 'postDespesa').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open').and.callThrough();
@@ -152,7 +154,8 @@ describe('Unit Test DespesasFormComponent', () => {
       data: dayjs().format('YYYY-MM-DD'),
       descricao: 'Teste Edit Despesas',
       valor: 10.58,
-      dataVencimento: null
+      dataVencimento: null,
+      categoria: null
     };
     const despesaPutServiceSpy = spyOn(despesaService, 'putDespesa').and.returnValue(of({ message: true, despesa: mockDespesa }));
     const modalCloseSpy = spyOn(component.activeModal, 'close').and.callThrough();
@@ -186,7 +189,8 @@ describe('Unit Test DespesasFormComponent', () => {
       data: dayjs().format('YYYY-MM-DD'),
       descricao: 'Teste Edit Despesas',
       valor: 20.42,
-      dataVencimento: dayjs().format('YYYY-MM-DD')
+      dataVencimento: dayjs().format('YYYY-MM-DD'),
+      categoria: ''
     };
     const despesaPutServiceSpy = spyOn(despesaService, 'putDespesa').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open').and.callThrough();

@@ -47,6 +47,7 @@ export class DespesasFormComponent {
       id: [0],
       idUsuario: this.idUsuario,
       idCategoria: [null, Validators.required],
+      categoria: null,
       data: [dayjs().format('YYYY-MM-DD'), Validators.required],
       descricao: ['', Validators.required],
       valor: ['', [Validators.required, this.greaterThanZero]],
@@ -75,7 +76,7 @@ export class DespesasFormComponent {
         this.despesaService.postDespesa(despesa)
         .subscribe({
           next: (result: any ) => {
-            if (result.message == true)
+            if (result.message === true)
             {
               this.activeModal.close();
               this.refresh();
@@ -91,7 +92,7 @@ export class DespesasFormComponent {
         this.despesaService.putDespesa(despesa)
         .subscribe({
           next: (response: any ) => {
-            if ((response !== undefined || response !== null) && response.message == true)
+            if ((response !== undefined || response !== null) && response.message === true)
             {
               this.activeModal.close();
               this.refresh();
