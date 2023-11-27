@@ -28,9 +28,9 @@ describe('Unit Test DespesaService', () => {
     (service: DespesaService, httpMock: HttpTestingController) => {
 
       const mockResponse : IDespesa[] = [
-        { id: 1, idUsuario: 1, idCategoria: 1, data: dayjs(), descricao: 'Teste Despesas 1', valor: 1.05, dataVencimento: dayjs() },
-        { id: 2, idUsuario: 2, idCategoria: 2, data: dayjs(), descricao: 'Teste Despesas 2', valor: 2.05, dataVencimento: dayjs() },
-        { id: 3, idUsuario: 1, idCategoria: 4, data: dayjs(), descricao: 'Teste Despesas 3', valor: 3.05, dataVencimento: dayjs() },
+        { id: 1, idUsuario: 1, idCategoria: 1, data: dayjs(), descricao: 'Teste Despesas 1', valor: 1.05, dataVencimento: dayjs(), categoria: null },
+        { id: 2, idUsuario: 2, idCategoria: 2, data: dayjs(), descricao: 'Teste Despesas 2', valor: 2.05, dataVencimento: dayjs(), categoria: null },
+        { id: 3, idUsuario: 1, idCategoria: 4, data: dayjs(), descricao: 'Teste Despesas 3', valor: 3.05, dataVencimento: dayjs(), categoria: null },
       ];
 
       service.getDespesas().subscribe((response: any) => {
@@ -58,7 +58,8 @@ describe('Unit Test DespesaService', () => {
         data: dayjs(),
         descricao: 'Teste Despesas 1',
         valor: 1.05,
-        dataVencimento: dayjs()
+        dataVencimento: dayjs(),
+        categoria: ''
       };
 
       service.getDespesaById(1).subscribe((response: any) => {
@@ -116,7 +117,8 @@ describe('Unit Test DespesaService', () => {
         data: dayjs(),
         descricao: 'Teste Despesas 1',
         valor: 1.05,
-        dataVencimento: null
+        dataVencimento: null,
+        categoria: ''
       };
 
       const mockResponse = { message: true, Despesa: despesa  };
@@ -143,7 +145,8 @@ describe('Unit Test DespesaService', () => {
         data: dayjs(),
         descricao: 'Teste Despesas 1',
         valor: 1.05,
-        dataVencimento: null
+        dataVencimento: null,
+        categoria: ''
       };
 
       const mockResponse = { message: true, Despesa: despesa  };
