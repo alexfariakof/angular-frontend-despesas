@@ -79,6 +79,7 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
     return despesas.map((despesa: IDespesa) => ({
       id: despesa.id,
       data: dayjs(despesa.data).format('DD/MM/YYYY'),
+      categoria: despesa.categoria,
       descricao: despesa.descricao,
       valor: `${ despesa.valor.toLocaleString('pt-BR', {
         style: 'currency',

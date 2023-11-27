@@ -5,4 +5,5 @@ export interface DespesaDataSet {
   descricao: String;
   valor: String;
   dataVencimento: String;
+  categoria: String;
 }

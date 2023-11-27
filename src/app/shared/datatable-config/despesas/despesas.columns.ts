@@ -4,6 +4,10 @@ export const DespesaColumns = [
     data: 'data'
   },
   {
+    title: 'Categoria',
+    data: 'categoria'
+  },
+  {
     title: 'Descrição',
     data: 'descricao'
   },
