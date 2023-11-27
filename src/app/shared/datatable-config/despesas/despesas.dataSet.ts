@@ -1,4 +1,3 @@
-import { Dayjs } from "dayjs";
 export interface DespesaDataSet {
   id: number;
   data: String;
