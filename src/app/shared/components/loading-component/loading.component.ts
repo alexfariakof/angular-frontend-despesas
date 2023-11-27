@@ -5,7 +5,4 @@ import { Component } from '@angular/core';
   template: '<p class="loading-modal spinner-border text-primary position-absolute top-50" role="status"></p>'
 })
 
-export class LoadingComponent {
-
-  constructor() {}
-}
+export class LoadingComponent {}
