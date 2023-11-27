@@ -15,7 +15,7 @@ export class CustomInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     const baseUrl = environment.endPoint;
 
-    const modalRef = this.modalService.open(LoadingComponent, { centered: true, backdropClass: 'loading-modal',  windowClass: 'loading-modal' });
+    const modalRef = this.modalService.open(LoadingComponent, { centered: true, fullscreen: true,  windowClass: 'loading-modal' });
 
     return this.authService.accessToken$.pipe(
 
