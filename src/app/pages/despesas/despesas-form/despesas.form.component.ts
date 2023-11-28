@@ -2,12 +2,9 @@ import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import * as dayjs from 'dayjs';
-import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
-import { IAction } from 'src/app/shared/interfaces/IAction';
-import { ICategoria } from 'src/app/shared/interfaces/ICategoria';
-import { IDespesa } from 'src/app/shared/interfaces/IDespesa';
-import { DespesaService } from 'src/app/shared/services/api/despesas/despesa.service';
-
+import { AlertComponent } from 'src/app/shared/components';
+import { IDespesa, ICategoria, IAction } from 'src/app/shared/interfaces';
+import { DespesaService } from 'src/app/shared/services/api';
 @Component({
   selector: 'app-despesas-form',
   templateUrl: './despesas.form.component.html',

@@ -1,12 +1,10 @@
-import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import * as dayjs from 'dayjs';
-import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
-import { IAction } from 'src/app/shared/interfaces/IAction';
-import { ICategoria } from 'src/app/shared/interfaces/ICategoria';
-import { IReceita } from 'src/app/shared/interfaces/IReceita';
-import { ReceitaService } from 'src/app/shared/services/api/receitas/receita.service';
+import { Component } from "@angular/core";
+import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from "@angular/forms";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import * as dayjs from "dayjs";
+import { AlertComponent } from "src/app/shared/components";
+import { ICategoria, IReceita, IAction } from "src/app/shared/interfaces";
+import { ReceitaService } from "src/app/shared/services/api";
 @Component({
   selector: 'app-receitas-form',
   templateUrl: './receitas.form.component.html',
@@ -51,6 +49,15 @@ export class ReceitasFormComponent {
     }) as FormGroup & IReceita;
   }
 
+  onSaveClick = () => {
+    const receita : IReceita = this.receitaForm.getRawValue() as IReceita;
+    switch (this.action) {
+      case IAction.Create: return this.createReceita(receita);
+      case IAction.Edit: return this.editReceita(receita);
+      default: this.modalAlert.open(AlertComponent, "Ação não pode ser realizada.", 'Warning');
+    }
+  }
+
   getCatgeorias = () => {
     this.receitaService.getCategorias(this.idUsuario)
       .subscribe({
@@ -64,45 +71,38 @@ export class ReceitasFormComponent {
     });
   }
 
-  onSaveClick = () => {
-    const receita : IReceita = this.receitaForm.getRawValue() as IReceita;
-    try {
-      if (this.action === IAction.Create){
-        this.receitaService.postReceita(receita)
-        .subscribe({
-          next: (result: any ) => {
-            if (result.message === true)
-            {
-              this.activeModal.close();
-              this.refresh();
-              this.modalAlert.open(AlertComponent, "Receita cadastrada com Sucesso.", 'Success');
-            }
-          },
-          error :(error : any) =>  {
-            this.modalAlert.open(AlertComponent, error.message, 'Warning');
-          }
-        });
+  createReceita = (receita: IReceita) => {
+    this.receitaService.postReceita(receita)
+    .subscribe({
+      next: (result: any ) => {
+        if (result.message === true)
+        {
+          this.activeModal.close();
+          this.refresh();
+          this.modalAlert.open(AlertComponent, "Receita cadastrada com Sucesso.", 'Success');
+        }
+      },
+      error :(error : any) =>  {
+        this.modalAlert.open(AlertComponent, error.message, 'Warning');
       }
-      else if (this.action === IAction.Edit) {
-        this.receitaService.putReceita(receita)
-        .subscribe({
-          next: (response: any ) => {
-            if ((response !== undefined || response !== null) && response.message === true)
-            {
-              this.activeModal.close();
-              this.refresh();
-              this.modalAlert.open(AlertComponent, "Receita alterada com Sucesso.", 'Success');
-            }
-          },
-          error :(error : any) =>  {
-            this.modalAlert.open(AlertComponent, error.message, 'Warning');
-          }
-        });
+    });
+  }
+
+  editReceita = (receita: IReceita) => {
+    this.receitaService.putReceita(receita)
+    .subscribe({
+      next: (response: any ) => {
+        if ((response !== undefined || response !== null) && response.message === true)
+        {
+          this.activeModal.close();
+          this.refresh();
+          this.modalAlert.open(AlertComponent, "Receita alterada com Sucesso.", 'Success');
+        }
+      },
+      error :(error : any) =>  {
+        this.modalAlert.open(AlertComponent, error.message, 'Warning');
       }
-    }
-    catch(error){
-      this.modalAlert.open(AlertComponent, error.message, 'Warning');
-    }
+    });
   }
 
   greaterThanZero = (control: AbstractControl): ValidationErrors | null => {

@@ -1,23 +1,22 @@
-import { ComponentFixture, TestBed, fakeAsync, flush, tick } from '@angular/core/testing';
-import { DespesasFormComponent } from './despesas.form.component';
-import { DespesaService } from 'src/app/shared/services/api/despesas/despesa.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
-import { from, of, throwError } from 'rxjs';
-import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import { ICategoria } from 'src/app/shared/interfaces/ICategoria';
-import { IDespesa } from 'src/app/shared/interfaces/IDespesa';
-import * as dayjs from 'dayjs';
-import { IAction } from 'src/app/shared/interfaces/IAction';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatNativeDateModule, MatOption } from '@angular/material/core';
-import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelect, MatSelectModule  } from '@angular/material/select';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CurrencyMaskModule } from 'ng2-currency-mask';
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { ComponentFixture, TestBed, fakeAsync, flush } from "@angular/core/testing";
+import { ReactiveFormsModule, FormBuilder } from "@angular/forms";
+import { MatNativeDateModule } from "@angular/material/core";
+import { MatDatepicker, MatDatepickerModule } from "@angular/material/datepicker";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatSelect, MatSelectModule } from "@angular/material/select";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import * as dayjs from "dayjs";
+import { CurrencyMaskModule } from "ng2-currency-mask";
+import { from, throwError, of } from "rxjs";
+import { AlertComponent } from "src/app/shared/components";
+import { ICategoria, IDespesa, IAction } from "src/app/shared/interfaces";
+import { AuthService } from "src/app/shared/services";
+import { DespesaService } from "src/app/shared/services/api";
+import { DespesasFormComponent } from "./despesas.form.component";
+
 
 describe('Unit Test DespesasFormComponent', () => {
   let component: DespesasFormComponent;

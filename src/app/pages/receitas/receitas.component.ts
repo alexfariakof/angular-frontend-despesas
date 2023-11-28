@@ -1,17 +1,11 @@
-import { Component, ViewChild } from '@angular/core';
-import * as dayjs from 'dayjs';
-import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
-import { BarraFerramentaClass } from 'src/app/shared/components/barra-ferramenta-component/barra-ferramenta.abstract';
-import { DataTableComponent } from 'src/app/shared/components/data-table/data-table.component';
-import { ModalConfirmComponent } from 'src/app/shared/components/modal-confirm/modal.confirm.component';
-import { ModalFormComponent } from 'src/app/shared/components/modal-form/modal.form.component';
-import { ReceitaColumns } from 'src/app/shared/datatable-config/receitas/receitas.columns';
-import { ReceitaDataSet } from 'src/app/shared/datatable-config/receitas/receitas.dataSet';
-import { IAction } from 'src/app/shared/interfaces/IAction';
-import { IReceita } from 'src/app/shared/interfaces/IReceita';
-import { ReceitaService } from 'src/app/shared/services/api/receitas/receita.service';
-import { MenuService } from 'src/app/shared/services/utils/menu-service/menu.service';
-import { ReceitasFormComponent } from './receitas-form/receitas.form.component';
+import { Component, ViewChild } from "@angular/core";
+import * as dayjs from "dayjs";
+import { BarraFerramentaClass, DataTableComponent, AlertComponent, ModalFormComponent, ModalConfirmComponent } from "src/app/shared/components";
+import { ReceitaDataSet, ReceitaColumns } from "src/app/shared/datatable-config/receitas";
+import { IReceita, IAction } from "src/app/shared/interfaces";
+import { MenuService } from "src/app/shared/services";
+import { ReceitaService } from "src/app/shared/services/api";
+import { ReceitasFormComponent } from "./receitas-form/receitas.form.component";
 @Component({
   selector: 'app-receitas',
   templateUrl: './receitas.component.html',
