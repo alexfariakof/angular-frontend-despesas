@@ -17,6 +17,9 @@ export class ReceitasFormComponent {
   private idUsuario: number = Number(localStorage.getItem('idUsuario')) || 0;
   categorias: ICategoria[]= [];
   receitaForm: FormGroup & IReceita;
+  setReceita(receita: IReceita): void {
+    this.receitaForm.patchValue(receita);
+  }
 
   private action: IAction = IAction.Create;
   setAction(_action: IAction){
@@ -63,21 +66,42 @@ export class ReceitasFormComponent {
 
   onSaveClick = () => {
     const receita : IReceita = this.receitaForm.getRawValue() as IReceita;
-    if (this.action === IAction.Create){
-      this.receitaService.postReceita(receita)
-      .subscribe({
-        next: (result: any ) => {
-          if (result.message === true)
-          {
-            this.activeModal.close();
-            this.refresh();
-            this.modalAlert.open(AlertComponent, "Receita cadastrada com Sucesso.", 'Success');
+    try {
+      if (this.action === IAction.Create){
+        this.receitaService.postReceita(receita)
+        .subscribe({
+          next: (result: any ) => {
+            if (result.message === true)
+            {
+              this.activeModal.close();
+              this.refresh();
+              this.modalAlert.open(AlertComponent, "Receita cadastrada com Sucesso.", 'Success');
+            }
+          },
+          error :(error : any) =>  {
+            this.modalAlert.open(AlertComponent, error.message, 'Warning');
           }
-        },
-        error :(error : any) =>  {
-          this.modalAlert.open(AlertComponent, error.message, 'Warning');
-        }
-      });
+        });
+      }
+      else if (this.action === IAction.Edit) {
+        this.receitaService.putReceita(receita)
+        .subscribe({
+          next: (response: any ) => {
+            if ((response !== undefined || response !== null) && response.message === true)
+            {
+              this.activeModal.close();
+              this.refresh();
+              this.modalAlert.open(AlertComponent, "Receita alterada com Sucesso.", 'Success');
+            }
+          },
+          error :(error : any) =>  {
+            this.modalAlert.open(AlertComponent, error.message, 'Warning');
+          }
+        });
+      }
+    }
+    catch(error){
+      this.modalAlert.open(AlertComponent, error.message, 'Warning');
     }
   }
 
