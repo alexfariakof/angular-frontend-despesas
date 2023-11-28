@@ -1,13 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators  } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { map, catchError } from "rxjs";
-import { AlertComponent } from "src/app/shared/components/alert-component/alert.component";
-import { IAuth } from "src/app/shared/interfaces/IAuth";
-import { ILogin } from "src/app/shared/interfaces/ILogin";
-import { AuthService } from "src/app/shared/services/auth/auth.service";
-import { ControleAcessoService } from "src/app/shared/services/api/controle-acesso/controle-acesso.service";
-
+import { AlertComponent } from "src/app/shared/components";
+import { ILogin, IAuth } from "src/app/shared/interfaces";
+import { AuthService } from "src/app/shared/services";
+import { ControleAcessoService } from "src/app/shared/services/api";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

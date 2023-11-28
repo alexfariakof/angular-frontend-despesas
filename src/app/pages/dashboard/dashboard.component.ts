@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { MenuService } from 'src/app/shared/services/utils/menu-service/menu.service';
-
+import { Component } from "@angular/core";
+import { FormBuilder } from "@angular/forms";
+import { MenuService } from "src/app/shared/services";
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',

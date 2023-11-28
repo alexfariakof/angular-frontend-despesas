@@ -1,9 +1,8 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { LancamentosComponent } from './lancamentos.component';
-import { LancamentosRoutingModule } from './lancamentos.routing.module';
-import { SharedModule } from '../../shared/shared.module';
-
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
+import { SharedModule } from "src/app/shared/shared.module";
+import { LancamentosComponent } from "./lancamentos.component";
+import { LancamentosRoutingModule } from "./lancamentos.routing.module";
 @NgModule({
   declarations: [LancamentosComponent ],
   imports: [CommonModule, LancamentosRoutingModule, SharedModule]

@@ -13,7 +13,7 @@ export class DespesaService {
     return this.httpClient.get(`Despesa`);
   }
 
-  getDespesaById(idDespesa: Number) : any {
+  getDespesaById(idDespesa: number) : any {
     return this.httpClient.get(`Despesa/GetById/${idDespesa}`);
   }
 
@@ -21,7 +21,7 @@ export class DespesaService {
     return this.httpClient.get(`Categoria/GetByTipoCategoria/${idUsuario}/1`);
   }
 
-  getDespesaByIdUsuario(idUsuario: Number) : any {
+  getDespesaByIdUsuario(idUsuario: number) : any {
     return this.httpClient.get(`Despesa/GetByIdUsuario/${idUsuario}`);
   }
 
@@ -33,7 +33,7 @@ export class DespesaService {
     return this.httpClient.put<IDespesa>(`Despesa`, despesa);
   }
 
-  deleteDespesa(idDespesa: Number): any {
+  deleteDespesa(idDespesa: number): any {
     return this.httpClient.delete(`Despesa/${idDespesa}`);
   }
 }

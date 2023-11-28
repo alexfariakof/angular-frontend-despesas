@@ -1,17 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
-import { ModalFormComponent } from 'src/app/shared/components/modal-form/modal.form.component';
 import { MenuService } from 'src/app/shared/services/utils/menu-service/menu.service';
 import { CategoriasFormComponent } from './categorias-form/categorias.form.component';
-import { BarraFerramentaClass } from 'src/app/shared/components/barra-ferramenta-component/barra-ferramenta.abstract';
-import { ICategoria } from './../../shared/interfaces/ICategoria';
-import { ITipoCategoria } from './../../shared/interfaces/ITipoCategoria';
+import { ICategoria, ITipoCategoria, IAction } from './../../shared/interfaces';
 import { CategoriaService } from 'src/app/shared/services/api/categorias/categoria.service';
-import { DataTableComponent } from 'src/app/shared/components/data-table/data-table.component';
-import { IAction } from 'src/app/shared/interfaces/IAction';
-import { CategoriaColumns } from 'src/app/shared/datatable-config/categorias/categoria.columns';
-import { CategoriaDataSet } from 'src/app/shared/datatable-config/categorias/categoria.dataSet';
-import { ModalConfirmComponent } from 'src/app/shared/components/modal-confirm/modal.confirm.component';
+import { CategoriaColumns, CategoriaDataSet  } from 'src/app/shared/datatable-config/categorias';
+import { DataTableComponent, AlertComponent, ModalFormComponent, ModalConfirmComponent, BarraFerramentaClass } from 'src/app/shared/components';
 @Component({
   selector: 'app-categorias',
   templateUrl: './categorias.component.html',
@@ -94,7 +87,7 @@ export class CategoriasComponent implements BarraFerramentaClass, OnInit {
     this.categoriaService.getCategoriaById(idCategoria)
     .subscribe({
       next: (categoria: ICategoria) => {
-        if (categoria !== undefined || categoria !== null)
+        if (categoria !== undefined && categoria !== null)
           this.editCategoria(categoria);
       },
       error :(response : any) =>  {

@@ -1,22 +1,19 @@
-import { ComponentFixture, TestBed, fakeAsync, flush, tick } from '@angular/core/testing';
-import { CategoriasComponent } from './categorias.component';
-import { CommonModule } from '@angular/common';
-import { SharedModule } from 'src/app/shared/shared.module';
-import { MenuService } from 'src/app/shared/services/utils/menu-service/menu.service';
-import { ModalFormComponent } from 'src/app/shared/components/modal-form/modal.form.component';
-import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import { CategoriaService } from 'src/app/shared/services/api/categorias/categoria.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { CategoriasFormComponent } from './categorias-form/categorias.form.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { ICategoria } from 'src/app/shared/interfaces/ICategoria';
-import { from, of, throwError } from 'rxjs';
-import { ModalConfirmComponent } from 'src/app/shared/components/modal-confirm/modal.confirm.component';
-import { DataTableComponent } from 'src/app/shared/components/data-table/data-table.component';
-import { CategoriaDataSet } from 'src/app/shared/datatable-config/categorias/categoria.dataSet';
-import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
+import { CommonModule } from "@angular/common";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { ComponentFixture, TestBed, fakeAsync, tick, flush } from "@angular/core/testing";
+import { ReactiveFormsModule } from "@angular/forms";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { MdbFormsModule } from "mdb-angular-ui-kit/forms";
+import { from, throwError, of } from "rxjs";
+import { AlertComponent, ModalFormComponent, ModalConfirmComponent, DataTableComponent } from "src/app/shared/components";
+import { CategoriaDataSet } from "src/app/shared/datatable-config/categorias";
+import { ICategoria } from "src/app/shared/interfaces";
+import { AuthService, MenuService } from "src/app/shared/services";
+import { CategoriaService } from "src/app/shared/services/api";
+import { SharedModule } from "src/app/shared/shared.module";
+import { CategoriasFormComponent } from "./categorias-form/categorias.form.component";
+import { CategoriasComponent } from "./categorias.component";
+
 
 describe('Unit Test CategoriasComponent', () => {
   let component: CategoriasComponent;
@@ -168,6 +165,20 @@ describe('Unit Test CategoriasComponent', () => {
     // Assert
     expect(getCategoriaByIdSpy).toHaveBeenCalled();
     expect(editCategoriaSpy).toHaveBeenCalledWith(mockCategoria);
+  }));
+
+  it('should do nothing when onClickEdit return null Categoria', fakeAsync(() => {
+    // Arrange
+    const getReceitasById = spyOn(categoriaService, 'getCategoriaById').and.returnValue(of(null));
+    const editCategoriaSpy = spyOn(component, 'editCategoria').and.callThrough();
+
+    // Act
+    component.onClickEdit(0);
+    flush();
+
+    // Assert
+    expect(getReceitasById).toHaveBeenCalled();
+    expect(editCategoriaSpy).not.toHaveBeenCalled();
   }));
 
   it('should throw error when onClickEdit ', fakeAsync(() => {
