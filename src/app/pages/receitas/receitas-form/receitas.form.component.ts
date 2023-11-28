@@ -1,4 +1,4 @@
-import { Component, InjectionToken } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import * as dayjs from 'dayjs';
@@ -77,22 +77,6 @@ export class ReceitasFormComponent {
               this.activeModal.close();
               this.refresh();
               this.modalAlert.open(AlertComponent, "Receita cadastrada com Sucesso.", 'Success');
-            }
-          },
-          error :(error : any) =>  {
-            this.modalAlert.open(AlertComponent, error.message, 'Warning');
-          }
-        });
-      }
-      else if (this.action === IAction.Edit) {
-        this.receitaService.putReceita(receita)
-        .subscribe({
-          next: (response: any ) => {
-            if ((response !== undefined || response !== null) && response.message === true)
-            {
-              this.activeModal.close();
-              this.refresh();
-              this.modalAlert.open(AlertComponent, "Receita alterada com Sucesso.", 'Success');
             }
           },
           error :(error : any) =>  {
