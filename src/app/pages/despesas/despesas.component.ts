@@ -43,7 +43,7 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
       next: (result: IDespesa[]) => {
         if (result)
         {
-          this.despesasData = this.parseToDespeasData(result);
+          this.despesasData = this.parseToDespesasData(result);
           this.dataTable.loadData(this.getDespesasData());
           this.dataTable.rerender();
         }
@@ -61,7 +61,7 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
       next: (result: any) => {
         if (result)
         {
-          this.despesasData = this.parseToDespeasData(result);
+          this.despesasData = this.parseToDespesasData(result);
           this.dataTable.rerender();
         }
       },
@@ -75,7 +75,7 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
     return this.despesasData;
   }
 
-  parseToDespeasData(despesas: IDespesa[]): DespesaDataSet[] {
+  parseToDespesasData(despesas: IDespesa[]): DespesaDataSet[] {
     return despesas.map((despesa: IDespesa) => ({
       id: despesa.id,
       data: dayjs(despesa.data).format('DD/MM/YYYY'),
