@@ -113,7 +113,26 @@ export class ReceitasComponent implements BarraFerramentaClass {
     });
   }
 
-  onClickDelete = (idReceita: number) => { }
+  onClickDelete = (idReceita: number) => {
+    const modalRef = this.modalConfirm.open(ModalConfirmComponent, `Deseja excluir a receita ${ this.dataTable.row.descricao } ?`);
+    modalRef.componentInstance.setConfirmButton(() => { this.deleteReceita(idReceita); });
+  }
 
-  deleteReceita = (idReceita: number) => { }
+  deleteReceita = (idReceita: number) => {
+    this.receitaService.deleteReceita(idReceita)
+    .subscribe({
+      next: (response: any) => {
+        if (response.message === true){
+          this.updateDatatable();
+          this.modalAlert.open(AlertComponent, "Receita excluída com sucesso", 'Success');
+        }
+        else{
+          this.modalAlert.open(AlertComponent, 'Erro ao excluír receita', 'Warning');
+        }
+      },
+      error :(response : any) =>  {
+        this.modalAlert.open(AlertComponent, response.message, 'Warning');
+      }
+    });
+  }
 }
