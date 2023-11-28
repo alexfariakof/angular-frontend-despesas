@@ -295,6 +295,4 @@ describe('Unit Test DespesasComponent', () => {
     expect(alertOpenSpy).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
   }));
-
-
 });

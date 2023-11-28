@@ -13,7 +13,7 @@ import { DespesasFormComponent } from "./despesas-form/despesas.form.component";
 })
 export class DespesasComponent implements BarraFerramentaClass, OnInit {
   @ViewChild(DataTableComponent) dataTable: DataTableComponent;
-  private idUsuario: number = Number(localStorage.getItem('idUsuario')) || 0;
+  private idUsuario: number = Number(localStorage.getItem('idUsuario'));
   despesasData: DespesaDataSet[] = [];
   columns = DespesaColumns;
 
@@ -96,7 +96,7 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
     this.despesaService.getDespesaById(idDespesa)
     .subscribe({
       next: (response: any) => {
-        if (response.message === true && (response.despesa !== undefined || response.despesa !== null))
+        if (response.message === true && (response.despesa !== undefined && response.despesa !== null))
           this.editDespesa(response.despesa);
       },
       error :(response : any) =>  {

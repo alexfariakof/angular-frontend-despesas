@@ -234,4 +234,63 @@ describe('Unit Test ReceitasComponent', () => {
     expect(component.modalForm.modalService.open).toHaveBeenCalled();
   });
 
+  it('should open Modal Confirm when onClickDelete', () => {
+    // Arrange
+    spyOn(component.modalConfirm, 'open').and.callThrough();
+
+    // Act
+    component.onClickDelete(mockReceitas[0].id);
+
+    // Assert
+    expect(component.modalConfirm.open).toHaveBeenCalled();
+  });
+
+  it('should  deleteReceita and open modal alert success', fakeAsync(() => {
+    // Arrange
+    const mockResponse = { message: true };
+    const getDeleteReceita = spyOn(receitaService, 'deleteReceita').and.returnValue(from(Promise.resolve(mockResponse)));
+    spyOn(component.modalAlert, 'open').and.callThrough();
+
+    // Act
+    component.deleteReceita(mockReceitas[1].id);
+    flush();
+
+    // Assert
+    expect(getDeleteReceita).toHaveBeenCalled();
+    expect(component.modalAlert.open).toHaveBeenCalled();
+    expect(component.modalAlert.open).toHaveBeenCalledWith(AlertComponent, 'Receita excluída com sucesso', 'Success');
+  }));
+
+  it('should try to deleteReceita and open modal alert warning', fakeAsync(() => {
+    // Arrange
+    const mockResponse = { message: false };
+    const getDeleteReceita = spyOn(receitaService, 'deleteReceita').and.returnValue(from(Promise.resolve(mockResponse)));
+    spyOn(component.modalAlert, 'open').and.callThrough();
+
+    // Act
+    component.deleteReceita(mockReceitas[2].id);
+    flush();
+
+    // Assert
+    expect(getDeleteReceita).toHaveBeenCalled();
+    expect(component.modalAlert.open).toHaveBeenCalled();
+    expect(component.modalAlert.open).toHaveBeenCalledWith(AlertComponent, 'Erro ao excluír receita', 'Warning');
+  }));
+
+  it('should throws error when try to deleteReceita and open modal alert warning', fakeAsync(() => {
+    // Arrange
+    const errorMessage = { message: 'Fake Error Message Delete Receita'};
+    const spyOnDeleteReceita = spyOn(receitaService, 'deleteReceita').and.returnValue(throwError(errorMessage));
+    const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
+
+    // Act
+    component.deleteReceita(mockReceitas[1].id);
+    flush();
+
+    // Assert
+    expect(spyOnDeleteReceita).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+  }));
+
 });
