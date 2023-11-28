@@ -6,8 +6,9 @@
   <form (ngSubmit)="onSaveClick()" [formGroup]="despesaForm" >
     <input id="id"  name="id" formControlName="id" type="hidden" class="form-control" [value]=0 />
     <mat-form-field appearance="outline" class="w-100 mt-2" readonly>
-      <mat-label>Despesas</mat-label>
-      <mat-select matInput id="idCategoria" name="idCategoria" formControlName="idCategoria" >
+      <mat-label>Categorias</mat-label>
+      <mat-select matInput id="idCategoria" name="idCategoria" formControlName="idCategoria"
+        [ngClass]="{ 'is-invalid': despesaForm.get('idCategoria')?.errors?.['required'] &&  despesaForm.get('idCategoria')?.touched }"  >
         <mat-option [value]="null" disabled selected >Nenhuma categoria selecionada</mat-option>
         <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.descricao }}</mat-option>
       </mat-select>

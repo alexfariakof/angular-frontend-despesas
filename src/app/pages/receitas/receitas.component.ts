@@ -11,6 +11,7 @@ import { IAction } from 'src/app/shared/interfaces/IAction';
 import { IReceita } from 'src/app/shared/interfaces/IReceita';
 import { ReceitaService } from 'src/app/shared/services/api/receitas/receita.service';
 import { MenuService } from 'src/app/shared/services/utils/menu-service/menu.service';
+import { ReceitasFormComponent } from './receitas-form/receitas.form.component';
 @Component({
   selector: 'app-receitas',
   templateUrl: './receitas.component.html',
@@ -89,6 +90,11 @@ export class ReceitasComponent implements BarraFerramentaClass {
   }
 
   onClickNovo = () => {
+    const modalRef = this.modalForm.modalService.open(ReceitasFormComponent, { centered: true });
+    modalRef.shown.subscribe(() => {
+      modalRef.componentInstance.setAction(IAction.Create);
+      modalRef.componentInstance.setRefresh(() => { this.updateDatatable(); });
+    });
   }
 
   onClickEdit = (idReceita: number) =>{

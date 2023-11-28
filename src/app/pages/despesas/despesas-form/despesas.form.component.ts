@@ -1,4 +1,3 @@
-import { ScrollStrategy } from '@angular/cdk/overlay';
 import { Component, InjectionToken } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -17,7 +16,6 @@ import { DespesaService } from 'src/app/shared/services/api/despesas/despesa.ser
 
 export class DespesasFormComponent {
   private idUsuario: number = Number(localStorage.getItem('idUsuario')) || 0;
-  MAT_DATEPICKER_SCROLL_STRATEGY: InjectionToken<() => ScrollStrategy>;
   categorias: ICategoria[]= [];
   despesaForm: FormGroup & IDespesa;
   setDespesa(despesa: IDespesa): void {
