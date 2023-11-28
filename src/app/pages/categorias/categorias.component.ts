@@ -87,7 +87,7 @@ export class CategoriasComponent implements BarraFerramentaClass, OnInit {
     this.categoriaService.getCategoriaById(idCategoria)
     .subscribe({
       next: (categoria: ICategoria) => {
-        if (categoria !== undefined || categoria !== null)
+        if (categoria !== undefined && categoria !== null)
           this.editCategoria(categoria);
       },
       error :(response : any) =>  {

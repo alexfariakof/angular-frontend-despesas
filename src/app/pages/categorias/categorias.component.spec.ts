@@ -167,6 +167,20 @@ describe('Unit Test CategoriasComponent', () => {
     expect(editCategoriaSpy).toHaveBeenCalledWith(mockCategoria);
   }));
 
+  it('should do nothing when onClickEdit return null Categoria', fakeAsync(() => {
+    // Arrange
+    const getReceitasById = spyOn(categoriaService, 'getCategoriaById').and.returnValue(of(null));
+    const editCategoriaSpy = spyOn(component, 'editCategoria').and.callThrough();
+
+    // Act
+    component.onClickEdit(0);
+    flush();
+
+    // Assert
+    expect(getReceitasById).toHaveBeenCalled();
+    expect(editCategoriaSpy).not.toHaveBeenCalled();
+  }));
+
   it('should throw error when onClickEdit ', fakeAsync(() => {
     // Arrange
     const errorMessage = { message: 'Fake Error Message' };

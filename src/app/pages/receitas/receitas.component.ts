@@ -13,7 +13,7 @@ import { ReceitasFormComponent } from "./receitas-form/receitas.form.component";
 })
 export class ReceitasComponent implements BarraFerramentaClass {
   @ViewChild(DataTableComponent) dataTable: DataTableComponent;
-  private idUsuario: number = Number(localStorage.getItem('idUsuario')) || 0;
+  private idUsuario: number = Number(localStorage.getItem('idUsuario'));
   receitasData: ReceitaDataSet[] = [];
   columns = ReceitaColumns;
 
@@ -95,7 +95,7 @@ export class ReceitasComponent implements BarraFerramentaClass {
     this.receitaService.getReceitaById(idReceita)
     .subscribe({
       next: (response: any) => {
-        if (response.message === true && (response.receita !== undefined || response.receita !== null))
+        if (response.message === true && (response.receita !== undefined && response.receita !== null))
           this.editReceita(response.receita);
       },
       error :(response : any) =>  {
@@ -113,7 +113,26 @@ export class ReceitasComponent implements BarraFerramentaClass {
     });
   }
 
-  onClickDelete = (idReceita: number) => { }
+  onClickDelete = (idReceita: number) => {
+    const modalRef = this.modalConfirm.open(ModalConfirmComponent, `Deseja excluir a receita ${ this.dataTable.row.descricao } ?`);
+    modalRef.componentInstance.setConfirmButton(() => { this.deleteReceita(idReceita); });
+  }
 
-  deleteReceita = (idReceita: number) => { }
+  deleteReceita = (idReceita: number) => {
+    this.receitaService.deleteReceita(idReceita)
+    .subscribe({
+      next: (response: any) => {
+        if (response.message === true){
+          this.updateDatatable();
+          this.modalAlert.open(AlertComponent, "Receita excluída com sucesso", 'Success');
+        }
+        else{
+          this.modalAlert.open(AlertComponent, 'Erro ao excluír receita', 'Warning');
+        }
+      },
+      error :(response : any) =>  {
+        this.modalAlert.open(AlertComponent, response.message, 'Warning');
+      }
+    });
+  }
 }

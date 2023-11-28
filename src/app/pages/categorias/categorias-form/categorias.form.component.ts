@@ -11,7 +11,7 @@ import { CategoriaService } from 'src/app/shared/services/api';
 })
 
 export class CategoriasFormComponent implements OnInit {
-  private idUsuario: number = Number(localStorage.getItem('idUsuario')) || 0;
+  private idUsuario: number = Number(localStorage.getItem('idUsuario'));
 
   categoriatForm: FormGroup & ICategoria;
   setCategoria(categoria): void {
