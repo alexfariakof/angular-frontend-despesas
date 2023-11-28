@@ -13,7 +13,7 @@ export class ReceitaService {
     return this.httpClient.get(`Receita`);
   }
 
-  getReceitaById(idReceita: Number) : any {
+  getReceitaById(idReceita: number) : any {
     return this.httpClient.get(`Receita/GetById/${idReceita}`);
   }
 
@@ -21,7 +21,7 @@ export class ReceitaService {
     return this.httpClient.get(`Categoria/GetByTipoCategoria/${idUsuario}/1`);
   }
 
-  getReceitaByIdUsuario(idUsuario: Number) : any {
+  getReceitaByIdUsuario(idUsuario: number) : any {
     return this.httpClient.get(`Receita/GetByIdUsuario/${idUsuario}`);
   }
 
@@ -33,7 +33,7 @@ export class ReceitaService {
     return this.httpClient.put<IReceita>(`Receita`, despesa);
   }
 
-  deleteReceita(idReceita: Number): any {
+  deleteReceita(idReceita: number): any {
     return this.httpClient.delete(`Receita/${idReceita}`);
   }
 }
