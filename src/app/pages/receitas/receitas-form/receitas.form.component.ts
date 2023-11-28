@@ -7,7 +7,6 @@ import { IAction } from 'src/app/shared/interfaces/IAction';
 import { ICategoria } from 'src/app/shared/interfaces/ICategoria';
 import { IReceita } from 'src/app/shared/interfaces/IReceita';
 import { ReceitaService } from 'src/app/shared/services/api/receitas/receita.service';
-
 @Component({
   selector: 'app-receitas-form',
   templateUrl: './receitas.form.component.html',
@@ -66,27 +65,21 @@ export class ReceitasFormComponent {
 
   onSaveClick = () => {
     const receita : IReceita = this.receitaForm.getRawValue() as IReceita;
-    try {
-      if (this.action === IAction.Create){
-
-        this.receitaService.postReceita(receita)
-        .subscribe({
-          next: (result: any ) => {
-            if (result.message === true)
-            {
-              this.activeModal.close();
-              this.refresh();
-              this.modalAlert.open(AlertComponent, "Receita cadastrada com Sucesso.", 'Success');
-            }
-          },
-          error :(error : any) =>  {
-            this.modalAlert.open(AlertComponent, error.message, 'Warning');
+    if (this.action === IAction.Create){
+      this.receitaService.postReceita(receita)
+      .subscribe({
+        next: (result: any ) => {
+          if (result.message === true)
+          {
+            this.activeModal.close();
+            this.refresh();
+            this.modalAlert.open(AlertComponent, "Receita cadastrada com Sucesso.", 'Success');
           }
-        });
-      }
-    }
-    catch(error){
-      this.modalAlert.open(AlertComponent, error.message, 'Warning');
+        },
+        error :(error : any) =>  {
+          this.modalAlert.open(AlertComponent, error.message, 'Warning');
+        }
+      });
     }
   }
 
