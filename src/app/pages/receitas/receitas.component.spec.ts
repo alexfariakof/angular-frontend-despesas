@@ -1,25 +1,21 @@
-import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testing';
-import { ReceitasComponent } from './receitas.component';
-import { CommonModule } from '@angular/common';
-import { SharedModule } from 'src/app/shared/shared.module';
-import { MenuService } from 'src/app/shared/services/utils/menu-service/menu.service';
-import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
-import { MatSelect, MatSelectModule } from '@angular/material/select';
-import { RouterTestingModule } from '@angular/router/testing';
-import * as dayjs from 'dayjs';
-import { DataTableComponent } from 'src/app/shared/components/data-table/data-table.component';
-import { ModalConfirmComponent } from 'src/app/shared/components/modal-confirm/modal.confirm.component';
-import { ModalFormComponent } from 'src/app/shared/components/modal-form/modal.form.component';
-import { ReceitaDataSet } from 'src/app/shared/datatable-config/receitas/receitas.dataSet';
-import { IReceita } from 'src/app/shared/interfaces/IReceita';
-import { ReceitaService } from 'src/app/shared/services/api/receitas/receita.service';
-import { from, throwError } from 'rxjs';
-import { ReceitasFormComponent } from './receitas-form/receitas.form.component';
+import { CommonModule } from "@angular/common";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { ComponentFixture, TestBed, fakeAsync, flush } from "@angular/core/testing";
+import { MatNativeDateModule } from "@angular/material/core";
+import { MatDatepicker, MatDatepickerModule } from "@angular/material/datepicker";
+import { MatSelect, MatSelectModule } from "@angular/material/select";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import * as dayjs from "dayjs";
+import { from, throwError } from "rxjs";
+import { AlertComponent, ModalFormComponent, ModalConfirmComponent, DataTableComponent } from "src/app/shared/components";
+import { ReceitaDataSet } from "src/app/shared/datatable-config/receitas";
+import { IReceita } from "src/app/shared/interfaces";
+import { AuthService, MenuService } from "src/app/shared/services";
+import { ReceitaService } from "src/app/shared/services/api";
+import { SharedModule } from "src/app/shared/shared.module";
+import { ReceitasFormComponent } from "./receitas-form/receitas.form.component";
+import { ReceitasComponent } from "./receitas.component";
 
 describe('Unit Test ReceitasComponent', () => {
   let component: ReceitasComponent;
@@ -141,7 +137,6 @@ describe('Unit Test ReceitasComponent', () => {
     expect(receitasData.length).toBeGreaterThan(0);
   });
 
-
   it('should updateDatatable when is called', fakeAsync(() => {
     // Arrange
     let mockIdUsuario = 2;
@@ -187,4 +182,56 @@ describe('Unit Test ReceitasComponent', () => {
     // Assert
     expect(component.modalForm.modalService.open).toHaveBeenCalled();
   }));
+
+  it('should open call editReceita onClickEdit', fakeAsync(() => {
+    // Arrange
+    const mockReceita: IReceita = mockReceitas[0];
+    const mockResponse: any = { message: true, receita: mockReceita };
+    const getReceitasById = spyOn(receitaService, 'getReceitaById').and.returnValue(from(Promise.resolve(mockResponse)));
+    const editReceita = spyOn(component, 'editReceita').and.callThrough();
+
+    // Act
+    component.onClickEdit(mockReceita.idUsuario);
+    flush();
+
+    // Assert
+    expect(getReceitasById).toHaveBeenCalled();
+    expect(editReceita).toHaveBeenCalled();
+    expect(editReceita).toHaveBeenCalledWith(mockReceita);
+  }));
+
+  it('should throws error in onClickEdit', fakeAsync(() => {
+    // Arrange
+    const errorMessage = { message: 'Fake Error Message'};
+    const mockReceita: IReceita = mockReceitas[1];
+    const getReceitasById = spyOn(receitaService, 'getReceitaById').and.returnValue(throwError(errorMessage));
+    const editReceita = spyOn(component, 'editReceita').and.callThrough();
+    const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
+
+    // Act
+    component.onClickEdit(mockReceita.idUsuario);
+    flush();
+
+    // Assert
+    expect(getReceitasById).toHaveBeenCalled();
+    expect(editReceita).not.toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+  }));
+
+  it('should open call editReceita', () => {
+    // Arrange
+    const mockReceita: IReceita = mockReceitas[2];
+    const editReceita = spyOn(component, 'editReceita').and.callThrough();
+    spyOn(component.modalForm.modalService, 'open').and.callThrough();
+
+    // Act
+    component.editReceita(mockReceita);
+
+    // Assert
+    expect(editReceita).toHaveBeenCalled();
+    expect(editReceita).toHaveBeenCalledWith(mockReceita);
+    expect(component.modalForm.modalService.open).toHaveBeenCalled();
+  });
+
 });

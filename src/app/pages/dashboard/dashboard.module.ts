@@ -1,12 +1,10 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { DashboardComponent } from './dashboard.component';
-import { DashboardRoutingModule } from './dashboard.routing.module';
-import { SharedModule } from '../../shared/shared.module';
-import { BarChartComponent } from 'src/app/shared/components/bar-chart/bar-chart.component';
-import { NgChartsModule } from 'ng2-charts';
-
-
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
+import { NgChartsModule } from "ng2-charts";
+import { BarChartComponent } from "src/app/shared/components";
+import { SharedModule } from "src/app/shared/shared.module";
+import { DashboardComponent } from "./dashboard.component";
+import { DashboardRoutingModule } from "./dashboard.routing.module";
 @NgModule({
   providers: [],
   declarations: [DashboardComponent, BarChartComponent],

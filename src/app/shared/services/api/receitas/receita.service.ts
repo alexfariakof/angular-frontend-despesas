@@ -18,7 +18,7 @@ export class ReceitaService {
   }
 
   getCategorias(idUsuario: number): any {
-    return this.httpClient.get(`Categoria/GetByTipoCategoria/${idUsuario}/1`);
+    return this.httpClient.get(`Categoria/GetByTipoCategoria/${idUsuario}/2`);
   }
 
   getReceitaByIdUsuario(idUsuario: number) : any {

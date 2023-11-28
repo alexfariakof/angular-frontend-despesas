@@ -1,18 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import * as dayjs from 'dayjs';
-import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
-import { BarraFerramentaClass } from 'src/app/shared/components/barra-ferramenta-component/barra-ferramenta.abstract';
-import { DataTableComponent } from 'src/app/shared/components/data-table/data-table.component';
-import { ModalConfirmComponent } from 'src/app/shared/components/modal-confirm/modal.confirm.component';
-import { ModalFormComponent } from 'src/app/shared/components/modal-form/modal.form.component';
-import { DespesaColumns } from 'src/app/shared/datatable-config/despesas/despesas.columns';
-import { DespesaDataSet } from 'src/app/shared/datatable-config/despesas/despesas.dataSet';
-import { IDespesa } from 'src/app/shared/interfaces/IDespesa';
-import { DespesaService } from 'src/app/shared/services/api/despesas/despesa.service';
-import { MenuService } from 'src/app/shared/services/utils/menu-service/menu.service';
-import { DespesasFormComponent } from './despesas-form/despesas.form.component';
-import { IAction } from 'src/app/shared/interfaces/IAction';
-
+import { Component, OnInit, ViewChild } from "@angular/core";
+import * as dayjs from "dayjs";
+import { BarraFerramentaClass, DataTableComponent, AlertComponent, ModalFormComponent, ModalConfirmComponent } from "src/app/shared/components";
+import { DespesaDataSet, DespesaColumns } from "src/app/shared/datatable-config/despesas";
+import { IDespesa, IAction } from "src/app/shared/interfaces";
+import { MenuService } from "src/app/shared/services";
+import { DespesaService } from "src/app/shared/services/api";
+import { DespesasFormComponent } from "./despesas-form/despesas.form.component";
 @Component({
   selector: 'app-despesas',
   templateUrl: './despesas.component.html',

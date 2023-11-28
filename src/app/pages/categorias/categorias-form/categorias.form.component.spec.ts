@@ -1,14 +1,13 @@
-import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
-import { CategoriasFormComponent } from './categorias.form.component';
-import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { CategoriaService } from 'src/app/shared/services/api/categorias/categoria.service';
-import { of, throwError } from 'rxjs';
-import { IAction } from 'src/app/shared/interfaces/IAction';
-import { ICategoria } from 'src/app/shared/interfaces/ICategoria';
-import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { ComponentFixture, TestBed, fakeAsync } from "@angular/core/testing";
+import { ReactiveFormsModule, FormBuilder } from "@angular/forms";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { MdbFormsModule } from "mdb-angular-ui-kit/forms";
+import { of, throwError } from "rxjs";
+import { AlertComponent } from "src/app/shared/components";
+import { ICategoria, IAction } from "src/app/shared/interfaces";
+import { CategoriasFormComponent } from "./categorias.form.component";
+import { CategoriaService } from "src/app/shared/services/api";
 
 describe('Unit Test CategoriasFormComponent', () => {
   let component: CategoriasFormComponent;
