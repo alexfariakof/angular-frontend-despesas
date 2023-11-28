@@ -105,7 +105,7 @@ describe('Unit Test DespesasFormComponent', () => {
     component.ngOnInit();
     component.setAction(IAction.Create);
     component.setRefresh(() => { });
-    component.despesatForm.patchValue(despesa);
+    component.despesaForm.patchValue(despesa);
     component.onSaveClick();
     flush();
 
@@ -137,7 +137,7 @@ describe('Unit Test DespesasFormComponent', () => {
     component.ngOnInit();
     component.setAction(IAction.Create);
     component.setRefresh(() => { });
-    component.despesatForm.patchValue(despesa);
+    component.despesaForm.patchValue(despesa);
     component.onSaveClick();
 
     // Assert
@@ -167,7 +167,7 @@ describe('Unit Test DespesasFormComponent', () => {
     component.ngOnInit();
     component.setAction(IAction.Edit);
     component.setRefresh(() => { });
-    component.despesatForm.patchValue(mockDespesa);
+    component.despesaForm.patchValue(mockDespesa);
     component.onSaveClick();
     flush();
 
@@ -200,7 +200,7 @@ describe('Unit Test DespesasFormComponent', () => {
     component.ngOnInit();
     component.setAction(IAction.Edit);
     component.setRefresh(() => { });
-    component.despesatForm.patchValue(despesa);
+    component.despesaForm.patchValue(despesa);
     component.onSaveClick();
 
     // Assert

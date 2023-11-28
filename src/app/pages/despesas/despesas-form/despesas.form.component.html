@@ -3,7 +3,7 @@
     <h3 class="m-0 border-0 ">Despesas</h3>
     <button type="button" class="btn-close " aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
   </div>
-  <form (ngSubmit)="onSaveClick()" [formGroup]="despesatForm" >
+  <form (ngSubmit)="onSaveClick()" [formGroup]="despesaForm" >
     <input id="id"  name="id" formControlName="id" type="hidden" class="form-control" [value]=0 />
     <mat-form-field appearance="outline" class="w-100 mt-2" readonly>
       <mat-label>Despesas</mat-label>
@@ -15,32 +15,32 @@
     <mat-form-field appearance="outline" class="w-100 "  >
       <mat-label>Data</mat-label>
       <input matInput [matDatepicker]="data" id="data" name="data" formControlName="data" type="text" placeholder="Entre com uma data válida"
-        [ngClass]="{ 'is-invalid': despesatForm.get('data')?.errors?.['required'] &&  despesatForm.get('data')?.touched }" />
+        [ngClass]="{ 'is-invalid': despesaForm.get('data')?.errors?.['required'] &&  despesaForm.get('data')?.touched }" />
       <mat-datepicker-toggle matIconSuffix [for]="data"
-        [ngClass]="{'text-danger': despesatForm.get('data')?.hasError('required') && despesatForm.get('data')?.touched,
-                    '': !despesatForm.get('data')?.hasError('required')  || !despesatForm.get('data')?.touched }">
+        [ngClass]="{'text-danger': despesaForm.get('data')?.hasError('required') && despesaForm.get('data')?.touched,
+                    '': !despesaForm.get('data')?.hasError('required')  || !despesaForm.get('data')?.touched }">
       </mat-datepicker-toggle>
       <mat-datepicker touchUi #data></mat-datepicker>
     </mat-form-field>
     <mat-form-field appearance="outline" class="w-100 "  >
       <mat-label>Descrição</mat-label>
       <input matInput id="descricao" name="descricao" formControlName="descricao" type="text" placeholder="Entre com uma descrição"
-        [ngClass]="{ 'is-invalid': despesatForm.get('descricao')?.errors?.['required'] &&  despesatForm.get('descricao')?.touched }" />
+        [ngClass]="{ 'is-invalid': despesaForm.get('descricao')?.errors?.['required'] &&  despesaForm.get('descricao')?.touched }" />
       <mat-icon matSuffix>
         <i class="text-danger bi bi-exclamation-circle position-absolute mx-2 my-1 top-0 end-0"
-          [ngClass]="{'error-bi-input': despesatForm.get('descricao')?.hasError('required') && despesatForm.get('descricao')?.touched,
-          'not-error-input': !despesatForm.get('descricao')?.hasError('required')  || !despesatForm.get('descricao')?.touched }">
+          [ngClass]="{'error-bi-input': despesaForm.get('descricao')?.hasError('required') && despesaForm.get('descricao')?.touched,
+          'not-error-input': !despesaForm.get('descricao')?.hasError('required')  || !despesaForm.get('descricao')?.touched }">
         </i>
       </mat-icon>
     </mat-form-field>
     <mat-form-field appearance="outline" class="w-100 ">
       <mat-label>Valor</mat-label>
       <input matInput currencyMask  id="valor" name="valor" formControlName="valor" type="text"  placeholder="Entre com um valor > 0" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" class="text-start"
-        [ngClass]="{ 'is-invalid': (despesatForm.get('valor')?.errors?.['required'] || despesatForm.get('valor')?.errors?.['greaterThanZero']) &&  despesatForm.get('valor')?.touched }" />
+        [ngClass]="{ 'is-invalid': (despesaForm.get('valor')?.errors?.['required'] || despesaForm.get('valor')?.errors?.['greaterThanZero']) &&  despesaForm.get('valor')?.touched }" />
       <mat-icon matSuffix>
         <i class="text-danger bi bi-exclamation-circle position-absolute mx-2 my-1 top-0 end-0"
-          [ngClass]="{'error-bi-input': despesatForm.get('valor')?.hasError('required') && despesatForm.get('valor')?.touched,
-                    'not-error-input': (!despesatForm.get('valor')?.hasError('required') && !despesatForm.get('valor')?.hasError('greaterThanZero'))  || !despesatForm.get('valor')?.touched }">
+          [ngClass]="{'error-bi-input': despesaForm.get('valor')?.hasError('required') && despesaForm.get('valor')?.touched,
+                    'not-error-input': (!despesaForm.get('valor')?.hasError('required') && !despesaForm.get('valor')?.hasError('greaterThanZero'))  || !despesaForm.get('valor')?.touched }">
         </i>
       </mat-icon>
     </mat-form-field>
@@ -52,7 +52,7 @@
     </mat-form-field>
     <div class="input-group mt-3  d-flex flex-column align-items-center justify-content-center">
       <button type="submit" class="btn btn-primary w-responsive"
-        [ngClass]="{'disabled' : !despesatForm.valid}"  [disabled]="!despesatForm.valid" >
+        [ngClass]="{'disabled' : !despesaForm.valid}"  [disabled]="!despesaForm.valid" >
         Salvar</button>
     </div>
   </form>
