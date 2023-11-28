@@ -1,12 +1,12 @@
-import { TestBed } from '@angular/core/testing';
-import { PerfilComponent } from './perfil.component';
-import { CommonModule } from '@angular/common';
-import { FormBuilder, FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { MenuService } from '../../shared/services/utils/menu-service/menu.service';
-import { RouterTestingModule } from '@angular/router/testing';
-import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { CommonModule } from "@angular/common";
+import { TestBed } from "@angular/core/testing";
+import { FormBuilder, FormsModule } from "@angular/forms";
+import { Router } from "@angular/router";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { AlertComponent } from "src/app/shared/components";
+import { MenuService } from "src/app/shared/services";
+import { PerfilComponent } from "./perfil.component";
 
 describe('PerfilComponent', () => {
   let component: PerfilComponent;

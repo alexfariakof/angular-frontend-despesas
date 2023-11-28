@@ -1,15 +1,14 @@
-import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testing';
-import { LoginComponent } from './login.component';
-import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
-import { ReactiveFormsModule } from '@angular/forms';
-import { ILogin } from 'src/app/shared/interfaces/ILogin';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { of } from 'rxjs';
-import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import { IAuth } from 'src/app/shared/interfaces/IAuth';
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { ComponentFixture, TestBed, fakeAsync, flush } from "@angular/core/testing";
+import { ReactiveFormsModule } from "@angular/forms";
+import { Router } from "@angular/router";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { of } from "rxjs";
+import { AlertComponent } from "src/app/shared/components";
+import { ILogin, IAuth } from "src/app/shared/interfaces";
+import { AuthService } from "src/app/shared/services";
+import { LoginComponent } from "./login.component";
 
 describe('LoginComponent', () => {
   let component: LoginComponent;

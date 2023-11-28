@@ -1,11 +1,10 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { LancamentosComponent } from './lancamentos.component';
-import { CommonModule } from '@angular/common';
-import { SharedModule } from 'src/app/shared/shared.module';
-import { MenuService } from 'src/app/shared/services/utils/menu-service/menu.service';
-import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { CommonModule } from "@angular/common";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { AlertComponent } from "src/app/shared/components";
+import { AuthService, MenuService } from "src/app/shared/services";
+import { SharedModule } from "src/app/shared/shared.module";
+import { LancamentosComponent } from "./lancamentos.component";
 
 describe('LancamentosComponent', () => {
   let component: LancamentosComponent;

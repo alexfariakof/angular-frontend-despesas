@@ -1,14 +1,14 @@
-import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
-import { PrimeiroAcessoComponent } from './primeiro-acesso.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { IControleAcesso } from 'src/app/shared/interfaces/IControleAcesso';
-import { of } from 'rxjs';
-import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { ComponentFixture, TestBed, fakeAsync } from "@angular/core/testing";
+import { ReactiveFormsModule } from "@angular/forms";
+import { Router } from "@angular/router";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { MdbFormsModule } from "mdb-angular-ui-kit/forms";
+import { of } from "rxjs";
+import { AlertComponent } from "src/app/shared/components";
+import { IControleAcesso } from "src/app/shared/interfaces";
+import { PrimeiroAcessoComponent } from "./primeiro-acesso.component";
 
 describe('PrimeiroAcessoComponent', () => {
   let component: PrimeiroAcessoComponent;

@@ -1,8 +1,8 @@
-import { PrimeiroAcessoComponent } from './pages/primeiro-acesso/primeiro-acesso.component';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
-import { AuthProvider } from './shared/services/provider/auth.provider';
+import { PrimeiroAcessoComponent } from './pages/primeiro-acesso/primeiro-acesso.component';
+import { AuthProvider } from './shared/services';
 
 const routes: Routes = [
   { path: '',  pathMatch: 'full', redirectTo: 'login' },

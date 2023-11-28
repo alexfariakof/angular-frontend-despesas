@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
-import { BarraFerramentaClass } from 'src/app/shared/components/barra-ferramenta-component/barra-ferramenta.abstract';
-import { MenuService } from 'src/app/shared/services/utils/menu-service/menu.service';
+import { Component } from "@angular/core";
+import { FormBuilder } from "@angular/forms";
+import { BarraFerramentaClass, AlertComponent } from "src/app/shared/components";
+import { MenuService } from "src/app/shared/services";
 @Component({
   selector: 'app-lancamentos',
   templateUrl: './lancamentos.component.html',

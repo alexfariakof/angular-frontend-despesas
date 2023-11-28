@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
-import { IAction } from 'src/app/shared/interfaces/IAction';
-import { ICategoria } from 'src/app/shared/interfaces/ICategoria';
-import { CategoriaService } from 'src/app/shared/services/api/categorias/categoria.service';
+import { AlertComponent } from 'src/app/shared/components';
+import { ICategoria, IAction } from 'src/app/shared/interfaces';
+import { CategoriaService } from 'src/app/shared/services/api';
 @Component({
   selector: 'app-categorias-form',
   templateUrl: './categorias.form.component.html',
@@ -12,7 +11,7 @@ import { CategoriaService } from 'src/app/shared/services/api/categorias/categor
 })
 
 export class CategoriasFormComponent implements OnInit {
-  private idUsuario: number = Number(localStorage.getItem('idUsuario')) || 0;
+  private idUsuario: number = Number(localStorage.getItem('idUsuario'));
 
   categoriatForm: FormGroup & ICategoria;
   setCategoria(categoria): void {
