@@ -6,7 +6,7 @@ export interface IDespesa {
   idCategoria: number | string;
   categoria: string;
   data: Dayjs | string | null;
-  descricao: String;
+  descricao: string;
   valor: number ;
   dataVencimento: Dayjs | string | null;
 }

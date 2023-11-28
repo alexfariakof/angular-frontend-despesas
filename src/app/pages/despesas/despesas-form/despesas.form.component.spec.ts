@@ -25,8 +25,8 @@ describe('Unit Test DespesasFormComponent', () => {
   let mockAuthService: jasmine.SpyObj<AuthService>;
   let despesaService: DespesaService;
   let mockCategorias: ICategoria[] = [
-    { id: 1, descricao: 'Teste Categoria Despesas', idTipoCategoria: 1, idUsuario: 1 },
-    { id: 2, descricao: 'Teste Categoria Receitas', idTipoCategoria: 2, idUsuario: 1 }
+    { id: 1, descricao: 'Teste Categoria Despesas 1', idTipoCategoria: 1, idUsuario: 1 },
+    { id: 2, descricao: 'Teste Categoria Despesas 2', idTipoCategoria: 2, idUsuario: 1 }
   ];
 
   beforeEach(() => {
@@ -105,7 +105,7 @@ describe('Unit Test DespesasFormComponent', () => {
     component.ngOnInit();
     component.setAction(IAction.Create);
     component.setRefresh(() => { });
-    component.despesatForm.patchValue(despesa);
+    component.despesaForm.patchValue(despesa);
     component.onSaveClick();
     flush();
 
@@ -137,7 +137,7 @@ describe('Unit Test DespesasFormComponent', () => {
     component.ngOnInit();
     component.setAction(IAction.Create);
     component.setRefresh(() => { });
-    component.despesatForm.patchValue(despesa);
+    component.despesaForm.patchValue(despesa);
     component.onSaveClick();
 
     // Assert
@@ -167,7 +167,7 @@ describe('Unit Test DespesasFormComponent', () => {
     component.ngOnInit();
     component.setAction(IAction.Edit);
     component.setRefresh(() => { });
-    component.despesatForm.patchValue(mockDespesa);
+    component.despesaForm.patchValue(mockDespesa);
     component.onSaveClick();
     flush();
 
@@ -200,7 +200,7 @@ describe('Unit Test DespesasFormComponent', () => {
     component.ngOnInit();
     component.setAction(IAction.Edit);
     component.setRefresh(() => { });
-    component.despesatForm.patchValue(despesa);
+    component.despesaForm.patchValue(despesa);
     component.onSaveClick();
 
     // Assert

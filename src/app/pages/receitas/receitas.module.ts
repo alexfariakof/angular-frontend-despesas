@@ -9,8 +9,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { ReceitasFormComponent } from './receitas-form/receitas.form.component';
 @NgModule({
-  declarations: [ReceitasComponent ],
+  declarations: [ReceitasComponent, ReceitasFormComponent ],
   imports: [CommonModule, ReceitasRoutingModule, ReactiveFormsModule, SharedModule, MatIconModule, MatInputModule, MatFormFieldModule, MatNativeDateModule, MatDatepickerModule]
 })
 export class ReceitasModule {}

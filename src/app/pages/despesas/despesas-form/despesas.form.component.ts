@@ -1,5 +1,4 @@
-import { ScrollStrategy } from '@angular/cdk/overlay';
-import { Component, InjectionToken } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import * as dayjs from 'dayjs';
@@ -17,11 +16,10 @@ import { DespesaService } from 'src/app/shared/services/api/despesas/despesa.ser
 
 export class DespesasFormComponent {
   private idUsuario: number = Number(localStorage.getItem('idUsuario')) || 0;
-  MAT_DATEPICKER_SCROLL_STRATEGY: InjectionToken<() => ScrollStrategy>;
   categorias: ICategoria[]= [];
-  despesatForm: FormGroup & IDespesa;
+  despesaForm: FormGroup & IDespesa;
   setDespesa(despesa: IDespesa): void {
-    this.despesatForm.patchValue(despesa);
+    this.despesaForm.patchValue(despesa);
   }
 
   private action: IAction = IAction.Create;
@@ -43,7 +41,7 @@ export class DespesasFormComponent {
 
   ngOnInit(): void{
     this.getCatgeorias()
-    this.despesatForm = this.formbuilder.group({
+    this.despesaForm = this.formbuilder.group({
       id: [0],
       idUsuario: this.idUsuario,
       idCategoria: [null, Validators.required],
@@ -69,7 +67,7 @@ export class DespesasFormComponent {
   }
 
   onSaveClick = () => {
-    const despesa : IDespesa = this.despesatForm.getRawValue() as IDespesa;
+    const despesa : IDespesa = this.despesaForm.getRawValue() as IDespesa;
     try {
       if (this.action === IAction.Create){
 
