@@ -167,7 +167,7 @@ describe('Unit Test DespesasFormComponent', () => {
     component.ngOnInit();
     component.setAction(IAction.Edit);
     component.setRefresh(() => { });
-    component.despesaForm.patchValue(mockDespesa);
+    component.setDespesa(mockDespesa);
     component.onSaveClick();
     flush();
 
@@ -200,7 +200,7 @@ describe('Unit Test DespesasFormComponent', () => {
     component.ngOnInit();
     component.setAction(IAction.Edit);
     component.setRefresh(() => { });
-    component.despesaForm.patchValue(despesa);
+    component.setDespesa(despesa);
     component.onSaveClick();
 
     // Assert

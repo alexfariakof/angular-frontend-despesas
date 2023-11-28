@@ -141,7 +141,6 @@ describe('Unit Test ReceitasComponent', () => {
     expect(receitasData.length).toBeGreaterThan(0);
   });
 
-
   it('should updateDatatable when is called', fakeAsync(() => {
     // Arrange
     let mockIdUsuario = 2;
@@ -187,4 +186,56 @@ describe('Unit Test ReceitasComponent', () => {
     // Assert
     expect(component.modalForm.modalService.open).toHaveBeenCalled();
   }));
+
+  it('should open call editReceita onClickEdit', fakeAsync(() => {
+    // Arrange
+    const mockReceita: IReceita = mockReceitas[0];
+    const mockResponse: any = { message: true, receita: mockReceita };
+    const getReceitasById = spyOn(receitaService, 'getReceitaById').and.returnValue(from(Promise.resolve(mockResponse)));
+    const editReceita = spyOn(component, 'editReceita').and.callThrough();
+
+    // Act
+    component.onClickEdit(mockReceita.idUsuario);
+    flush();
+
+    // Assert
+    expect(getReceitasById).toHaveBeenCalled();
+    expect(editReceita).toHaveBeenCalled();
+    expect(editReceita).toHaveBeenCalledWith(mockReceita);
+  }));
+
+  it('should throws error in onClickEdit', fakeAsync(() => {
+    // Arrange
+    const errorMessage = { message: 'Fake Error Message'};
+    const mockReceita: IReceita = mockReceitas[1];
+    const getReceitasById = spyOn(receitaService, 'getReceitaById').and.returnValue(throwError(errorMessage));
+    const editReceita = spyOn(component, 'editReceita').and.callThrough();
+    const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
+
+    // Act
+    component.onClickEdit(mockReceita.idUsuario);
+    flush();
+
+    // Assert
+    expect(getReceitasById).toHaveBeenCalled();
+    expect(editReceita).not.toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+  }));
+
+  it('should open call editReceita', () => {
+    // Arrange
+    const mockReceita: IReceita = mockReceitas[2];
+    const editReceita = spyOn(component, 'editReceita').and.callThrough();
+    spyOn(component.modalForm.modalService, 'open').and.callThrough();
+
+    // Act
+    component.editReceita(mockReceita);
+
+    // Assert
+    expect(editReceita).toHaveBeenCalled();
+    expect(editReceita).toHaveBeenCalledWith(mockReceita);
+    expect(component.modalForm.modalService.open).toHaveBeenCalled();
+  });
+
 });

@@ -98,14 +98,28 @@ export class ReceitasComponent implements BarraFerramentaClass {
   }
 
   onClickEdit = (idReceita: number) =>{
+    this.receitaService.getReceitaById(idReceita)
+    .subscribe({
+      next: (response: any) => {
+        if (response.message === true && (response.receita !== undefined || response.receita !== null))
+          this.editReceita(response.receita);
+      },
+      error :(response : any) =>  {
+        this.modalAlert.open(AlertComponent, response.message, 'Warning');
+      }
+    });
   }
 
   editReceita = (receita: IReceita) => {
+    const modalRef = this.modalForm.modalService.open(ReceitasFormComponent, { centered: true });
+    modalRef.shown.subscribe(() => {
+      modalRef.componentInstance.setAction(IAction.Edit);
+      modalRef.componentInstance.setRefresh(() => { this.updateDatatable(); });
+      modalRef.componentInstance.setReceita(receita);
+    });
   }
 
-  onClickDelete = (idReceita: number) => {
-  }
+  onClickDelete = (idReceita: number) => { }
 
-  deleteReceita = (idReceita: number) => {
-  }
+  deleteReceita = (idReceita: number) => { }
 }

@@ -97,7 +97,7 @@ describe('Unit Test ReceitaService', () => {
         expect(response).toBeTruthy();
       });
 
-      const expectedUrl = `${environment.endPoint}/Categoria/GetByTipoCategoria/1/1`;
+      const expectedUrl = `${environment.endPoint}/Categoria/GetByTipoCategoria/1/2`;
       const req = httpMock.expectOne(expectedUrl);
       expect(req.request.method).toBe('GET');
 

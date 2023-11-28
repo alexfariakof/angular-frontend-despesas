@@ -142,4 +142,78 @@ describe('Unit Test ReceitasFormComponent', () => {
     expect(receitaPostServiceSpy).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
   });
+
+  it('should Save receita onSaveClick with Action is Edit', fakeAsync(() => {
+    // Arrange
+    const mockReceita: IReceita = {
+      id: 1,
+      idUsuario: 1,
+      idCategoria: 1,
+      data: dayjs().format('YYYY-MM-DD'),
+      descricao: 'Teste Edit Receitas',
+      valor: 10.58,
+      categoria: null
+    };
+    const receitaPutServiceSpy = spyOn(receitaService, 'putReceita').and.returnValue(of({ message: true, receita: mockReceita }));
+    const modalCloseSpy = spyOn(component.activeModal, 'close').and.callThrough();
+    const spyRefresh = spyOn(component, "setRefresh");
+    const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open').and.callThrough();
+    spyOn(component, 'onSaveClick').and.callThrough();
+
+    // Act
+    component.ngOnInit();
+    component.setAction(IAction.Edit);
+    component.setRefresh(() => { });
+    component.setReceita(mockReceita);
+    component.onSaveClick();
+    flush();
+
+    // Assert
+    expect(receitaPutServiceSpy).toHaveBeenCalledWith(jasmine.objectContaining(mockReceita));
+    expect(modalCloseSpy).toHaveBeenCalled();
+    expect(spyRefresh).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, 'Receita alterada com Sucesso.', 'Success');
+  }));
+
+  it('should throws error when try to edit receita and show error message', () => {
+    // Arrange
+    const errorMessage = { message: 'Fake Error Message Edit Receita'};
+    const receita: IReceita = {
+      id: 1,
+      idUsuario: 2,
+      idCategoria: 2,
+      data: dayjs().format('YYYY-MM-DD'),
+      descricao: 'Teste Edit Receitas',
+      valor: 20.87,
+      categoria: ''
+    };
+    const receitaPutServiceSpy = spyOn(receitaService, 'putReceita').and.returnValue(throwError(errorMessage));
+    const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open').and.callThrough();
+    spyOn(component, 'onSaveClick').and.callThrough();
+
+    // Act
+    component.ngOnInit();
+    component.setAction(IAction.Edit);
+    component.setRefresh(() => { });
+    component.setReceita(receita);
+    component.onSaveClick();
+
+    // Assert
+    expect(receitaPutServiceSpy).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+  });
+
+  it('should throws error when onClickSave and show error message', () => {
+    // Arrange
+    const errorMessage = Error('Fake Error Message Edit Receita');
+    spyOn(receitaService, 'postReceita').and.throwError(errorMessage);
+    const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open').and.callThrough();
+
+    // Act
+    component.ngOnInit();
+    component.onSaveClick();
+
+    // Assert
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+  });
 });
