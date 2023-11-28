@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors }
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import * as dayjs from 'dayjs';
 import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
+import { IAction } from 'src/app/shared/interfaces/IAction';
 import { ICategoria } from 'src/app/shared/interfaces/ICategoria';
 import { IReceita } from 'src/app/shared/interfaces/IReceita';
 import { ReceitaService } from 'src/app/shared/services/api/receitas/receita.service';
@@ -16,6 +17,12 @@ export class ReceitasFormComponent {
   private idUsuario: number = Number(localStorage.getItem('idUsuario')) || 0;
   categorias: ICategoria[]= [];
   receitaForm: FormGroup & IReceita;
+
+  private action: IAction = IAction.Create;
+  setAction(_action: IAction){
+    this.action = _action;
+  }
+
   private refresh: Function = () => {};
   setRefresh(_refresh: Function) {
     this.refresh = _refresh;
@@ -56,20 +63,22 @@ export class ReceitasFormComponent {
 
   onSaveClick = () => {
     const receita : IReceita = this.receitaForm.getRawValue() as IReceita;
-    this.receitaService.postReceita(receita)
-    .subscribe({
-      next: (result: any ) => {
-        if (result.message === true)
-        {
-          this.activeModal.close();
-          this.refresh();
-          this.modalAlert.open(AlertComponent, "Receita cadastrada com Sucesso.", 'Success');
+    if (this.action === IAction.Create){
+      this.receitaService.postReceita(receita)
+      .subscribe({
+        next: (result: any ) => {
+          if (result.message === true)
+          {
+            this.activeModal.close();
+            this.refresh();
+            this.modalAlert.open(AlertComponent, "Receita cadastrada com Sucesso.", 'Success');
+          }
+        },
+        error :(error : any) =>  {
+          this.modalAlert.open(AlertComponent, error.message, 'Warning');
         }
-      },
-      error :(error : any) =>  {
-        this.modalAlert.open(AlertComponent, error.message, 'Warning');
-      }
-    });
+      });
+    }
   }
 
   greaterThanZero = (control: AbstractControl): ValidationErrors | null => {

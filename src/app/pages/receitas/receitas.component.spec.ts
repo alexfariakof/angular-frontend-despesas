@@ -19,6 +19,7 @@ import { ReceitaDataSet } from 'src/app/shared/datatable-config/receitas/receita
 import { IReceita } from 'src/app/shared/interfaces/IReceita';
 import { ReceitaService } from 'src/app/shared/services/api/receitas/receita.service';
 import { from, throwError } from 'rxjs';
+import { ReceitasFormComponent } from './receitas-form/receitas.form.component';
 
 describe('Unit Test ReceitasComponent', () => {
   let component: ReceitasComponent;
@@ -42,7 +43,7 @@ describe('Unit Test ReceitasComponent', () => {
     mockAuthService = jasmine.createSpyObj('AuthService', ['isAuthenticated']);
     mockAuthService.isAuthenticated.and.returnValue(true);
     TestBed.configureTestingModule({
-      declarations: [ReceitasComponent, MatDatepicker, MatSelect],
+      declarations: [ReceitasComponent, ReceitasFormComponent, MatDatepicker, MatSelect],
       imports: [CommonModule, RouterTestingModule, SharedModule, HttpClientTestingModule, MatSelectModule , MatDatepickerModule, MatNativeDateModule],
       providers: [MenuService, AlertComponent, ModalFormComponent, ModalConfirmComponent, NgbActiveModal, ReceitaService,
         { provide: Storage, useValue: localStorageSpy },
