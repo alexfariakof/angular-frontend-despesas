@@ -23,6 +23,11 @@ describe('Unit Test DespesasFormComponent', () => {
   let fixture: ComponentFixture<DespesasFormComponent>;
   let mockAuthService: jasmine.SpyObj<AuthService>;
   let despesaService: DespesaService;
+  let mockDespesas: IDespesa[] = [
+    { id: 1, idUsuario: 1, idCategoria: 1, data: dayjs(), descricao: 'Teste Despesas 1', valor: 1.05, dataVencimento: dayjs(), categoria: 'Categoria 1' },
+    { id: 2, idUsuario: 2, idCategoria: 2, data: dayjs(), descricao: 'Teste Despesas 2', valor: 2.05, dataVencimento: dayjs(), categoria: 'Categoria 2' },
+    { id: 3, idUsuario: 1, idCategoria: 4, data: dayjs(), descricao: 'Teste Despesas 3', valor: 3.05, dataVencimento: dayjs(), categoria: 'Categoria 3' },
+  ];
   let mockCategorias: ICategoria[] = [
     { id: 1, descricao: 'Teste Categoria Despesas 1', idTipoCategoria: 1, idUsuario: 1 },
     { id: 2, descricao: 'Teste Categoria Despesas 2', idTipoCategoria: 2, idUsuario: 1 }
@@ -220,5 +225,87 @@ describe('Unit Test DespesasFormComponent', () => {
     // Assert
     expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
   });
+
+  it('should execute editDespesa and setFormDespesas', fakeAsync(() => {
+    // Arrange
+    const mockDespesa: IDespesa = mockDespesas[0];
+    const mockResponse: any = { message: true, despesa: mockDespesa };
+    const getDespesasById = spyOn(despesaService, 'getDespesaById').and.returnValue(from(Promise.resolve(mockResponse)));
+    const editDespesa = spyOn(component, 'editDespesa').and.callThrough();
+
+    // Act
+    component.editDespesa(mockDespesa.id);
+    flush();
+
+    // Assert
+    expect(getDespesasById).toHaveBeenCalled();
+    expect(editDespesa).toHaveBeenCalled();
+    expect(editDespesa).toHaveBeenCalledWith(mockDespesa.id);
+  }));
+
+  it('should throws error on editDespesa', fakeAsync(() => {
+    // Arrange
+    const errorMessage = { message: 'Fake Error Message Edit Despesa'};
+    const mockDespesa: IDespesa = mockDespesas[1];
+    const getDespesasById = spyOn(despesaService, 'getDespesaById').and.returnValue(throwError(errorMessage));
+    const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
+
+    // Act
+    component.editDespesa(mockDespesa.id);
+    flush();
+
+    // Assert
+    expect(getDespesasById).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+  }));
+
+  it('should  deleteDespesa and open modal alert success', fakeAsync(() => {
+    // Arrange
+    const mockResponse = { message: true };
+    const getDeleteDespesa = spyOn(despesaService, 'deleteDespesa').and.returnValue(from(Promise.resolve(mockResponse)));
+    spyOn(component.modalAlert, 'open').and.callThrough();
+
+    // Act
+    component.deleteDespesa(mockDespesas[1].id, () => { console.log('Fake Call Back'); });
+    flush();
+
+    // Assert
+    expect(getDeleteDespesa).toHaveBeenCalled();
+    expect(component.modalAlert.open).toHaveBeenCalled();
+    expect(component.modalAlert.open).toHaveBeenCalledWith(AlertComponent, 'Despesa excluída com sucesso', 'Success');
+  }));
+
+  it('should try to deleteDespesa and open modal alert warning', fakeAsync(() => {
+    // Arrange
+    const mockResponse = { message: false };
+    const getDeleteDespesa = spyOn(despesaService, 'deleteDespesa').and.returnValue(from(Promise.resolve(mockResponse)));
+    spyOn(component.modalAlert, 'open').and.callThrough();
+
+    // Act
+    component.deleteDespesa(mockDespesas[2].id, () => { console.log('Fake Call Back'); });
+    flush();
+
+    // Assert
+    expect(getDeleteDespesa).toHaveBeenCalled();
+    expect(component.modalAlert.open).toHaveBeenCalled();
+    expect(component.modalAlert.open).toHaveBeenCalledWith(AlertComponent, 'Erro ao excluír despesa', 'Warning');
+  }));
+
+  it('should throws error when try to deleteDespesa and open modal alert warning', fakeAsync(() => {
+    // Arrange
+    const errorMessage = { message: 'Fake Error Message Delete Despesa'};
+    const spyOnDeleteDespesa = spyOn(despesaService, 'deleteDespesa').and.returnValue(throwError(errorMessage));
+    const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
+
+    // Act
+    component.deleteDespesa(mockDespesas[1].id, () => { console.log('Fake Call Back'); });
+    flush();
+
+    // Assert
+    expect(spyOnDeleteDespesa).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+  }));
 
 });

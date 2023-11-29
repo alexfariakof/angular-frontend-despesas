@@ -45,7 +45,7 @@ export class DespesasFormComponent {
       categoria: null,
       data: [dayjs().format('YYYY-MM-DD'), Validators.required],
       descricao: ['', Validators.required],
-      valor: ['', [Validators.required, this.greaterThanZero]],
+      valor: ['', [Validators.required, this.isGreaterThanZero]],
       dataVencimento: null
     }) as FormGroup & IDespesa;
   }
@@ -118,7 +118,25 @@ export class DespesasFormComponent {
     });
   }
 
-  greaterThanZero = (control: AbstractControl): ValidationErrors | null => {
+  deleteDespesa = (idDespesa: number, callBack: Function) => {
+    this.despesaService.deleteDespesa(idDespesa)
+    .subscribe({
+      next: (response: any) => {
+        if (response.message === true){
+          callBack();
+          this.modalAlert.open(AlertComponent, "Despesa excluída com sucesso", 'Success');
+        }
+        else{
+          this.modalAlert.open(AlertComponent, 'Erro ao excluír despesa', 'Warning');
+        }
+      },
+      error :(response : any) =>  {
+        this.modalAlert.open(AlertComponent, response.message, 'Warning');
+      }
+    });
+  }
+
+  isGreaterThanZero = (control: AbstractControl): ValidationErrors | null => {
     const value = control.value;
     if (value !== null && value > 0) {
       return null;
@@ -126,5 +144,4 @@ export class DespesasFormComponent {
       return { greaterThanZero: true };
     }
   }
-
 }

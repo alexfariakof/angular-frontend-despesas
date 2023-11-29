@@ -22,7 +22,8 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
     public modalAlert: AlertComponent,
     public modalForm: ModalFormComponent,
     public modalConfirm: ModalConfirmComponent,
-    public despesaService: DespesaService
+    public despesaService: DespesaService,
+    private despesasFormComponent: DespesasFormComponent
     ) { }
 
   ngOnInit() {
@@ -103,24 +104,10 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
 
   onClickDelete = (idDespesa: number) => {
     const modalRef = this.modalConfirm.open(ModalConfirmComponent, `Deseja excluir a despesa ${ this.dataTable.row.descricao } ?`);
-    modalRef.componentInstance.setConfirmButton(() => { this.deleteDespesa(idDespesa); });
-  }
-
-  deleteDespesa = (idDespesa: number) => {
-    this.despesaService.deleteDespesa(idDespesa)
-    .subscribe({
-      next: (response: any) => {
-        if (response.message === true){
-          this.updateDatatable();
-          this.modalAlert.open(AlertComponent, "Despesa excluída com sucesso", 'Success');
-        }
-        else{
-          this.modalAlert.open(AlertComponent, 'Erro ao excluír despesa', 'Warning');
-        }
-      },
-      error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, 'Warning');
-      }
+    modalRef.shown.subscribe(() => {
+      modalRef.componentInstance.setConfirmButton(() => {
+        this.despesasFormComponent.deleteDespesa(idDespesa, () => { this.updateDatatable(); });
+      });
     });
   }
 }
