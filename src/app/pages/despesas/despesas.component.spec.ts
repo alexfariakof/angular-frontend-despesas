@@ -208,6 +208,4 @@ describe('Unit Test DespesasComponent', () => {
     // Assert
     expect(component.modalConfirm.open).toHaveBeenCalled();
   });
-
-
 });

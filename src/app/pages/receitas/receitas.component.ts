@@ -22,7 +22,8 @@ export class ReceitasComponent implements BarraFerramentaClass {
     public modalAlert: AlertComponent,
     public modalForm: ModalFormComponent,
     public modalConfirm: ModalConfirmComponent,
-    public receitaService: ReceitaService
+    public receitaService: ReceitaService,
+    private receitasFormComponent: ReceitasFormComponent
     ) { }
 
   ngOnInit() {
@@ -92,47 +93,20 @@ export class ReceitasComponent implements BarraFerramentaClass {
   }
 
   onClickEdit = (idReceita: number) =>{
-    this.receitaService.getReceitaById(idReceita)
-    .subscribe({
-      next: (response: any) => {
-        if (response.message === true && (response.receita !== undefined && response.receita !== null))
-          this.editReceita(response.receita);
-      },
-      error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, 'Warning');
-      }
-    });
-  }
-
-  editReceita = (receita: IReceita) => {
     const modalRef = this.modalForm.modalService.open(ReceitasFormComponent, { centered: true });
     modalRef.shown.subscribe(() => {
       modalRef.componentInstance.setAction(IAction.Edit);
       modalRef.componentInstance.setRefresh(() => { this.updateDatatable(); });
-      modalRef.componentInstance.setReceita(receita);
+      modalRef.componentInstance.editReceita(idReceita);
     });
   }
 
   onClickDelete = (idReceita: number) => {
     const modalRef = this.modalConfirm.open(ModalConfirmComponent, `Deseja excluir a receita ${ this.dataTable.row.descricao } ?`);
-    modalRef.componentInstance.setConfirmButton(() => { this.deleteReceita(idReceita); });
-  }
-
-  deleteReceita = (idReceita: number) => {
-    this.receitaService.deleteReceita(idReceita)
-    .subscribe({
-      next: (response: any) => {
-        if (response.message === true){
-          this.updateDatatable();
-          this.modalAlert.open(AlertComponent, "Receita excluída com sucesso", 'Success');
-        }
-        else{
-          this.modalAlert.open(AlertComponent, 'Erro ao excluír receita', 'Warning');
-        }
-      },
-      error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, 'Warning');
-      }
+    modalRef.shown.subscribe(() => {
+      modalRef.componentInstance.setConfirmButton(() => {
+        this.receitasFormComponent.deleteReceita(idReceita, () => { this.updateDatatable(); });
+      });
     });
   }
 }

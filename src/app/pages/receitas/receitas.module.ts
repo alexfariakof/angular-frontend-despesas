@@ -12,6 +12,7 @@ import { ReceitasComponent } from "./receitas.component";
 import { ReceitasRoutingModule } from "./receitas.routing.module";
 @NgModule({
   declarations: [ReceitasComponent, ReceitasFormComponent ],
-  imports: [CommonModule, ReceitasRoutingModule, ReactiveFormsModule, SharedModule, MatIconModule, MatInputModule, MatFormFieldModule, MatNativeDateModule, MatDatepickerModule]
+  imports: [CommonModule, ReceitasRoutingModule, ReactiveFormsModule, SharedModule, MatIconModule, MatInputModule, MatFormFieldModule, MatNativeDateModule, MatDatepickerModule],
+  providers: [ReceitasFormComponent]
 })
 export class ReceitasModule {}
