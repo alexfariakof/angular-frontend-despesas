@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import * as dayjs from 'dayjs';
@@ -13,17 +13,17 @@ import { DespesaService } from 'src/app/shared/services/api';
 })
 
 export class DespesasFormComponent {
-  private idUsuario: number = Number(localStorage.getItem('idUsuario')) || 0;
+  private idUsuario: number = Number(localStorage.getItem('idUsuario'));
   categorias: ICategoria[]= [];
   despesaForm: FormGroup & IDespesa;
-  private action: IAction = IAction.Create;
-  setAction(_action: IAction){
-    this.action = _action;
-  }
-  private refresh: Function = () => {};
-  setRefresh(_refresh: Function) {
-    this.refresh = _refresh;
-  }
+
+  private _action: IAction = IAction.Create;
+  get action(): IAction { return this._action; }
+  set action(action: IAction) { this._action = action; }
+
+  private _refresh: Function = () => {};
+  get refresh(): Function { return this._refresh; }
+  set refresh(refresh: Function) { this._refresh = refresh; }
 
   constructor(
     public formbuilder: FormBuilder,
@@ -33,7 +33,7 @@ export class DespesasFormComponent {
     ) {}
 
   ngOnInit(): void{
-    this.getCatgeorias()
+    this.getCatgeorias();
     this.despesaForm = this.formbuilder.group({
       id: [0],
       idUsuario: this.idUsuario,
@@ -60,10 +60,15 @@ export class DespesasFormComponent {
   }
 
   onSaveClick = () => {
-    switch (this.action) {
-      case IAction.Create: return this.saveCreateDespesa();
-      case IAction.Edit: return this.saveEditDespesa();
-      default: this.modalAlert.open(AlertComponent, "Ação não pode ser realizada.", 'Warning');
+    switch (this._action) {
+      case IAction.Create:
+        this.saveCreateDespesa();
+        break;
+      case IAction.Edit:
+        this.saveEditDespesa();
+        break;
+      default:
+        this.modalAlert.open(AlertComponent, 'Ação não pode ser realizada.', 'Warning');
     }
   }
 
@@ -74,7 +79,7 @@ export class DespesasFormComponent {
         if (result.message === true)
         {
           this.activeModal.close();
-          this.refresh();
+          this._refresh();
           this.modalAlert.open(AlertComponent, "Despesa cadastrada com Sucesso.", 'Success');
         }
       },
@@ -88,10 +93,10 @@ export class DespesasFormComponent {
     this.despesaService.putDespesa(this.despesaForm.getRawValue() as IDespesa)
     .subscribe({
       next: (response: any ) => {
-        if ((response !== undefined || response !== null) && response.message === true)
+        if (response !== undefined && response !== null && response.message === true)
         {
           this.activeModal.close();
-          this.refresh();
+          this._refresh();
           this.modalAlert.open(AlertComponent, "Despesa alterada com Sucesso.", 'Success');
         }
       },
@@ -99,14 +104,15 @@ export class DespesasFormComponent {
         this.modalAlert.open(AlertComponent, error.message, 'Warning');
       }
     });
+
   }
 
   editDespesa = (idDespesa: number) => {
     this.despesaService.getDespesaById(idDespesa)
     .subscribe({
       next: (response: any) => {
-        if (response.message === true && (response.despesa !== undefined && response.despesa !== null))
-        this.despesaForm.patchValue(response.despesa);
+        if (response.message === true && response.despesa !== undefined && response.despesa !== null)
+          this.despesaForm.patchValue(response.despesa);
       },
       error :(response : any) =>  {
         this.modalAlert.open(AlertComponent, response.message, 'Warning');
@@ -133,7 +139,7 @@ export class DespesasFormComponent {
   }
 
   isGreaterThanZero = (control: AbstractControl): ValidationErrors | null => {
-    const value = control.value;
+    let value = control.value;
     if (value !== null && value > 0) {
       return null;
     } else {

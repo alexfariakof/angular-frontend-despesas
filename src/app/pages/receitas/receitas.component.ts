@@ -96,8 +96,8 @@ export class ReceitasComponent implements BarraFerramentaClass {
   onClickEdit = (idReceita: number) =>{
     const modalRef = this.modalForm.modalService.open(ReceitasFormComponent, { centered: true });
     modalRef.shown.subscribe(() => {
-      modalRef.componentInstance.setAction(IAction.Edit);
-      modalRef.componentInstance.setRefresh(() => { this.updateDatatable(); });
+      modalRef.componentInstance.action = IAction.Edit;
+      modalRef.componentInstance.refresh = () => { this.updateDatatable(); };
       modalRef.componentInstance.editReceita(idReceita);
     });
   }

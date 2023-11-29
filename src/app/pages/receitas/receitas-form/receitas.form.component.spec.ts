@@ -1,21 +1,21 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { ComponentFixture, TestBed, fakeAsync, flush } from "@angular/core/testing";
-import { ReactiveFormsModule, FormBuilder } from "@angular/forms";
-import { MatNativeDateModule } from "@angular/material/core";
-import { MatDatepicker, MatDatepickerModule } from "@angular/material/datepicker";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatInputModule } from "@angular/material/input";
-import { MatSelect, MatSelectModule } from "@angular/material/select";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import * as dayjs from "dayjs";
-import { CurrencyMaskModule } from "ng2-currency-mask";
-import { from, throwError, of } from "rxjs";
-import { AlertComponent } from "src/app/shared/components";
-import { ICategoria, IReceita, IAction } from "src/app/shared/interfaces";
-import { AuthService } from "src/app/shared/services";
-import { ReceitaService } from "src/app/shared/services/api";
-import { ReceitasFormComponent } from "./receitas.form.component";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testing';
+import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import * as dayjs from 'dayjs';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
+import { from, throwError, of } from 'rxjs';
+import { AlertComponent } from 'src/app/shared/components';
+import { ICategoria, IReceita, IAction } from 'src/app/shared/interfaces';
+import { AuthService } from 'src/app/shared/services';
+import { ReceitaService } from 'src/app/shared/services/api';
+import { ReceitasFormComponent } from './receitas.form.component';
 
 describe('Unit Test ReceitasFormComponent', () => {
   let component: ReceitasFormComponent;
@@ -99,14 +99,13 @@ describe('Unit Test ReceitasFormComponent', () => {
     };
     const receitaPostServiceSpy = spyOn(receitaService, 'postReceita').and.returnValue(of({ message: true }));
     const modalCloseSpy = spyOn(component.activeModal, 'close').and.callThrough();
-    const spyRefresh = spyOn(component, "setRefresh");
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open').and.callThrough();
     spyOn(component, 'onSaveClick').and.callThrough();
 
     // Act
     component.ngOnInit();
-    component.setAction(IAction.Create);
-    component.setRefresh(() => { });
+    component.action = IAction.Create;
+    component.refresh = () => { console.log('Fake Refresh Receitas'); };
     component.receitaForm.patchValue(receita);
     component.onSaveClick();
     flush();
@@ -114,7 +113,6 @@ describe('Unit Test ReceitasFormComponent', () => {
     // Assert
     expect(receitaPostServiceSpy).toHaveBeenCalledWith(jasmine.objectContaining(receita));
     expect(modalCloseSpy).toHaveBeenCalled();
-    expect(spyRefresh).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, 'Receita cadastrada com Sucesso.', 'Success');
   }));
 
@@ -136,8 +134,8 @@ describe('Unit Test ReceitasFormComponent', () => {
 
     // Act
     component.ngOnInit();
-    component.setAction(IAction.Create);
-    component.setRefresh(() => { });
+    component.action = IAction.Create;
+    component.refresh = () => { console.log('Fake Refresh Receitas'); };
     component.receitaForm.patchValue(receita);
     component.onSaveClick();
 
@@ -159,14 +157,13 @@ describe('Unit Test ReceitasFormComponent', () => {
     };
     const receitaPutServiceSpy = spyOn(receitaService, 'putReceita').and.returnValue(of({ message: true, receita: mockReceita }));
     const modalCloseSpy = spyOn(component.activeModal, 'close').and.callThrough();
-    const spyRefresh = spyOn(component, "setRefresh");
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open').and.callThrough();
     spyOn(component, 'onSaveClick').and.callThrough();
 
     // Act
     component.ngOnInit();
-    component.setAction(IAction.Edit);
-    component.setRefresh(() => { });
+    component.action = IAction.Edit;
+    component.refresh = () => { console.log('Fake Refresh Receitas'); };
     component.receitaForm.patchValue(mockReceita);
     component.onSaveClick();
     flush();
@@ -174,7 +171,6 @@ describe('Unit Test ReceitasFormComponent', () => {
     // Assert
     expect(receitaPutServiceSpy).toHaveBeenCalledWith(jasmine.objectContaining(mockReceita));
     expect(modalCloseSpy).toHaveBeenCalled();
-    expect(spyRefresh).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, 'Receita alterada com Sucesso.', 'Success');
   }));
 
@@ -196,8 +192,8 @@ describe('Unit Test ReceitasFormComponent', () => {
 
     // Act
     component.ngOnInit();
-    component.setAction(IAction.Edit);
-    component.setRefresh(() => { });
+    component.action = IAction.Edit;
+    component.refresh = () => { console.log('Fake Refresh Receitas'); };
     component.receitaForm.patchValue(receita);
     component.onSaveClick();
 
@@ -213,7 +209,7 @@ describe('Unit Test ReceitasFormComponent', () => {
 
     // Act
     component.ngOnInit();
-    component.setAction(undefined);
+    component.action = undefined;
     component.onSaveClick();
 
     // Assert

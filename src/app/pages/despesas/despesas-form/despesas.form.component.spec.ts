@@ -101,14 +101,13 @@ describe('Unit Test DespesasFormComponent', () => {
     };
     const despesaPostServiceSpy = spyOn(despesaService, 'postDespesa').and.returnValue(of({ message: true }));
     const modalCloseSpy = spyOn(component.activeModal, 'close').and.callThrough();
-    const spyRefresh = spyOn(component, "setRefresh");
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open').and.callThrough();
     spyOn(component, 'onSaveClick').and.callThrough();
 
     // Act
     component.ngOnInit();
-    component.setAction(IAction.Create);
-    component.setRefresh(() => { });
+    component.action = IAction.Create;
+    component.refresh = () => { console.log('Fake Refresh Despesas');};
     component.despesaForm.patchValue(despesa);
     component.onSaveClick();
     flush();
@@ -116,7 +115,6 @@ describe('Unit Test DespesasFormComponent', () => {
     // Assert
     expect(despesaPostServiceSpy).toHaveBeenCalledWith(jasmine.objectContaining(despesa));
     expect(modalCloseSpy).toHaveBeenCalled();
-    expect(spyRefresh).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, 'Despesa cadastrada com Sucesso.', 'Success');
   }));
 
@@ -139,8 +137,8 @@ describe('Unit Test DespesasFormComponent', () => {
 
     // Act
     component.ngOnInit();
-    component.setAction(IAction.Create);
-    component.setRefresh(() => { });
+    component.action = IAction.Create;
+    component.refresh = () => { console.log('Fake Refresh Despesas'); };
     component.despesaForm.patchValue(despesa);
     component.onSaveClick();
 
@@ -163,14 +161,13 @@ describe('Unit Test DespesasFormComponent', () => {
     };
     const despesaPutServiceSpy = spyOn(despesaService, 'putDespesa').and.returnValue(of({ message: true, despesa: mockDespesa }));
     const modalCloseSpy = spyOn(component.activeModal, 'close').and.callThrough();
-    const spyRefresh = spyOn(component, "setRefresh");
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open').and.callThrough();
     spyOn(component, 'onSaveClick').and.callThrough();
 
     // Act
     component.ngOnInit();
-    component.setAction(IAction.Edit);
-    component.setRefresh(() => { });
+    component.action = IAction.Edit;
+    component.refresh = () => { console.log('Fake Refresh Despesas'); };
     component.despesaForm.patchValue(mockDespesa);
     component.onSaveClick();
     flush();
@@ -178,7 +175,6 @@ describe('Unit Test DespesasFormComponent', () => {
     // Assert
     expect(despesaPutServiceSpy).toHaveBeenCalledWith(jasmine.objectContaining(mockDespesa));
     expect(modalCloseSpy).toHaveBeenCalled();
-    expect(spyRefresh).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, 'Despesa alterada com Sucesso.', 'Success');
   }));
 
@@ -202,8 +198,8 @@ describe('Unit Test DespesasFormComponent', () => {
 
     // Act
     component.ngOnInit();
-    component.setAction(IAction.Edit);
-    component.setRefresh(() => { });
+    component.action = IAction.Edit;
+    component.refresh = () => { console.log('Fake Refresh Despesas'); };
     component.despesaForm.patchValue(despesa);
     component.onSaveClick();
 
@@ -219,7 +215,7 @@ describe('Unit Test DespesasFormComponent', () => {
 
     // Act
     component.ngOnInit();
-    component.setAction(undefined);
+    component.action = undefined;
     component.onSaveClick();
 
     // Assert

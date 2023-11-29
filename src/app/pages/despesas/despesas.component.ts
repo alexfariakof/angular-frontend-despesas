@@ -96,8 +96,8 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
   onClickEdit = (idDespesa: number) =>{
     const modalRef = this.modalForm.modalService.open(DespesasFormComponent, { centered: true });
     modalRef.shown.subscribe(() => {
-      modalRef.componentInstance.setAction(IAction.Edit);
-      modalRef.componentInstance.setRefresh(() => { this.updateDatatable(); });
+      modalRef.componentInstance.action = IAction.Edit;
+      modalRef.componentInstance.refresh = () => { this.updateDatatable(); };
       modalRef.componentInstance.editDespesa(idDespesa);
     });
   }

@@ -5,6 +5,7 @@ import * as dayjs from "dayjs";
 import { AlertComponent } from "src/app/shared/components";
 import { ICategoria, IReceita, IAction } from "src/app/shared/interfaces";
 import { ReceitaService } from "src/app/shared/services/api";
+
 @Component({
   selector: 'app-receitas-form',
   templateUrl: './receitas.form.component.html',
@@ -12,17 +13,17 @@ import { ReceitaService } from "src/app/shared/services/api";
 })
 
 export class ReceitasFormComponent {
-  private idUsuario: number = Number(localStorage.getItem('idUsuario')) || 0;
+  private idUsuario: number = Number(localStorage.getItem('idUsuario'));
   categorias: ICategoria[]= [];
   receitaForm: FormGroup & IReceita;
-  private action: IAction = IAction.Create;
-  setAction(_action: IAction){
-    this.action = _action;
-  }
-  private refresh: Function = () => {};
-  setRefresh(_refresh: Function) {
-    this.refresh = _refresh;
-  }
+
+  private _action: IAction = IAction.Create;
+  get action(): IAction { return this._action; }
+  set action(action: IAction) { this._action = action; }
+
+  private _refresh: Function = () => {};
+  get refresh(): Function { return this._refresh; }
+  set refresh(refresh: Function) { this._refresh = refresh; }
 
   constructor(
     public formbuilder: FormBuilder,
@@ -32,7 +33,7 @@ export class ReceitasFormComponent {
     ) {}
 
   ngOnInit(): void{
-    this.getCatgeorias()
+    this.getCatgeorias();
     this.receitaForm = this.formbuilder.group({
       id: [0],
       idUsuario: this.idUsuario,
@@ -45,10 +46,15 @@ export class ReceitasFormComponent {
   }
 
   onSaveClick = () => {
-    switch (this.action) {
-      case IAction.Create: return this.saveCreateReceita();
-      case IAction.Edit: return this.saveEditReceita();
-      default: this.modalAlert.open(AlertComponent, "Ação não pode ser realizada.", 'Warning');
+    switch (this._action) {
+      case IAction.Create:
+        this.saveCreateReceita();
+        break;
+      case IAction.Edit:
+        this.saveEditReceita();
+        break;
+      default:
+        this.modalAlert.open(AlertComponent, 'Ação não pode ser realizada.', 'Warning');
     }
   }
 
@@ -69,10 +75,9 @@ export class ReceitasFormComponent {
     this.receitaService.postReceita(this.receitaForm.getRawValue() as IReceita)
     .subscribe({
       next: (result: any ) => {
-        if (result.message === true)
-        {
+        if (result.message === true) {
           this.activeModal.close();
-          this.refresh();
+          this._refresh();
           this.modalAlert.open(AlertComponent, "Receita cadastrada com Sucesso.", 'Success');
         }
       },
@@ -86,10 +91,9 @@ export class ReceitasFormComponent {
     this.receitaService.putReceita(this.receitaForm.getRawValue() as IReceita)
     .subscribe({
       next: (response: any ) => {
-        if ((response !== undefined || response !== null) && response.message === true)
-        {
+        if (response !== undefined && response !== null && response.message === true) {
           this.activeModal.close();
-          this.refresh();
+          this._refresh();
           this.modalAlert.open(AlertComponent, "Receita alterada com Sucesso.", 'Success');
         }
       },
@@ -103,7 +107,7 @@ export class ReceitasFormComponent {
     this.receitaService.getReceitaById(idReceita)
     .subscribe({
       next: (response: any) => {
-        if (response.message === true && (response.receita !== undefined && response.receita !== null))
+        if (response.message === true && response.receita !== undefined && response.receita !== null)
           this.receitaForm.patchValue(response.receita);
       },
       error :(response : any) =>  {
