@@ -11,7 +11,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import * as dayjs from 'dayjs';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { from, throwError, of } from 'rxjs';
-import { AlertComponent } from 'src/app/shared/components';
+import { AlertComponent, AlertType } from 'src/app/shared/components';
 import { ICategoria, IReceita, IAction } from 'src/app/shared/interfaces';
 import { AuthService } from 'src/app/shared/services';
 import { ReceitaService } from 'src/app/shared/services/api';
@@ -83,7 +83,7 @@ describe('Unit Test ReceitasFormComponent', () => {
     // Assert
     expect(getCategoriasSpy).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
   });
 
   it('should saveCreateReceita onSaveClick and show successfully message', fakeAsync(() => {
@@ -113,7 +113,7 @@ describe('Unit Test ReceitasFormComponent', () => {
     // Assert
     expect(receitaPostServiceSpy).toHaveBeenCalledWith(jasmine.objectContaining(receita));
     expect(modalCloseSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, 'Receita cadastrada com Sucesso.', 'Success');
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, 'Receita cadastrada com Sucesso.', AlertType.Success);
   }));
 
   it('should throws error when try to saveCreateReceita and show error message', () => {
@@ -141,7 +141,7 @@ describe('Unit Test ReceitasFormComponent', () => {
 
     // Assert
     expect(receitaPostServiceSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
   });
 
   it('should saveEditReceita onSaveClick', fakeAsync(() => {
@@ -171,7 +171,7 @@ describe('Unit Test ReceitasFormComponent', () => {
     // Assert
     expect(receitaPutServiceSpy).toHaveBeenCalledWith(jasmine.objectContaining(mockReceita));
     expect(modalCloseSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, 'Receita alterada com Sucesso.', 'Success');
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, 'Receita alterada com Sucesso.', AlertType.Success);
   }));
 
   it('should throws error when try to saveEditReceita and show error message', () => {
@@ -199,7 +199,7 @@ describe('Unit Test ReceitasFormComponent', () => {
 
     // Assert
     expect(receitaPutServiceSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
   });
 
   it('should show error message when onClickSave', () => {
@@ -213,7 +213,7 @@ describe('Unit Test ReceitasFormComponent', () => {
     component.onSaveClick();
 
     // Assert
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
   });
 
   it('should execute editReceita and SetFormReceita ', fakeAsync(() => {
@@ -247,7 +247,7 @@ describe('Unit Test ReceitasFormComponent', () => {
     // Assert
     expect(getReceitasById).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
   }));
 
   it('should deleteReceita and open modal alert success', fakeAsync(() => {
@@ -263,7 +263,7 @@ describe('Unit Test ReceitasFormComponent', () => {
     // Assert
     expect(getDeleteReceita).toHaveBeenCalled();
     expect(component.modalAlert.open).toHaveBeenCalled();
-    expect(component.modalAlert.open).toHaveBeenCalledWith(AlertComponent, 'Receita excluída com sucesso', 'Success');
+    expect(component.modalAlert.open).toHaveBeenCalledWith(AlertComponent, 'Receita excluída com sucesso', AlertType.Success);
   }));
 
   it('should try to deleteReceita and open modal alert warning', fakeAsync(() => {
@@ -279,7 +279,7 @@ describe('Unit Test ReceitasFormComponent', () => {
     // Assert
     expect(getDeleteReceita).toHaveBeenCalled();
     expect(component.modalAlert.open).toHaveBeenCalled();
-    expect(component.modalAlert.open).toHaveBeenCalledWith(AlertComponent, 'Erro ao excluír receita', 'Warning');
+    expect(component.modalAlert.open).toHaveBeenCalledWith(AlertComponent, 'Erro ao excluír receita', AlertType.Warning);
   }));
 
   it('should throws error when try to deleteReceita and open modal alert warning', fakeAsync(() => {
@@ -295,6 +295,6 @@ describe('Unit Test ReceitasFormComponent', () => {
     // Assert
     expect(spyOnDeleteReceita).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
   }));
 });

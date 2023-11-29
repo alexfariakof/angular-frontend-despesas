@@ -8,7 +8,7 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import * as dayjs from "dayjs";
 import { from, throwError } from "rxjs";
-import { AlertComponent, ModalFormComponent, ModalConfirmComponent, DataTableComponent } from "src/app/shared/components";
+import { AlertComponent, ModalFormComponent, ModalConfirmComponent, DataTableComponent, AlertType } from "src/app/shared/components";
 import { DespesaDataSet } from "src/app/shared/datatable-config/despesas";
 import { IDespesa } from "src/app/shared/interfaces";
 import { AuthService, MenuService } from "src/app/shared/services";
@@ -105,7 +105,7 @@ describe('Unit Test DespesasComponent', () => {
     // Assert
     expect(getDespesasByIdUsuarioSpy).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
   }));
 
 
@@ -122,7 +122,7 @@ describe('Unit Test DespesasComponent', () => {
     // Assert
     expect(getDespesasByIdUsuarioSpy).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
   });
 
   it('should return despesaData when call getDespesasData', () => {
@@ -170,7 +170,7 @@ describe('Unit Test DespesasComponent', () => {
     // Assert
     expect(getDespesasByIdUsuarioSpy).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
   });
 
   it('should open modalForm on onClickNovo', fakeAsync(() => {

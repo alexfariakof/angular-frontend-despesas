@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AlertComponent } from 'src/app/shared/components';
+import { AlertComponent, AlertType } from 'src/app/shared/components';
 import { ICategoria, IAction } from 'src/app/shared/interfaces';
 import { CategoriaService } from 'src/app/shared/services/api';
 @Component({
@@ -56,11 +56,11 @@ export class CategoriasFormComponent implements OnInit {
             {
               this.activeModal.close();
               this.refresh();
-              this.modalAlert.open(AlertComponent, "Categoria cadastrada com Sucesso.", 'Success');
+              this.modalAlert.open(AlertComponent, "Categoria cadastrada com Sucesso.", AlertType.Success);
             }
           },
           error :(error : any) =>  {
-            this.modalAlert.open(AlertComponent, error.message, 'Warning');
+            this.modalAlert.open(AlertComponent, error.message, AlertType.Warning);
           }
         });
       }
@@ -72,17 +72,17 @@ export class CategoriasFormComponent implements OnInit {
             {
               this.activeModal.close();
               this.refresh();
-              this.modalAlert.open(AlertComponent, "Categoria alterada com Sucesso.", 'Success');
+              this.modalAlert.open(AlertComponent, "Categoria alterada com Sucesso.", AlertType.Success);
             }
           },
           error :(error : any) =>  {
-            this.modalAlert.open(AlertComponent, error.message, 'Warning');
+            this.modalAlert.open(AlertComponent, error.message, AlertType.Warning);
           }
         });
       }
     }
     catch(error){
-      this.modalAlert.open(AlertComponent, error.message, 'Warning');
+      this.modalAlert.open(AlertComponent, error.message, AlertType.Warning);
     }
   }
 }

@@ -11,7 +11,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import * as dayjs from 'dayjs';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { from, throwError, of } from 'rxjs';
-import { AlertComponent } from 'src/app/shared/components';
+import { AlertComponent, AlertType } from 'src/app/shared/components';
 import { ICategoria, IDespesa, IAction } from 'src/app/shared/interfaces';
 import { AuthService } from 'src/app/shared/services';
 import { DespesaService } from 'src/app/shared/services/api';
@@ -84,7 +84,7 @@ describe('Unit Test DespesasFormComponent', () => {
     // Assert
     expect(getCategoriasSpy).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
   });
 
   it('should Save despesa onSaveClick with Action is Create and show successfully message', fakeAsync(() => {
@@ -115,7 +115,7 @@ describe('Unit Test DespesasFormComponent', () => {
     // Assert
     expect(despesaPostServiceSpy).toHaveBeenCalledWith(jasmine.objectContaining(despesa));
     expect(modalCloseSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, 'Despesa cadastrada com Sucesso.', 'Success');
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, 'Despesa cadastrada com Sucesso.', AlertType.Success);
   }));
 
   it('should throws error when try to create despesa and show error message', () => {
@@ -144,7 +144,7 @@ describe('Unit Test DespesasFormComponent', () => {
 
     // Assert
     expect(despesaPostServiceSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
   });
 
   it('should Save despesa onSaveClick with Action is Edit', fakeAsync(() => {
@@ -175,7 +175,7 @@ describe('Unit Test DespesasFormComponent', () => {
     // Assert
     expect(despesaPutServiceSpy).toHaveBeenCalledWith(jasmine.objectContaining(mockDespesa));
     expect(modalCloseSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, 'Despesa alterada com Sucesso.', 'Success');
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, 'Despesa alterada com Sucesso.', AlertType.Success);
   }));
 
 
@@ -205,7 +205,7 @@ describe('Unit Test DespesasFormComponent', () => {
 
     // Assert
     expect(despesaPutServiceSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
   });
 
   it('should show error message when onClickSave', () => {
@@ -219,7 +219,7 @@ describe('Unit Test DespesasFormComponent', () => {
     component.onSaveClick();
 
     // Assert
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
   });
 
   it('should execute editDespesa and setFormDespesas', fakeAsync(() => {
@@ -253,7 +253,7 @@ describe('Unit Test DespesasFormComponent', () => {
     // Assert
     expect(getDespesasById).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
   }));
 
   it('should  deleteDespesa and open modal alert success', fakeAsync(() => {
@@ -269,7 +269,7 @@ describe('Unit Test DespesasFormComponent', () => {
     // Assert
     expect(getDeleteDespesa).toHaveBeenCalled();
     expect(component.modalAlert.open).toHaveBeenCalled();
-    expect(component.modalAlert.open).toHaveBeenCalledWith(AlertComponent, 'Despesa excluída com sucesso', 'Success');
+    expect(component.modalAlert.open).toHaveBeenCalledWith(AlertComponent, 'Despesa excluída com sucesso', AlertType.Success);
   }));
 
   it('should try to deleteDespesa and open modal alert warning', fakeAsync(() => {
@@ -285,7 +285,7 @@ describe('Unit Test DespesasFormComponent', () => {
     // Assert
     expect(getDeleteDespesa).toHaveBeenCalled();
     expect(component.modalAlert.open).toHaveBeenCalled();
-    expect(component.modalAlert.open).toHaveBeenCalledWith(AlertComponent, 'Erro ao excluír despesa', 'Warning');
+    expect(component.modalAlert.open).toHaveBeenCalledWith(AlertComponent, 'Erro ao excluír despesa', AlertType.Warning);
   }));
 
   it('should throws error when try to deleteDespesa and open modal alert warning', fakeAsync(() => {
@@ -301,7 +301,7 @@ describe('Unit Test DespesasFormComponent', () => {
     // Assert
     expect(spyOnDeleteDespesa).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
   }));
 
 });

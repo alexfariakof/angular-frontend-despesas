@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import * as dayjs from "dayjs";
-import { BarraFerramentaClass, DataTableComponent, AlertComponent, ModalFormComponent, ModalConfirmComponent } from "src/app/shared/components";
+import { BarraFerramentaClass, DataTableComponent, AlertComponent, ModalFormComponent, ModalConfirmComponent, AlertType } from "src/app/shared/components";
 import { DespesaDataSet, DespesaColumns } from "src/app/shared/datatable-config/despesas";
 import { IDespesa, IAction } from "src/app/shared/interfaces";
 import { MenuService } from "src/app/shared/services";
@@ -44,7 +44,7 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
 
       },
       error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, 'Warning');
+        this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
       }
     });
   }
@@ -60,7 +60,7 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
         }
       },
       error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, 'Warning');
+        this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
       }
     });
   }

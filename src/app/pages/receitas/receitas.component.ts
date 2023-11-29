@@ -1,6 +1,6 @@
 import { Component, ViewChild } from "@angular/core";
 import * as dayjs from "dayjs";
-import { BarraFerramentaClass, DataTableComponent, AlertComponent, ModalFormComponent, ModalConfirmComponent } from "src/app/shared/components";
+import { BarraFerramentaClass, DataTableComponent, AlertComponent, ModalFormComponent, ModalConfirmComponent, AlertType } from "src/app/shared/components";
 import { ReceitaDataSet, ReceitaColumns } from "src/app/shared/datatable-config/receitas";
 import { IReceita, IAction } from "src/app/shared/interfaces";
 import { MenuService } from "src/app/shared/services";
@@ -45,7 +45,7 @@ export class ReceitasComponent implements BarraFerramentaClass {
 
       },
       error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, 'Warning');
+        this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
       }
     });
   }
@@ -61,7 +61,7 @@ export class ReceitasComponent implements BarraFerramentaClass {
         }
       },
       error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, 'Warning');
+        this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
       }
     });
   }

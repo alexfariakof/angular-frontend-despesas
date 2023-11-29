@@ -4,7 +4,7 @@ import { CategoriasFormComponent } from './categorias-form/categorias.form.compo
 import { ICategoria, ITipoCategoria, IAction } from './../../shared/interfaces';
 import { CategoriaService } from 'src/app/shared/services/api/categorias/categoria.service';
 import { CategoriaColumns, CategoriaDataSet  } from 'src/app/shared/datatable-config/categorias';
-import { DataTableComponent, AlertComponent, ModalFormComponent, ModalConfirmComponent, BarraFerramentaClass } from 'src/app/shared/components';
+import { DataTableComponent, AlertComponent, ModalFormComponent, ModalConfirmComponent, BarraFerramentaClass, AlertType } from 'src/app/shared/components';
 @Component({
   selector: 'app-categorias',
   templateUrl: './categorias.component.html',
@@ -42,7 +42,7 @@ export class CategoriasComponent implements BarraFerramentaClass, OnInit {
 
       },
       error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, 'Warning');
+        this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
       }
     });
   }
@@ -58,7 +58,7 @@ export class CategoriasComponent implements BarraFerramentaClass, OnInit {
         }
       },
       error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, 'Warning');
+        this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
       }
     });
   }
@@ -91,7 +91,7 @@ export class CategoriasComponent implements BarraFerramentaClass, OnInit {
           this.editCategoria(categoria);
       },
       error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, 'Warning');
+        this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
       }
     });
   }
@@ -116,14 +116,14 @@ export class CategoriasComponent implements BarraFerramentaClass, OnInit {
       next: (response: any) => {
         if (response.message === true){
           this.updateDatatable();
-          this.modalAlert.open(AlertComponent, "Categoria excluída com sucesso", 'Success');
+          this.modalAlert.open(AlertComponent, "Categoria excluída com sucesso", AlertType.Success);
         }
         else{
-          this.modalAlert.open(AlertComponent, 'Erro ao excluír categoria', 'Warning');
+          this.modalAlert.open(AlertComponent, 'Erro ao excluír categoria', AlertType.Warning);
         }
       },
       error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, 'Warning');
+        this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
       }
     });
   }
