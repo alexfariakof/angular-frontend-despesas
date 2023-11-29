@@ -1,4 +1,7 @@
 export interface ReceitaDataSet {
   id: number;
-  descricao: String;
+  data: string;
+  descricao: string;
+  valor: string;
+  categoria: string;
 }

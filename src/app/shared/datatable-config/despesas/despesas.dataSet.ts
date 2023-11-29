@@ -1,8 +1,8 @@
-import { Dayjs } from "dayjs";
 export interface DespesaDataSet {
   id: number;
-  data: String;
-  descricao: String;
-  valor: String;
-  dataVencimento: String;
+  data: string;
+  descricao: string;
+  valor: string;
+  dataVencimento: string;
+  categoria: string;
 }

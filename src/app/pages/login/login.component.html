@@ -18,31 +18,31 @@
     </nav>
   </div>
   <div class="d-flex align-items-center justify-content-center flex-grow-1 fs-6 fs-sm-5 fs-md-4 fs-lg-3">
-    <div class="d-flex flex-column border border-4 border-dark rounded-4 align-items-center justify-content-center fs-6 fs-sm-5 fs-md-4 fs-lg-3">
+    <div class="d-flex flex-column m-2 border border-4 border-dark rounded-4 align-items-center justify-content-center fs-6 fs-sm-5 fs-md-4 fs-lg-3">
       <div class="bg-dark w-100 d-flex flex-column align-items-center justify-content-center">
         <h2 class="text-light fw-bolder">Identifique-se</h2>
       </div>
       <form class="p-4 " (submit)="onLoginClick()" [formGroup]="loginForm">
-        <div class="input-group mt-3">
-          <span class="input-group-text" id="email">@</span>
-          <input id="email" name="email" formControlName="email" required="" type="text" class="form-control"
-            placeholder="E-mail" aria-label="email" aria-describedby="email" />
-        </div>
-        <label *ngIf="loginForm.get('email')?.errors?.['required'] &&  loginForm.get('email')?.touched"
-          class="error-input">
-          Campo Obrigatório!
-        </label>
-
-        <div class="input-group mt-3" id="password">
-          <span class="input-group-text"><i class="bi bi-lock"></i></span>
-          <input id="senha"  name="senha" formControlName="senha" required="" type="password" autocomplete="section-red current-password"
-                [type]="showPassword ? 'text' : 'password'" class="form-control" placeholder="Senha" aria-label="Senha" aria-describedby="password">
-          <span class="input-group-text" (click)="onTooglePassword()" ><i [ngClass]="eyeIconClass" ></i></span>
-        </div>
-        <label *ngIf="loginForm.get('senha')?.errors?.['required'] &&  loginForm.get('senha')?.touched"
-          class="error-input">
-          Campo Obrigatório!
-        </label>
+        <mat-form-field appearance="outline"  class="w-100 "  >
+          <mat-label>Email</mat-label>
+          <input matInput required id="email" name="email" formControlName="email" type="text" placeholder="Entre com o seu email"
+            [ngClass]="{ 'is-invalid text-danger': loginForm.get('email')?.errors?.['required'] &&  loginForm.get('email')?.touched }" />
+            <mat-icon matSuffix>
+              <i class="text-danger bi bi-exclamation-circle position-absolute mx-2 top-0 end-0"
+                [ngClass]="{'error-bi-input': loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched,
+                'not-error-input': !loginForm.get('email')?.hasError('required')  || !loginForm.get('email')?.touched }">
+              </i>
+          </mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100 "  >
+          <mat-label>Senha</mat-label>
+          <input matInput required id="senha" name="senha" formControlName="senha" type="passwrod" placeholder="Entre com a sua senha"
+            [type]="showPassword ? 'text' : 'password'"
+            [ngClass]="{'is-invalid': loginForm.get('senha')?.errors?.['required'] &&  loginForm.get('senha')?.touched }" />
+            <i class="position-absolute my-3 top-0 end-0" (click)="onTooglePassword()"
+              [ngClass]="eyeIconClass"
+              [class.text-danger]="loginForm.get('senha')?.hasError('required') && loginForm.get('senha')?.touched"></i>
+        </mat-form-field>
         <div class="input-group mt-3  d-flex flex-column align-items-center justify-content-center">
           <button type="submit" class="btn btn-primary w-100" [ngClass]="{'disabled' : !loginForm.valid}"
             [disabled]="!loginForm.valid">Entrar</button>

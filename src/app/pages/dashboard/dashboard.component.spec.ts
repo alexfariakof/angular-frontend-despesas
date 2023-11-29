@@ -1,11 +1,10 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DashboardComponent } from './dashboard.component';
-import { CommonModule } from '@angular/common';
-import { NgChartsModule } from 'ng2-charts';
-import { BarChartComponent } from 'src/app/shared/components/bar-chart/bar-chart.component';
-import { SharedModule } from 'src/app/shared/shared.module';
-import { MenuService } from 'src/app/shared/services/utils/menu-service/menu.service';
-import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { CommonModule } from "@angular/common";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { NgChartsModule } from "ng2-charts";
+import { BarChartComponent } from "src/app/shared/components";
+import { AuthService, MenuService } from "src/app/shared/services";
+import { SharedModule } from "src/app/shared/shared.module";
+import { DashboardComponent } from "./dashboard.component";
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;

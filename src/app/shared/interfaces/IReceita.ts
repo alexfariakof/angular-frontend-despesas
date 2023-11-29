@@ -1,6 +1,6 @@
 import { Dayjs } from "dayjs";
 
-export interface IDespesa {
+export interface IReceita {
   id: number | null;
   idUsuario: number;
   idCategoria: number | string;
@@ -8,5 +8,4 @@ export interface IDespesa {
   data: Dayjs | string | null;
   descricao: string;
   valor: number ;
-  dataVencimento: Dayjs | string | null;
 }

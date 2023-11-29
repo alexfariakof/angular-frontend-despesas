@@ -1,5 +1,5 @@
 export interface CategoriaDataSet {
   id: number;
-  descricao: String;
-  tipoCategoria : String;
+  descricao: string;
+  tipoCategoria: string;
 }

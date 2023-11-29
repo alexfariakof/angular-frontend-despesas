@@ -1,25 +1,21 @@
-import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testing';
-import { CommonModule } from '@angular/common';
-import { SharedModule } from 'src/app/shared/shared.module';
-import { MenuService } from 'src/app/shared/services/utils/menu-service/menu.service';
-import { RouterTestingModule } from '@angular/router/testing';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { DespesasComponent } from './despesas.component';
-import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import { AlertComponent } from 'src/app/shared/components/alert-component/alert.component';
-import { ModalFormComponent } from 'src/app/shared/components/modal-form/modal.form.component';
-import { DespesaService } from 'src/app/shared/services/api/despesas/despesa.service';
-import { ModalConfirmComponent } from 'src/app/shared/components/modal-confirm/modal.confirm.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { IDespesa } from 'src/app/shared/interfaces/IDespesa';
-import * as dayjs from 'dayjs';
-import { from, throwError } from 'rxjs';
-import { DespesaDataSet } from 'src/app/shared/datatable-config/despesas/despesas.dataSet';
-import { DataTableComponent } from 'src/app/shared/components/data-table/data-table.component';
-import { DespesasFormComponent } from './despesas-form/despesas.form.component';
-import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
-import { MatSelect, MatSelectModule } from '@angular/material/select';
-import { MatNativeDateModule } from '@angular/material/core';
+import { CommonModule } from "@angular/common";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { ComponentFixture, TestBed, fakeAsync, flush } from "@angular/core/testing";
+import { MatNativeDateModule } from "@angular/material/core";
+import { MatDatepicker, MatDatepickerModule } from "@angular/material/datepicker";
+import { MatSelect, MatSelectModule } from "@angular/material/select";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import * as dayjs from "dayjs";
+import { from, throwError } from "rxjs";
+import { AlertComponent, ModalFormComponent, ModalConfirmComponent, DataTableComponent } from "src/app/shared/components";
+import { DespesaDataSet } from "src/app/shared/datatable-config/despesas";
+import { IDespesa } from "src/app/shared/interfaces";
+import { AuthService, MenuService } from "src/app/shared/services";
+import { DespesaService } from "src/app/shared/services/api";
+import { SharedModule } from "src/app/shared/shared.module";
+import { DespesasFormComponent } from "./despesas-form/despesas.form.component";
+import { DespesasComponent } from "./despesas.component";
 
 describe('Unit Test DespesasComponent', () => {
   let component: DespesasComponent;
@@ -28,14 +24,14 @@ describe('Unit Test DespesasComponent', () => {
   let mockAuthService: jasmine.SpyObj<AuthService>;
   let despesaService: DespesaService;
   let mockDespesas: IDespesa[] = [
-    { id: 1, idUsuario: 1, idCategoria: 1, data: dayjs(), descricao: 'Teste Despesas 1', valor: 1.05, dataVencimento: dayjs() },
-    { id: 2, idUsuario: 2, idCategoria: 2, data: dayjs(), descricao: 'Teste Despesas 2', valor: 2.05, dataVencimento: dayjs() },
-    { id: 3, idUsuario: 1, idCategoria: 4, data: dayjs(), descricao: 'Teste Despesas 3', valor: 3.05, dataVencimento: dayjs() },
+    { id: 1, idUsuario: 1, idCategoria: 1, data: dayjs(), descricao: 'Teste Despesas 1', valor: 1.05, dataVencimento: dayjs(), categoria: 'Categoria 1' },
+    { id: 2, idUsuario: 2, idCategoria: 2, data: dayjs(), descricao: 'Teste Despesas 2', valor: 2.05, dataVencimento: dayjs(), categoria: 'Categoria 2' },
+    { id: 3, idUsuario: 1, idCategoria: 4, data: dayjs(), descricao: 'Teste Despesas 3', valor: 3.05, dataVencimento: dayjs(), categoria: 'Categoria 3' },
   ];
   let mockDespesasData: DespesaDataSet[] = [
-    { id: 1, data: dayjs().format('DD/MM/YYYY'), descricao: 'Teste Despesas 1', valor: 'R$ 1.05', dataVencimento: dayjs().format('DD/MM/YYY') },
-    { id: 2, data: dayjs().format('DD/MM/YYYY'), descricao: 'Teste Despesas 2', valor: 'R$ 2.05', dataVencimento: dayjs().format('DD/MM/YYY') },
-    { id: 3, data: dayjs().format('DD/MM/YYYY'), descricao: 'Teste Despesas 3', valor: 'R$ 3.05', dataVencimento: dayjs().format('DD/MM/YYY') }
+    { id: 1, data: dayjs().format('DD/MM/YYYY'), descricao: 'Teste Despesas 1', valor: 'R$ 1.05', dataVencimento: dayjs().format('DD/MM/YYY'), categoria: 'Categoria 1' },
+    { id: 2, data: dayjs().format('DD/MM/YYYY'), descricao: 'Teste Despesas 2', valor: 'R$ 2.05', dataVencimento: dayjs().format('DD/MM/YYY'), categoria: 'Categoria 2' },
+    { id: 3, data: dayjs().format('DD/MM/YYYY'), descricao: 'Teste Despesas 3', valor: 'R$ 3.05', dataVencimento: dayjs().format('DD/MM/YYY'), categoria: 'Categroia 3' }
   ];
 
   beforeEach(() => {
@@ -299,6 +295,4 @@ describe('Unit Test DespesasComponent', () => {
     expect(alertOpenSpy).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
   }));
-
-
 });
