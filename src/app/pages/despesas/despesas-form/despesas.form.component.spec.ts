@@ -1,21 +1,21 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { ComponentFixture, TestBed, fakeAsync, flush } from "@angular/core/testing";
-import { ReactiveFormsModule, FormBuilder } from "@angular/forms";
-import { MatNativeDateModule } from "@angular/material/core";
-import { MatDatepicker, MatDatepickerModule } from "@angular/material/datepicker";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatInputModule } from "@angular/material/input";
-import { MatSelect, MatSelectModule } from "@angular/material/select";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import * as dayjs from "dayjs";
-import { CurrencyMaskModule } from "ng2-currency-mask";
-import { from, throwError, of } from "rxjs";
-import { AlertComponent } from "src/app/shared/components";
-import { ICategoria, IDespesa, IAction } from "src/app/shared/interfaces";
-import { AuthService } from "src/app/shared/services";
-import { DespesaService } from "src/app/shared/services/api";
-import { DespesasFormComponent } from "./despesas.form.component";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testing';
+import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import * as dayjs from 'dayjs';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
+import { from, throwError, of } from 'rxjs';
+import { AlertComponent } from 'src/app/shared/components';
+import { ICategoria, IDespesa, IAction } from 'src/app/shared/interfaces';
+import { AuthService } from 'src/app/shared/services';
+import { DespesaService } from 'src/app/shared/services/api';
+import { DespesasFormComponent } from './despesas.form.component';
 
 
 describe('Unit Test DespesasFormComponent', () => {
@@ -62,7 +62,7 @@ describe('Unit Test DespesasFormComponent', () => {
 
     // Act
     component.ngOnInit();
-    component.getCatgeorias();
+    component.getCatgeoriasFromDespesas();
     flush();
     fixture.detectChanges();
     // Assert
@@ -79,7 +79,7 @@ describe('Unit Test DespesasFormComponent', () => {
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
     // Act
-    component.getCatgeorias();
+    component.getCatgeoriasFromDespesas();
 
     // Assert
     expect(getCategoriasSpy).toHaveBeenCalled();

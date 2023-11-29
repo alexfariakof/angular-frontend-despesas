@@ -61,7 +61,7 @@ describe('Unit Test ReceitasFormComponent', () => {
 
     // Act
     component.ngOnInit();
-    component.getCatgeorias();
+    component.getCatgeoriasFromReceitas();
     flush();
     fixture.detectChanges();
     // Assert
@@ -78,7 +78,7 @@ describe('Unit Test ReceitasFormComponent', () => {
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
     // Act
-    component.getCatgeorias();
+    component.getCatgeoriasFromReceitas();
 
     // Assert
     expect(getCategoriasSpy).toHaveBeenCalled();

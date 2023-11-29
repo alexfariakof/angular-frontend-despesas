@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import * as dayjs from 'dayjs';
@@ -33,7 +33,7 @@ export class DespesasFormComponent {
     ) {}
 
   ngOnInit(): void{
-    this.getCatgeorias();
+    this.getCatgeoriasFromDespesas();
     this.despesaForm = this.formbuilder.group({
       id: [0],
       idUsuario: this.idUsuario,
@@ -46,7 +46,7 @@ export class DespesasFormComponent {
     }) as FormGroup & IDespesa;
   }
 
-  getCatgeorias = () => {
+  getCatgeoriasFromDespesas = () => {
     this.despesaService.getCategorias(this.idUsuario)
       .subscribe({
         next: (result: ICategoria[]) => {
@@ -80,7 +80,7 @@ export class DespesasFormComponent {
         {
           this.activeModal.close();
           this._refresh();
-          this.modalAlert.open(AlertComponent, "Despesa cadastrada com Sucesso.", 'Success');
+          this.modalAlert.open(AlertComponent, 'Despesa cadastrada com Sucesso.', 'Success');
         }
       },
       error :(error : any) =>  {
@@ -97,7 +97,7 @@ export class DespesasFormComponent {
         {
           this.activeModal.close();
           this._refresh();
-          this.modalAlert.open(AlertComponent, "Despesa alterada com Sucesso.", 'Success');
+          this.modalAlert.open(AlertComponent, 'Despesa alterada com Sucesso.', 'Success');
         }
       },
       error :(error : any) =>  {
@@ -126,7 +126,7 @@ export class DespesasFormComponent {
       next: (response: any) => {
         if (response.message === true){
           callBack();
-          this.modalAlert.open(AlertComponent, "Despesa excluída com sucesso", 'Success');
+          this.modalAlert.open(AlertComponent, 'Despesa excluída com sucesso', 'Success');
         }
         else{
           this.modalAlert.open(AlertComponent, 'Erro ao excluír despesa', 'Warning');

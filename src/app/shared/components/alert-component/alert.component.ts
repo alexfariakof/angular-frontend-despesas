@@ -28,7 +28,7 @@ export class AlertComponent {
   }
 }
 
-type AlertType = 'Success' | 'Warning';
+export type AlertType = 'Success' | 'Warning';
 const AlertTypeClass: Record<AlertType, string> = {
   Success: 'alert alert-success mt-2 bi bi-emoji-smile',
   Warning: 'alert alert-danger mt-2 bi bi-exclamation-circle',
