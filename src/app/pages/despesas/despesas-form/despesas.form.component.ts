@@ -105,6 +105,19 @@ export class DespesasFormComponent {
     }
   }
 
+  editDespesa = (idDespesa: number) => {
+    this.despesaService.getDespesaById(idDespesa)
+    .subscribe({
+      next: (response: any) => {
+        if (response.message === true && (response.despesa !== undefined && response.despesa !== null))
+          this.setDespesa(response.despesa);
+      },
+      error :(response : any) =>  {
+        this.modalAlert.open(AlertComponent, response.message, 'Warning');
+      }
+    });
+  }
+
   greaterThanZero = (control: AbstractControl): ValidationErrors | null => {
     const value = control.value;
     if (value !== null && value > 0) {
