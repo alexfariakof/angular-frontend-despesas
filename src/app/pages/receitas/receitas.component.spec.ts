@@ -41,7 +41,7 @@ describe('Unit Test ReceitasComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ReceitasComponent, ReceitasFormComponent, MatDatepicker, MatSelect],
       imports: [CommonModule, RouterTestingModule, SharedModule, HttpClientTestingModule, MatSelectModule , MatDatepickerModule, MatNativeDateModule],
-      providers: [MenuService, AlertComponent, ModalFormComponent, ModalConfirmComponent, NgbActiveModal, ReceitaService,
+      providers: [MenuService, AlertComponent, ModalFormComponent, ModalConfirmComponent, NgbActiveModal, ReceitaService, ReceitasFormComponent,
         { provide: Storage, useValue: localStorageSpy },
         { provide: AuthService, useValue: mockAuthService }
       ]
@@ -183,54 +183,14 @@ describe('Unit Test ReceitasComponent', () => {
     expect(component.modalForm.modalService.open).toHaveBeenCalled();
   }));
 
-  it('should open call editReceita onClickEdit', fakeAsync(() => {
+  it('should open modalform onClickEdit', () => {
     // Arrange
-    const mockReceita: IReceita = mockReceitas[0];
-    const mockResponse: any = { message: true, receita: mockReceita };
-    const getReceitasById = spyOn(receitaService, 'getReceitaById').and.returnValue(from(Promise.resolve(mockResponse)));
-    const editReceita = spyOn(component, 'editReceita').and.callThrough();
-
-    // Act
-    component.onClickEdit(mockReceita.idUsuario);
-    flush();
-
-    // Assert
-    expect(getReceitasById).toHaveBeenCalled();
-    expect(editReceita).toHaveBeenCalled();
-    expect(editReceita).toHaveBeenCalledWith(mockReceita);
-  }));
-
-  it('should throws error in onClickEdit', fakeAsync(() => {
-    // Arrange
-    const errorMessage = { message: 'Fake Error Message'};
-    const mockReceita: IReceita = mockReceitas[1];
-    const getReceitasById = spyOn(receitaService, 'getReceitaById').and.returnValue(throwError(errorMessage));
-    const editReceita = spyOn(component, 'editReceita').and.callThrough();
-    const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
-
-    // Act
-    component.onClickEdit(mockReceita.idUsuario);
-    flush();
-
-    // Assert
-    expect(getReceitasById).toHaveBeenCalled();
-    expect(editReceita).not.toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
-  }));
-
-  it('should open call editReceita', () => {
-    // Arrange
-    const mockReceita: IReceita = mockReceitas[2];
-    const editReceita = spyOn(component, 'editReceita').and.callThrough();
     spyOn(component.modalForm.modalService, 'open').and.callThrough();
 
     // Act
-    component.editReceita(mockReceita);
+    component.onClickEdit(mockReceitas[0].id);
 
     // Assert
-    expect(editReceita).toHaveBeenCalled();
-    expect(editReceita).toHaveBeenCalledWith(mockReceita);
     expect(component.modalForm.modalService.open).toHaveBeenCalled();
   });
 
@@ -244,53 +204,5 @@ describe('Unit Test ReceitasComponent', () => {
     // Assert
     expect(component.modalConfirm.open).toHaveBeenCalled();
   });
-
-  it('should  deleteReceita and open modal alert success', fakeAsync(() => {
-    // Arrange
-    const mockResponse = { message: true };
-    const getDeleteReceita = spyOn(receitaService, 'deleteReceita').and.returnValue(from(Promise.resolve(mockResponse)));
-    spyOn(component.modalAlert, 'open').and.callThrough();
-
-    // Act
-    component.deleteReceita(mockReceitas[1].id);
-    flush();
-
-    // Assert
-    expect(getDeleteReceita).toHaveBeenCalled();
-    expect(component.modalAlert.open).toHaveBeenCalled();
-    expect(component.modalAlert.open).toHaveBeenCalledWith(AlertComponent, 'Receita excluída com sucesso', 'Success');
-  }));
-
-  it('should try to deleteReceita and open modal alert warning', fakeAsync(() => {
-    // Arrange
-    const mockResponse = { message: false };
-    const getDeleteReceita = spyOn(receitaService, 'deleteReceita').and.returnValue(from(Promise.resolve(mockResponse)));
-    spyOn(component.modalAlert, 'open').and.callThrough();
-
-    // Act
-    component.deleteReceita(mockReceitas[2].id);
-    flush();
-
-    // Assert
-    expect(getDeleteReceita).toHaveBeenCalled();
-    expect(component.modalAlert.open).toHaveBeenCalled();
-    expect(component.modalAlert.open).toHaveBeenCalledWith(AlertComponent, 'Erro ao excluír receita', 'Warning');
-  }));
-
-  it('should throws error when try to deleteReceita and open modal alert warning', fakeAsync(() => {
-    // Arrange
-    const errorMessage = { message: 'Fake Error Message Delete Receita'};
-    const spyOnDeleteReceita = spyOn(receitaService, 'deleteReceita').and.returnValue(throwError(errorMessage));
-    const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
-
-    // Act
-    component.deleteReceita(mockReceitas[1].id);
-    flush();
-
-    // Assert
-    expect(spyOnDeleteReceita).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
-  }));
 
 });

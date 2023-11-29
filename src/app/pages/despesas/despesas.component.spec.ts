@@ -41,7 +41,7 @@ describe('Unit Test DespesasComponent', () => {
     TestBed.configureTestingModule({
       declarations: [DespesasComponent, DespesasFormComponent, MatDatepicker, MatSelect],
       imports: [CommonModule, RouterTestingModule, SharedModule, HttpClientTestingModule, MatSelectModule , MatDatepickerModule, MatNativeDateModule],
-      providers: [MenuService, AlertComponent, ModalFormComponent, ModalConfirmComponent, NgbActiveModal, DespesaService,
+      providers: [MenuService, AlertComponent, ModalFormComponent, ModalConfirmComponent, NgbActiveModal, DespesaService, DespesasFormComponent,
         { provide: Storage, useValue: localStorageSpy },
         { provide: AuthService, useValue: mockAuthService }
       ]
@@ -185,57 +185,18 @@ describe('Unit Test DespesasComponent', () => {
     expect(component.modalForm.modalService.open).toHaveBeenCalled();
   }));
 
-  it('should open call editDespesa onClickEdit', fakeAsync(() => {
+
+  it('should open ModalForm onClickEdit', fakeAsync(() => {
     // Arrange
-    const mockDespesa: IDespesa = mockDespesas[0];
-    const mockResponse: any = { message: true, despesa: mockDespesa };
-    const getDespesasById = spyOn(despesaService, 'getDespesaById').and.returnValue(from(Promise.resolve(mockResponse)));
-    const editDespesa = spyOn(component, 'editDespesa').and.callThrough();
-
-    // Act
-    component.onClickEdit(mockDespesa.idUsuario);
-    flush();
-
-    // Assert
-    expect(getDespesasById).toHaveBeenCalled();
-    expect(editDespesa).toHaveBeenCalled();
-    expect(editDespesa).toHaveBeenCalledWith(mockDespesa);
-  }));
-
-  it('should throws error in onClickEdit', fakeAsync(() => {
-    // Arrange
-    const errorMessage = { message: 'Fake Error Message'};
-    const mockDespesa: IDespesa = mockDespesas[1];
-    const getDespesasById = spyOn(despesaService, 'getDespesaById').and.returnValue(throwError(errorMessage));
-    const editDespesa = spyOn(component, 'editDespesa').and.callThrough();
-    const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
-
-    // Act
-    component.onClickEdit(mockDespesa.idUsuario);
-    flush();
-
-    // Assert
-    expect(getDespesasById).toHaveBeenCalled();
-    expect(editDespesa).not.toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
-  }));
-
-
-  it('should open call editDespesa', () => {
-    // Arrange
-    const mockDespesa: IDespesa = mockDespesas[2];
-    const editDespesa = spyOn(component, 'editDespesa').and.callThrough();
     spyOn(component.modalForm.modalService, 'open').and.callThrough();
 
     // Act
-    component.editDespesa(mockDespesa);
+    component.onClickEdit(mockDespesas[1].id);
+    flush();
 
     // Assert
-    expect(editDespesa).toHaveBeenCalled();
-    expect(editDespesa).toHaveBeenCalledWith(mockDespesa);
     expect(component.modalForm.modalService.open).toHaveBeenCalled();
-  });
+  }));
 
   it('should open Modal Confirm when onClickDelete', () => {
     // Arrange
@@ -247,52 +208,4 @@ describe('Unit Test DespesasComponent', () => {
     // Assert
     expect(component.modalConfirm.open).toHaveBeenCalled();
   });
-
-  it('should  deleteDespesa and open modal alert success', fakeAsync(() => {
-    // Arrange
-    const mockResponse = { message: true };
-    const getDeleteDespesa = spyOn(despesaService, 'deleteDespesa').and.returnValue(from(Promise.resolve(mockResponse)));
-    spyOn(component.modalAlert, 'open').and.callThrough();
-
-    // Act
-    component.deleteDespesa(mockDespesas[1].id);
-    flush();
-
-    // Assert
-    expect(getDeleteDespesa).toHaveBeenCalled();
-    expect(component.modalAlert.open).toHaveBeenCalled();
-    expect(component.modalAlert.open).toHaveBeenCalledWith(AlertComponent, 'Despesa excluída com sucesso', 'Success');
-  }));
-
-  it('should try to deleteDespesa and open modal alert warning', fakeAsync(() => {
-    // Arrange
-    const mockResponse = { message: false };
-    const getDeleteDespesa = spyOn(despesaService, 'deleteDespesa').and.returnValue(from(Promise.resolve(mockResponse)));
-    spyOn(component.modalAlert, 'open').and.callThrough();
-
-    // Act
-    component.deleteDespesa(mockDespesas[2].id);
-    flush();
-
-    // Assert
-    expect(getDeleteDespesa).toHaveBeenCalled();
-    expect(component.modalAlert.open).toHaveBeenCalled();
-    expect(component.modalAlert.open).toHaveBeenCalledWith(AlertComponent, 'Erro ao excluír despesa', 'Warning');
-  }));
-
-  it('should throws error when try to deleteDespesa and open modal alert warning', fakeAsync(() => {
-    // Arrange
-    const errorMessage = { message: 'Fake Error Message Delete Despesa'};
-    const spyOnDeleteDespesa = spyOn(despesaService, 'deleteDespesa').and.returnValue(throwError(errorMessage));
-    const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
-
-    // Act
-    component.deleteDespesa(mockDespesas[1].id);
-    flush();
-
-    // Assert
-    expect(spyOnDeleteDespesa).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
-  }));
 });

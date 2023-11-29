@@ -62,9 +62,9 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnDestroy, OnC
         search: 'Pesquisar :',
         lengthMenu: 'Mostrando _MENU_ registros por página',
         zeroRecords: 'Nenhum registro encontrado.',
-        info: 'Mostrando página _PAGE_ de _PAGES_.',
+        info: 'Mostrando página _PAGE_ de _PAGES_. (_MAX_ registros no total)',
         infoEmpty: '0 registros.',
-        infoFiltered: '(filtrado de _MAX_ registros no total)',
+        infoFiltered: '',
         paginate: {
           previous: 'Anterior',
           first: 'Primeiro',

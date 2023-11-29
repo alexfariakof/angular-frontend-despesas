@@ -15,15 +15,10 @@ export class ReceitasFormComponent {
   private idUsuario: number = Number(localStorage.getItem('idUsuario')) || 0;
   categorias: ICategoria[]= [];
   receitaForm: FormGroup & IReceita;
-  setReceita(receita: IReceita): void {
-    this.receitaForm.patchValue(receita);
-  }
-
   private action: IAction = IAction.Create;
   setAction(_action: IAction){
     this.action = _action;
   }
-
   private refresh: Function = () => {};
   setRefresh(_refresh: Function) {
     this.refresh = _refresh;
@@ -45,15 +40,15 @@ export class ReceitasFormComponent {
       categoria: null,
       data: [dayjs().format('YYYY-MM-DD'), Validators.required],
       descricao: ['', Validators.required],
-      valor: ['', [Validators.required, this.greaterThanZero]],
+      valor: ['', [Validators.required, this.isGreaterThanZero]],
     }) as FormGroup & IReceita;
   }
 
   onSaveClick = () => {
     const receita : IReceita = this.receitaForm.getRawValue() as IReceita;
     switch (this.action) {
-      case IAction.Create: return this.createReceita(receita);
-      case IAction.Edit: return this.editReceita(receita);
+      case IAction.Create: return this.saveCreateReceita(receita);
+      case IAction.Edit: return this.saveEditReceita(receita);
       default: this.modalAlert.open(AlertComponent, "Ação não pode ser realizada.", 'Warning');
     }
   }
@@ -71,7 +66,7 @@ export class ReceitasFormComponent {
     });
   }
 
-  createReceita = (receita: IReceita) => {
+  saveCreateReceita = (receita: IReceita) => {
     this.receitaService.postReceita(receita)
     .subscribe({
       next: (result: any ) => {
@@ -88,7 +83,7 @@ export class ReceitasFormComponent {
     });
   }
 
-  editReceita = (receita: IReceita) => {
+  saveEditReceita = (receita: IReceita) => {
     this.receitaService.putReceita(receita)
     .subscribe({
       next: (response: any ) => {
@@ -105,7 +100,38 @@ export class ReceitasFormComponent {
     });
   }
 
-  greaterThanZero = (control: AbstractControl): ValidationErrors | null => {
+  editReceita = (idReceita: number) => {
+    this.receitaService.getReceitaById(idReceita)
+    .subscribe({
+      next: (response: any) => {
+        if (response.message === true && (response.receita !== undefined && response.receita !== null))
+          this.receitaForm.patchValue(response.receita);
+      },
+      error :(response : any) =>  {
+        this.modalAlert.open(AlertComponent, response.message, 'Warning');
+      }
+    });
+  }
+
+  deleteReceita = (idReceita: number, callBack: Function) => {
+    this.receitaService.deleteReceita(idReceita)
+    .subscribe({
+      next: (response: any) => {
+        if (response.message === true){
+          callBack();
+          this.modalAlert.open(AlertComponent, "Receita excluída com sucesso", 'Success');
+        }
+        else{
+          this.modalAlert.open(AlertComponent, 'Erro ao excluír receita', 'Warning');
+        }
+      },
+      error :(response : any) =>  {
+        this.modalAlert.open(AlertComponent, response.message, 'Warning');
+      }
+    });
+  }
+
+  isGreaterThanZero = (control: AbstractControl): ValidationErrors | null => {
     const value = control.value;
     if (value !== null && value > 0) {
       return null;

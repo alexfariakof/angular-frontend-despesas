@@ -22,6 +22,11 @@ describe('Unit Test ReceitasFormComponent', () => {
   let fixture: ComponentFixture<ReceitasFormComponent>;
   let mockAuthService: jasmine.SpyObj<AuthService>;
   let receitaService: ReceitaService;
+  let mockReceitas: IReceita[] = [
+    { id: 1, idUsuario: 1, idCategoria: 1, data: dayjs(), descricao: 'Teste Receitas 1', valor: 1.05, categoria: 'Categoria 1' },
+    { id: 2, idUsuario: 2, idCategoria: 2, data: dayjs(), descricao: 'Teste Receitas 2', valor: 2.05, categoria: 'Categoria 2' },
+    { id: 3, idUsuario: 1, idCategoria: 4, data: dayjs(), descricao: 'Teste Receitas 3', valor: 3.05, categoria: 'Categoria 3' },
+  ];
   let mockCategorias: ICategoria[] = [
     { id: 1, descricao: 'Teste Categoria Recaita 1', idTipoCategoria: 1, idUsuario: 1 },
     { id: 2, descricao: 'Teste Categoria Receita 2', idTipoCategoria: 2, idUsuario: 1 }
@@ -81,7 +86,7 @@ describe('Unit Test ReceitasFormComponent', () => {
     expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
   });
 
-  it('should Save receita onSaveClick with Action is Create and show successfully message', fakeAsync(() => {
+  it('should saveCreateReceita onSaveClick and show successfully message', fakeAsync(() => {
     // Arrange
     const receita: IReceita = {
       id: 0,
@@ -113,7 +118,7 @@ describe('Unit Test ReceitasFormComponent', () => {
     expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, 'Receita cadastrada com Sucesso.', 'Success');
   }));
 
-  it('should throws error when try to create receita and show error message', () => {
+  it('should throws error when try to saveCreateReceita and show error message', () => {
     // Arrange
     const errorMessage = { message: 'Fake Error Message Create Receita'};
     const receita: IReceita = {
@@ -141,7 +146,7 @@ describe('Unit Test ReceitasFormComponent', () => {
     expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
   });
 
-  it('should Save receita onSaveClick with Action is Edit', fakeAsync(() => {
+  it('should saveEditReceita onSaveClick', fakeAsync(() => {
     // Arrange
     const mockReceita: IReceita = {
       id: 1,
@@ -162,7 +167,7 @@ describe('Unit Test ReceitasFormComponent', () => {
     component.ngOnInit();
     component.setAction(IAction.Edit);
     component.setRefresh(() => { });
-    component.setReceita(mockReceita);
+    component.receitaForm.patchValue(mockReceita);
     component.onSaveClick();
     flush();
 
@@ -173,7 +178,7 @@ describe('Unit Test ReceitasFormComponent', () => {
     expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, 'Receita alterada com Sucesso.', 'Success');
   }));
 
-  it('should throws error when try to edit receita and show error message', () => {
+  it('should throws error when try to saveEditReceita and show error message', () => {
     // Arrange
     const errorMessage = { message: 'Fake Error Message Edit Receita'};
     const receita: IReceita = {
@@ -193,7 +198,7 @@ describe('Unit Test ReceitasFormComponent', () => {
     component.ngOnInit();
     component.setAction(IAction.Edit);
     component.setRefresh(() => { });
-    component.setReceita(receita);
+    component.receitaForm.patchValue(receita);
     component.onSaveClick();
 
     // Assert
@@ -214,4 +219,86 @@ describe('Unit Test ReceitasFormComponent', () => {
     // Assert
     expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
   });
+
+  it('should execute editReceita and SetFormReceita ', fakeAsync(() => {
+    // Arrange
+    const mockReceita: IReceita = mockReceitas[0];
+    const mockResponse: any = { message: true, receita: mockReceita };
+    const getReceitasById = spyOn(receitaService, 'getReceitaById').and.returnValue(from(Promise.resolve(mockResponse)));
+    const editReceita = spyOn(component, 'editReceita').and.callThrough();
+
+    // Act
+    component.editReceita(mockReceita.id);
+    flush();
+
+    // Assert
+    expect(getReceitasById).toHaveBeenCalled();
+    expect(editReceita).toHaveBeenCalled();
+    expect(editReceita).toHaveBeenCalledWith(mockReceita.id);
+  }));
+
+  it('should throws error when try to editReceita', fakeAsync(() => {
+    // Arrange
+    const errorMessage = { message: 'Fake Error Message Edit Receita'};
+    const mockReceita: IReceita = mockReceitas[1];
+    const getReceitasById = spyOn(receitaService, 'getReceitaById').and.returnValue(throwError(errorMessage));
+    const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
+
+    // Act
+    component.editReceita(mockReceita.id);
+    flush();
+
+    // Assert
+    expect(getReceitasById).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+  }));
+
+  it('should deleteReceita and open modal alert success', fakeAsync(() => {
+    // Arrange
+    const mockResponse = { message: true };
+    const getDeleteReceita = spyOn(receitaService, 'deleteReceita').and.returnValue(from(Promise.resolve(mockResponse)));
+    spyOn(component.modalAlert, 'open').and.callThrough();
+
+    // Act
+    component.deleteReceita(mockReceitas[1].id, () => { console.log('Fake Call Back'); });
+    flush();
+
+    // Assert
+    expect(getDeleteReceita).toHaveBeenCalled();
+    expect(component.modalAlert.open).toHaveBeenCalled();
+    expect(component.modalAlert.open).toHaveBeenCalledWith(AlertComponent, 'Receita excluída com sucesso', 'Success');
+  }));
+
+  it('should try to deleteReceita and open modal alert warning', fakeAsync(() => {
+    // Arrange
+    const mockResponse = { message: false };
+    const getDeleteReceita = spyOn(receitaService, 'deleteReceita').and.returnValue(from(Promise.resolve(mockResponse)));
+    spyOn(component.modalAlert, 'open').and.callThrough();
+
+    // Act
+    component.deleteReceita(mockReceitas[2].id, () => { console.log('Fake Call Back'); });
+    flush();
+
+    // Assert
+    expect(getDeleteReceita).toHaveBeenCalled();
+    expect(component.modalAlert.open).toHaveBeenCalled();
+    expect(component.modalAlert.open).toHaveBeenCalledWith(AlertComponent, 'Erro ao excluír receita', 'Warning');
+  }));
+
+  it('should throws error when try to deleteReceita and open modal alert warning', fakeAsync(() => {
+    // Arrange
+    const errorMessage = { message: 'Fake Error Message Delete Receita'};
+    const spyOnDeleteReceita = spyOn(receitaService, 'deleteReceita').and.returnValue(throwError(errorMessage));
+    const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
+
+    // Act
+    component.deleteReceita(mockReceitas[1].id, () => { console.log('Fake Call Back'); });
+    flush();
+
+    // Assert
+    expect(spyOnDeleteReceita).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+  }));
 });
