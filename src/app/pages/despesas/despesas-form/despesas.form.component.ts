@@ -41,7 +41,7 @@ export class DespesasFormComponent {
       categoria: null,
       data: [dayjs().format('YYYY-MM-DD'), Validators.required],
       descricao: ['', Validators.required],
-      valor: ['', [Validators.required, this.isGreaterThanZero]],
+      valor: [0, [Validators.required, this.isGreaterThanZero]],
       dataVencimento: null
     }) as FormGroup & IDespesa;
   }
@@ -60,16 +60,15 @@ export class DespesasFormComponent {
   }
 
   onSaveClick = () => {
-    const despesa : IDespesa = this.despesaForm.getRawValue() as IDespesa;
     switch (this.action) {
-      case IAction.Create: return this.saveCreateDespesa(despesa);
-      case IAction.Edit: return this.saveEditDespesa(despesa);
+      case IAction.Create: return this.saveCreateDespesa();
+      case IAction.Edit: return this.saveEditDespesa();
       default: this.modalAlert.open(AlertComponent, "Ação não pode ser realizada.", 'Warning');
     }
   }
 
-  saveCreateDespesa = (despesa: IDespesa) => {
-    this.despesaService.postDespesa(despesa)
+  saveCreateDespesa = () => {
+    this.despesaService.postDespesa(this.despesaForm.getRawValue() as IDespesa)
     .subscribe({
       next: (result: any ) => {
         if (result.message === true)
@@ -85,8 +84,8 @@ export class DespesasFormComponent {
     });
   }
 
-  saveEditDespesa = (despesa: IDespesa) => {
-    this.despesaService.putDespesa(despesa)
+  saveEditDespesa = () => {
+    this.despesaService.putDespesa(this.despesaForm.getRawValue() as IDespesa)
     .subscribe({
       next: (response: any ) => {
         if ((response !== undefined || response !== null) && response.message === true)

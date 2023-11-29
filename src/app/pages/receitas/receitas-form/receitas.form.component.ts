@@ -40,15 +40,14 @@ export class ReceitasFormComponent {
       categoria: null,
       data: [dayjs().format('YYYY-MM-DD'), Validators.required],
       descricao: ['', Validators.required],
-      valor: ['', [Validators.required, this.isGreaterThanZero]],
+      valor: [0, [Validators.required, this.isGreaterThanZero]],
     }) as FormGroup & IReceita;
   }
 
   onSaveClick = () => {
-    const receita : IReceita = this.receitaForm.getRawValue() as IReceita;
     switch (this.action) {
-      case IAction.Create: return this.saveCreateReceita(receita);
-      case IAction.Edit: return this.saveEditReceita(receita);
+      case IAction.Create: return this.saveCreateReceita();
+      case IAction.Edit: return this.saveEditReceita();
       default: this.modalAlert.open(AlertComponent, "Ação não pode ser realizada.", 'Warning');
     }
   }
@@ -66,8 +65,8 @@ export class ReceitasFormComponent {
     });
   }
 
-  saveCreateReceita = (receita: IReceita) => {
-    this.receitaService.postReceita(receita)
+  saveCreateReceita = () => {
+    this.receitaService.postReceita(this.receitaForm.getRawValue() as IReceita)
     .subscribe({
       next: (result: any ) => {
         if (result.message === true)
@@ -83,8 +82,8 @@ export class ReceitasFormComponent {
     });
   }
 
-  saveEditReceita = (receita: IReceita) => {
-    this.receitaService.putReceita(receita)
+  saveEditReceita = () => {
+    this.receitaService.putReceita(this.receitaForm.getRawValue() as IReceita)
     .subscribe({
       next: (response: any ) => {
         if ((response !== undefined || response !== null) && response.message === true)
@@ -132,7 +131,7 @@ export class ReceitasFormComponent {
   }
 
   isGreaterThanZero = (control: AbstractControl): ValidationErrors | null => {
-    const value = control.value;
+    let value = control.value;
     if (value !== null && value > 0) {
       return null;
     } else {
