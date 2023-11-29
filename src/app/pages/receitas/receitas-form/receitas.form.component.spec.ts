@@ -167,7 +167,7 @@ describe('Unit Test ReceitasFormComponent', () => {
     component.ngOnInit();
     component.setAction(IAction.Edit);
     component.setRefresh(() => { });
-    component.setReceita(mockReceita);
+    component.receitaForm.patchValue(mockReceita);
     component.onSaveClick();
     flush();
 
@@ -198,7 +198,7 @@ describe('Unit Test ReceitasFormComponent', () => {
     component.ngOnInit();
     component.setAction(IAction.Edit);
     component.setRefresh(() => { });
-    component.setReceita(receita);
+    component.receitaForm.patchValue(receita);
     component.onSaveClick();
 
     // Assert

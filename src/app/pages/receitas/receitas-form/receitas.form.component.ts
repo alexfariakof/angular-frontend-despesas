@@ -15,15 +15,10 @@ export class ReceitasFormComponent {
   private idUsuario: number = Number(localStorage.getItem('idUsuario')) || 0;
   categorias: ICategoria[]= [];
   receitaForm: FormGroup & IReceita;
-  setReceita(receita: IReceita): void {
-    this.receitaForm.patchValue(receita);
-  }
-
   private action: IAction = IAction.Create;
   setAction(_action: IAction){
     this.action = _action;
   }
-
   private refresh: Function = () => {};
   setRefresh(_refresh: Function) {
     this.refresh = _refresh;
@@ -110,7 +105,7 @@ export class ReceitasFormComponent {
     .subscribe({
       next: (response: any) => {
         if (response.message === true && (response.receita !== undefined && response.receita !== null))
-          this.setReceita(response.receita);
+          this.receitaForm.patchValue(response.receita);
       },
       error :(response : any) =>  {
         this.modalAlert.open(AlertComponent, response.message, 'Warning');

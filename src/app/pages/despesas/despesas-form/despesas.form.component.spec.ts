@@ -171,7 +171,7 @@ describe('Unit Test DespesasFormComponent', () => {
     component.ngOnInit();
     component.setAction(IAction.Edit);
     component.setRefresh(() => { });
-    component.setDespesa(mockDespesa);
+    component.despesaForm.patchValue(mockDespesa);
     component.onSaveClick();
     flush();
 
@@ -204,7 +204,7 @@ describe('Unit Test DespesasFormComponent', () => {
     component.ngOnInit();
     component.setAction(IAction.Edit);
     component.setRefresh(() => { });
-    component.setDespesa(despesa);
+    component.despesaForm.patchValue(despesa);
     component.onSaveClick();
 
     // Assert
@@ -212,14 +212,14 @@ describe('Unit Test DespesasFormComponent', () => {
     expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
   });
 
-  it('should throws error when onClickSave and show error message', () => {
+  it('should show error message when onClickSave', () => {
     // Arrange
-    const errorMessage = Error('Fake Error Message Edit Despesa');
-    spyOn(despesaService, 'postDespesa').and.throwError(errorMessage);
+    const errorMessage = Error('Ação não pode ser realizada.');
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open').and.callThrough();
 
     // Act
     component.ngOnInit();
+    component.setAction(undefined);
     component.onSaveClick();
 
     // Assert

@@ -6,6 +6,7 @@ import { IReceita, IAction } from "src/app/shared/interfaces";
 import { MenuService } from "src/app/shared/services";
 import { ReceitaService } from "src/app/shared/services/api";
 import { ReceitasFormComponent } from "./receitas-form/receitas.form.component";
+
 @Component({
   selector: 'app-receitas',
   templateUrl: './receitas.component.html',
