@@ -18,11 +18,9 @@ export class ReceitasFormComponent {
   receitaForm: FormGroup & IReceita;
 
   private _action: IAction = IAction.Create;
-  get action(): IAction { return this._action; }
   set action(action: IAction) { this._action = action; }
 
   private _refresh: Function = () => {};
-  get refresh(): Function { return this._refresh; }
   set refresh(refresh: Function) { this._refresh = refresh; }
 
   constructor(

@@ -1,4 +1,5 @@
-export interface LancamentoDataSet {
+export interface ILancamento {
+  id: number;
   idDespesa: number;
   idReceita: number;
   data: string;
