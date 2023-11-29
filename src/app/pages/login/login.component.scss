@@ -24,7 +24,11 @@
   transform: translate(-50%, -50%);
 }
 
-.error-input {
-  color: red;
-   font-size: 0.8rem;
+.error-bi-input {
+  display: inline;
+
+}
+
+.not-error-input {
+  display: none;
 }
