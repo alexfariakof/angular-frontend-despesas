@@ -1,6 +1,7 @@
+import { UserDataService } from './../../shared/services/utils/user-data-service/user.data.service';
 import { Component, ViewChild } from "@angular/core";
 import * as dayjs from "dayjs";
-import { BarraFerramentaClass, DataTableComponent, AlertComponent, ModalFormComponent, ModalConfirmComponent } from "src/app/shared/components";
+import { BarraFerramentaClass, DataTableComponent, AlertComponent, ModalFormComponent, ModalConfirmComponent, AlertType } from "src/app/shared/components";
 import { ReceitaDataSet, ReceitaColumns } from "src/app/shared/datatable-config/receitas";
 import { IReceita, IAction } from "src/app/shared/interfaces";
 import { MenuService } from "src/app/shared/services";
@@ -14,7 +15,6 @@ import { ReceitasFormComponent } from "./receitas-form/receitas.form.component";
 })
 export class ReceitasComponent implements BarraFerramentaClass {
   @ViewChild(DataTableComponent) dataTable: DataTableComponent;
-  private idUsuario: number = Number(localStorage.getItem('idUsuario'));
   receitasData: ReceitaDataSet[] = [];
   columns = ReceitaColumns;
 
@@ -24,7 +24,8 @@ export class ReceitasComponent implements BarraFerramentaClass {
     public modalForm: ModalFormComponent,
     public modalConfirm: ModalConfirmComponent,
     public receitaService: ReceitaService,
-    private receitasFormComponent: ReceitasFormComponent
+    private receitasFormComponent: ReceitasFormComponent,
+    private userDataService: UserDataService
     ) { }
 
   ngOnInit() {
@@ -33,7 +34,7 @@ export class ReceitasComponent implements BarraFerramentaClass {
   }
 
   initializeDataTable = () => {
-    this.receitaService.getReceitaByIdUsuario(this.idUsuario)
+    this.receitaService.getReceitaByIdUsuario(this.userDataService.getIdUsuario())
     .subscribe({
       next: (result: IReceita[]) => {
         if (result)
@@ -45,13 +46,13 @@ export class ReceitasComponent implements BarraFerramentaClass {
 
       },
       error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, 'Warning');
+        this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
       }
     });
   }
 
   updateDatatable = () => {
-    this.receitaService.getReceitaByIdUsuario(this.idUsuario)
+    this.receitaService.getReceitaByIdUsuario(this.userDataService.getIdUsuario())
     .subscribe({
       next: (result: any) => {
         if (result)
@@ -61,7 +62,7 @@ export class ReceitasComponent implements BarraFerramentaClass {
         }
       },
       error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, 'Warning');
+        this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
       }
     });
   }

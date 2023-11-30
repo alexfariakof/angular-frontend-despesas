@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { MdbFormsModule } from "mdb-angular-ui-kit/forms";
 import { from, throwError, of } from "rxjs";
-import { AlertComponent, ModalFormComponent, ModalConfirmComponent, DataTableComponent } from "src/app/shared/components";
+import { AlertComponent, ModalFormComponent, ModalConfirmComponent, DataTableComponent, AlertType } from "src/app/shared/components";
 import { CategoriaDataSet } from "src/app/shared/datatable-config/categorias";
 import { ICategoria } from "src/app/shared/interfaces";
 import { AuthService, MenuService } from "src/app/shared/services";
@@ -89,7 +89,7 @@ describe('Unit Test CategoriasComponent', () => {
     // Assert
     expect(getCategoriasSpy).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
   });
 
   it('should update data table on updateDatatable', () => {
@@ -116,7 +116,7 @@ describe('Unit Test CategoriasComponent', () => {
     // Assert
     expect(getCategoriasSpy).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
   });
 
   it('should return categoriasData on getCategoriasData', () => {
@@ -195,7 +195,7 @@ describe('Unit Test CategoriasComponent', () => {
     // Assert
     expect(getCategoriaByIdSpy).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
   }));
 
   it('should open modalConfirm when onDeleteClick', () => {
@@ -222,7 +222,7 @@ describe('Unit Test CategoriasComponent', () => {
     // Assert
     expect(getDeleteCategoria).toHaveBeenCalled();
     expect(component.modalAlert.open).toHaveBeenCalled();
-    expect(component.modalAlert.open).toHaveBeenCalledWith(AlertComponent, 'Categoria excluída com sucesso', 'Success');
+    expect(component.modalAlert.open).toHaveBeenCalledWith(AlertComponent, 'Categoria excluída com sucesso', AlertType.Success);
   }));
 
   it('should try deleteCategoria throw error and open modal alert warning', fakeAsync(() => {
@@ -238,7 +238,7 @@ describe('Unit Test CategoriasComponent', () => {
     // Assert
     expect(getDeleteCategoria).toHaveBeenCalled();
     expect(component.modalAlert.open).toHaveBeenCalled();
-    expect(component.modalAlert.open).toHaveBeenCalledWith(AlertComponent, 'Erro ao excluír categoria', 'Warning');
+    expect(component.modalAlert.open).toHaveBeenCalledWith(AlertComponent, 'Erro ao excluír categoria', AlertType.Warning);
   }));
 
   it('should throw error when deleteCategoria ', fakeAsync(() => {
@@ -255,6 +255,6 @@ describe('Unit Test CategoriasComponent', () => {
     // Assert
     expect(getDeleteCategoria).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, 'Warning');
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
   }));
 });

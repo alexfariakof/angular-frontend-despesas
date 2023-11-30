@@ -1,6 +1,7 @@
+import { UserDataService } from './../../shared/services/utils/user-data-service/user.data.service';
 import { Component, OnInit, ViewChild } from "@angular/core";
 import * as dayjs from "dayjs";
-import { BarraFerramentaClass, DataTableComponent, AlertComponent, ModalFormComponent, ModalConfirmComponent } from "src/app/shared/components";
+import { BarraFerramentaClass, DataTableComponent, AlertComponent, ModalFormComponent, ModalConfirmComponent, AlertType } from "src/app/shared/components";
 import { DespesaDataSet, DespesaColumns } from "src/app/shared/datatable-config/despesas";
 import { IDespesa, IAction } from "src/app/shared/interfaces";
 import { MenuService } from "src/app/shared/services";
@@ -13,7 +14,6 @@ import { DespesasFormComponent } from "./despesas-form/despesas.form.component";
 })
 export class DespesasComponent implements BarraFerramentaClass, OnInit {
   @ViewChild(DataTableComponent) dataTable: DataTableComponent;
-  private idUsuario: number = Number(localStorage.getItem('idUsuario'));
   despesasData: DespesaDataSet[] = [];
   columns = DespesaColumns;
 
@@ -23,7 +23,8 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
     public modalForm: ModalFormComponent,
     public modalConfirm: ModalConfirmComponent,
     public despesaService: DespesaService,
-    private despesasFormComponent: DespesasFormComponent
+    private despesasFormComponent: DespesasFormComponent,
+    private userDataService: UserDataService
     ) { }
 
   ngOnInit() {
@@ -32,7 +33,7 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
   }
 
   initializeDataTable = () => {
-    this.despesaService.getDespesaByIdUsuario(this.idUsuario)
+    this.despesaService.getDespesaByIdUsuario(this.userDataService.getIdUsuario())
     .subscribe({
       next: (result: IDespesa[]) => {
         if (result)
@@ -44,13 +45,13 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
 
       },
       error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, 'Warning');
+        this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
       }
     });
   }
 
   updateDatatable = () => {
-    this.despesaService.getDespesaByIdUsuario(this.idUsuario)
+    this.despesaService.getDespesaByIdUsuario(this.userDataService.getIdUsuario())
     .subscribe({
       next: (result: any) => {
         if (result)
@@ -60,7 +61,7 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
         }
       },
       error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, 'Warning');
+        this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
       }
     });
   }
