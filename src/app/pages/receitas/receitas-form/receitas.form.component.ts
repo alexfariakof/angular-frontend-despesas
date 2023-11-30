@@ -1,11 +1,12 @@
 import { UserDataService } from './../../../shared/services/utils/user-data-service/user.data.service';
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import * as dayjs from 'dayjs';
 import { AlertComponent, AlertType } from 'src/app/shared/components';
 import { ICategoria, IReceita, IAction } from 'src/app/shared/interfaces';
 import { ReceitaService } from 'src/app/shared/services/api';
+import { CustomValidators } from 'src/app/shared/validators';
 
 @Component({
   selector: 'app-receitas-form',
@@ -36,7 +37,7 @@ export class ReceitasFormComponent {
       categoria: null,
       data: [dayjs().format('YYYY-MM-DD'), Validators.required],
       descricao: ['', Validators.required],
-      valor: [0, [Validators.required, this.isGreaterThanZero]],
+      valor: [0, [Validators.required, CustomValidators.isGreaterThanZero]],
     }) as FormGroup & IReceita;
   }
 
@@ -127,14 +128,5 @@ export class ReceitasFormComponent {
         this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
       }
     });
-  }
-
-  isGreaterThanZero = (control: AbstractControl): ValidationErrors | null => {
-    let value = control.value;
-    if (value !== null && value > 0) {
-      return null;
-    } else {
-      return { greaterThanZero: true };
-    }
   }
 }

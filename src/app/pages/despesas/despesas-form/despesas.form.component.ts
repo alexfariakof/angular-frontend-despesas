@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import * as dayjs from 'dayjs';
 import { AlertComponent, AlertType } from 'src/app/shared/components';
 import { IDespesa, ICategoria, IAction } from 'src/app/shared/interfaces';
 import { UserDataService } from 'src/app/shared/services';
 import { DespesaService } from 'src/app/shared/services/api';
+import { CustomValidators } from 'src/app/shared/validators';
 
 @Component({
   selector: 'app-despesas-form',
@@ -25,7 +26,6 @@ export class DespesasFormComponent {
     public activeModal:NgbActiveModal,
     public despesaService: DespesaService,
     private userDataService: UserDataService
-
     ) {}
 
   ngOnInit(): void{
@@ -37,7 +37,7 @@ export class DespesasFormComponent {
       categoria: null,
       data: [dayjs().format('YYYY-MM-DD'), Validators.required],
       descricao: ['', Validators.required],
-      valor: [0, [Validators.required, this.isGreaterThanZero]],
+      valor: [0, [Validators.required, CustomValidators.isGreaterThanZero]],
       dataVencimento: null
     }) as FormGroup & IDespesa;
   }
@@ -132,14 +132,5 @@ export class DespesasFormComponent {
         this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
       }
     });
-  }
-
-  isGreaterThanZero = (control: AbstractControl): ValidationErrors | null => {
-    let value = control.value;
-    if (value !== null && value > 0) {
-      return null;
-    } else {
-      return { greaterThanZero: true };
-    }
   }
 }
