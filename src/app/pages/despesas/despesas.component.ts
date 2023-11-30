@@ -1,6 +1,7 @@
+import { UserDataService } from './../../shared/services/utils/user-data-service/user.data.service';
 import { Component, OnInit, ViewChild } from "@angular/core";
 import * as dayjs from "dayjs";
-import { BarraFerramentaClass, DataTableComponent, AlertComponent, ModalFormComponent, ModalConfirmComponent } from "src/app/shared/components";
+import { BarraFerramentaClass, DataTableComponent, AlertComponent, ModalFormComponent, ModalConfirmComponent, AlertType } from "src/app/shared/components";
 import { DespesaDataSet, DespesaColumns } from "src/app/shared/datatable-config/despesas";
 import { IDespesa, IAction } from "src/app/shared/interfaces";
 import { MenuService } from "src/app/shared/services";
@@ -13,7 +14,6 @@ import { DespesasFormComponent } from "./despesas-form/despesas.form.component";
 })
 export class DespesasComponent implements BarraFerramentaClass, OnInit {
   @ViewChild(DataTableComponent) dataTable: DataTableComponent;
-  private idUsuario: number = Number(localStorage.getItem('idUsuario'));
   despesasData: DespesaDataSet[] = [];
   columns = DespesaColumns;
 
@@ -22,7 +22,9 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
     public modalAlert: AlertComponent,
     public modalForm: ModalFormComponent,
     public modalConfirm: ModalConfirmComponent,
-    public despesaService: DespesaService
+    public despesaService: DespesaService,
+    private despesasFormComponent: DespesasFormComponent,
+    private userDataService: UserDataService
     ) { }
 
   ngOnInit() {
@@ -31,7 +33,7 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
   }
 
   initializeDataTable = () => {
-    this.despesaService.getDespesaByIdUsuario(this.idUsuario)
+    this.despesaService.getDespesaByIdUsuario(this.userDataService.getIdUsuario())
     .subscribe({
       next: (result: IDespesa[]) => {
         if (result)
@@ -43,13 +45,13 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
 
       },
       error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, 'Warning');
+        this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
       }
     });
   }
 
   updateDatatable = () => {
-    this.despesaService.getDespesaByIdUsuario(this.idUsuario)
+    this.despesaService.getDespesaByIdUsuario(this.userDataService.getIdUsuario())
     .subscribe({
       next: (result: any) => {
         if (result)
@@ -59,7 +61,7 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
         }
       },
       error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, 'Warning');
+        this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
       }
     });
   }
@@ -93,47 +95,20 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
   }
 
   onClickEdit = (idDespesa: number) =>{
-    this.despesaService.getDespesaById(idDespesa)
-    .subscribe({
-      next: (response: any) => {
-        if (response.message === true && (response.despesa !== undefined && response.despesa !== null))
-          this.editDespesa(response.despesa);
-      },
-      error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, 'Warning');
-      }
-    });
-  }
-
-  editDespesa = (despesa: IDespesa) => {
     const modalRef = this.modalForm.modalService.open(DespesasFormComponent, { centered: true });
     modalRef.shown.subscribe(() => {
-      modalRef.componentInstance.setAction(IAction.Edit);
-      modalRef.componentInstance.setRefresh(() => { this.updateDatatable(); });
-      modalRef.componentInstance.setDespesa(despesa);
+      modalRef.componentInstance.action = IAction.Edit;
+      modalRef.componentInstance.refresh = () => { this.updateDatatable(); };
+      modalRef.componentInstance.editDespesa(idDespesa);
     });
   }
 
   onClickDelete = (idDespesa: number) => {
     const modalRef = this.modalConfirm.open(ModalConfirmComponent, `Deseja excluir a despesa ${ this.dataTable.row.descricao } ?`);
-    modalRef.componentInstance.setConfirmButton(() => { this.deleteDespesa(idDespesa); });
-  }
-
-  deleteDespesa = (idDespesa: number) => {
-    this.despesaService.deleteDespesa(idDespesa)
-    .subscribe({
-      next: (response: any) => {
-        if (response.message === true){
-          this.updateDatatable();
-          this.modalAlert.open(AlertComponent, "Despesa excluída com sucesso", 'Success');
-        }
-        else{
-          this.modalAlert.open(AlertComponent, 'Erro ao excluír despesa', 'Warning');
-        }
-      },
-      error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, 'Warning');
-      }
+    modalRef.shown.subscribe(() => {
+      modalRef.componentInstance.setConfirmButton(() => {
+        this.despesasFormComponent.deleteDespesa(idDespesa, () => { this.updateDatatable(); });
+      });
     });
   }
 }

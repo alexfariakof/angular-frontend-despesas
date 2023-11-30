@@ -4,7 +4,7 @@ import { ReactiveFormsModule, FormBuilder } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { MdbFormsModule } from "mdb-angular-ui-kit/forms";
 import { of, throwError } from "rxjs";
-import { AlertComponent } from "src/app/shared/components";
+import { AlertComponent, AlertType } from "src/app/shared/components";
 import { ICategoria, IAction } from "src/app/shared/interfaces";
 import { CategoriasFormComponent } from "./categorias.form.component";
 import { CategoriaService } from "src/app/shared/services/api";
@@ -54,7 +54,7 @@ describe('Unit Test CategoriasFormComponent', () => {
     expect(categoriaServiceSpy).toHaveBeenCalledWith(jasmine.objectContaining(categoria));
     expect(modalCloseSpy).toHaveBeenCalled();
     expect(spyRefresh).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, 'Categoria cadastrada com Sucesso.', 'Success');
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, 'Categoria cadastrada com Sucesso.', AlertType.Success);
   });
 
   it('should edit categoria and show successfully message', () => {
@@ -78,7 +78,7 @@ describe('Unit Test CategoriasFormComponent', () => {
     expect(categoriaServiceSpy).toHaveBeenCalledWith(jasmine.objectContaining(categoria));
     expect(modalCloseSpy).toHaveBeenCalled();
     expect(spyRefresh).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, 'Categoria alterada com Sucesso.', 'Success');
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, 'Categoria alterada com Sucesso.', AlertType.Success);
   });
 
   it('should call try create categoria throw error and show error message', fakeAsync(() => {
@@ -94,7 +94,7 @@ describe('Unit Test CategoriasFormComponent', () => {
     component.onSaveClick();
 
     // Assert
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, 'Warning');
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, AlertType.Warning);
   }));
 
   it('should return FormGroup', () => {

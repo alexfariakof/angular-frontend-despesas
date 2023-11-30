@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AlertComponent } from 'src/app/shared/components';
+import { AlertComponent, AlertType } from 'src/app/shared/components';
 import { ICategoria, IAction } from 'src/app/shared/interfaces';
+import { UserDataService } from 'src/app/shared/services';
 import { CategoriaService } from 'src/app/shared/services/api';
 @Component({
   selector: 'app-categorias-form',
@@ -11,8 +12,6 @@ import { CategoriaService } from 'src/app/shared/services/api';
 })
 
 export class CategoriasFormComponent implements OnInit {
-  private idUsuario: number = Number(localStorage.getItem('idUsuario'));
-
   categoriatForm: FormGroup & ICategoria;
   setCategoria(categoria): void {
     this.categoriatForm.patchValue(categoria);
@@ -32,14 +31,15 @@ export class CategoriasFormComponent implements OnInit {
     public formbuilder: FormBuilder,
     public modalAlert: AlertComponent,
     public activeModal:NgbActiveModal,
-    public categoriaService: CategoriaService
+    public categoriaService: CategoriaService,
+    private userDataService: UserDataService
     ) {}
 
   ngOnInit(): void{
     this.categoriatForm = this.formbuilder.group({
       id: [0, Validators.required],
       descricao: ['', Validators.required],
-      idUsuario: this.idUsuario,
+      idUsuario: this.userDataService.getIdUsuario(),
       idTipoCategoria: ['', Validators.required]
       }) as FormGroup & ICategoria;
   }
@@ -56,11 +56,11 @@ export class CategoriasFormComponent implements OnInit {
             {
               this.activeModal.close();
               this.refresh();
-              this.modalAlert.open(AlertComponent, "Categoria cadastrada com Sucesso.", 'Success');
+              this.modalAlert.open(AlertComponent, "Categoria cadastrada com Sucesso.", AlertType.Success);
             }
           },
           error :(error : any) =>  {
-            this.modalAlert.open(AlertComponent, error.message, 'Warning');
+            this.modalAlert.open(AlertComponent, error.message, AlertType.Warning);
           }
         });
       }
@@ -72,17 +72,17 @@ export class CategoriasFormComponent implements OnInit {
             {
               this.activeModal.close();
               this.refresh();
-              this.modalAlert.open(AlertComponent, "Categoria alterada com Sucesso.", 'Success');
+              this.modalAlert.open(AlertComponent, "Categoria alterada com Sucesso.", AlertType.Success);
             }
           },
           error :(error : any) =>  {
-            this.modalAlert.open(AlertComponent, error.message, 'Warning');
+            this.modalAlert.open(AlertComponent, error.message, AlertType.Warning);
           }
         });
       }
     }
     catch(error){
-      this.modalAlert.open(AlertComponent, error.message, 'Warning');
+      this.modalAlert.open(AlertComponent, error.message, AlertType.Warning);
     }
   }
 }

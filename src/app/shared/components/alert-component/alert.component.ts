@@ -28,8 +28,8 @@ export class AlertComponent {
   }
 }
 
-type AlertType = 'Success' | 'Warning';
+export enum AlertType { Success = 0, Warning = 1 };
 const AlertTypeClass: Record<AlertType, string> = {
-  Success: 'alert alert-success mt-2 bi bi-emoji-smile',
-  Warning: 'alert alert-danger mt-2 bi bi-exclamation-circle',
+  0: 'alert alert-success mt-2 bi bi-emoji-smile',
+  1: 'alert alert-danger mt-2 bi bi-exclamation-circle',
 };

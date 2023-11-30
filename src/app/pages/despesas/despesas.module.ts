@@ -13,5 +13,6 @@ import { DespesasRoutingModule } from "./despesas.routing.module";
 @NgModule({
   declarations: [DespesasComponent, DespesasFormComponent ],
   imports: [CommonModule, DespesasRoutingModule, ReactiveFormsModule, SharedModule, MatIconModule, MatInputModule, MatFormFieldModule, MatNativeDateModule, MatDatepickerModule],
+  providers: [DespesasFormComponent]
 })
 export class DespesasModule {}

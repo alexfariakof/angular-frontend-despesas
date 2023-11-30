@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import * as dayjs from 'dayjs';
-import { AlertComponent } from 'src/app/shared/components';
+import { AlertComponent, AlertType } from 'src/app/shared/components';
 import { IDespesa, ICategoria, IAction } from 'src/app/shared/interfaces';
+import { UserDataService } from 'src/app/shared/services';
 import { DespesaService } from 'src/app/shared/services/api';
+import { CustomValidators } from 'src/app/shared/validators';
+
 @Component({
   selector: 'app-despesas-form',
   templateUrl: './despesas.form.component.html',
@@ -12,106 +15,122 @@ import { DespesaService } from 'src/app/shared/services/api';
 })
 
 export class DespesasFormComponent {
-  private idUsuario: number = Number(localStorage.getItem('idUsuario')) || 0;
   categorias: ICategoria[]= [];
   despesaForm: FormGroup & IDespesa;
-  setDespesa(despesa: IDespesa): void {
-    this.despesaForm.patchValue(despesa);
-  }
-
-  private action: IAction = IAction.Create;
-  setAction(_action: IAction){
-    this.action = _action;
-  }
-
-  private refresh: Function = () => {};
-  setRefresh(_refresh: Function) {
-    this.refresh = _refresh;
-  }
+  action: IAction = IAction.Create;
+  refresh: Function = () => {};
 
   constructor(
     public formbuilder: FormBuilder,
     public modalAlert: AlertComponent,
     public activeModal:NgbActiveModal,
-    public despesaService: DespesaService
+    public despesaService: DespesaService,
+    private userDataService: UserDataService
     ) {}
 
   ngOnInit(): void{
-    this.getCatgeorias()
+    this.getCatgeoriasFromDespesas();
     this.despesaForm = this.formbuilder.group({
       id: [0],
-      idUsuario: this.idUsuario,
+      idUsuario: this.userDataService.getIdUsuario(),
       idCategoria: [null, Validators.required],
       categoria: null,
       data: [dayjs().format('YYYY-MM-DD'), Validators.required],
       descricao: ['', Validators.required],
-      valor: ['', [Validators.required, this.greaterThanZero]],
+      valor: [0, [Validators.required, CustomValidators.isGreaterThanZero]],
       dataVencimento: null
     }) as FormGroup & IDespesa;
   }
 
-  getCatgeorias = () => {
-    this.despesaService.getCategorias(this.idUsuario)
+  getCatgeoriasFromDespesas = () => {
+    this.despesaService.getCategorias(this.userDataService.getIdUsuario())
       .subscribe({
         next: (result: ICategoria[]) => {
           if (result)
             this.categorias = result;
       },
       error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, 'Warning');
+        this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
       }
     });
   }
 
   onSaveClick = () => {
-    const despesa : IDespesa = this.despesaForm.getRawValue() as IDespesa;
-    try {
-      if (this.action === IAction.Create){
-
-        this.despesaService.postDespesa(despesa)
-        .subscribe({
-          next: (result: any ) => {
-            if (result.message === true)
-            {
-              this.activeModal.close();
-              this.refresh();
-              this.modalAlert.open(AlertComponent, "Despesa cadastrada com Sucesso.", 'Success');
-            }
-          },
-          error :(error : any) =>  {
-            this.modalAlert.open(AlertComponent, error.message, 'Warning');
-          }
-        });
-      }
-      else if (this.action === IAction.Edit) {
-        this.despesaService.putDespesa(despesa)
-        .subscribe({
-          next: (response: any ) => {
-            if ((response !== undefined || response !== null) && response.message === true)
-            {
-              this.activeModal.close();
-              this.refresh();
-              this.modalAlert.open(AlertComponent, "Despesa alterada com Sucesso.", 'Success');
-            }
-          },
-          error :(error : any) =>  {
-            this.modalAlert.open(AlertComponent, error.message, 'Warning');
-          }
-        });
-      }
-    }
-    catch(error){
-      this.modalAlert.open(AlertComponent, error.message, 'Warning');
+    switch (this.action) {
+      case IAction.Create:
+        this.saveCreateDespesa();
+        break;
+      case IAction.Edit:
+        this.saveEditDespesa();
+        break;
+      default:
+        this.modalAlert.open(AlertComponent, 'Ação não pode ser realizada.', AlertType.Warning);
     }
   }
 
-  greaterThanZero = (control: AbstractControl): ValidationErrors | null => {
-    const value = control.value;
-    if (value !== null && value > 0) {
-      return null;
-    } else {
-      return { greaterThanZero: true };
-    }
+  saveCreateDespesa = () => {
+    this.despesaService.postDespesa(this.despesaForm.getRawValue() as IDespesa)
+    .subscribe({
+      next: (result: any ) => {
+        if (result.message === true)
+        {
+          this.activeModal.close();
+          this.refresh();
+          this.modalAlert.open(AlertComponent, 'Despesa cadastrada com Sucesso.', AlertType.Success);
+        }
+      },
+      error :(error : any) =>  {
+        this.modalAlert.open(AlertComponent, error.message, AlertType.Warning);
+      }
+    });
   }
 
+  saveEditDespesa = () => {
+    this.despesaService.putDespesa(this.despesaForm.getRawValue() as IDespesa)
+    .subscribe({
+      next: (response: any ) => {
+        if (response !== undefined && response !== null && response.message === true)
+        {
+          this.activeModal.close();
+          this.refresh();
+          this.modalAlert.open(AlertComponent, 'Despesa alterada com Sucesso.', AlertType.Success);
+        }
+      },
+      error :(error : any) =>  {
+        this.modalAlert.open(AlertComponent, error.message, AlertType.Warning);
+      }
+    });
+
+  }
+
+  editDespesa = (idDespesa: number) => {
+    this.despesaService.getDespesaById(idDespesa)
+    .subscribe({
+      next: (response: any) => {
+        if (response.message === true && response.despesa !== undefined && response.despesa !== null)
+          this.despesaForm.patchValue(response.despesa);
+      },
+      error :(response : any) =>  {
+        this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
+      }
+    });
+  }
+
+  deleteDespesa = (idDespesa: number, callBack: Function) => {
+    this.despesaService.deleteDespesa(idDespesa)
+    .subscribe({
+      next: (response: any) => {
+        if (response.message === true){
+          callBack();
+          this.modalAlert.open(AlertComponent, 'Despesa excluída com sucesso', AlertType.Success);
+        }
+        else{
+          this.modalAlert.open(AlertComponent, 'Erro ao excluír despesa', AlertType.Warning);
+        }
+      },
+      error :(response : any) =>  {
+        this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
+      }
+    });
+  }
 }

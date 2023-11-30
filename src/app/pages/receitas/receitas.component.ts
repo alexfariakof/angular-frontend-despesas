@@ -1,11 +1,13 @@
+import { UserDataService } from './../../shared/services/utils/user-data-service/user.data.service';
 import { Component, ViewChild } from "@angular/core";
 import * as dayjs from "dayjs";
-import { BarraFerramentaClass, DataTableComponent, AlertComponent, ModalFormComponent, ModalConfirmComponent } from "src/app/shared/components";
+import { BarraFerramentaClass, DataTableComponent, AlertComponent, ModalFormComponent, ModalConfirmComponent, AlertType } from "src/app/shared/components";
 import { ReceitaDataSet, ReceitaColumns } from "src/app/shared/datatable-config/receitas";
 import { IReceita, IAction } from "src/app/shared/interfaces";
 import { MenuService } from "src/app/shared/services";
 import { ReceitaService } from "src/app/shared/services/api";
 import { ReceitasFormComponent } from "./receitas-form/receitas.form.component";
+
 @Component({
   selector: 'app-receitas',
   templateUrl: './receitas.component.html',
@@ -13,7 +15,6 @@ import { ReceitasFormComponent } from "./receitas-form/receitas.form.component";
 })
 export class ReceitasComponent implements BarraFerramentaClass {
   @ViewChild(DataTableComponent) dataTable: DataTableComponent;
-  private idUsuario: number = Number(localStorage.getItem('idUsuario'));
   receitasData: ReceitaDataSet[] = [];
   columns = ReceitaColumns;
 
@@ -22,7 +23,9 @@ export class ReceitasComponent implements BarraFerramentaClass {
     public modalAlert: AlertComponent,
     public modalForm: ModalFormComponent,
     public modalConfirm: ModalConfirmComponent,
-    public receitaService: ReceitaService
+    public receitaService: ReceitaService,
+    private receitasFormComponent: ReceitasFormComponent,
+    private userDataService: UserDataService
     ) { }
 
   ngOnInit() {
@@ -31,7 +34,7 @@ export class ReceitasComponent implements BarraFerramentaClass {
   }
 
   initializeDataTable = () => {
-    this.receitaService.getReceitaByIdUsuario(this.idUsuario)
+    this.receitaService.getReceitaByIdUsuario(this.userDataService.getIdUsuario())
     .subscribe({
       next: (result: IReceita[]) => {
         if (result)
@@ -43,13 +46,13 @@ export class ReceitasComponent implements BarraFerramentaClass {
 
       },
       error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, 'Warning');
+        this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
       }
     });
   }
 
   updateDatatable = () => {
-    this.receitaService.getReceitaByIdUsuario(this.idUsuario)
+    this.receitaService.getReceitaByIdUsuario(this.userDataService.getIdUsuario())
     .subscribe({
       next: (result: any) => {
         if (result)
@@ -59,7 +62,7 @@ export class ReceitasComponent implements BarraFerramentaClass {
         }
       },
       error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, 'Warning');
+        this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
       }
     });
   }
@@ -92,47 +95,20 @@ export class ReceitasComponent implements BarraFerramentaClass {
   }
 
   onClickEdit = (idReceita: number) =>{
-    this.receitaService.getReceitaById(idReceita)
-    .subscribe({
-      next: (response: any) => {
-        if (response.message === true && (response.receita !== undefined && response.receita !== null))
-          this.editReceita(response.receita);
-      },
-      error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, 'Warning');
-      }
-    });
-  }
-
-  editReceita = (receita: IReceita) => {
     const modalRef = this.modalForm.modalService.open(ReceitasFormComponent, { centered: true });
     modalRef.shown.subscribe(() => {
-      modalRef.componentInstance.setAction(IAction.Edit);
-      modalRef.componentInstance.setRefresh(() => { this.updateDatatable(); });
-      modalRef.componentInstance.setReceita(receita);
+      modalRef.componentInstance.action = IAction.Edit;
+      modalRef.componentInstance.refresh = () => { this.updateDatatable(); };
+      modalRef.componentInstance.editReceita(idReceita);
     });
   }
 
   onClickDelete = (idReceita: number) => {
     const modalRef = this.modalConfirm.open(ModalConfirmComponent, `Deseja excluir a receita ${ this.dataTable.row.descricao } ?`);
-    modalRef.componentInstance.setConfirmButton(() => { this.deleteReceita(idReceita); });
-  }
-
-  deleteReceita = (idReceita: number) => {
-    this.receitaService.deleteReceita(idReceita)
-    .subscribe({
-      next: (response: any) => {
-        if (response.message === true){
-          this.updateDatatable();
-          this.modalAlert.open(AlertComponent, "Receita excluída com sucesso", 'Success');
-        }
-        else{
-          this.modalAlert.open(AlertComponent, 'Erro ao excluír receita', 'Warning');
-        }
-      },
-      error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, 'Warning');
-      }
+    modalRef.shown.subscribe(() => {
+      modalRef.componentInstance.setConfirmButton(() => {
+        this.receitasFormComponent.deleteReceita(idReceita, () => { this.updateDatatable(); });
+      });
     });
   }
 }
