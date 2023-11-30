@@ -15,6 +15,9 @@ import { LancamentoDataSet } from 'src/app/shared/datatable-config/lancamentos';
 import { from, throwError } from 'rxjs';
 import * as dayjs from 'dayjs';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
 
 describe('Unit Test LancamentosComponent', () => {
   let component: LancamentosComponent;
@@ -38,7 +41,8 @@ describe('Unit Test LancamentosComponent', () => {
     localStorageSpy = jasmine.createSpyObj('localStorage', ['getItem', 'setItem', 'removeItem', 'clear']);
     TestBed.configureTestingModule({
       declarations: [LancamentosComponent],
-      imports: [CommonModule,  SharedModule, RouterTestingModule, HttpClientTestingModule, MatFormFieldModule],
+      imports: [CommonModule,  SharedModule, RouterTestingModule, HttpClientTestingModule,
+        MatFormFieldModule, MatSelectModule , MatDatepickerModule, MatNativeDateModule],
       providers: [MenuService, AlertComponent, NgbActiveModal, ModalFormComponent, ModalConfirmComponent,
          FilterMesAnoService, DespesasFormComponent, ReceitasFormComponent,
         { provide: Storage, useValue: localStorageSpy },
