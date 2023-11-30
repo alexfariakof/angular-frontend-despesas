@@ -40,11 +40,11 @@ describe('Unit Test LancamentosComponent', () => {
     mockAuthService.isAuthenticated.and.returnValue(true);
     localStorageSpy = jasmine.createSpyObj('localStorage', ['getItem', 'setItem', 'removeItem', 'clear']);
     TestBed.configureTestingModule({
-      declarations: [LancamentosComponent, MatDatepicker, MatSelect],
+      declarations: [LancamentosComponent, DespesasFormComponent, ReceitasFormComponent],
       imports: [CommonModule,  SharedModule, RouterTestingModule, HttpClientTestingModule,
         MatFormFieldModule, MatSelectModule , MatDatepickerModule, MatNativeDateModule],
       providers: [MenuService, AlertComponent, NgbActiveModal, ModalFormComponent, ModalConfirmComponent,
-         FilterMesAnoService, DespesasFormComponent, ReceitasFormComponent,
+        FilterMesAnoService, DespesasFormComponent, ReceitasFormComponent,
         { provide: Storage, useValue: localStorageSpy },
         { provide: AuthService, useValue: mockAuthService }, ]
     });

@@ -1,1 +1,1 @@
-export * from './isGreaterThanZero.validator'
+export * from './custom.validators'
