@@ -7,6 +7,7 @@ git flow release start 1.0.3
 git tag -a <v*.*.*> -m "Version tag"
 
 git tag -a v1.0.6 -m "Implementations Maked In Iteration 2"
+git tag -a v1.1.0 -m "Finish Implementations Iteration 2"
 
 # Envia as alterações(commits) e as tags locais para o repositório remoto
 git push --follow-tags
