@@ -79,7 +79,7 @@ describe('Unit Test LancamentosComponent', () => {
   it('should initializeDataTable', fakeAsync(() => {
     // Arrange
     let mockIdUsuario = 1;
-    const getLancamntosByMesAnoSpy = spyOn(lancamentoService, 'getLancamentosByMesAnoIdUsuario').and.returnValue(from(Promise.resolve({message: true , lancamento: mockLancamentos})));
+    const getLancamntosByMesAnoSpy = spyOn(lancamentoService, 'getLancamentosByMesAnoIdUsuario').and.returnValue(from(Promise.resolve({message: true , lancamentos: mockLancamentos})));
     spyOn(component, 'getLancamentosData').and.returnValue(mockLancamentosData);
     localStorageSpy['idUsuario'] = mockIdUsuario.toString();
 
@@ -115,7 +115,7 @@ describe('Unit Test LancamentosComponent', () => {
   it('should updateDatatable when is called', fakeAsync(() => {
     // Arrange
     let mockIdUsuario = 2;
-    const getLancamntosByMesAnoSpy = spyOn(lancamentoService, 'getLancamentosByMesAnoIdUsuario').and.returnValue(from(Promise.resolve({message: true , lancamento: mockLancamentos})));
+    const getLancamntosByMesAnoSpy = spyOn(lancamentoService, 'getLancamentosByMesAnoIdUsuario').and.returnValue(from(Promise.resolve({message: true , lancamentos: mockLancamentos})));
     spyOn(component, 'getLancamentosData').and.returnValue(mockLancamentosData);
     localStorageSpy['idUsuario'] = mockIdUsuario.toString();
 

@@ -43,7 +43,7 @@ export class LancamentosComponent implements OnInit {
       next: (response: any) => {
         if (response.message === true)
         {
-          this.lancamentosData = this.parseToLancamentosData(response.lancamento as ILancamento[]);
+          this.lancamentosData = this.parseToLancamentosData(response.lancamentos as ILancamento[]);
           this.dataTable.loadData(this.getLancamentosData());
           this.dataTable.rerender();
           this.barraFerramenta.setOnChangeDataMesAno(() => { this.updateDatatable(); } );
@@ -61,7 +61,7 @@ export class LancamentosComponent implements OnInit {
       next: (response: any) => {
         if (response.message === true)
         {
-          this.lancamentosData = this.parseToLancamentosData(response.lancamento as ILancamento[]);
+          this.lancamentosData = this.parseToLancamentosData(response.lancamentos as ILancamento[]);
           this.dataTable.rerender();
         }
       },

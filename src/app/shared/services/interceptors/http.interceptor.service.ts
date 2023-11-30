@@ -52,7 +52,7 @@ export class CustomInterceptor implements HttpInterceptor {
       catchError((error) => {
         modalRef.close();
         console.log(error);
-        return throwError({message: error.message});
+        return throwError(error);
       })
     );
   }
