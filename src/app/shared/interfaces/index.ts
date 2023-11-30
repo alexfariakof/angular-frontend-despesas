@@ -6,4 +6,4 @@ export * from './IDespesa';
 export * from './IReceita';
 export * from './ITipoCategoria';
 export * from './ILogin';
-
+export * from './ILancamento'

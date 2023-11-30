@@ -9,6 +9,9 @@ import { AlertComponent } from "src/app/shared/components";
 import { ILogin, IAuth } from "src/app/shared/interfaces";
 import { AuthService } from "src/app/shared/services";
 import { LoginComponent } from "./login.component";
+import { MatInputModule } from "@angular/material/input";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -21,7 +24,7 @@ describe('LoginComponent', () => {
     mockAuthService = jasmine.createSpyObj('AuthService', ['createAccessToken', 'isAuthenticated']);
     TestBed.configureTestingModule({
       declarations: [LoginComponent],
-      imports: [ReactiveFormsModule,  RouterTestingModule, HttpClientTestingModule  ],
+      imports: [ReactiveFormsModule,  RouterTestingModule, HttpClientTestingModule, BrowserAnimationsModule,  MatFormFieldModule, MatInputModule  ],
       providers: [AlertComponent, NgbActiveModal,
         { provide: Router, useValue: mockRouter },
         { provide: AuthService, useValue: mockAuthService },

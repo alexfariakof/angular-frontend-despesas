@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
-import { AlertComponent } from './alert.component';
+import { AlertComponent, AlertType } from './alert.component';
 import { AlertModule } from './alert.component.module';
 import { MockAlertComponent } from '__mock__/mock.alert.component';
 
@@ -15,7 +15,6 @@ describe('Test AlertComponent', () => {
       imports: [ AlertModule ],
       providers: [NgbModalConfig,  NgbModal],
     });
-
 
     fixture = TestBed.createComponent(AlertComponent);
     component = fixture.componentInstance;
@@ -41,7 +40,6 @@ describe('Test AlertComponent', () => {
     expect(modalService.open).toHaveBeenCalledWith(content);
   });
 
-
   it('should close modal', () => {
     // Arrange
     const content = MockAlertComponent;
@@ -63,10 +61,10 @@ describe('Test AlertComponent', () => {
 
     // Act
     modalRefMock.componentInstance.message = expectedMessage;
-    component.open(MockAlertComponent, expectedMessage, 'Warning');
+    component.open(MockAlertComponent, expectedMessage, AlertType.Warning);
 
     // Assert
-    expect(openSpy).toHaveBeenCalledWith(MockAlertComponent, expectedMessage, 'Warning');
+    expect(openSpy).toHaveBeenCalledWith(MockAlertComponent, expectedMessage, AlertType.Warning);
     expect(modalRefMock.componentInstance.message).toBe(expectedMessage);
   });
 
@@ -77,11 +75,11 @@ describe('Test AlertComponent', () => {
     const closeSpy = spyOn(component, 'close').and.returnValue(modalRefMock);
 
     // Act
-    component.open(MockAlertComponent, "Test Alert Component", 'Success');
+    component.open(MockAlertComponent, "Test Alert Component", AlertType.Success);
     component.close();
 
     // Assert
-    expect(openSpy).toHaveBeenCalledWith(MockAlertComponent, "Test Alert Component", 'Success');
+    expect(openSpy).toHaveBeenCalledWith(MockAlertComponent, "Test Alert Component", AlertType.Success);
     expect(closeSpy).toHaveBeenCalledWith();
   });
 });

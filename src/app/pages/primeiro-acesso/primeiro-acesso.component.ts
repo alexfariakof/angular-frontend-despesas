@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { map, catchError } from "rxjs";
-import { AlertComponent } from "src/app/shared/components";
+import { AlertComponent, AlertType } from "src/app/shared/components";
 import { IControleAcesso } from "src/app/shared/interfaces";
 import { ControleAcessoService } from "src/app/shared/services/api";
 @Component({
@@ -53,10 +53,10 @@ export class PrimeiroAcessoComponent  implements OnInit {
     .subscribe({
       next: (result: Boolean) => {
         if (result === true){
-          this.modalALert.open(AlertComponent, "Cadastro realizado com sucesso!", 'Success');
+          this.modalALert.open(AlertComponent, "Cadastro realizado com sucesso!", AlertType.Success);
         }
       },
-      error: (response: any) =>  this.modalALert.open(AlertComponent, response.message, 'Warning'),
+      error: (response: any) =>  this.modalALert.open(AlertComponent, response.message, AlertType.Warning),
       complete() {}
     });
   }

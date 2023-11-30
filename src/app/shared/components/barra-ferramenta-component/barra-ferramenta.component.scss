@@ -2,6 +2,18 @@
   margin-right: 4px;
 }
 
+.md-outline.always-active-label .form-label {
+  transform: translateY(-0.4rem) translateY(0.2rem) scale(.8);
+  font-weight: bold;
+  position: absolute;
+}
+
+.md-outline.always-active-label .form-notch-middle {
+    border-right: none;
+    border-left: none;
+    border-top: 1px solid transparent !important;
+}
+
 @media (min-width: 768px) {
   .btn-barra-ferramenta {
     width: auto;
