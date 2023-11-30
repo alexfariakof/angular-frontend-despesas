@@ -52,7 +52,7 @@ export class CustomInterceptor implements HttpInterceptor {
       catchError((error) => {
         modalRef.close();
         console.log(error);
-        return throwError({message: 'Erro tente atualizar a página ou realize novamente o login..'});
+        return throwError({message: error.message});
       })
     );
   }
