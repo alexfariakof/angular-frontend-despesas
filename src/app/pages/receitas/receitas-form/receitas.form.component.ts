@@ -1,3 +1,4 @@
+import { UserDataService } from './../../../shared/services/utils/user-data-service/user.data.service';
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -13,7 +14,6 @@ import { ReceitaService } from 'src/app/shared/services/api';
 })
 
 export class ReceitasFormComponent {
-  private idUsuario: number = Number(localStorage.getItem('idUsuario'));
   categorias: ICategoria[]= [];
   receitaForm: FormGroup & IReceita;
 
@@ -27,14 +27,15 @@ export class ReceitasFormComponent {
     public formbuilder: FormBuilder,
     public modalAlert: AlertComponent,
     public activeModal:NgbActiveModal,
-    public receitaService: ReceitaService
+    public receitaService: ReceitaService,
+    private userDataService: UserDataService
     ) {}
 
   ngOnInit(): void{
     this.getCatgeoriasFromReceitas();
     this.receitaForm = this.formbuilder.group({
       id: [0],
-      idUsuario: this.idUsuario,
+      idUsuario: this.userDataService.getIdUsuario(),
       idCategoria: [null, Validators.required],
       categoria: null,
       data: [dayjs().format('YYYY-MM-DD'), Validators.required],
@@ -57,7 +58,7 @@ export class ReceitasFormComponent {
   }
 
   getCatgeoriasFromReceitas = () => {
-    this.receitaService.getCategorias(this.idUsuario)
+    this.receitaService.getCategorias(this.userDataService.getIdUsuario())
       .subscribe({
         next: (result: ICategoria[]) => {
           if (result)

@@ -1,3 +1,4 @@
+import { UserDataService } from './../../shared/services/utils/user-data-service/user.data.service';
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { AlertComponent, AlertType, BarraFerramentaComponent, DataTableComponent, ModalConfirmComponent, ModalFormComponent } from "src/app/shared/components";
 import { FilterMesAnoService, MenuService } from "src/app/shared/services";
@@ -16,7 +17,6 @@ import { IAction, ILancamento } from "src/app/shared/interfaces";
 export class LancamentosComponent implements OnInit {
   @ViewChild(BarraFerramentaComponent) barraFerramenta: BarraFerramentaComponent;
   @ViewChild(DataTableComponent) dataTable: DataTableComponent;
-  private idUsuario: number = Number(localStorage.getItem('idUsuario'));
   lancamentosData: LancamentoDataSet[] = [];
   columns = LancamentoColumns;
 
@@ -28,7 +28,8 @@ export class LancamentosComponent implements OnInit {
     public lancamentoservice: LancamentoService,
     private despesasFormComponent: DespesasFormComponent,
     private receitasFormComponent: ReceitasFormComponent,
-    public filterMesAnoService: FilterMesAnoService
+    public filterMesAnoService: FilterMesAnoService,
+    private userDataService: UserDataService
     ) {  }
 
   ngOnInit() {
@@ -37,7 +38,7 @@ export class LancamentosComponent implements OnInit {
   }
 
   initializeDataTable = () => {
-    this.lancamentoservice.getLancamentosByMesAnoIdUsuario(dayjs(this.filterMesAnoService.dataMesAno), this.idUsuario)
+    this.lancamentoservice.getLancamentosByMesAnoIdUsuario(dayjs(this.filterMesAnoService.dataMesAno), this.userDataService.getIdUsuario())
     .subscribe({
       next: (response: any) => {
         if (response.message === true)
@@ -55,7 +56,7 @@ export class LancamentosComponent implements OnInit {
   }
 
   updateDatatable = () => {
-    this.lancamentoservice.getLancamentosByMesAnoIdUsuario(dayjs(this.filterMesAnoService.dataMesAno), this.idUsuario)
+    this.lancamentoservice.getLancamentosByMesAnoIdUsuario(dayjs(this.filterMesAnoService.dataMesAno), this.userDataService.getIdUsuario())
     .subscribe({
       next: (response: any) => {
         if (response.message === true)

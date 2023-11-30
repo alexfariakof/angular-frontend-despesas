@@ -4,6 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import * as dayjs from 'dayjs';
 import { AlertComponent, AlertType } from 'src/app/shared/components';
 import { IDespesa, ICategoria, IAction } from 'src/app/shared/interfaces';
+import { UserDataService } from 'src/app/shared/services';
 import { DespesaService } from 'src/app/shared/services/api';
 
 @Component({
@@ -13,7 +14,6 @@ import { DespesaService } from 'src/app/shared/services/api';
 })
 
 export class DespesasFormComponent {
-  private idUsuario: number = Number(localStorage.getItem('idUsuario'));
   categorias: ICategoria[]= [];
   despesaForm: FormGroup & IDespesa;
 
@@ -27,14 +27,16 @@ export class DespesasFormComponent {
     public formbuilder: FormBuilder,
     public modalAlert: AlertComponent,
     public activeModal:NgbActiveModal,
-    public despesaService: DespesaService
+    public despesaService: DespesaService,
+    private userDataService: UserDataService
+
     ) {}
 
   ngOnInit(): void{
     this.getCatgeoriasFromDespesas();
     this.despesaForm = this.formbuilder.group({
       id: [0],
-      idUsuario: this.idUsuario,
+      idUsuario: this.userDataService.getIdUsuario(),
       idCategoria: [null, Validators.required],
       categoria: null,
       data: [dayjs().format('YYYY-MM-DD'), Validators.required],
@@ -45,7 +47,7 @@ export class DespesasFormComponent {
   }
 
   getCatgeoriasFromDespesas = () => {
-    this.despesaService.getCategorias(this.idUsuario)
+    this.despesaService.getCategorias(this.userDataService.getIdUsuario())
       .subscribe({
         next: (result: ICategoria[]) => {
           if (result)
