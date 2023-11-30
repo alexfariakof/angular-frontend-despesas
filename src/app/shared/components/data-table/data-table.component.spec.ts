@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DataTableComponent } from './data-table.component';
 import { DataTableModule } from './data-table.component.module';
 import { DataTableDirective } from 'angular-datatables';
+import { ITipoCategoria } from '../../interfaces';
 
 describe('Unit Test DataTableComponent', () => {
   let component: DataTableComponent;
@@ -41,13 +42,13 @@ describe('Unit Test DataTableComponent', () => {
     spyOn(component.editAction, 'call');
 
     // Act
-    component.handleAction('edit', fakeId, mockData);
+    component.handleAction('edit', fakeId, mockData, 'Despesa');
     const editActionAccessed = component.editAction !== undefined;
 
     // Assert
     expect(editActionAccessed).toBe(true);
     expect(spyHandle).toHaveBeenCalled();
-    expect(spyHandle).toHaveBeenCalledWith('edit', fakeId, mockData);
+    expect(spyHandle).toHaveBeenCalledWith('edit', fakeId, mockData, 'Despesa');
   });
 
   it('should call deleteAction when handleAction is called with "delete"', () => {
@@ -57,13 +58,13 @@ describe('Unit Test DataTableComponent', () => {
 
     // Act
     spyOn(component.deleteAction, 'call');
-    component.handleAction('delete', fakeId, mockData);
+    component.handleAction('delete', fakeId, mockData, 'Receita');
     const deleteActionAccessed = component.deleteAction !== undefined;
 
     // Assert
     expect(deleteActionAccessed).toBe(true);
     expect(spyHandle).toHaveBeenCalled();
-    expect(spyHandle).toHaveBeenCalledWith('delete', fakeId, mockData);
+    expect(spyHandle).toHaveBeenCalledWith('delete', fakeId, mockData, 'Receita');
   });
 
 

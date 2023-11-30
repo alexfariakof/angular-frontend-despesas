@@ -4,7 +4,8 @@ import { Observable, catchError, finalize, switchMap, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AuthService } from '../auth/auth.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { LoadingComponent } from '../../components/loading-component/loading.component';
+import { LoadingComponent } from '../../components';
+
 @Injectable()
 export class CustomInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService, private modalService: NgbModal) {}
@@ -27,7 +28,7 @@ export class CustomInterceptor implements HttpInterceptor {
           }
         });
 
-        console.log('Modified Request URL:', modifiedRequest.url);
+        //console.log('Modified Request URL:', modifiedRequest.url);
 
         return next.handle(modifiedRequest).pipe(
           catchError((error: HttpErrorResponse) => {
@@ -36,9 +37,12 @@ export class CustomInterceptor implements HttpInterceptor {
             if (error.ok === false && error.status === 0)
               return throwError({message: 'Erro de conexão tente mais tarde.'});
             else if (error.status === 401) {
+              localStorage.clear();
+              window.location.reload();
               return throwError({message: 'Erro de autenticação, tente atualizar a página ou realize novamente o login.'});
             }
-            return throwError(error);
+            console.log(error);
+            return throwError({message: 'Erro tente atualizar a página ou realize novamente o login..'});
           }),
           finalize(() => {
             modalRef.close();
@@ -47,7 +51,8 @@ export class CustomInterceptor implements HttpInterceptor {
       }),
       catchError((error) => {
         modalRef.close();
-        return throwError(error);
+        console.log(error);
+        return throwError({message: 'Erro tente atualizar a página ou realize novamente o login..'});
       })
     );
   }

@@ -5,7 +5,7 @@ export const LancamentoColumns = [
   },
   {
     title: 'Tipo',
-    data: 'tipo'
+    data: 'tipoCategoria'
   },
   {
     title: 'Categoria',
