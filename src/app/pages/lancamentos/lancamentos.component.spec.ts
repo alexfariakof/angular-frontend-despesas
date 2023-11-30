@@ -14,6 +14,7 @@ import { ILancamento } from 'src/app/shared/interfaces';
 import { LancamentoDataSet } from 'src/app/shared/datatable-config/lancamentos';
 import { from, throwError } from 'rxjs';
 import * as dayjs from 'dayjs';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 describe('Unit Test LancamentosComponent', () => {
   let component: LancamentosComponent;
@@ -37,9 +38,9 @@ describe('Unit Test LancamentosComponent', () => {
     localStorageSpy = jasmine.createSpyObj('localStorage', ['getItem', 'setItem', 'removeItem', 'clear']);
     TestBed.configureTestingModule({
       declarations: [LancamentosComponent],
-      imports: [CommonModule,  SharedModule, RouterTestingModule, HttpClientTestingModule],
+      imports: [CommonModule,  SharedModule, RouterTestingModule, HttpClientTestingModule, MatFormFieldModule],
       providers: [MenuService, AlertComponent, NgbActiveModal, ModalFormComponent, ModalConfirmComponent,
-        FilterMesAnoService, DespesasFormComponent, ReceitasFormComponent,
+         FilterMesAnoService, DespesasFormComponent, ReceitasFormComponent,
         { provide: Storage, useValue: localStorageSpy },
         { provide: AuthService, useValue: mockAuthService }, ]
     });
@@ -107,4 +108,80 @@ describe('Unit Test LancamentosComponent', () => {
     expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
   }));
 
+  it('should updateDatatable when is called', fakeAsync(() => {
+    // Arrange
+    let mockIdUsuario = 2;
+    const getLancamntosByMesAnoSpy = spyOn(lancamentoService, 'getLancamentosByMesAnoIdUsuario').and.returnValue(from(Promise.resolve({message: true , lancamento: mockLancamentos})));
+    spyOn(component, 'getLancamentosData').and.returnValue(mockLancamentosData);
+    localStorageSpy['idUsuario'] = mockIdUsuario.toString();
+
+
+    // Act
+    component.updateDatatable();
+    flush();
+
+    // Assert
+    expect(getLancamntosByMesAnoSpy).toHaveBeenCalled();
+    expect(component.lancamentosData.length).toBeGreaterThan(0);
+  }));
+
+  it('should throw error when try to updateDataTable', () => {
+    // Arrange
+    const errorMessage = { message: 'Fake Error Message Lançamentos UpdateDataTable'};
+    const getLancamntosByMesAnoSpy = spyOn(lancamentoService, 'getLancamentosByMesAnoIdUsuario').and.returnValue(throwError(errorMessage));
+    const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
+    localStorageSpy['idUsuario'] = '4';
+
+    // Act
+    component.updateDatatable();
+
+    // Assert
+    expect(getLancamntosByMesAnoSpy).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalled();
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
+  });
+
+  it('should open modalform Despesa onClickEdit', () => {
+    // Arrange
+    spyOn(component.modalForm.modalService, 'open').and.callThrough();
+
+    // Act
+    component.onClickEdit(1, 'Despesa');
+
+    // Assert
+    expect(component.modalForm.modalService.open).toHaveBeenCalled();
+  });
+
+  it('should open modalform Receita onClickEdit', () => {
+    // Arrange
+    spyOn(component.modalForm.modalService, 'open').and.callThrough();
+
+    // Act
+    component.onClickEdit(1, 'Receita');
+
+    // Assert
+    expect(component.modalForm.modalService.open).toHaveBeenCalled();
+  });
+
+  it('should open Modal Confirm Despesa when onClickDelete', () => {
+    // Arrange
+    spyOn(component.modalConfirm, 'open').and.callThrough();
+
+    // Act
+    component.onClickDelete(1, 'Despesa');
+
+    // Assert
+    expect(component.modalConfirm.open).toHaveBeenCalled();
+  });
+
+  it('should open Modal Confirm Receita when onClickDelete', () => {
+    // Arrange
+    spyOn(component.modalConfirm, 'open').and.callThrough();
+
+    // Act
+    component.onClickDelete(1, 'Receita');
+
+    // Assert
+    expect(component.modalConfirm.open).toHaveBeenCalled();
+  });
 });
