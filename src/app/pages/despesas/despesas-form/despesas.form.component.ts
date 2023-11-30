@@ -16,12 +16,8 @@ import { DespesaService } from 'src/app/shared/services/api';
 export class DespesasFormComponent {
   categorias: ICategoria[]= [];
   despesaForm: FormGroup & IDespesa;
-
-  private _action: IAction = IAction.Create;
-  set action(action: IAction) { this._action = action; }
-
-  private _refresh: Function = () => {};
-  set refresh(refresh: Function) { this._refresh = refresh; }
+  action: IAction = IAction.Create;
+  refresh: Function = () => {};
 
   constructor(
     public formbuilder: FormBuilder,
@@ -60,7 +56,7 @@ export class DespesasFormComponent {
   }
 
   onSaveClick = () => {
-    switch (this._action) {
+    switch (this.action) {
       case IAction.Create:
         this.saveCreateDespesa();
         break;
@@ -79,7 +75,7 @@ export class DespesasFormComponent {
         if (result.message === true)
         {
           this.activeModal.close();
-          this._refresh();
+          this.refresh();
           this.modalAlert.open(AlertComponent, 'Despesa cadastrada com Sucesso.', AlertType.Success);
         }
       },
@@ -96,7 +92,7 @@ export class DespesasFormComponent {
         if (response !== undefined && response !== null && response.message === true)
         {
           this.activeModal.close();
-          this._refresh();
+          this.refresh();
           this.modalAlert.open(AlertComponent, 'Despesa alterada com Sucesso.', AlertType.Success);
         }
       },

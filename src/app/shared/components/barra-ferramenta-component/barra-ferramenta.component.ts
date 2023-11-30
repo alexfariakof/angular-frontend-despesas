@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { BarraFerramentaClass } from './barra-ferramenta.abstract';
 import { FilterMesAnoService } from '../../services';
 @Component({
@@ -7,7 +7,7 @@ import { FilterMesAnoService } from '../../services';
   styleUrls: ['./barra-ferramenta.component.scss']
 })
 
-export class BarraFerramentaComponent implements BarraFerramentaClass, OnInit{
+export class BarraFerramentaComponent implements BarraFerramentaClass{
   @Input() onClickNovo: Function = () => {};
   @Input() btnNovo: boolean =  false;
   @Input() dtMesAno: boolean = false;
@@ -18,8 +18,6 @@ export class BarraFerramentaComponent implements BarraFerramentaClass, OnInit{
   }
 
   constructor(public filterMesAnoService: FilterMesAnoService) {}
-
-  ngOnInit(): void {  }
 
   clickBtnNovo = () => {
     if (this.onClickNovo) {

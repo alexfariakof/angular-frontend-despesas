@@ -16,12 +16,8 @@ import { ReceitaService } from 'src/app/shared/services/api';
 export class ReceitasFormComponent {
   categorias: ICategoria[]= [];
   receitaForm: FormGroup & IReceita;
-
-  private _action: IAction = IAction.Create;
-  set action(action: IAction) { this._action = action; }
-
-  private _refresh: Function = () => {};
-  set refresh(refresh: Function) { this._refresh = refresh; }
+  action: IAction = IAction.Create;
+  refresh: Function = () => {};
 
   constructor(
     public formbuilder: FormBuilder,
@@ -45,7 +41,7 @@ export class ReceitasFormComponent {
   }
 
   onSaveClick = () => {
-    switch (this._action) {
+    switch (this.action) {
       case IAction.Create:
         this.saveCreateReceita();
         break;
@@ -76,7 +72,7 @@ export class ReceitasFormComponent {
       next: (result: any ) => {
         if (result.message === true) {
           this.activeModal.close();
-          this._refresh();
+          this.refresh();
           this.modalAlert.open(AlertComponent, 'Receita cadastrada com Sucesso.', AlertType.Success);
         }
       },
@@ -92,7 +88,7 @@ export class ReceitasFormComponent {
       next: (response: any ) => {
         if (response !== undefined && response !== null && response.message === true) {
           this.activeModal.close();
-          this._refresh();
+          this.refresh();
           this.modalAlert.open(AlertComponent, 'Receita alterada com Sucesso.', AlertType.Success);
         }
       },

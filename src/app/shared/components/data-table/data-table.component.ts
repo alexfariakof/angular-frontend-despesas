@@ -85,7 +85,7 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnDestroy, OnC
     this.data = newData;
   }
 
-  handleAction(action: string, id: Number, _row, tipoCategoria: string) {
+  handleAction(action: string, id: number, _row, tipoCategoria: string) {
     this.row = _row;
     if (action === 'edit') {
       this.editAction(id, tipoCategoria);

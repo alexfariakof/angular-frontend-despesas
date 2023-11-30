@@ -37,7 +37,7 @@ describe('Unit Test DataTableComponent', () => {
 
   it('should call editAction when handleAction is called with "edit"', () => {
     // Arrangte
-    const fakeId: Number = 1;
+    const fakeId: number = 1;
     const spyHandle = spyOn(component, 'handleAction').and.callThrough();
     spyOn(component.editAction, 'call');
 
@@ -53,7 +53,7 @@ describe('Unit Test DataTableComponent', () => {
 
   it('should call deleteAction when handleAction is called with "delete"', () => {
     // Arrange
-    const fakeId: Number = 1;
+    const fakeId: number = 1;
     const spyHandle = spyOn(component, 'handleAction').and.callThrough();
 
     // Act
