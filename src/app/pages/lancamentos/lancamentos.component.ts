@@ -28,7 +28,7 @@ export class LancamentosComponent implements OnInit {
     public lancamentoservice: LancamentoService,
     private despesasFormComponent: DespesasFormComponent,
     private receitasFormComponent: ReceitasFormComponent,
-    public filterMesAnoService: FilterMesAnoService,
+    private filterMesAnoService: FilterMesAnoService,
     private userDataService: UserDataService
     ) {  }
 
