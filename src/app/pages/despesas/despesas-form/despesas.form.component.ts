@@ -20,7 +20,7 @@ export class DespesasFormComponent {
   action: IAction = IAction.Create;
   refresh: Function = () => { };
   setRefresh(_refresh: Function): void {
-    this.refresh = this.refresh;
+    this.refresh = _refresh;
   }
 
   constructor(

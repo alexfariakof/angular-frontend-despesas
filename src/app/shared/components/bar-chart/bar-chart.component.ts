@@ -84,7 +84,6 @@ export class BarChartComponent implements OnInit {
   }
 
   public updateBarChart(datasetes: any[]): void {
-    this.barChartData.labels = this.barChartData.labels;
     this.barChartData.datasets = datasetes;
     this.chart?.update();
   }
