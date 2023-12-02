@@ -1,11 +1,12 @@
-<canvas baseChart class="chart"
-    [data]="barChartData"
-    [options]="barChartOptions"
-    [plugins]="barChartPlugins"
-    [type]="barChartType"
-    (chartHover)="chartHovered($event)"
-    (chartClick)="chartClicked($event)"
-    style="width: 100%;height:100%"
-
-    >
+<canvas
+  baseChart
+  class="chart flex-shrink h-100"
+  [data]="barChartData"
+  [options]="barChartOptions"
+  [plugins]="barChartPlugins"
+  [type]="barChartType"
+  (chartHover)="chartHovered($event)"
+  (chartClick)="chartClicked($event)"
+  style="width: auto"
+>
 </canvas>

@@ -1,8 +1,8 @@
-import { Component, ViewChild } from "@angular/core";
-import * as dayjs from "dayjs";
-import { BarraFerramentaComponent, BarChartComponent, AlertComponent, AlertType } from "src/app/shared/components";
-import { MenuService, FilterAnoService, UserDataService } from "src/app/shared/services";
-import { DashboardService } from "src/app/shared/services/api";
+import { Component, ViewChild } from '@angular/core';
+import * as dayjs from 'dayjs';
+import { BarraFerramentaComponent, BarChartComponent, AlertComponent, AlertType } from 'src/app/shared/components';
+import { MenuService, FilterAnoService, UserDataService } from 'src/app/shared/services';
+import { DashboardService } from 'src/app/shared/services/api';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,7 +21,7 @@ export class DashboardComponent {
     public modalAlert: AlertComponent,
     private filterAnoService: FilterAnoService,
     private userDataService: UserDataService
-    ) {
+  ) {
   }
 
   ngOnInit() {
@@ -31,41 +31,34 @@ export class DashboardComponent {
 
   initializeChart = () => {
     this.dashboardService.getDataGraphicByYear(dayjs(`${this.filterAnoService.dataAno}-01-01`), this.userDataService.getIdUsuario())
-    .subscribe({
-      next: (response: any) => {
-        if (response)
-        {
-          this.barChartLabels = response.labels;
-          this.barChartDatasets = response.datasets;
-          this.baseChart.loadBarChart(response.labels, response.datasets);
-          this.barraFerramenta.setOnChangeDataAno(() => { this.updateChart(); } );
+      .subscribe({
+        next: (response: any) => {
+          if (response) {
+            this.barChartLabels = response.labels;
+            this.barChartDatasets = response.datasets;
+            this.baseChart.loadBarChart(response.labels, response.datasets);
+            this.barraFerramenta.setOnChangeDataAno(this.updateChart);
 
+          }
+        },
+        error: (response: any) => {
+          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
         }
-      },
-      error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
-      }
-    });
+      });
   }
-
 
   updateChart = () => {
-this.dashboardService.getDataGraphicByYear(dayjs(`${this.filterAnoService.dataAno}-01-01`), this.userDataService.getIdUsuario())
-    .subscribe({
-      next: (response: any) => {
-        if (response)
-        {
-          this.barChartDatasets = response.datasets;
-          this.baseChart.updateBarChart(response.datasets);
+    this.dashboardService.getDataGraphicByYear(dayjs(`${this.filterAnoService.dataAno}-01-01`), this.userDataService.getIdUsuario())
+      .subscribe({
+        next: (response: any) => {
+          if (response) {
+            this.barChartDatasets = response.datasets;
+            this.baseChart.updateBarChart(response.datasets);
+          }
+        },
+        error: (response: any) => {
+          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
         }
-      },
-      error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
-      }
-    });
-  }
-
-  getChartData = () => {
-    return this.barChartDatasets;
+      });
   }
 }

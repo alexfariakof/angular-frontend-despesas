@@ -25,7 +25,7 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
     public despesaService: DespesaService,
     private despesasFormComponent: DespesasFormComponent,
     private userDataService: UserDataService
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.menuService.menuSelecionado = 3;
@@ -34,40 +34,33 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
 
   initializeDataTable = () => {
     this.despesaService.getDespesaByIdUsuario(this.userDataService.getIdUsuario())
-    .subscribe({
-      next: (result: IDespesa[]) => {
-        if (result)
-        {
-          this.despesasData = this.parseToDespesasData(result);
-          this.dataTable.loadData(this.getDespesasData());
-          this.dataTable.rerender();
+      .subscribe({
+        next: (result: IDespesa[]) => {
+          if (result) {
+            this.despesasData = this.parseToDespesasData(result);
+            this.dataTable.loadData(this.despesasData);
+            this.dataTable.rerender();
+          }
+        },
+        error: (response: any) => {
+          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
         }
-
-      },
-      error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
-      }
-    });
+      });
   }
 
   updateDatatable = () => {
     this.despesaService.getDespesaByIdUsuario(this.userDataService.getIdUsuario())
-    .subscribe({
-      next: (result: any) => {
-        if (result)
-        {
-          this.despesasData = this.parseToDespesasData(result);
-          this.dataTable.rerender();
+      .subscribe({
+        next: (result: any) => {
+          if (result) {
+            this.despesasData = this.parseToDespesasData(result);
+            this.dataTable.rerender();
+          }
+        },
+        error: (response: any) => {
+          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
         }
-      },
-      error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
-      }
-    });
-  }
-
-  getDespesasData = () =>{
-    return this.despesasData;
+      });
   }
 
   parseToDespesasData(despesas: IDespesa[]): DespesaDataSet[] {
@@ -76,12 +69,12 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
       data: dayjs(despesa.data).format('DD/MM/YYYY'),
       categoria: despesa.categoria,
       descricao: despesa.descricao,
-      valor: `${ despesa.valor.toLocaleString('pt-BR', {
+      valor: `${despesa.valor.toLocaleString('pt-BR', {
         style: 'currency',
         currency: 'BRL',
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
-      }) }`,
+      })}`,
       dataVencimento: (despesa.dataVencimento && dayjs(despesa.dataVencimento).isValid()) ? dayjs(despesa.dataVencimento).format('DD/MM/YYYY') : null
     }));
   }
@@ -89,26 +82,24 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
   onClickNovo = () => {
     const modalRef = this.modalForm.modalService.open(DespesasFormComponent, { centered: true });
     modalRef.shown.subscribe(() => {
-      modalRef.componentInstance.setAction(IAction.Create);
-      modalRef.componentInstance.setRefresh(() => { this.updateDatatable(); });
+      modalRef.componentInstance.action = IAction.Create;
+      modalRef.componentInstance.setRefresh(this.updateDatatable);
     });
   }
 
-  onClickEdit = (idDespesa: number) =>{
+  onClickEdit = (idDespesa: number) => {
     const modalRef = this.modalForm.modalService.open(DespesasFormComponent, { centered: true });
     modalRef.shown.subscribe(() => {
       modalRef.componentInstance.action = IAction.Edit;
-      modalRef.componentInstance.refresh = () => { this.updateDatatable(); };
+      modalRef.componentInstance.setRefresh(this.updateDatatable);
       modalRef.componentInstance.editDespesa(idDespesa);
     });
   }
 
   onClickDelete = (idDespesa: number) => {
-    const modalRef = this.modalConfirm.open(ModalConfirmComponent, `Deseja excluir a despesa ${ this.dataTable.row.descricao } ?`);
+    const modalRef = this.modalConfirm.open(ModalConfirmComponent, `Deseja excluir a despesa ${this.dataTable.row.descricao} ?`);
     modalRef.shown.subscribe(() => {
-      modalRef.componentInstance.setConfirmButton(() => {
-        this.despesasFormComponent.deleteDespesa(idDespesa, () => { this.updateDatatable(); });
-      });
+      modalRef.componentInstance.setConfirmButton(() => this.despesasFormComponent.deleteDespesa(idDespesa, this.updateDatatable));
     });
   }
 }

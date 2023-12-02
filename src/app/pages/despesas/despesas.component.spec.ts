@@ -26,12 +26,12 @@ describe('Unit Test DespesasComponent', () => {
   let mockDespesas: IDespesa[] = [
     { id: 1, idUsuario: 1, idCategoria: 1, data: dayjs(), descricao: 'Teste Despesas 1', valor: 1.05, dataVencimento: dayjs(), categoria: 'Categoria 1' },
     { id: 2, idUsuario: 2, idCategoria: 2, data: dayjs(), descricao: 'Teste Despesas 2', valor: 2.05, dataVencimento: dayjs(), categoria: 'Categoria 2' },
-    { id: 3, idUsuario: 1, idCategoria: 4, data: dayjs(), descricao: 'Teste Despesas 3', valor: 3.05, dataVencimento: dayjs(), categoria: 'Categoria 3' },
+    { id: 3, idUsuario: 1, idCategoria: 4, data: dayjs(), descricao: 'Teste Despesas 3', valor: 3.05, dataVencimento: null, categoria: 'Categoria 3' },
   ];
   let mockDespesasData: DespesaDataSet[] = [
     { id: 1, data: dayjs().format('DD/MM/YYYY'), descricao: 'Teste Despesas 1', valor: 'R$ 1.05', dataVencimento: dayjs().format('DD/MM/YYY'), categoria: 'Categoria 1' },
     { id: 2, data: dayjs().format('DD/MM/YYYY'), descricao: 'Teste Despesas 2', valor: 'R$ 2.05', dataVencimento: dayjs().format('DD/MM/YYY'), categoria: 'Categoria 2' },
-    { id: 3, data: dayjs().format('DD/MM/YYYY'), descricao: 'Teste Despesas 3', valor: 'R$ 3.05', dataVencimento: dayjs().format('DD/MM/YYY'), categoria: 'Categroia 3' }
+    { id: 3, data: dayjs().format('DD/MM/YYYY'), descricao: 'Teste Despesas 3', valor: 'R$ 3.05', dataVencimento: null, categoria: 'Categroia 3' }
   ];
 
   beforeEach(() => {
@@ -40,7 +40,7 @@ describe('Unit Test DespesasComponent', () => {
     mockAuthService.isAuthenticated.and.returnValue(true);
     TestBed.configureTestingModule({
       declarations: [DespesasComponent, DespesasFormComponent, MatDatepicker, MatSelect],
-      imports: [CommonModule, RouterTestingModule, SharedModule, HttpClientTestingModule, MatSelectModule , MatDatepickerModule, MatNativeDateModule],
+      imports: [CommonModule, RouterTestingModule, SharedModule, HttpClientTestingModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule],
       providers: [MenuService, AlertComponent, ModalFormComponent, ModalConfirmComponent, NgbActiveModal, DespesaService, DespesasFormComponent,
         { provide: Storage, useValue: localStorageSpy },
         { provide: AuthService, useValue: mockAuthService }
@@ -50,6 +50,7 @@ describe('Unit Test DespesasComponent', () => {
     component = fixture.componentInstance;
     localStorage.setItem('idUsuario', '1');
     component.dataTable = TestBed.inject(DataTableComponent);
+    component.despesasData = mockDespesasData;
     despesaService = TestBed.inject(DespesaService);
     localStorageSpy.getItem.and.callFake((key: string) => localStorageSpy[key]);
     localStorageSpy.setItem.and.callFake((key: string, value: string) => localStorageSpy[key] = value);
@@ -78,7 +79,6 @@ describe('Unit Test DespesasComponent', () => {
     let mockIdUsuario = 1;
     let despesas = mockDespesas.filter(despesa => despesa.idUsuario === mockIdUsuario);
     const getDespesasByIdUsuarioSpy = spyOn(despesaService, 'getDespesaByIdUsuario').and.returnValue(from(Promise.resolve(despesas)));
-    spyOn(component, 'getDespesasData').and.returnValue(mockDespesasData);
     localStorageSpy['idUsuario'] = mockIdUsuario.toString();
 
     // Act
@@ -92,9 +92,8 @@ describe('Unit Test DespesasComponent', () => {
 
   it('should initializeDataTable and return empty Datatable', fakeAsync(() => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message'};
+    const errorMessage = { message: 'Fake Error Message' };
     const getDespesasByIdUsuarioSpy = spyOn(despesaService, 'getDespesaByIdUsuario').and.returnValue(throwError(errorMessage));
-    spyOn(component, 'getDespesasData').and.returnValue(mockDespesasData);
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
     localStorageSpy['idUsuario'] = '2';
 
@@ -111,7 +110,7 @@ describe('Unit Test DespesasComponent', () => {
 
   it('should throw error when try to initializeDataTable', () => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message'};
+    const errorMessage = { message: 'Fake Error Message' };
     const getDespesasByIdUsuarioSpy = spyOn(despesaService, 'getDespesaByIdUsuario').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
     localStorageSpy['idUsuario'] = '4';
@@ -125,26 +124,11 @@ describe('Unit Test DespesasComponent', () => {
     expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
   });
 
-  it('should return despesaData when call getDespesasData', () => {
-    // Arrange
-    localStorageSpy['idUsuario'] = '1';
-    component.despesasData = mockDespesasData;
-
-    // Act
-    let despesasData =  component.getDespesasData();
-
-    // Assert
-    expect(despesasData).not.toBeNull();
-    expect(despesasData.length).toBeGreaterThan(0);
-  });
-
-
   it('should updateDatatable when is called', fakeAsync(() => {
     // Arrange
     let mockIdUsuario = 2;
     let despesas = mockDespesas.filter(despesa => despesa.idUsuario === mockIdUsuario);
     const getDespesasByIdUsuarioSpy = spyOn(despesaService, 'getDespesaByIdUsuario').and.returnValue(from(Promise.resolve(despesas)));
-    spyOn(component, 'getDespesasData').and.returnValue(mockDespesasData);
     localStorageSpy['idUsuario'] = mockIdUsuario.toString();
 
     // Act
@@ -159,7 +143,7 @@ describe('Unit Test DespesasComponent', () => {
 
   it('should throw error when try to updateDataTable', () => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message'};
+    const errorMessage = { message: 'Fake Error Message' };
     const getDespesasByIdUsuarioSpy = spyOn(despesaService, 'getDespesaByIdUsuario').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
     localStorageSpy['idUsuario'] = '4';
@@ -184,7 +168,6 @@ describe('Unit Test DespesasComponent', () => {
     // Assert
     expect(component.modalForm.modalService.open).toHaveBeenCalled();
   }));
-
 
   it('should open ModalForm onClickEdit', fakeAsync(() => {
     // Arrange
