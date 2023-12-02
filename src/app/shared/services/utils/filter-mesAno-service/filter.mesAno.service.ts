@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class FilterMesAnoService {
-  private _dataMesAno: BehaviorSubject<string> = new BehaviorSubject<string>(dayjs().format("YYYY-MM"));
+  private _dataMesAno: BehaviorSubject<string> = new BehaviorSubject<string>(dayjs().format('YYYY-MM'));
   dataMesAno$ = this._dataMesAno.asObservable();
 
   get dataMesAno(): string { return this._dataMesAno.getValue(); }

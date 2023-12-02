@@ -15,20 +15,23 @@ import { CustomValidators } from 'src/app/shared/validators';
 })
 
 export class DespesasFormComponent {
-  categorias: ICategoria[]= [];
+  categorias: ICategoria[] = [];
   despesaForm: FormGroup & IDespesa;
   action: IAction = IAction.Create;
-  refresh: Function = () => {};
+  refresh: Function = () => { };
+  setRefresh(_refresh: Function): void {
+    this.refresh = _refresh;
+  }
 
   constructor(
     public formbuilder: FormBuilder,
     public modalAlert: AlertComponent,
-    public activeModal:NgbActiveModal,
+    public activeModal: NgbActiveModal,
     public despesaService: DespesaService,
     private userDataService: UserDataService
-    ) {}
+  ) { }
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     this.getCatgeoriasFromDespesas();
     this.despesaForm = this.formbuilder.group({
       id: [0],
@@ -48,11 +51,11 @@ export class DespesasFormComponent {
         next: (result: ICategoria[]) => {
           if (result)
             this.categorias = result;
-      },
-      error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
-      }
-    });
+        },
+        error: (response: any) => {
+          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
+        }
+      });
   }
 
   onSaveClick = () => {
@@ -70,67 +73,65 @@ export class DespesasFormComponent {
 
   saveCreateDespesa = () => {
     this.despesaService.postDespesa(this.despesaForm.getRawValue() as IDespesa)
-    .subscribe({
-      next: (result: any ) => {
-        if (result.message === true)
-        {
-          this.activeModal.close();
-          this.refresh();
-          this.modalAlert.open(AlertComponent, 'Despesa cadastrada com Sucesso.', AlertType.Success);
+      .subscribe({
+        next: (result: any) => {
+          if (result.message === true) {
+            this.activeModal.close();
+            this.refresh();
+            this.modalAlert.open(AlertComponent, 'Despesa cadastrada com Sucesso.', AlertType.Success);
+          }
+        },
+        error: (error: any) => {
+          this.modalAlert.open(AlertComponent, error.message, AlertType.Warning);
         }
-      },
-      error :(error : any) =>  {
-        this.modalAlert.open(AlertComponent, error.message, AlertType.Warning);
-      }
-    });
+      });
   }
 
   saveEditDespesa = () => {
     this.despesaService.putDespesa(this.despesaForm.getRawValue() as IDespesa)
-    .subscribe({
-      next: (response: any ) => {
-        if (response !== undefined && response !== null && response.message === true)
-        {
-          this.activeModal.close();
-          this.refresh();
-          this.modalAlert.open(AlertComponent, 'Despesa alterada com Sucesso.', AlertType.Success);
+      .subscribe({
+        next: (response: any) => {
+          if (response !== undefined && response !== null && response.message === true) {
+            this.activeModal.close();
+            this.refresh();
+            this.modalAlert.open(AlertComponent, 'Despesa alterada com Sucesso.', AlertType.Success);
+          }
+        },
+        error: (error: any) => {
+          this.modalAlert.open(AlertComponent, error.message, AlertType.Warning);
         }
-      },
-      error :(error : any) =>  {
-        this.modalAlert.open(AlertComponent, error.message, AlertType.Warning);
-      }
-    });
+      });
 
   }
 
   editDespesa = (idDespesa: number) => {
     this.despesaService.getDespesaById(idDespesa)
-    .subscribe({
-      next: (response: any) => {
-        if (response.message === true && response.despesa !== undefined && response.despesa !== null)
-          this.despesaForm.patchValue(response.despesa);
-      },
-      error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
-      }
-    });
+      .subscribe({
+        next: (response: any) => {
+          if (response.message === true && response.despesa !== undefined && response.despesa !== null)
+            this.despesaForm.patchValue(response.despesa);
+        },
+        error: (response: any) => {
+          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
+        }
+      });
   }
 
   deleteDespesa = (idDespesa: number, callBack: Function) => {
     this.despesaService.deleteDespesa(idDespesa)
-    .subscribe({
-      next: (response: any) => {
-        if (response.message === true){
-          callBack();
-          this.modalAlert.open(AlertComponent, 'Despesa excluída com sucesso', AlertType.Success);
+      .subscribe({
+        next: (response: any) => {
+          if (response.message === true) {
+            callBack();
+            this.modalAlert.open(AlertComponent, 'Despesa excluída com sucesso', AlertType.Success);
+          }
+          else {
+            this.modalAlert.open(AlertComponent, 'Erro ao excluír despesa', AlertType.Warning);
+          }
+        },
+        error: (response: any) => {
+          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
         }
-        else{
-          this.modalAlert.open(AlertComponent, 'Erro ao excluír despesa', AlertType.Warning);
-        }
-      },
-      error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
-      }
-    });
+      });
   }
 }

@@ -5,9 +5,12 @@ import { BarChartComponent } from "src/app/shared/components";
 import { SharedModule } from "src/app/shared/shared.module";
 import { DashboardComponent } from "./dashboard.component";
 import { DashboardRoutingModule } from "./dashboard.routing.module";
+import { DashboardService } from "src/app/shared/services/api";
+
 @NgModule({
-  providers: [],
   declarations: [DashboardComponent, BarChartComponent],
-  imports: [CommonModule, DashboardRoutingModule, SharedModule, NgChartsModule]
+  imports: [CommonModule, DashboardRoutingModule, SharedModule, NgChartsModule],
+  providers: [DashboardService ]
 })
+
 export class DashboardModule {}
