@@ -4,3 +4,4 @@ export * from './despesas/despesa.service';
 export * from './receitas/receita.service';
 export * from './lancamentos/lancamento.service';
 export * from './dashboard/dashboard.service';
+export * from './usuarios/usuario.service';

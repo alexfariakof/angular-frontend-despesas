@@ -107,7 +107,6 @@ describe('Unit Test DespesasComponent', () => {
     expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
   }));
 
-
   it('should throw error when try to initializeDataTable', () => {
     // Arrange
     const errorMessage = { message: 'Fake Error Message' };
