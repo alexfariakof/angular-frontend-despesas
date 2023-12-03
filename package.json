@@ -45,6 +45,7 @@
     "mdb-ui-kit": "^6.4.0",
     "ng2-charts": "^4.1.1",
     "ng2-currency-mask": "^13.0.3",
+    "ngx-mask": "^16.4.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
