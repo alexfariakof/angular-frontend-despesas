@@ -5,3 +5,4 @@ export * from './receitas/receita.service';
 export * from './lancamentos/lancamento.service';
 export * from './dashboard/dashboard.service';
 export * from './usuarios/usuario.service';
+export * from './imagem-perfil/imagem.perfil.service';

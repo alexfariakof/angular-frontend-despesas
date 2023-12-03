@@ -19,4 +19,8 @@
     createUsuario(controleAcesso: IControleAcesso) : any {
       return this.httpClient.post<IControleAcesso>(`ControleAcesso`, controleAcesso);
     }
+
+    changePassword(login: ILogin): any {
+      return this.httpClient.post<ILogin>(`ControleAcesso/ChangePassword`, login);
+    }
   }
