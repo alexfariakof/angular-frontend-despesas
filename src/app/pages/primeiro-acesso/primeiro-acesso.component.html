@@ -43,7 +43,7 @@
         <label mdbLabel class="form-label" for="sobreNome" >Sobre Nome</label>
       </mdb-form-control>
       <mdb-form-control  class="mt-3 position-relative" >
-        <input id="telefone" name="telefone" formControlName="telefone" type="text" class="form-control" placeholder="Entre com seu telefone" mdbValidate mdbInput
+        <input id="telefone" name="telefone" formControlName="telefone" type="text" class="form-control" placeholder="Entre com seu telefone" mdbValidate mdbInput mask="(00) 0000-0000"
           [ngClass]="{ 'is-invalid': createAccountFrom.get('telefone')?.errors?.['required'] &&  createAccountFrom.get('telefone')?.touched }" />
           <label mdbLabel class="form-label" for="telefone" >Telefone</label>
           <i class="text-danger bi bi-exclamation-circle position-absolute mx-2 my-1 top-0 end-0"

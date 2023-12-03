@@ -20,10 +20,12 @@ import { AuthService, MenuService, CustomInterceptor } from './shared/services';
 import { ControleAcessoService } from './shared/services/api';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter, MomentDateModule,  MAT_MOMENT_DATE_ADAPTER_OPTIONS,} from '@angular/material-moment-adapter';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 @NgModule({
   declarations: [ AppComponent, LoginComponent, PrimeiroAcessoComponent ],
   imports: [ BrowserModule, AppRoutingModule, CommonModule, MdbFormsModule, ReactiveFormsModule, HttpClientModule, AlertModule,
-            MatFormFieldModule, MatInputModule, MatSelectModule , MatDatepickerModule, MatNativeDateModule,  BrowserAnimationsModule, MomentDateModule  ],
+            MatFormFieldModule, MatInputModule, MatSelectModule , MatDatepickerModule, MatNativeDateModule,  BrowserAnimationsModule, MomentDateModule,
+            NgxMaskDirective, NgxMaskPipe ],
   providers: [AuthService, ControleAcessoService, MenuService, AlertComponent, ModalFormComponent,  ModalConfirmComponent, NgbActiveModal,
     { provide: HTTP_INTERCEPTORS, useClass: CustomInterceptor, multi: true, },
     {provide: MAT_DATE_LOCALE, useValue: 'pt-br'},
@@ -33,6 +35,7 @@ import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter, MomentDateModule,  MAT_MOME
       deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
     },
     {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+    provideNgxMask()
 
   ],
   bootstrap: [AppComponent]
