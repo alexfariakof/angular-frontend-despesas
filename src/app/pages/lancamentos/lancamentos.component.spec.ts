@@ -3,7 +3,7 @@ import { CommonModule } from "@angular/common";
 import { ComponentFixture, TestBed, fakeAsync, flush } from "@angular/core/testing";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { AlertComponent, AlertType, DataTableComponent, ModalConfirmComponent, ModalFormComponent } from "src/app/shared/components";
-import { AuthService, FilterMesAnoService, MenuService, UserDataService } from "src/app/shared/services";
+import { FilterMesAnoService, MenuService, UserDataService } from "src/app/shared/services";
 import { SharedModule } from "src/app/shared/shared.module";
 import { LancamentosComponent } from "./lancamentos.component";
 import { DespesasFormComponent } from "../despesas/despesas-form/despesas.form.component";
@@ -23,7 +23,6 @@ import { MockLocalStorage } from '__mock__';
 describe('Unit Test LancamentosComponent', () => {
   let component: LancamentosComponent;
   let fixture: ComponentFixture<LancamentosComponent>;
-  let mockAuthService: jasmine.SpyObj<AuthService>;
   let localStorageSpy: MockLocalStorage;
   let lancamentoService: LancamentoService;
   let mockLancamentos: ILancamento[] = [

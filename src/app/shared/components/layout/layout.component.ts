@@ -32,8 +32,8 @@ export class LayoutComponent implements OnInit {
           this.urlPerfilImage  = response.imagemPerfilUsuario.url;
         }
       },
-      error: (response: any) => {
-        console.log(response.message);
+      error: () => {
+        this.urlPerfilImage = '../../../../assets/perfil_static.png';
       }
     });
   }

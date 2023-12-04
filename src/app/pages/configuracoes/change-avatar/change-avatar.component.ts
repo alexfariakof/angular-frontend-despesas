@@ -55,7 +55,7 @@ export class ChangeAvatarComponent implements OnInit {
 
   handleImagePerfil = (): void =>  {
     if (this.file !== null) {
-      if (this.imagemPerfilUsuario === null) {
+      if (this.imagemPerfilUsuario.id === null || this.imagemPerfilUsuario.id === 0 || this.imagemPerfilUsuario.id === undefined) {
         this.imagemPerfilService.createImagemPerfilUsuario(this.file, this.userDataService.getIdUsuario())
         .subscribe({
           next: (result: any) => {

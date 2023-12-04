@@ -11,7 +11,7 @@ import { from, throwError } from "rxjs";
 import { AlertComponent, ModalFormComponent, ModalConfirmComponent, DataTableComponent, AlertType } from "src/app/shared/components";
 import { ReceitaDataSet } from "src/app/shared/datatable-config/receitas";
 import { IReceita } from "src/app/shared/interfaces";
-import { AuthService, MenuService } from "src/app/shared/services";
+import { MenuService } from "src/app/shared/services";
 import { ReceitaService } from "src/app/shared/services/api";
 import { SharedModule } from "src/app/shared/shared.module";
 import { ReceitasFormComponent } from "./receitas-form/receitas.form.component";
