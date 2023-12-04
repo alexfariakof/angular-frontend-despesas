@@ -5,6 +5,7 @@ import { MenuService } from '../../services/utils/menu-service/menu.service';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('Unit Test LayoutComponent', () => {
   let component: LayoutComponent;
@@ -19,7 +20,7 @@ describe('Unit Test LayoutComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [LayoutComponent],
-      imports:[ CommonModule, RouterTestingModule],
+      imports:[ CommonModule, RouterTestingModule, HttpClientTestingModule],
       providers: [MenuService,
         { provide: AuthService, useValue: mockAuthService },]
     });

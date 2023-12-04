@@ -14,14 +14,7 @@ export class ChangeAvatarComponent implements OnInit {
   formAvatar: FormGroup;
   file: File | null = null;
   fileLoaded = false;
-  imagemPerfilUsuario: IImagemPerfil = {
-    url: '../../../../assets/perfil_static.png',
-    id: 0,
-    name: '',
-    type: '',
-    contentType: '',
-    idUsuario: 0
-  };
+  imagemPerfilUsuario: IImagemPerfil = {  url: '../../../../assets/perfil_static.png' };
 
   constructor(
     public imagemPerfilService: ImagemPerfilService,

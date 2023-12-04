@@ -16,12 +16,12 @@ import { ReceitaService } from "src/app/shared/services/api";
 import { SharedModule } from "src/app/shared/shared.module";
 import { ReceitasFormComponent } from "./receitas-form/receitas.form.component";
 import { ReceitasComponent } from "./receitas.component";
+import { MockLocalStorage } from "__mock__";
 
 describe('Unit Test ReceitasComponent', () => {
   let component: ReceitasComponent;
   let fixture: ComponentFixture<ReceitasComponent>;
-  let localStorageSpy: jasmine.SpyObj<Storage>;
-  let mockAuthService: jasmine.SpyObj<AuthService>;
+  let localStorageSpy: MockLocalStorage;
   let receitaService: ReceitaService;
   let mockReceitas: IReceita[] = [
     { id: 1, idUsuario: 1, idCategoria: 1, data: dayjs(), descricao: 'Teste Receitas 1', valor: 1.05, categoria: 'Categoria 1' },
@@ -35,37 +35,23 @@ describe('Unit Test ReceitasComponent', () => {
   ];
 
   beforeEach(() => {
-    localStorageSpy = jasmine.createSpyObj('localStorage', ['getItem', 'setItem', 'removeItem', 'clear']);
-    mockAuthService = jasmine.createSpyObj('AuthService', ['isAuthenticated']);
-    mockAuthService.isAuthenticated.and.returnValue(true);
+    localStorageSpy = new MockLocalStorage();
     TestBed.configureTestingModule({
       declarations: [ReceitasComponent, ReceitasFormComponent, MatDatepicker, MatSelect],
       imports: [CommonModule, RouterTestingModule, SharedModule, HttpClientTestingModule, MatSelectModule , MatDatepickerModule, MatNativeDateModule],
       providers: [MenuService, AlertComponent, ModalFormComponent, ModalConfirmComponent, NgbActiveModal, ReceitaService, ReceitasFormComponent,
-        { provide: Storage, useValue: localStorageSpy },
-        { provide: AuthService, useValue: mockAuthService }
+        { provide: Storage, useValue: localStorageSpy.instance() }
       ]
     });
     fixture = TestBed.createComponent(ReceitasComponent);
     component = fixture.componentInstance;
-    localStorage.setItem('idUsuario', '1');
     component.dataTable = TestBed.inject(DataTableComponent);
     receitaService = TestBed.inject(ReceitaService);
-    localStorageSpy.getItem.and.callFake((key: string) => localStorageSpy[key]);
-    localStorageSpy.setItem.and.callFake((key: string, value: string) => localStorageSpy[key] = value);
-    localStorageSpy.removeItem.and.callFake((key: string) => delete localStorageSpy[key]);
-    localStorageSpy.clear.and.callFake(() => {
-      for (const key in localStorageSpy) {
-        if (localStorageSpy.hasOwnProperty(key)) {
-          delete localStorageSpy[key];
-        }
-      }
-    });
     fixture.detectChanges();
   });
 
   afterEach(() => {
-    localStorageSpy = jasmine.createSpyObj('localStorage', ['getItem', 'setItem', 'removeItem', 'clear']);
+    localStorageSpy.cleanup();
   });
 
   it('should create', () => {
@@ -76,10 +62,10 @@ describe('Unit Test ReceitasComponent', () => {
   it('should initializeDataTable', fakeAsync(() => {
     // Arrange
     let mockIdUsuario = 1;
+    localStorageSpy.setItem('idUsuario', mockIdUsuario);
     let receitas = mockReceitas.filter(receita => receita.idUsuario === mockIdUsuario);
     const getReceitasByIdUsuarioSpy = spyOn(receitaService, 'getReceitaByIdUsuario').and.returnValue(from(Promise.resolve(receitas)));
     spyOn(component, 'getReceitasData').and.returnValue(mockReceitasData);
-    localStorageSpy['idUsuario'] = mockIdUsuario.toString();
 
     // Act
     component.initializeDataTable();
@@ -87,6 +73,7 @@ describe('Unit Test ReceitasComponent', () => {
 
     // Assert
     expect(getReceitasByIdUsuarioSpy).toHaveBeenCalled();
+    expect(getReceitasByIdUsuarioSpy).toHaveBeenCalledWith(mockIdUsuario);
     expect(component.receitasData.length).toBeGreaterThan(1);
   }));
 
@@ -96,7 +83,6 @@ describe('Unit Test ReceitasComponent', () => {
     const getReceitasByIdUsuarioSpy = spyOn(receitaService, 'getReceitaByIdUsuario').and.returnValue(throwError(errorMessage));
     spyOn(component, 'getReceitasData').and.returnValue(mockReceitasData);
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
-    localStorageSpy['idUsuario'] = '2';
 
     // Act
     component.initializeDataTable();
@@ -113,7 +99,6 @@ describe('Unit Test ReceitasComponent', () => {
     const errorMessage = { message: 'Fake Error Message initialize DataTable Receitas'};
     const getReceitasByIdUsuarioSpy = spyOn(receitaService, 'getReceitaByIdUsuario').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
-    localStorageSpy['idUsuario'] = '4';
 
     // Act
     component.initializeDataTable();
@@ -126,7 +111,6 @@ describe('Unit Test ReceitasComponent', () => {
 
   it('should return receitaData when call getReceitasData', () => {
     // Arrange
-    localStorageSpy['idUsuario'] = '1';
     component.receitasData = mockReceitasData;
 
     // Act
@@ -140,10 +124,10 @@ describe('Unit Test ReceitasComponent', () => {
   it('should updateDatatable when is called', fakeAsync(() => {
     // Arrange
     let mockIdUsuario = 2;
+    localStorageSpy.setItem('idUsuario', mockIdUsuario);
     let receitas = mockReceitas.filter(receita => receita.idUsuario === mockIdUsuario);
     const getReceitasByIdUsuarioSpy = spyOn(receitaService, 'getReceitaByIdUsuario').and.returnValue(from(Promise.resolve(receitas)));
     spyOn(component, 'getReceitasData').and.returnValue(mockReceitasData);
-    localStorageSpy['idUsuario'] = mockIdUsuario.toString();
 
     // Act
     component.updateDatatable();
@@ -151,8 +135,8 @@ describe('Unit Test ReceitasComponent', () => {
 
     // Assert
     expect(getReceitasByIdUsuarioSpy).toHaveBeenCalled();
+    expect(getReceitasByIdUsuarioSpy).toHaveBeenCalledWith(mockIdUsuario);
     expect(component.receitasData.length).toBeGreaterThan(0);
-
   }));
 
   it('should throw error when try to updateDataTable', () => {
@@ -160,7 +144,6 @@ describe('Unit Test ReceitasComponent', () => {
     const errorMessage = { message: 'Fake Error Message Recitas UpdateDataTable'};
     const getReceitasByIdUsuarioSpy = spyOn(receitaService, 'getReceitaByIdUsuario').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
-    localStorageSpy['idUsuario'] = '4';
 
     // Act
     component.updateDatatable();
