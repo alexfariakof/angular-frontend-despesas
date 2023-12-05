@@ -7,9 +7,10 @@ import { LayoutComponent, BarraFerramentaComponent, DataTableComponent } from ".
 import { BarraFerramentaModule } from "./components/barra-ferramenta-component/barra-ferramenta.component.module";
 import { DataTableModule } from "./components/data-table/data-table.component.module";
 import { UserDataService } from "./services";
+import { SaldoComponent } from './components/saldo/saldo.component';
 
 @NgModule({
-  declarations: [LayoutComponent ],
+  declarations: [LayoutComponent, SaldoComponent ],
   imports: [CommonModule, FormsModule, BarraFerramentaModule, CurrencyMaskModule ],
   exports: [LayoutComponent, BarraFerramentaComponent, DataTableModule, CurrencyMaskModule, MatSelectModule],
   providers: [DataTableComponent, UserDataService]
