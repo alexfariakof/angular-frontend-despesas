@@ -15,7 +15,7 @@ export class UsuarioService {
   }
 
   getUsuarioById(idUsuario: number) : any {
-    return this.httpClient.post<number>(`Usuario/GetById`, idUsuario);
+    return this.httpClient.get<number>(`Usuario/GetById/${ idUsuario}`);
   }
 
   postUsuario(usuario: IUsuario): any {

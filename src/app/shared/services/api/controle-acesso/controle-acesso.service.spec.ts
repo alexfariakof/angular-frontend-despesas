@@ -31,26 +31,13 @@ describe('Unit Test ControleAcessoService', () => {
       };
 
       const mockResponse = { message: true };
-
-      // Call the service method inside a subscribe to ensure the request is made
       service.signIn(loginData).subscribe((response: any) => {
-        // Expect that the response is a truthy value
         expect(response).toBeTruthy();
       });
-
-      // Define the expected URL for the POST request
       const expectedUrl = `${environment.endPoint}/ControleAcesso/SignIn`;
-
-      // Expect a single request to the specified URL
       const req = httpMock.expectOne(expectedUrl);
-
-      // Verify that the request method is POST
       expect(req.request.method).toBe('POST');
-
-      // Respond to the request with the mock response data
       req.flush(mockResponse);
-
-      // Verify that there are no outstanding requests
       httpMock.verify();
     }
   ));
@@ -68,28 +55,37 @@ describe('Unit Test ControleAcessoService', () => {
       };
 
       const mockResponse = { message: true };
-
-      // Call the service method inside a subscribe to ensure the request is made
       service.createUsuario(controleAcessoData).subscribe((response: any) => {
-        // Expect that the response is a truthy value
         expect(response).toBeTruthy();
       });
-
-      // Define the expected URL for the POST request
       const expectedUrl = `${environment.endPoint}/ControleAcesso`;
-
-      // Expect a single request to the specified URL
       const req = httpMock.expectOne(expectedUrl);
-
-      // Verify that the request method is POST
       expect(req.request.method).toBe('POST');
-
-      // Respond to the request with the mock response data
       req.flush(mockResponse);
-
-      // Verify that there are no outstanding requests
       httpMock.verify();
     }
   ));
 
+  it('should send a POST request to the /ControleAcesso/ChangePassword endpoint', inject(
+    [ControleAcessoService, HttpTestingController],
+    (service: ControleAcessoService, httpMock: HttpTestingController) => {
+      const login: ILogin = {
+        idUsuario: 12,
+        email: 'teste@teste.com',
+        senha: '12345',
+        confirmaSenha: '12345'
+      };
+
+      const mockResponse = { message: true };
+      service.changePassword(login).subscribe((response: any) => {
+        expect(response).toBeTruthy();
+      });
+
+      const expectedUrl = `${environment.endPoint}/ControleAcesso/ChangePassword`;
+      const req = httpMock.expectOne(expectedUrl);
+      expect(req.request.method).toBe('POST');
+      req.flush(mockResponse);
+      httpMock.verify();
+    }
+  ));
 });

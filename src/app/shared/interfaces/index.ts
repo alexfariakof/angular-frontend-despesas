@@ -6,5 +6,6 @@ export * from './IDespesa';
 export * from './IReceita';
 export * from './ITipoCategoria';
 export * from './ILogin';
-export * from './ILancamento'
-export *  from './IUsuario'
+export * from './ILancamento';
+export * from './IUsuario';
+export * from './IImagemPerfil'

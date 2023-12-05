@@ -1,36 +1,44 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testing';
 import { LayoutComponent } from './layout.component';
 import { CommonModule } from '@angular/common';
 import { MenuService } from '../../services/utils/menu-service/menu.service';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MockLocalStorage } from '__mock__';
+import { ImagemPerfilService } from '../../services/api';
+import { from, throwError } from 'rxjs';
 
 describe('Unit Test LayoutComponent', () => {
   let component: LayoutComponent;
   let fixture: ComponentFixture<LayoutComponent>;
   let mockAuthService: jasmine.SpyObj<AuthService>;
+  let localStorageSpy: MockLocalStorage;
+  let imagemPerfilService: ImagemPerfilService;
   let router: Router;
 
   beforeEach(() => {
     mockAuthService = jasmine.createSpyObj('AuthService', ['clearLocalStorage']);
     mockAuthService.clearLocalStorage.and.callThrough();
-
-
+    localStorageSpy = new MockLocalStorage();
     TestBed.configureTestingModule({
       declarations: [LayoutComponent],
-      imports:[ CommonModule, RouterTestingModule],
+      imports: [CommonModule, RouterTestingModule, HttpClientTestingModule],
       providers: [MenuService,
-        { provide: AuthService, useValue: mockAuthService },]
+        { provide: AuthService, useValue: mockAuthService },
+        { provide: Storage, useValue: localStorageSpy.instance() }
+      ]
     });
     fixture = TestBed.createComponent(LayoutComponent);
     component = fixture.componentInstance;
     router = TestBed.inject(Router);
-
+    imagemPerfilService = TestBed.inject(ImagemPerfilService);
     fixture.detectChanges();
   });
 
   afterEach(() => {
+    localStorageSpy.cleanup();
     TestBed.resetTestingModule();
   });
 
@@ -38,6 +46,36 @@ describe('Unit Test LayoutComponent', () => {
     // Assert
     expect(component).toBeTruthy();
   });
+
+  it('should initialize correctlly', fakeAsync(() => {
+    // Arrange
+    const mockIdUsuario = 500;
+    let mockResponse = { message: true, imagemPerfilUsuario: { url: 'http://testeimagemperfil.png' } };
+    localStorageSpy.setItem('idUsuario', mockIdUsuario);
+    const spyOnImagemPerfilService = spyOn(imagemPerfilService, 'getImagemPerfilUsuarioByIdUsuario').and.returnValue(from(Promise.resolve(mockResponse)));
+
+    // Act
+    component.initialize();
+    flush();
+
+    // Assert
+    expect(spyOnImagemPerfilService).toHaveBeenCalled();
+    expect(component.urlPerfilImage).toEqual(mockResponse.imagemPerfilUsuario.url);
+  }));
+
+  it('should throws error and fill with default path imagemPerfil', fakeAsync(() => {
+    // Arrange
+    const spyOnImagemPerfilService = spyOn(imagemPerfilService, 'getImagemPerfilUsuarioByIdUsuario').and.returnValue(throwError('Imagem não encontrada!'));
+
+    // Act
+    component.initialize();
+    flush();
+
+    // Assert
+    expect(spyOnImagemPerfilService).toHaveBeenCalled();
+    expect(component.urlPerfilImage).toEqual('../../../../assets/perfil_static.png');
+  }));
+
 
   it('should navigate to dashboard when menu is 1', () => {
     // Arrange
