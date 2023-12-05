@@ -10,7 +10,7 @@ export class DashboardService {
 
   constructor(public httpClient: HttpClient) {  }
 
-  getDataGraphicByYear(ano: Dayjs, idUsuario:number) : any {
-    return this.httpClient.get(`lancamento/GetDadosGraficoByAnoByIdUsuario/${ ano }/${ idUsuario }`);
+  getDataGraphicByYear(ano: Dayjs) : any {
+    return this.httpClient.get(`Graficos/Bar/${ ano }`);
   }
 }

@@ -9,20 +9,20 @@ export class ImagemPerfilService {
 
   constructor(public httpClient: HttpClient) {  }
 
-  getImagemPerfilUsuarioByIdUsuario(idUsuario: number): any {
-    return this.httpClient.get(`ImagemPerfilUsuario/GetByIdUsuario/${idUsuario}`);
+  getImagemPerfilUsuarioByIdUsuario(): any {
+    return this.httpClient.get(`ImagemPerfilUsuario`);
   }
 
-  createImagemPerfilUsuario(file: File, idUsuario: number): any {
+  createImagemPerfilUsuario(file: File): any {
     const formData = new FormData();
     formData.append('file', file);
-    return this.httpClient.post(`ImagemPerfilUsuario?idUsuario=${idUsuario}`, formData);
+    return this.httpClient.post(`ImagemPerfilUsuario`, formData);
   }
 
-  updateImagemPerfilUsuario(file: File, idUsuario: number): any {
+  updateImagemPerfilUsuario(file: File): any {
     const formData = new FormData();
     formData.append('file', file);
-    return this.httpClient.put(`ImagemPerfilUsuario?idUsuario=${idUsuario}`, formData);
+    return this.httpClient.put(`ImagemPerfilUsuario`, formData);
   }
 
   deleteImagemPerfilUsuario(idUsuario: number): any {

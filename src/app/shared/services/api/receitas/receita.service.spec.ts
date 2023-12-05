@@ -74,7 +74,7 @@ describe('Unit Test ReceitaService', () => {
     }
   ));
 
-  it('should send a getCategorias request to the Categoria endpoint', inject(
+  it('should send a getReceitasCategorias request to the Categoria endpoint', inject(
     [ReceitaService, HttpTestingController],
     (service: ReceitaService, httpMock: HttpTestingController) => {
 
@@ -93,11 +93,11 @@ describe('Unit Test ReceitaService', () => {
         }
       ];
 
-      service.getCategorias(1).subscribe((response: any) => {
+      service.getReceitasCategorias().subscribe((response: any) => {
         expect(response).toBeTruthy();
       });
 
-      const expectedUrl = `${environment.endPoint}/Categoria/GetByTipoCategoria/1/2`;
+      const expectedUrl = `${environment.endPoint}/Categoria/GetByTipoCategoria/2`;
       const req = httpMock.expectOne(expectedUrl);
       expect(req.request.method).toBe('GET');
 

@@ -72,9 +72,9 @@ describe('Unit Test UsuarioService', () => {
         expect(response).toBeTruthy();
       });
 
-      const expectedUrl = `${environment.endPoint}/Usuario/GetById`;
+      const expectedUrl = `${environment.endPoint}/Usuario/GetById/${idUsuario}`;
       const req = httpMock.expectOne(expectedUrl);
-      expect(req.request.method).toBe('POST');
+      expect(req.request.method).toBe('GET');
 
       req.flush(mockResponse);
       httpMock.verify();

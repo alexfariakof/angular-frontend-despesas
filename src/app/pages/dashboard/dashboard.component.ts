@@ -19,10 +19,7 @@ export class DashboardComponent {
     public menuService: MenuService,
     public dashboardService: DashboardService,
     public modalAlert: AlertComponent,
-    private filterAnoService: FilterAnoService,
-    private userDataService: UserDataService
-  ) {
-  }
+    private filterAnoService: FilterAnoService) {}
 
   ngOnInit() {
     this.menuService.menuSelecionado = 1;
@@ -30,7 +27,7 @@ export class DashboardComponent {
   }
 
   initializeChart = () => {
-    this.dashboardService.getDataGraphicByYear(dayjs(`${this.filterAnoService.dataAno}-01-01`), this.userDataService.getIdUsuario())
+    this.dashboardService.getDataGraphicByYear(dayjs(`${this.filterAnoService.dataAno}-01-01`))
       .subscribe({
         next: (response: any) => {
           if (response) {
@@ -48,7 +45,7 @@ export class DashboardComponent {
   }
 
   updateChart = () => {
-    this.dashboardService.getDataGraphicByYear(dayjs(`${this.filterAnoService.dataAno}-01-01`), this.userDataService.getIdUsuario())
+    this.dashboardService.getDataGraphicByYear(dayjs(`${this.filterAnoService.dataAno}-01-01`))
       .subscribe({
         next: (response: any) => {
           if (response) {

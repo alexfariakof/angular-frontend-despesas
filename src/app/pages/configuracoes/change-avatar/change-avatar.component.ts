@@ -31,7 +31,7 @@ export class ChangeAvatarComponent implements OnInit {
   }
 
   initialize = (): void  => {
-    this.imagemPerfilService.getImagemPerfilUsuarioByIdUsuario(this.userDataService.getIdUsuario())
+    this.imagemPerfilService.getImagemPerfilUsuarioByIdUsuario()
     .subscribe({
       next: (response: any) => {
         if (response.message === true && response.imagemPerfilUsuario !== undefined && response.imagemPerfilUsuario !== null) {
@@ -56,7 +56,7 @@ export class ChangeAvatarComponent implements OnInit {
   handleImagePerfil = (): void =>  {
     if (this.file !== null) {
       if (this.imagemPerfilUsuario === null) {
-        this.imagemPerfilService.createImagemPerfilUsuario(this.file, this.userDataService.getIdUsuario())
+        this.imagemPerfilService.createImagemPerfilUsuario(this.file)
         .subscribe({
           next: (result: any) => {
             if (result.message === true) {
@@ -72,7 +72,7 @@ export class ChangeAvatarComponent implements OnInit {
         });
       }
       else {
-        this.imagemPerfilService.updateImagemPerfilUsuario(this.file, this.userDataService.getIdUsuario())
+        this.imagemPerfilService.updateImagemPerfilUsuario(this.file)
         .subscribe({
           next: (result: any) => {
             if (result.message === true) {
