@@ -94,11 +94,11 @@ describe('Unit Test DespesaService', () => {
         }
       ];
 
-      service.getCategorias(1).subscribe((response: any) => {
+      service.getDespesasCategorias().subscribe((response: any) => {
         expect(response).toBeTruthy();
       });
 
-      const expectedUrl = `${environment.endPoint}/Categoria/GetByTipoCategoria/1/1`;
+      const expectedUrl = `${environment.endPoint}/Categoria/GetByTipoCategoria/1`;
       const req = httpMock.expectOne(expectedUrl);
       expect(req.request.method).toBe('GET');
 
