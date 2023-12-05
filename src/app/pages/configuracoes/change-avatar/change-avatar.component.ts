@@ -14,13 +14,13 @@ export class ChangeAvatarComponent implements OnInit {
   formAvatar: FormGroup;
   file: File | null = null;
   fileLoaded = false;
-  imagemPerfilUsuario: IImagemPerfil = {  url: '../../../../assets/perfil_static.png' };
+  imagemPerfilUsuario: IImagemPerfil = { url: '../../../../assets/perfil_static.png' };
 
   constructor(
     public imagemPerfilService: ImagemPerfilService,
     public userDataService: UserDataService,
     public modalAlert: AlertComponent
-    ) {
+  ) {
     this.formAvatar = new FormGroup({
       uploadPhoto: new FormControl(null),
     });
@@ -30,18 +30,18 @@ export class ChangeAvatarComponent implements OnInit {
     this.initialize();
   }
 
-  initialize = (): void  => {
+  initialize = (): void => {
     this.imagemPerfilService.getImagemPerfilUsuarioByIdUsuario()
-    .subscribe({
-      next: (response: any) => {
-        if (response.message === true && response.imagemPerfilUsuario !== undefined && response.imagemPerfilUsuario !== null) {
-          this.imagemPerfilUsuario  = response.imagemPerfilUsuario;
+      .subscribe({
+        next: (response: any) => {
+          if (response.message === true && response.imagemPerfilUsuario !== undefined && response.imagemPerfilUsuario !== null) {
+            this.imagemPerfilUsuario = response.imagemPerfilUsuario;
+          }
+        },
+        error: (response: any) => {
+          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
         }
-      },
-      error: (response: any) => {
-        this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
-      }
-    });;
+      });;
   }
 
   handleAvatarUpload = (event: any): void => {
@@ -53,39 +53,39 @@ export class ChangeAvatarComponent implements OnInit {
     }
   }
 
-  handleImagePerfil = (): void =>  {
+  handleImagePerfil = (): void => {
     if (this.file !== null) {
-      if (this.imagemPerfilUsuario === null) {
+      if (this.imagemPerfilUsuario.id === null) {
         this.imagemPerfilService.createImagemPerfilUsuario(this.file)
-        .subscribe({
-          next: (result: any) => {
-            if (result.message === true) {
-              this.file = null;
-              this.fileLoaded = false;
-              this.imagemPerfilUsuario = result.imagemPerfilUsuario;
-              this.modalAlert.open(AlertComponent, 'Imagem adicionada com sucesso!', AlertType.Success);
+          .subscribe({
+            next: (result: any) => {
+              if (result.message === true) {
+                this.file = null;
+                this.fileLoaded = false;
+                this.imagemPerfilUsuario = result.imagemPerfilUsuario;
+                this.modalAlert.open(AlertComponent, 'Imagem adicionada com sucesso!', AlertType.Success);
+              }
+            },
+            error: (response: any) => {
+              this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
             }
-          },
-          error: (response: any) => {
-            this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
-          }
-        });
+          });
       }
       else {
         this.imagemPerfilService.updateImagemPerfilUsuario(this.file)
-        .subscribe({
-          next: (result: any) => {
-            if (result.message === true) {
-              this.file = null;
-              this.fileLoaded = false;
-              this.imagemPerfilUsuario = result.imagemPerfilUsuario;
-              this.modalAlert.open(AlertComponent, 'Imagem de perfil usuário alterada com sucesso!', AlertType.Success);
+          .subscribe({
+            next: (result: any) => {
+              if (result.message === true) {
+                this.file = null;
+                this.fileLoaded = false;
+                this.imagemPerfilUsuario = result.imagemPerfilUsuario;
+                this.modalAlert.open(AlertComponent, 'Imagem de perfil usuário alterada com sucesso!', AlertType.Success);
+              }
+            },
+            error: (response: any) => {
+              this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
             }
-          },
-          error: (response: any) => {
-            this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
-          }
-        });
+          });
       }
     }
     else {
@@ -93,20 +93,20 @@ export class ChangeAvatarComponent implements OnInit {
     }
   }
 
-  handleDeleteImagePerfil = (): void  => {
+  handleDeleteImagePerfil = (): void => {
     this.imagemPerfilService.deleteImagemPerfilUsuario(this.userDataService.getIdUsuario())
-    .subscribe({
-      next: (result: any) => {
-        if (result.message === true) {
-          this.file = null;
-          this.fileLoaded = false;
-          this.imagemPerfilUsuario = null;
-          this.modalAlert.open(AlertComponent, 'Imagem de perfil usuário excluída com sucesso!', AlertType.Success);
+      .subscribe({
+        next: (result: any) => {
+          if (result.message === true) {
+            this.file = null;
+            this.fileLoaded = false;
+            this.imagemPerfilUsuario = null;
+            this.modalAlert.open(AlertComponent, 'Imagem de perfil usuário excluída com sucesso!', AlertType.Success);
+          }
+        },
+        error: (response: any) => {
+          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
         }
-      },
-      error: (response: any) => {
-        this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
-      }
-    });
+      });
   }
 }

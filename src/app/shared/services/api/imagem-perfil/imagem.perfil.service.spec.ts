@@ -6,12 +6,12 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ImagemPerfilService } from './imagem.perfil.service';
 
 describe('Unit Test ImagemPerfilService', () => {
- let file = new File(['Mock File Test '], 'image.png', { type: 'image/jpg' });
+  let file = new File(['Mock File Test '], 'image.png', { type: 'image/jpg' });
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers:[ImagemPerfilService,
+      providers: [ImagemPerfilService,
         { provide: HTTP_INTERCEPTORS, useClass: CustomInterceptor, multi: true, }
       ]
     });
@@ -27,10 +27,10 @@ describe('Unit Test ImagemPerfilService', () => {
 
       const idUsuario = 1;
       const mockResponse = { message: true };
-      service.getImagemPerfilUsuarioByIdUsuario(1).subscribe((response: any) => {
+      service.getImagemPerfilUsuarioByIdUsuario().subscribe((response: any) => {
         expect(response).toBeTruthy();
       });
-      const expectedUrl = `${environment.endPoint}/ImagemPerfilUsuario/GetByIdUsuario/${idUsuario}`;
+      const expectedUrl = `${environment.endPoint}/ImagemPerfilUsuario`;
       const req = httpMock.expectOne(expectedUrl);
       expect(req.request.method).toBe('GET');
       req.flush(mockResponse);
@@ -43,10 +43,10 @@ describe('Unit Test ImagemPerfilService', () => {
     (service: ImagemPerfilService, httpMock: HttpTestingController) => {
       const idUsuario = 10;
       const mockResponse = { message: true };
-      service.createImagemPerfilUsuario(file, idUsuario).subscribe((response: any) => {
+      service.createImagemPerfilUsuario(file).subscribe((response: any) => {
         expect(response).toBeTruthy();
       });
-      const expectedUrl = `${environment.endPoint}/ImagemPerfilUsuario?idUsuario=${idUsuario}`;
+      const expectedUrl = `${environment.endPoint}/ImagemPerfilUsuario`;
       const req = httpMock.expectOne(expectedUrl);
       expect(req.request.method).toBe('POST');
       req.flush(mockResponse);
@@ -59,10 +59,10 @@ describe('Unit Test ImagemPerfilService', () => {
     (service: ImagemPerfilService, httpMock: HttpTestingController) => {
       const idUsuario = 22;
       const mockResponse = { message: true };
-      service.updateImagemPerfilUsuario(file, idUsuario).subscribe((response: any) => {
+      service.updateImagemPerfilUsuario(file).subscribe((response: any) => {
         expect(response).toBeTruthy();
       });
-      const expectedUrl = `${environment.endPoint}/ImagemPerfilUsuario?idUsuario=${idUsuario}`;
+      const expectedUrl = `${environment.endPoint}/ImagemPerfilUsuario`;
       const req = httpMock.expectOne(expectedUrl);
       expect(req.request.method).toBe('PUT');
       req.flush(mockResponse);

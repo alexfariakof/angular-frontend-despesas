@@ -24,7 +24,7 @@ describe('Unit Test LayoutComponent', () => {
     localStorageSpy = new MockLocalStorage();
     TestBed.configureTestingModule({
       declarations: [LayoutComponent],
-      imports:[ CommonModule, RouterTestingModule, HttpClientTestingModule],
+      imports: [CommonModule, RouterTestingModule, HttpClientTestingModule],
       providers: [MenuService,
         { provide: AuthService, useValue: mockAuthService },
         { provide: Storage, useValue: localStorageSpy.instance() }
@@ -50,7 +50,7 @@ describe('Unit Test LayoutComponent', () => {
   it('should initialize correctlly', fakeAsync(() => {
     // Arrange
     const mockIdUsuario = 500;
-    let mockResponse= { message: true, imagemPerfilUsuario: { url: 'http://testeimagemperfil.png' }};
+    let mockResponse = { message: true, imagemPerfilUsuario: { url: 'http://testeimagemperfil.png' } };
     localStorageSpy.setItem('idUsuario', mockIdUsuario);
     const spyOnImagemPerfilService = spyOn(imagemPerfilService, 'getImagemPerfilUsuarioByIdUsuario').and.returnValue(from(Promise.resolve(mockResponse)));
 
@@ -60,7 +60,6 @@ describe('Unit Test LayoutComponent', () => {
 
     // Assert
     expect(spyOnImagemPerfilService).toHaveBeenCalled();
-    expect(spyOnImagemPerfilService).toHaveBeenCalledWith(mockIdUsuario);
     expect(component.urlPerfilImage).toEqual(mockResponse.imagemPerfilUsuario.url);
   }));
 

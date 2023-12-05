@@ -73,7 +73,7 @@ describe('Unit Test DashboardComponent', () => {
 
     // Assert
     expect(spyOnGetDataGraphicByYear).toHaveBeenCalled();
-    expect(spyOnGetDataGraphicByYear).toHaveBeenCalledWith(dayjs(dayjs().format('YYYY-01-01')), mockIdUsuario);
+    expect(spyOnGetDataGraphicByYear).toHaveBeenCalledWith(dayjs(dayjs().format('YYYY-01-01')));
     expect(component.barChartDatasets.length).toBeGreaterThan(1);
     expect(component.barChartLabels.length).toBeGreaterThan(11);
   }));
@@ -110,7 +110,7 @@ describe('Unit Test DashboardComponent', () => {
 
     // Assert
     expect(spyOnGetDataGraphicByYear).toHaveBeenCalled();
-    expect(spyOnGetDataGraphicByYear).toHaveBeenCalledWith(dayjs(mockFilterAno), mockIdUsuario);
+    expect(spyOnGetDataGraphicByYear).toHaveBeenCalledWith(dayjs(mockFilterAno));
     expect(component.barChartDatasets.length).toBeGreaterThan(1);
     expect(component.barChartLabels.length).toBeGreaterThan(11);
   }));
