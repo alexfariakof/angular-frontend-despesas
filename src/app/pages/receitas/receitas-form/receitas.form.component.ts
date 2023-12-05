@@ -58,7 +58,7 @@ export class ReceitasFormComponent {
   }
 
   getCatgeoriasFromReceitas = () => {
-    this.receitaService.getCategorias(this.userDataService.getIdUsuario())
+    this.receitaService.getReceitasCategorias()
       .subscribe({
         next: (result: ICategoria[]) => {
           if (result)

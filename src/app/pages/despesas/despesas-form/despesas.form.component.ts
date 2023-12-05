@@ -46,7 +46,7 @@ export class DespesasFormComponent {
   }
 
   getCatgeoriasFromDespesas = () => {
-    this.despesaService.getCategorias(this.userDataService.getIdUsuario())
+    this.despesaService.getDespesasCategorias()
       .subscribe({
         next: (result: ICategoria[]) => {
           if (result)

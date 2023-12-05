@@ -36,6 +36,9 @@ export class CustomInterceptor implements HttpInterceptor {
 
             if (error.ok === false && error.status === 0)
               return throwError({message: 'Erro de conexão tente mais tarde.'});
+            else if (error.status === 400) {
+              return throwError(error.error);
+            }
             else if (error.status === 401) {
               localStorage.clear();
               window.location.reload();

@@ -17,8 +17,8 @@ export class ReceitaService {
     return this.httpClient.get(`Receita/GetById/${idReceita}`);
   }
 
-  getCategorias(idUsuario: number): any {
-    return this.httpClient.get(`Categoria/GetByTipoCategoria/${idUsuario}/2`);
+  getReceitasCategorias(): any {
+    return this.httpClient.get(`Categoria/GetByTipoCategoria/2`);
   }
 
   getReceitaByIdUsuario(idUsuario: number) : any {

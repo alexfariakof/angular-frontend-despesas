@@ -10,10 +10,12 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { DashboardService } from 'src/app/shared/services/api';
 import { from, throwError } from 'rxjs';
 import * as dayjs from 'dayjs';
+import { MockLocalStorage } from '__mock__';
+
 describe('Unit Test DashboardComponent', () => {
   let component: DashboardComponent;
   let fixture: ComponentFixture<DashboardComponent>;
-  let localStorageSpy: jasmine.SpyObj<Storage>;
+  let localStorageSpy: MockLocalStorage;
   let mockAuthService: jasmine.SpyObj<AuthService>;
   let mockDashboardService: DashboardService;
 
@@ -24,7 +26,7 @@ describe('Unit Test DashboardComponent', () => {
   ]
 
   beforeEach(() => {
-    localStorageSpy = jasmine.createSpyObj('localStorage', ['getItem', 'setItem', 'removeItem', 'clear']);
+    localStorageSpy = new MockLocalStorage();
     mockAuthService = jasmine.createSpyObj('AuthService', ['createAccessToken', 'isAuthenticated']);
     mockAuthService.createAccessToken.and.returnValue(true);
     mockAuthService.isAuthenticated.and.returnValue(true);
@@ -33,7 +35,7 @@ describe('Unit Test DashboardComponent', () => {
       declarations: [DashboardComponent, BarChartComponent],
       imports: [CommonModule, SharedModule, NgChartsModule, HttpClientTestingModule],
       providers: [MenuService, AlertComponent, NgbActiveModal,
-        { provide: Storage, useValue: localStorageSpy },
+        { provide: Storage, useValue: localStorageSpy.instance() },
         { provide: AuthService, useValue: mockAuthService },
       ]
     });
@@ -41,37 +43,29 @@ describe('Unit Test DashboardComponent', () => {
     component = fixture.componentInstance;
     component.barChartLabels = mockLabels;
     component.barChartDatasets = mockDatasets;
-    localStorage.setItem('idUsuario', '1');
     mockDashboardService = TestBed.inject(DashboardService);
-    localStorageSpy.getItem.and.callFake((key: string) => localStorageSpy[key]);
-    localStorageSpy.setItem.and.callFake((key: string, value: string) => localStorageSpy[key] = value);
-    localStorageSpy.removeItem.and.callFake((key: string) => delete localStorageSpy[key]);
-    localStorageSpy.clear.and.callFake(() => {
-      for (const key in localStorageSpy) {
-        if (localStorageSpy.hasOwnProperty(key)) {
-          delete localStorageSpy[key];
-        }
-      }
-    });
-
     fixture.detectChanges();
   });
 
   afterEach(() => {
-    localStorageSpy = jasmine.createSpyObj('localStorage', ['getItem', 'setItem', 'removeItem', 'clear']);
+    localStorageSpy.cleanup();
   });
 
   it('should create', () => {
+    // Arrange
+    localStorageSpy.setItem("idUsuario", 250);
+
+    // Assert
     expect(component).toBeTruthy();
   });
 
   it('should initializeChart', fakeAsync(() => {
     // Arrange
-    let mockIdUsuario = 1;
+    let mockIdUsuario = 59;
+    localStorageSpy.setItem("idUsuario", mockIdUsuario);
     let mockChartData = { labels: mockLabels, datasets: mockDatasets };
     const spyOnGetDataGraphicByYear = spyOn(mockDashboardService, 'getDataGraphicByYear').and.returnValue(from(Promise.resolve(mockChartData)));
     spyOn(component, 'updateChart').and.callThrough();
-    localStorageSpy['idUsuario'] = mockIdUsuario.toString();
 
     // Act
     component.initializeChart();
@@ -79,6 +73,7 @@ describe('Unit Test DashboardComponent', () => {
 
     // Assert
     expect(spyOnGetDataGraphicByYear).toHaveBeenCalled();
+    expect(spyOnGetDataGraphicByYear).toHaveBeenCalledWith(dayjs(dayjs().format('YYYY-01-01')));
     expect(component.barChartDatasets.length).toBeGreaterThan(1);
     expect(component.barChartLabels.length).toBeGreaterThan(11);
   }));
@@ -101,19 +96,21 @@ describe('Unit Test DashboardComponent', () => {
 
   it('should updateChart', fakeAsync(() => {
     // Arrange
-    let mockIdUsuario = 1;
+    let mockIdUsuario = 189;
+    let mockFilterAno = dayjs().format('YYYY');
+    localStorageSpy.setItem("idUsuario", mockIdUsuario);
     let mockChartData = { labels: mockLabels, datasets: mockDatasets };
     const spyOnGetDataGraphicByYear = spyOn(mockDashboardService, 'getDataGraphicByYear').and.returnValue(from(Promise.resolve(mockChartData)));
     spyOn(component, 'updateChart').and.callThrough();
-    localStorageSpy['idUsuario'] = mockIdUsuario.toString();
 
     // Act
-    component.barraFerramenta.filterAnoService.dataAno = dayjs().format('YYYY-MM-DD');
+    component.barraFerramenta.filterAnoService.dataAno = mockFilterAno;
     component.updateChart();
     flush();
 
     // Assert
     expect(spyOnGetDataGraphicByYear).toHaveBeenCalled();
+    expect(spyOnGetDataGraphicByYear).toHaveBeenCalledWith(dayjs(mockFilterAno));
     expect(component.barChartDatasets.length).toBeGreaterThan(1);
     expect(component.barChartLabels.length).toBeGreaterThan(11);
   }));
@@ -123,7 +120,6 @@ describe('Unit Test DashboardComponent', () => {
     const errorMessage = { message: 'Fake Error Message Update Chart' };
     const spyOnGetDataGraphicByYear = spyOn(mockDashboardService, 'getDataGraphicByYear').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
-    localStorageSpy['idUsuario'] = '4';
 
     // Act
     component.updateChart();

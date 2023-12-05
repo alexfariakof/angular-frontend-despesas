@@ -44,8 +44,8 @@ export class LancamentosComponent implements OnInit {
           if (response.message === true) {
             this.lancamentosData = this.parseToLancamentosData(response.lancamentos as ILancamento[]);
             this.dataTable.loadData(this.lancamentosData);
-            this.dataTable.rerender();
             this.barraFerramenta.setOnChangeDataMesAno(this.updateDatatable);
+            this.dataTable.rerender();
           }
         },
         error: (response: any) => {
