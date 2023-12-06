@@ -206,7 +206,7 @@ describe('Unit Test ChangeAvatarComponent', () => {
     const spyOnImagemPerfilService = spyOn(mockImagemPerfilService, 'deleteImagemPerfilUsuario').and.returnValue(from(Promise.resolve({ message: true })));
     const mockIdUsuario = 3;
     localStorage.setItem('idUsuario', mockIdUsuario.toString());
-    const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
+    const alertOpenSpy = spyOn(component.modalAlert, 'open').and.callThrough();
 
     // Act
     component.handleDeleteImagePerfil();
@@ -215,10 +215,11 @@ describe('Unit Test ChangeAvatarComponent', () => {
     // Assert
     expect(spyOnImagemPerfilService).toHaveBeenCalled();
     expect(spyOnImagemPerfilService).toHaveBeenCalledWith(mockIdUsuario);
-    expect(component.file).toBeNull();
-    expect(component.fileLoaded).toBeFalsy();
     expect(alertOpenSpy).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, 'Imagem de perfil usuário excluída com sucesso!', AlertType.Success);
+    expect(component.file).toBeNull();
+    expect(component.fileLoaded).toBeFalsy();
+
   }));
 
   it('should handle and try delete imagem Perfil and throws error', fakeAsync(() => {

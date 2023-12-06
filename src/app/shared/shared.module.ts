@@ -9,10 +9,10 @@ import { DataTableModule } from "./components/data-table/data-table.component.mo
 import { UserDataService } from "./services";
 
 @NgModule({
-  declarations: [LayoutComponent ],
-  imports: [CommonModule, FormsModule, BarraFerramentaModule, CurrencyMaskModule ],
+  declarations: [LayoutComponent],
+  imports: [CommonModule, FormsModule, BarraFerramentaModule, CurrencyMaskModule],
   exports: [LayoutComponent, BarraFerramentaComponent, DataTableModule, CurrencyMaskModule, MatSelectModule],
   providers: [DataTableComponent, UserDataService]
- })
+})
 
 export class SharedModule { }

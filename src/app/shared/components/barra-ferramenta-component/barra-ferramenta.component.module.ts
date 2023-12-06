@@ -6,9 +6,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { SaldoComponent } from '../saldo/saldo.component';
 @NgModule({
   declarations: [BarraFerramentaComponent],
-  exports: [BarraFerramentaComponent],
-  imports: [FormsModule, CommonModule, MatInputModule, MatFormFieldModule, MatNativeDateModule, MatDatepickerModule ]
+  exports: [BarraFerramentaComponent, SaldoComponent],
+  imports: [FormsModule, CommonModule, MatInputModule, MatFormFieldModule, MatNativeDateModule, MatDatepickerModule, SaldoComponent]
 })
 export class BarraFerramentaModule { }

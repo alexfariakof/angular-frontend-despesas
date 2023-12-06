@@ -1,9 +1,9 @@
-import { UsuarioService } from './../../shared/services/api/usuarios/usuario.service';
-import { UserDataService } from 'src/app/shared/services';
+import { MenuService, UserDataService } from 'src/app/shared/services';
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { IUsuario } from 'src/app/shared/interfaces';
 import { AlertComponent, AlertType } from 'src/app/shared/components';
+import { UsuarioService } from 'src/app/shared/services/api';
 
 @Component({
   selector: 'app-perfil',
@@ -14,11 +14,12 @@ export class PerfilComponent implements OnInit {
   prefilFrom: FormGroup & IUsuario = this.formbuilder.group({}) as FormGroup & IUsuario;
 
   constructor(
+    private menuService: MenuService,
     public formbuilder: FormBuilder,
     public modalAlert: AlertComponent,
     public usuarioService: UsuarioService,
     private userDataService: UserDataService
-    ) {}
+    ) { menuService.setMenuSelecionado(6); }
 
   ngOnInit(): void{
     this.prefilFrom = this.formbuilder.group({ email: ['', [Validators.required, Validators.email]],

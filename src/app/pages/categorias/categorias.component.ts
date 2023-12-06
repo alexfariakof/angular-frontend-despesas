@@ -25,7 +25,7 @@ export class CategoriasComponent implements BarraFerramentaClass, OnInit {
   ) { }
 
   ngOnInit() {
-    this.menuService.menuSelecionado = 2;
+    this.menuService.setMenuSelecionado(2);
     this.initializeDataTable();
   }
 
@@ -35,10 +35,9 @@ export class CategoriasComponent implements BarraFerramentaClass, OnInit {
         next: (result: ICategoria[]) => {
           if (result) {
             this.catgoriasData = this.parseToCategoriaData(result);
-            this.dataTable.loadData(this.getCategoriasData());
+            this.dataTable.loadData(this.catgoriasData);
             this.dataTable.rerender();
           }
-
         },
         error: (response: any) => {
           this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);

@@ -1,3 +1,4 @@
+import { MenuService } from 'src/app/shared/services';
 import { Component } from "@angular/core";
 @Component({
   selector: 'app-configuracoes',
@@ -5,4 +6,9 @@ import { Component } from "@angular/core";
   styleUrls: ['./configuracoes.component.scss']
 })
 
-export class ConfiguracoesComponent  { }
+export class ConfiguracoesComponent  {
+
+  constructor(private menuService: MenuService){
+    menuService.setMenuSelecionado(7);
+  }
+}

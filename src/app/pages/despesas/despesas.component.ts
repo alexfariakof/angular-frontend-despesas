@@ -25,10 +25,12 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
     public despesaService: DespesaService,
     private despesasFormComponent: DespesasFormComponent,
     private userDataService: UserDataService
-  ) { }
+  ) {
+
+  }
 
   ngOnInit() {
-    this.menuService.menuSelecionado = 3;
+    this.menuService.setMenuSelecionado(3);
     this.initializeDataTable();
   }
 

@@ -1,4 +1,7 @@
-<div barraFerramenta class="d-flex justify-content-between">
+<div
+  barraFerramenta
+  class="d-flex flex-sm-row justify-content-around justify-content-sm-between"
+>
   <div>
     <div
       class="md-form md-outline always-active-label input-with-post-icon datepicker m-2"
@@ -19,6 +22,7 @@
       />
     </div>
     <div
+      id="filterDataMesAno"
       class="md-form md-outline always-active-label input-with-post-icon datepicker m-2"
       [ngClass]="{ 'd-none': !dtMesAno }"
     >
@@ -34,7 +38,7 @@
       />
     </div>
   </div>
-  <div class="mt-2 text-light"><h2>Saldo</h2></div>
+  <div class="flex-grow-1"><app-saldo></app-saldo></div>
   <div class="d-flex flex-row-reverse pt-2 pb-2 mb-0">
     <div class="btn-barra-ferramenta">
       <button
