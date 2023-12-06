@@ -10,10 +10,10 @@ import { UserDataService } from "./services";
 import { SaldoComponent } from './components/saldo/saldo.component';
 
 @NgModule({
-  declarations: [LayoutComponent, SaldoComponent ],
-  imports: [CommonModule, FormsModule, BarraFerramentaModule, CurrencyMaskModule ],
+  declarations: [LayoutComponent],
+  imports: [CommonModule, FormsModule, BarraFerramentaModule, CurrencyMaskModule],
   exports: [LayoutComponent, BarraFerramentaComponent, DataTableModule, CurrencyMaskModule, MatSelectModule],
   providers: [DataTableComponent, UserDataService]
- })
+})
 
 export class SharedModule { }

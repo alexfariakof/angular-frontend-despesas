@@ -6,11 +6,26 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class FilterAnoService {
-  private _dataAno: BehaviorSubject<string> = new BehaviorSubject<string>(dayjs().format('YYYY'));
-  dataAno$ = this._dataAno.asObservable();
+  private _dataAno: BehaviorSubject<string>;
 
-  get dataAno(): string { return this._dataAno.getValue(); }
+  constructor() {
+    const storedYear = localStorage.getItem('selectedYear');
+    const initialYear = storedYear || dayjs().format('YYYY');
+    this._dataAno = new BehaviorSubject<string>(initialYear);
+  }
+
+  get dataAno$() {
+    return this._dataAno.asObservable();
+  }
+
+  get dataAno(): string {
+    return this._dataAno.getValue();
+  }
+
   set dataAno(value: string) {
     this._dataAno.next(value);
+
+    // Salvar o valor no localStorage
+    localStorage.setItem('selectedYear', value);
   }
 }

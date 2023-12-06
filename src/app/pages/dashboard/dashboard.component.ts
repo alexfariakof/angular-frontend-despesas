@@ -22,7 +22,7 @@ export class DashboardComponent {
     private filterAnoService: FilterAnoService) {}
 
   ngOnInit() {
-    this.menuService.menuSelecionado = 1;
+    this.menuService.setMenuSelecionado(1);
     this.initializeChart();
   }
 

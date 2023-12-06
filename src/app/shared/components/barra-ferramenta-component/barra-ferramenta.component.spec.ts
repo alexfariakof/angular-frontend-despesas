@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BarraFerramentaComponent } from './barra-ferramenta.component';
 import { FormsModule } from '@angular/forms';
+import { SaldoComponent } from '../saldo/saldo.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('BarraFerramentaComponent', () => {
   let component: BarraFerramentaComponent;
@@ -9,7 +11,7 @@ describe('BarraFerramentaComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [BarraFerramentaComponent],
-      imports: [FormsModule]
+      imports: [FormsModule, SaldoComponent, HttpClientTestingModule]
     });
     fixture = TestBed.createComponent(BarraFerramentaComponent);
     component = fixture.componentInstance;
