@@ -24,8 +24,6 @@ export class FilterMesAnoService {
 
   set dataMesAno(value: string) {
     this._dataMesAno.next(value);
-
-    // Salvar o valor no localStorage
     localStorage.setItem('selectedMonthYear', value);
   }
 }

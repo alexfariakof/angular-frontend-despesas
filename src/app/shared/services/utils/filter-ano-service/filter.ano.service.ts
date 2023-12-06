@@ -24,8 +24,6 @@ export class FilterAnoService {
 
   set dataAno(value: string) {
     this._dataAno.next(value);
-
-    // Salvar o valor no localStorage
     localStorage.setItem('selectedYear', value);
   }
 }

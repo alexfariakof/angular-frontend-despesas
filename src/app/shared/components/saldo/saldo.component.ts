@@ -2,9 +2,7 @@ import { FilterMesService } from './../../services/utils/filter-mes.service/filt
 import { Component, OnInit } from '@angular/core';
 import { SaldoService } from '../../services/api';
 import * as dayjs from 'dayjs';
-import 'dayjs/locale/pt-BR';
 import { Dayjs } from 'dayjs';
-dayjs.locale('pt-BR');
 @Component({
   selector: 'app-saldo',
   standalone: true,
@@ -26,7 +24,7 @@ export class SaldoComponent implements OnInit {
       .subscribe({
         next: (response: any) => {
           if (response.message === true && response.saldo !== undefined && response.saldo !== null) {
-            this.saldoAnual = response.saldo.toLocaleString('pt-BR', {
+            this.saldoAnual = response.saldo.toLocaleString('pt-br', {
               style: 'currency',
               currency: 'BRL',
               minimumFractionDigits: 2,
@@ -47,7 +45,7 @@ export class SaldoComponent implements OnInit {
       .subscribe({
         next: (response: any) => {
           if (response.message === true && response.saldo !== undefined && response.saldo !== null) {
-            this.saldoMensal = response.saldo.toLocaleString('pt-BR', {
+            this.saldoMensal = response.saldo.toLocaleString('pt-br', {
               style: 'currency',
               currency: 'BRL',
               minimumFractionDigits: 2,
