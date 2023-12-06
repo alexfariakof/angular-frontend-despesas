@@ -51,8 +51,8 @@ export class CategoriasFormComponent implements OnInit {
 
         this.categoriaService.postCategoria(categoria)
         .subscribe({
-          next: (result: any ) => {
-            if (result.message == true)
+          next: (response: any ) => {
+            if (response.message === true)
             {
               this.activeModal.close();
               this.refresh();
@@ -67,8 +67,8 @@ export class CategoriasFormComponent implements OnInit {
       else if (this.action === IAction.Edit) {
         this.categoriaService.putCategoria(categoria)
         .subscribe({
-          next: (result: ICategoria ) => {
-            if (result !== undefined || result !== null)
+          next: (response: any ) => {
+            if (response.message === true && response !== undefined && response !== null)
             {
               this.activeModal.close();
               this.refresh();

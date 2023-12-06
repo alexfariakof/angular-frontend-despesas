@@ -6,11 +6,24 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class FilterMesAnoService {
-  private _dataMesAno: BehaviorSubject<string> = new BehaviorSubject<string>(dayjs().format("YYYY-MM"));
-  dataMesAno$ = this._dataMesAno.asObservable();
+  private _dataMesAno: BehaviorSubject<string>;
 
-  get dataMesAno(): string { return this._dataMesAno.getValue(); }
+  constructor() {
+    const storedMonthYear = localStorage.getItem('selectedMonthYear');
+    const initialMonthYear = storedMonthYear || dayjs().format('YYYY-MM');
+    this._dataMesAno = new BehaviorSubject<string>(initialMonthYear);
+  }
+
+  get dataMesAno$() {
+    return this._dataMesAno.asObservable();
+  }
+
+  get dataMesAno(): string {
+    return this._dataMesAno.getValue();
+  }
+
   set dataMesAno(value: string) {
     this._dataMesAno.next(value);
+    localStorage.setItem('selectedMonthYear', value);
   }
 }

@@ -37,7 +37,7 @@ describe('Unit Test ReceitasFormComponent', () => {
     mockAuthService.isAuthenticated.and.returnValue(true);
     TestBed.configureTestingModule({
       declarations: [ReceitasFormComponent, MatDatepicker, MatSelect],
-      imports: [ReactiveFormsModule, HttpClientTestingModule, MatFormFieldModule, MatInputModule, MatSelectModule , MatDatepickerModule, MatNativeDateModule, BrowserAnimationsModule, CurrencyMaskModule],
+      imports: [ReactiveFormsModule, HttpClientTestingModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, BrowserAnimationsModule, CurrencyMaskModule],
       providers: [FormBuilder, AlertComponent, NgbActiveModal, ReceitaService,
         { provide: AuthService, useValue: mockAuthService },
       ]
@@ -54,10 +54,11 @@ describe('Unit Test ReceitasFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should getCategorias ', fakeAsync(() => {
+  it('should getCategoriasReceutasw ', fakeAsync(() => {
     // Arrange
     const mockIdUsuario = 1;
-    const getCategoriasSpy = spyOn(receitaService, 'getCategorias').and.returnValue(from(Promise.resolve(mockCategorias)));
+    localStorage.setItem('idUsuario', mockIdUsuario.toString());
+    const getCategoriasSpy = spyOn(receitaService, 'getReceitasCategorias').and.returnValue(from(Promise.resolve(mockCategorias)));
 
     // Act
     component.ngOnInit();
@@ -66,15 +67,14 @@ describe('Unit Test ReceitasFormComponent', () => {
     fixture.detectChanges();
     // Assert
     expect(getCategoriasSpy).toHaveBeenCalled();
-    expect(getCategoriasSpy).toHaveBeenCalledWith(mockIdUsuario);
     expect(component.categorias.length).toBeGreaterThan(1);
   }));
 
   it('should thorws errro when call getCategorias and open modal alert ', () => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message'};
+    const errorMessage = { message: 'Fake Error Message' };
     const mockIdUsuario = 1;
-    const getCategoriasSpy = spyOn(receitaService, 'getCategorias').and.returnValue(throwError(errorMessage));
+    const getCategoriasSpy = spyOn(receitaService, 'getReceitasCategorias').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
     // Act
@@ -118,7 +118,7 @@ describe('Unit Test ReceitasFormComponent', () => {
 
   it('should throws error when try to saveCreateReceita and show error message', () => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message Create Receita'};
+    const errorMessage = { message: 'Fake Error Message Create Receita' };
     const receita: IReceita = {
       id: 0,
       idUsuario: 1,
@@ -176,7 +176,7 @@ describe('Unit Test ReceitasFormComponent', () => {
 
   it('should throws error when try to saveEditReceita and show error message', () => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message Edit Receita'};
+    const errorMessage = { message: 'Fake Error Message Edit Receita' };
     const receita: IReceita = {
       id: 1,
       idUsuario: 2,
@@ -235,7 +235,7 @@ describe('Unit Test ReceitasFormComponent', () => {
 
   it('should throws error when try to editReceita', fakeAsync(() => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message Edit Receita'};
+    const errorMessage = { message: 'Fake Error Message Edit Receita' };
     const mockReceita: IReceita = mockReceitas[1];
     const getReceitasById = spyOn(receitaService, 'getReceitaById').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
@@ -284,7 +284,7 @@ describe('Unit Test ReceitasFormComponent', () => {
 
   it('should throws error when try to deleteReceita and open modal alert warning', fakeAsync(() => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message Delete Receita'};
+    const errorMessage = { message: 'Fake Error Message Delete Receita' };
     const spyOnDeleteReceita = spyOn(receitaService, 'deleteReceita').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 

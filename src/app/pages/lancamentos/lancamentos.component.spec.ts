@@ -3,7 +3,7 @@ import { CommonModule } from "@angular/common";
 import { ComponentFixture, TestBed, fakeAsync, flush } from "@angular/core/testing";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { AlertComponent, AlertType, DataTableComponent, ModalConfirmComponent, ModalFormComponent } from "src/app/shared/components";
-import { AuthService, FilterMesAnoService, MenuService } from "src/app/shared/services";
+import { FilterMesAnoService, MenuService, UserDataService } from "src/app/shared/services";
 import { SharedModule } from "src/app/shared/shared.module";
 import { LancamentosComponent } from "./lancamentos.component";
 import { DespesasFormComponent } from "../despesas/despesas-form/despesas.form.component";
@@ -16,72 +16,61 @@ import { from, throwError } from 'rxjs';
 import * as dayjs from 'dayjs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
-import { MatSelect, MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
+import { MockLocalStorage } from '__mock__';
 
 describe('Unit Test LancamentosComponent', () => {
   let component: LancamentosComponent;
   let fixture: ComponentFixture<LancamentosComponent>;
-  let mockAuthService: jasmine.SpyObj<AuthService>;
-  let localStorageSpy: jasmine.SpyObj<Storage>;
+  let localStorageSpy: MockLocalStorage;
   let lancamentoService: LancamentoService;
   let mockLancamentos: ILancamento[] = [
-    { id:1, idDespesa: 1, idReceita: 0, data: dayjs().format('YYYY-MM-DD'), tipoCategoria: 'Despesa', categoria: 'Tipo Catgeoria 1', descricao: 'Teste Descrição categoria 1', valor: 50.98 },
-    { id:2, idDespesa: 0, idReceita: 1, data: dayjs().format('YYYY-MM-DD'), tipoCategoria: 'Receita', categoria: 'Tipo Catgeoria 2', descricao: 'Teste Descrição categoria 2', valor: 100.41 },
+    { id: 1, idDespesa: 1, idReceita: 0, data: dayjs().format('YYYY-MM-DD'), tipoCategoria: 'Despesa', categoria: 'Tipo Catgeoria 1', descricao: 'Teste Descrição categoria 1', valor: 50.98 },
+    { id: 2, idDespesa: 0, idReceita: 1, data: dayjs().format('YYYY-MM-DD'), tipoCategoria: 'Receita', categoria: 'Tipo Catgeoria 2', descricao: 'Teste Descrição categoria 2', valor: 100.41 },
   ];
   let mockLancamentosData: LancamentoDataSet[] = [
-    { id:1, data: dayjs().format('YYYY-MM-DD'), tipoCategoria: 'Despesa', categoria: 'Tipo Catgeoria 1', descricao: 'Teste Descrição categoria 1', valor: 'R$ 50.98' },
-    { id:1, data: dayjs().format('YYYY-MM-DD'), tipoCategoria: 'Receita', categoria: 'Tipo Catgeoria 2', descricao: 'Teste Descrição categoria 2', valor: 'R$ 100.41' },
+    { id: 1, data: dayjs().format('YYYY-MM-DD'), tipoCategoria: 'Despesa', categoria: 'Tipo Catgeoria 1', descricao: 'Teste Descrição categoria 1', valor: 'R$ 50.98' },
+    { id: 1, data: dayjs().format('YYYY-MM-DD'), tipoCategoria: 'Receita', categoria: 'Tipo Catgeoria 2', descricao: 'Teste Descrição categoria 2', valor: 'R$ 100.41' },
 
   ];
 
   beforeEach(() => {
-    mockAuthService = jasmine.createSpyObj('AuthService', ['isAuthenticated']);
-    mockAuthService.isAuthenticated.and.returnValue(true);
-    localStorageSpy = jasmine.createSpyObj('localStorage', ['getItem', 'setItem', 'removeItem', 'clear']);
+    localStorageSpy = new MockLocalStorage();
     TestBed.configureTestingModule({
       declarations: [LancamentosComponent, DespesasFormComponent, ReceitasFormComponent],
-      imports: [CommonModule,  SharedModule, RouterTestingModule, HttpClientTestingModule,
-        MatFormFieldModule, MatSelectModule , MatDatepickerModule, MatNativeDateModule],
+      imports: [CommonModule, SharedModule, RouterTestingModule, HttpClientTestingModule,
+        MatFormFieldModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule],
       providers: [MenuService, AlertComponent, NgbActiveModal, ModalFormComponent, ModalConfirmComponent,
-        FilterMesAnoService, DespesasFormComponent, ReceitasFormComponent,
-        { provide: Storage, useValue: localStorageSpy },
-        { provide: AuthService, useValue: mockAuthService }, ]
+        FilterMesAnoService, DespesasFormComponent, ReceitasFormComponent,UserDataService,
+        { provide: Storage, useValue: localStorageSpy.instance() }
+      ]
     });
     fixture = TestBed.createComponent(LancamentosComponent);
     component = fixture.componentInstance;
-    localStorage.setItem('idUsuario', '1');
-    component.dataTable = TestBed.inject(DataTableComponent);
     lancamentoService = TestBed.inject(LancamentoService);
-    localStorageSpy.getItem.and.callFake((key: string) => localStorageSpy[key]);
-    localStorageSpy.setItem.and.callFake((key: string, value: string) => localStorageSpy[key] = value);
-    localStorageSpy.removeItem.and.callFake((key: string) => delete localStorageSpy[key]);
-    localStorageSpy.clear.and.callFake(() => {
-      for (const key in localStorageSpy) {
-        if (localStorageSpy.hasOwnProperty(key)) {
-          delete localStorageSpy[key];
-        }
-      }
-    });
-
+    component.dataTable = TestBed.inject(DataTableComponent);
+    component.lancamentosData = mockLancamentosData;
     fixture.detectChanges();
   });
 
   afterEach(() => {
-    localStorageSpy = jasmine.createSpyObj('localStorage', ['getItem', 'setItem', 'removeItem', 'clear']);
+    localStorageSpy.cleanup();
   });
 
   it('should create', () => {
+    // Arrange
+    localStorageSpy.setItem('idUsuario', '99');
+
     // Assert
     expect(component).toBeTruthy();
   });
 
   it('should initializeDataTable', fakeAsync(() => {
     // Arrange
-    let mockIdUsuario = 1;
-    const getLancamntosByMesAnoSpy = spyOn(lancamentoService, 'getLancamentosByMesAnoIdUsuario').and.returnValue(from(Promise.resolve({message: true , lancamentos: mockLancamentos})));
-    spyOn(component, 'getLancamentosData').and.returnValue(mockLancamentosData);
-    localStorageSpy['idUsuario'] = mockIdUsuario.toString();
+    let mockIdUsuario = 2767;
+    localStorageSpy.setItem('idUsuario', mockIdUsuario.toString());
+    const getLancamntosByMesAnoSpy = spyOn(lancamentoService, 'getLancamentosByMesAnoIdUsuario').and.returnValue(from(Promise.resolve({ message: true, lancamentos: mockLancamentos })));
 
     // Act
     component.initializeDataTable();
@@ -89,18 +78,15 @@ describe('Unit Test LancamentosComponent', () => {
 
     // Assert
     expect(getLancamntosByMesAnoSpy).toHaveBeenCalled();
+    expect(getLancamntosByMesAnoSpy).toHaveBeenCalledWith(dayjs(dayjs().format('YYYY-MM')), mockIdUsuario);
     expect(component.lancamentosData.length).toBeGreaterThan(1);
   }));
 
   it('should throws error when initializeDataTable and show modal alert', fakeAsync(() => {
     // Arrange
-    let mockIdUsuario = 1;
-
-    const errorMessage = { message: 'Fake Error Message'};
+    const errorMessage = { message: 'Fake Error Message' };
     const getLancamntosByMesAnoSpy = spyOn(lancamentoService, 'getLancamentosByMesAnoIdUsuario').and.returnValue(throwError(errorMessage));
-    spyOn(component, 'getLancamentosData').and.returnValue(mockLancamentosData);
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
-    localStorageSpy['idUsuario'] = '2';
 
     // Act
     component.initializeDataTable();
@@ -114,24 +100,25 @@ describe('Unit Test LancamentosComponent', () => {
 
   it('should updateDatatable when is called', fakeAsync(() => {
     // Arrange
-    let mockIdUsuario = 2;
-    const getLancamntosByMesAnoSpy = spyOn(lancamentoService, 'getLancamentosByMesAnoIdUsuario').and.returnValue(from(Promise.resolve({message: true , lancamentos: mockLancamentos})));
-    spyOn(component, 'getLancamentosData').and.returnValue(mockLancamentosData);
-    localStorageSpy['idUsuario'] = mockIdUsuario.toString();
-
+    let mockIdUsuario = 48;
+    let mockDAtaMesAno = dayjs().toISOString();
+    localStorageSpy.setItem('idUsuario', mockIdUsuario.toString());
+    const getLancamntosByMesAnoSpy = spyOn(lancamentoService, 'getLancamentosByMesAnoIdUsuario').and.returnValue(from(Promise.resolve({ message: true, lancamentos: mockLancamentos })));
 
     // Act
+    component.barraFerramenta.filterMesAnoService.dataMesAno = mockDAtaMesAno;
     component.updateDatatable();
     flush();
 
     // Assert
     expect(getLancamntosByMesAnoSpy).toHaveBeenCalled();
+    expect(getLancamntosByMesAnoSpy).toHaveBeenCalledWith(dayjs(mockDAtaMesAno), mockIdUsuario);
     expect(component.lancamentosData.length).toBeGreaterThan(0);
   }));
 
   it('should throw error when try to updateDataTable', () => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message Lançamentos UpdateDataTable'};
+    const errorMessage = { message: 'Fake Error Message Lançamentos UpdateDataTable' };
     const getLancamntosByMesAnoSpy = spyOn(lancamentoService, 'getLancamentosByMesAnoIdUsuario').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
     localStorageSpy['idUsuario'] = '4';

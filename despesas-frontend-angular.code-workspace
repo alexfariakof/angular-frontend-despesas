@@ -5,9 +5,19 @@
     }
   ],
   "settings": {
-    "recommendations": [
-      "esbenp.prettier-vscode"
-      ]
+    "editor.formatOnSave": false,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true,
+      "source.fixAll.tslint": true
+    },
+    "eslint.validate": ["typescript"],
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "files.autoSave": "onFocusChange",
+    "prettier.semi": true,
+    "prettier.singleQuote": true,
+    "prettier.tabWidth": 2,
+    "prettier.useTabs": true
   },
   "launch": {
     "version": "0.2.0",
@@ -25,16 +35,11 @@
       {
         "name": "Run Debug Unit Tests",
         "request": "launch",
-        "runtimeArgs": [
-          "run",
-          "test:debug"
-        ],
+        "runtimeArgs": ["run", "test:debug"],
         "runtimeExecutable": "npm",
-        "skipFiles": [
-          "<node_internals>/**"
-        ],
+        "skipFiles": ["<node_internals>/**"],
         "type": "node",
-        "url":"http://localhost:9876/debug.html"
+        "url": "http://localhost:9876/debug.html"
       },
       {
         "name": "Chrome Attach Debugger",

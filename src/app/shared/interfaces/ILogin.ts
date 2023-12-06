@@ -1,4 +1,6 @@
 export interface ILogin{
-    email:string;
-    senha:string;
+  idUsuario?: number;
+  email?: string;
+  senha: string;
+  confirmaSenha?: string;
 }

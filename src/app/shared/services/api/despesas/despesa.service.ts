@@ -17,8 +17,8 @@ export class DespesaService {
     return this.httpClient.get(`Despesa/GetById/${idDespesa}`);
   }
 
-  getCategorias(idUsuario: number): any {
-    return this.httpClient.get(`Categoria/GetByTipoCategoria/${idUsuario}/1`);
+  getDespesasCategorias(): any {
+    return this.httpClient.get(`Categoria/GetByTipoCategoria/1`);
   }
 
   getDespesaByIdUsuario(idUsuario: number) : any {

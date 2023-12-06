@@ -26,48 +26,45 @@ export class ReceitasComponent implements BarraFerramentaClass {
     public receitaService: ReceitaService,
     private receitasFormComponent: ReceitasFormComponent,
     private userDataService: UserDataService
-    ) { }
+  ) { menuService.setMenuSelecionado(4); }
 
   ngOnInit() {
-    this.menuService.menuSelecionado = 4;
     this.initializeDataTable();
   }
 
   initializeDataTable = () => {
     this.receitaService.getReceitaByIdUsuario(this.userDataService.getIdUsuario())
-    .subscribe({
-      next: (result: IReceita[]) => {
-        if (result)
-        {
-          this.receitasData = this.parseToReceitaData(result);
-          this.dataTable.loadData(this.getReceitasData());
-          this.dataTable.rerender();
-        }
+      .subscribe({
+        next: (result: IReceita[]) => {
+          if (result) {
+            this.receitasData = this.parseToReceitaData(result);
+            this.dataTable.loadData(this.getReceitasData());
+            this.dataTable.rerender();
+          }
 
-      },
-      error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
-      }
-    });
+        },
+        error: (response: any) => {
+          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
+        }
+      });
   }
 
   updateDatatable = () => {
     this.receitaService.getReceitaByIdUsuario(this.userDataService.getIdUsuario())
-    .subscribe({
-      next: (result: any) => {
-        if (result)
-        {
-          this.receitasData = this.parseToReceitaData(result);
-          this.dataTable.rerender();
+      .subscribe({
+        next: (result: any) => {
+          if (result) {
+            this.receitasData = this.parseToReceitaData(result);
+            this.dataTable.rerender();
+          }
+        },
+        error: (response: any) => {
+          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
         }
-      },
-      error :(response : any) =>  {
-        this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
-      }
-    });
+      });
   }
 
-  getReceitasData = () =>{
+  getReceitasData = () => {
     return this.receitasData;
   }
 
@@ -77,34 +74,34 @@ export class ReceitasComponent implements BarraFerramentaClass {
       data: dayjs(receita.data).format('DD/MM/YYYY'),
       categoria: receita.categoria,
       descricao: receita.descricao,
-      valor: `${ receita.valor.toLocaleString('pt-BR', {
+      valor: `${receita.valor.toLocaleString('pt-BR', {
         style: 'currency',
         currency: 'BRL',
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
-      }) }`
+      })}`
     }));
   }
 
   onClickNovo = () => {
     const modalRef = this.modalForm.modalService.open(ReceitasFormComponent, { centered: true });
     modalRef.shown.subscribe(() => {
-      modalRef.componentInstance.setAction(IAction.Create);
-      modalRef.componentInstance.setRefresh(() => { this.updateDatatable(); });
+      modalRef.componentInstance.action = IAction.Create;
+      modalRef.componentInstance.setRefresh(this.updateDatatable);
     });
   }
 
-  onClickEdit = (idReceita: number) =>{
+  onClickEdit = (idReceita: number) => {
     const modalRef = this.modalForm.modalService.open(ReceitasFormComponent, { centered: true });
     modalRef.shown.subscribe(() => {
       modalRef.componentInstance.action = IAction.Edit;
-      modalRef.componentInstance.refresh = () => { this.updateDatatable(); };
+      modalRef.componentInstance.setRefresh(this.updateDatatable);
       modalRef.componentInstance.editReceita(idReceita);
     });
   }
 
   onClickDelete = (idReceita: number) => {
-    const modalRef = this.modalConfirm.open(ModalConfirmComponent, `Deseja excluir a receita ${ this.dataTable.row.descricao } ?`);
+    const modalRef = this.modalConfirm.open(ModalConfirmComponent, `Deseja excluir a receita ${this.dataTable.row.descricao} ?`);
     modalRef.shown.subscribe(() => {
       modalRef.componentInstance.setConfirmButton(() => {
         this.receitasFormComponent.deleteReceita(idReceita, () => { this.updateDatatable(); });

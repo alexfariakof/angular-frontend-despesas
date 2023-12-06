@@ -10,7 +10,7 @@ describe('Unit Test ModalConfirmComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ModalConfirmComponent],
-      providers: [NgbModalConfig, NgbModal, NgbActiveModal ],
+      providers: [NgbModalConfig, NgbModal, NgbActiveModal],
     });
 
     fixture = TestBed.createComponent(ModalConfirmComponent);
@@ -50,5 +50,20 @@ describe('Unit Test ModalConfirmComponent', () => {
     // Assert
     expect(modalService.dismissAll).toHaveBeenCalled();
   });
+
+  it('should setConfirmButton', () => {
+    // Arrange
+    const content = ModalConfirmComponent;
+    spyOn(modalService, 'open').and.returnValue(modalService.open(content));
+    const spySetConfirmButton = spyOn(component, 'setConfirmButton').and.callThrough();
+
+    // Act
+    component.setConfirmButton(() => console.log('Fake ModalConfirm Function Confirm Button '))
+    component.onClickConfirm();
+
+    // Assert
+    expect(spySetConfirmButton).toHaveBeenCalled();
+  });
+
 
 });
