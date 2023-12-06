@@ -19,20 +19,16 @@
           "options": {
             "allowedCommonJsDependencies": [
               "moment",
-              "dayjs"
+              "dayjs",
+              "dayjs/locale/pt-br"
             ],
             "outputPath": "dist/despesas-frontend-angular",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss",
@@ -118,7 +114,7 @@
             "development": {
               "browserTarget": "despesas-frontend-angular:build:development"
             },
-            "local-development":{
+            "local-development": {
               "browserTarget": "despesas-frontend-angular:build:local-development"
             }
           },
@@ -134,16 +130,10 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "codeCoverage": true,
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"

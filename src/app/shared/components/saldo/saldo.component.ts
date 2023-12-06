@@ -2,7 +2,9 @@ import { FilterMesService } from './../../services/utils/filter-mes.service/filt
 import { Component, OnInit } from '@angular/core';
 import { SaldoService } from '../../services/api';
 import * as dayjs from 'dayjs';
+import 'dayjs/locale/pt-br';
 import { Dayjs } from 'dayjs';
+dayjs.locale('pt-br');
 @Component({
   selector: 'app-saldo',
   standalone: true,
@@ -65,5 +67,3 @@ export class SaldoComponent implements OnInit {
 
   }
 }
-
-
