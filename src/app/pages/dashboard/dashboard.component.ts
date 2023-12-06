@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import * as dayjs from 'dayjs';
 import { BarraFerramentaComponent, BarChartComponent, AlertComponent, AlertType } from 'src/app/shared/components';
-import { MenuService, FilterAnoService, UserDataService } from 'src/app/shared/services';
+import { MenuService, FilterAnoService } from 'src/app/shared/services';
 import { DashboardService } from 'src/app/shared/services/api';
 
 @Component({

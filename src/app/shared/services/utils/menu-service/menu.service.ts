@@ -3,7 +3,7 @@ export class MenuService {
     constructor() { }
 
     menuSelecionado: number = 0;
-    menu: String = '';
+    menu: string = '';
 
     selectMenu(menu: number, router : Router) {
       switch (menu) {

@@ -52,7 +52,7 @@ export class CategoriasFormComponent implements OnInit {
         this.categoriaService.postCategoria(categoria)
         .subscribe({
           next: (response: any ) => {
-            if (response.message == true)
+            if (response.message === true)
             {
               this.activeModal.close();
               this.refresh();

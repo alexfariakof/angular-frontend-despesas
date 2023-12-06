@@ -1,10 +1,9 @@
-import { MenuService } from 'src/app/shared/services';
-import { UsuarioService } from './../../shared/services/api/usuarios/usuario.service';
-import { UserDataService } from 'src/app/shared/services';
+import { MenuService, UserDataService } from 'src/app/shared/services';
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { IUsuario } from 'src/app/shared/interfaces';
 import { AlertComponent, AlertType } from 'src/app/shared/components';
+import { UsuarioService } from 'src/app/shared/services/api';
 
 @Component({
   selector: 'app-perfil',
