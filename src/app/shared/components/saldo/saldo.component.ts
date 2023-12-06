@@ -54,7 +54,7 @@ export class SaldoComponent implements OnInit {
           }
         },
         error: () => {
-          this.saldoAnual = 0;
+          this.saldoMensal = 0;
         }
       });
   }
