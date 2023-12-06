@@ -55,7 +55,7 @@ export class ChangeAvatarComponent implements OnInit {
 
   handleImagePerfil = (): void => {
     if (this.file !== null) {
-      if (this.imagemPerfilUsuario.id === null) {
+      if (this.imagemPerfilUsuario.id === undefined || this.imagemPerfilUsuario.id === null) {
         this.imagemPerfilService.createImagemPerfilUsuario(this.file)
           .subscribe({
             next: (result: any) => {
@@ -98,10 +98,13 @@ export class ChangeAvatarComponent implements OnInit {
       .subscribe({
         next: (result: any) => {
           if (result.message === true) {
-            this.file = null;
-            this.fileLoaded = false;
-            this.imagemPerfilUsuario = null;
-            this.modalAlert.open(AlertComponent, 'Imagem de perfil usuário excluída com sucesso!', AlertType.Success);
+            const modalRef = this.modalAlert.open(AlertComponent, 'Imagem de perfil usuário excluída com sucesso!', AlertType.Success);
+            modalRef.shown.subscribe(() => {
+              this.file = null;
+              this.fileLoaded = false;
+              this.imagemPerfilUsuario = null;
+              this.imagemPerfilUsuario = { url: '../../../../assets/perfil_static.png' }
+            })
           }
         },
         error: (response: any) => {

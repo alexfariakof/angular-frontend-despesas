@@ -30,10 +30,10 @@ export class LancamentosComponent implements OnInit {
     private receitasFormComponent: ReceitasFormComponent,
     private filterMesAnoService: FilterMesAnoService,
     private userDataService: UserDataService
-  ) { }
+  ) {  }
 
   ngOnInit() {
-    this.menuService.menuSelecionado = 5;
+    this.menuService.setMenuSelecionado(5);
     this.initializeDataTable();
   }
 

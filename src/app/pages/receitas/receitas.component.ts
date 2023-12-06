@@ -26,10 +26,9 @@ export class ReceitasComponent implements BarraFerramentaClass {
     public receitaService: ReceitaService,
     private receitasFormComponent: ReceitasFormComponent,
     private userDataService: UserDataService
-  ) { }
+  ) { menuService.setMenuSelecionado(4); }
 
   ngOnInit() {
-    this.menuService.menuSelecionado = 4;
     this.initializeDataTable();
   }
 
