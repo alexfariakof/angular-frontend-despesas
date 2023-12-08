@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AlertComponent, AlertType } from 'src/app/shared/components';
 import { IImagemPerfil } from 'src/app/shared/interfaces';
-import { UserDataService } from 'src/app/shared/services';
 import { ImagemPerfilService } from 'src/app/shared/services/api';
 @Component({
   selector: 'app-change-avatar',
@@ -18,7 +17,6 @@ export class ChangeAvatarComponent implements OnInit {
 
   constructor(
     public imagemPerfilService: ImagemPerfilService,
-    public userDataService: UserDataService,
     public modalAlert: AlertComponent
   ) {
     this.formAvatar = new FormGroup({
@@ -31,7 +29,7 @@ export class ChangeAvatarComponent implements OnInit {
   }
 
   initialize = (): void => {
-    this.imagemPerfilService.getImagemPerfilUsuarioByIdUsuario()
+    this.imagemPerfilService.getImagemPerfilUsuario()
       .subscribe({
         next: (response: any) => {
           if (response.message === true && response.imagemPerfilUsuario !== undefined && response.imagemPerfilUsuario !== null) {
@@ -94,7 +92,7 @@ export class ChangeAvatarComponent implements OnInit {
   }
 
   handleDeleteImagePerfil = (): void => {
-    this.imagemPerfilService.deleteImagemPerfilUsuario(this.userDataService.getIdUsuario())
+    this.imagemPerfilService.deleteImagemPerfilUsuario()
       .subscribe({
         next: (result: any) => {
           if (result.message === true) {

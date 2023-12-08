@@ -8,9 +8,9 @@ import { Dayjs } from 'dayjs';
 
 export class LancamentoService {
 
-  constructor(public httpClient: HttpClient) {  }
+  constructor(public httpClient: HttpClient) { }
 
-  getLancamentosByMesAnoIdUsuario(mesAno: Dayjs, idUsuario:number) : any {
-    return this.httpClient.get(`lancamento/${ mesAno }/${ idUsuario }`);
+  getLancamentosByMesAnoIdUsuario(mesAno: Dayjs): any {
+    return this.httpClient.get(`lancamento/${mesAno}`);
   }
 }

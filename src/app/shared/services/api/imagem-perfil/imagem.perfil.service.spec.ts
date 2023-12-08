@@ -27,7 +27,7 @@ describe('Unit Test ImagemPerfilService', () => {
 
       const idUsuario = 1;
       const mockResponse = { message: true };
-      service.getImagemPerfilUsuarioByIdUsuario().subscribe((response: any) => {
+      service.getImagemPerfilUsuario().subscribe((response: any) => {
         expect(response).toBeTruthy();
       });
       const expectedUrl = `${environment.endPoint}/ImagemPerfilUsuario`;

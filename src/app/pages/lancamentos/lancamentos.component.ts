@@ -1,4 +1,3 @@
-import { UserDataService } from './../../shared/services/utils/user-data-service/user.data.service';
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { AlertComponent, AlertType, BarraFerramentaComponent, DataTableComponent, ModalConfirmComponent, ModalFormComponent } from "src/app/shared/components";
 import { FilterMesAnoService, MenuService } from "src/app/shared/services";
@@ -28,9 +27,8 @@ export class LancamentosComponent implements OnInit {
     public lancamentoservice: LancamentoService,
     private despesasFormComponent: DespesasFormComponent,
     private receitasFormComponent: ReceitasFormComponent,
-    private filterMesAnoService: FilterMesAnoService,
-    private userDataService: UserDataService
-  ) {  }
+    private filterMesAnoService: FilterMesAnoService
+  ) { }
 
   ngOnInit() {
     this.menuService.setMenuSelecionado(5);
@@ -38,7 +36,7 @@ export class LancamentosComponent implements OnInit {
   }
 
   initializeDataTable = () => {
-    this.lancamentoservice.getLancamentosByMesAnoIdUsuario(dayjs(this.filterMesAnoService.dataMesAno), this.userDataService.getIdUsuario())
+    this.lancamentoservice.getLancamentosByMesAnoIdUsuario(dayjs(this.filterMesAnoService.dataMesAno))
       .subscribe({
         next: (response: any) => {
           if (response.message === true) {
@@ -55,7 +53,7 @@ export class LancamentosComponent implements OnInit {
   }
 
   updateDatatable = () => {
-    this.lancamentoservice.getLancamentosByMesAnoIdUsuario(dayjs(this.filterMesAnoService.dataMesAno), this.userDataService.getIdUsuario())
+    this.lancamentoservice.getLancamentosByMesAnoIdUsuario(dayjs(this.filterMesAnoService.dataMesAno))
       .subscribe({
         next: (response: any) => {
           if (response.message === true) {

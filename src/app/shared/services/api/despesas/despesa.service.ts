@@ -7,22 +7,18 @@ import { IDespesa } from '../../../interfaces/IDespesa';
 
 export class DespesaService {
 
-  constructor(public httpClient: HttpClient) {  }
+  constructor(public httpClient: HttpClient) { }
 
-  getDespesas() : any {
+  getDespesas(): any {
     return this.httpClient.get(`Despesa`);
   }
 
-  getDespesaById(idDespesa: number) : any {
+  getDespesaById(idDespesa: number): any {
     return this.httpClient.get(`Despesa/GetById/${idDespesa}`);
   }
 
   getDespesasCategorias(): any {
     return this.httpClient.get(`Categoria/GetByTipoCategoria/1`);
-  }
-
-  getDespesaByIdUsuario(idUsuario: number) : any {
-    return this.httpClient.get(`Despesa/GetByIdUsuario/${idUsuario}`);
   }
 
   postDespesa(despesa: IDespesa): any {

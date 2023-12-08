@@ -5,7 +5,7 @@ import { IAuth } from '../../interfaces/IAuth';
   providedIn: 'root'
 })
 
-export class AuthService  {
+export class AuthService {
   private accessTokenSubject = new BehaviorSubject<string | undefined>(undefined);
 
   accessToken$ = this.accessTokenSubject.asObservable();
@@ -18,7 +18,7 @@ export class AuthService  {
       } else {
         this.clearLocalStorage();
       }
-    } catch{
+    } catch {
       this.clearLocalStorage();
     }
   }
@@ -43,7 +43,6 @@ export class AuthService  {
 
   createAccessToken(auth: IAuth): Boolean {
     try {
-      localStorage.setItem('idUsuario', auth.usuario.id);
       localStorage.setItem('@dpApiAccess', auth.accessToken);
       localStorage.setItem('@expiration', auth.expiration);
       this.setAccessToken(auth.accessToken);

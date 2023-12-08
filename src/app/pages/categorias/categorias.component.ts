@@ -32,9 +32,9 @@ export class CategoriasComponent implements BarraFerramentaClass, OnInit {
   initializeDataTable = () => {
     this.categoriaService.getCategorias()
       .subscribe({
-        next: (result: ICategoria[]) => {
-          if (result) {
-            this.catgoriasData = this.parseToCategoriaData(result);
+        next: (response: ICategoria[]) => {
+          if (response) {
+            this.catgoriasData = this.parseToCategoriaData(response);
             this.dataTable.loadData(this.catgoriasData);
             this.dataTable.rerender();
           }
@@ -48,9 +48,9 @@ export class CategoriasComponent implements BarraFerramentaClass, OnInit {
   updateDatatable = () => {
     this.categoriaService.getCategorias()
       .subscribe({
-        next: (result: any) => {
-          if (result) {
-            this.catgoriasData = this.parseToCategoriaData(result);
+        next: (response: ICategoria[]) => {
+          if (response) {
+            this.catgoriasData = this.parseToCategoriaData(response);
             this.dataTable.rerender();
           }
         },

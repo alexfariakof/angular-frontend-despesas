@@ -7,9 +7,9 @@ import { Injectable } from '@angular/core';
 
 export class ImagemPerfilService {
 
-  constructor(public httpClient: HttpClient) {  }
+  constructor(public httpClient: HttpClient) { }
 
-  getImagemPerfilUsuarioByIdUsuario(): any {
+  getImagemPerfilUsuario(): any {
     return this.httpClient.get(`ImagemPerfilUsuario`);
   }
 
@@ -25,7 +25,7 @@ export class ImagemPerfilService {
     return this.httpClient.put(`ImagemPerfilUsuario`, formData);
   }
 
-  deleteImagemPerfilUsuario(idUsuario: number): any {
-    return this.httpClient.delete(`ImagemPerfilUsuario/${idUsuario}`);
+  deleteImagemPerfilUsuario(): any {
+    return this.httpClient.delete(`ImagemPerfilUsuario`);
   }
 }

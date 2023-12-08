@@ -7,22 +7,18 @@ import { IReceita } from '../../../interfaces/IReceita';
 
 export class ReceitaService {
 
-  constructor(public httpClient: HttpClient) {  }
+  constructor(public httpClient: HttpClient) { }
 
-  getReceitas() : any {
+  getReceitas(): any {
     return this.httpClient.get(`Receita`);
   }
 
-  getReceitaById(idReceita: number) : any {
+  getReceitaById(idReceita: number): any {
     return this.httpClient.get(`Receita/GetById/${idReceita}`);
   }
 
   getReceitasCategorias(): any {
     return this.httpClient.get(`Categoria/GetByTipoCategoria/2`);
-  }
-
-  getReceitaByIdUsuario(idUsuario: number) : any {
-    return this.httpClient.get(`Receita/GetByIdUsuario/${idUsuario}`);
   }
 
   postReceita(despesa: IReceita): any {

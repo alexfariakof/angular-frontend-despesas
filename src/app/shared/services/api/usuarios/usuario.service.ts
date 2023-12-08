@@ -8,14 +8,14 @@ import { IUsuario } from 'src/app/shared/interfaces';
 
 export class UsuarioService {
 
-  constructor(public httpClient: HttpClient) {  }
+  constructor(public httpClient: HttpClient) { }
 
-  getUsuarios(idUsuario: number) : any {
-    return this.httpClient.get(`Usuario/${ idUsuario }`);
+  getUsuarios(idUsuario: number): any {
+    return this.httpClient.get(`Usuario/${idUsuario}`);
   }
 
-  getUsuarioById(idUsuario: number) : any {
-    return this.httpClient.get<number>(`Usuario/GetById/${ idUsuario}`);
+  getUsuario(): any {
+    return this.httpClient.get(`Usuario/GetUsuario`);
   }
 
   postUsuario(usuario: IUsuario): any {

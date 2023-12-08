@@ -1,4 +1,3 @@
-import { UserDataService } from './../../../shared/services/utils/user-data-service/user.data.service';
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -27,15 +26,13 @@ export class ReceitasFormComponent {
     public formbuilder: FormBuilder,
     public modalAlert: AlertComponent,
     public activeModal: NgbActiveModal,
-    public receitaService: ReceitaService,
-    private userDataService: UserDataService
+    public receitaService: ReceitaService
   ) { }
 
   ngOnInit(): void {
     this.getCatgeoriasFromReceitas();
     this.receitaForm = this.formbuilder.group({
       id: [0],
-      idUsuario: this.userDataService.getIdUsuario(),
       idCategoria: [null, Validators.required],
       categoria: null,
       data: [dayjs().format('YYYY-MM-DD'), Validators.required],
