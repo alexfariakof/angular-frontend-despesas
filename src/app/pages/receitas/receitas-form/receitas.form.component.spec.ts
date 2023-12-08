@@ -20,32 +20,26 @@ import { ReceitasFormComponent } from './receitas.form.component';
 describe('Unit Test ReceitasFormComponent', () => {
   let component: ReceitasFormComponent;
   let fixture: ComponentFixture<ReceitasFormComponent>;
-  let mockAuthService: jasmine.SpyObj<AuthService>;
   let receitaService: ReceitaService;
   let mockReceitas: IReceita[] = [
-    { id: 1, idUsuario: 1, idCategoria: 1, data: dayjs(), descricao: 'Teste Receitas 1', valor: 1.05, categoria: 'Categoria 1' },
-    { id: 2, idUsuario: 2, idCategoria: 2, data: dayjs(), descricao: 'Teste Receitas 2', valor: 2.05, categoria: 'Categoria 2' },
-    { id: 3, idUsuario: 1, idCategoria: 4, data: dayjs(), descricao: 'Teste Receitas 3', valor: 3.05, categoria: 'Categoria 3' },
+    { id: 1, idCategoria: 1, data: dayjs(), descricao: 'Teste Receitas 1', valor: 1.05, categoria: 'Categoria 1' },
+    { id: 2, idCategoria: 2, data: dayjs(), descricao: 'Teste Receitas 2', valor: 2.05, categoria: 'Categoria 2' },
+    { id: 3, idCategoria: 4, data: dayjs(), descricao: 'Teste Receitas 3', valor: 3.05, categoria: 'Categoria 3' },
   ];
   let mockCategorias: ICategoria[] = [
-    { id: 1, descricao: 'Teste Categoria Recaita 1', idTipoCategoria: 1, idUsuario: 1 },
-    { id: 2, descricao: 'Teste Categoria Receita 2', idTipoCategoria: 2, idUsuario: 1 }
+    { id: 1, descricao: 'Teste Categoria Recaita 1', idTipoCategoria: 1},
+    { id: 2, descricao: 'Teste Categoria Receita 2', idTipoCategoria: 2}
   ];
 
   beforeEach(() => {
-    mockAuthService = jasmine.createSpyObj('AuthService', ['isAuthenticated']);
-    mockAuthService.isAuthenticated.and.returnValue(true);
     TestBed.configureTestingModule({
       declarations: [ReceitasFormComponent, MatDatepicker, MatSelect],
       imports: [ReactiveFormsModule, HttpClientTestingModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, BrowserAnimationsModule, CurrencyMaskModule],
-      providers: [FormBuilder, AlertComponent, NgbActiveModal, ReceitaService,
-        { provide: AuthService, useValue: mockAuthService },
-      ]
+      providers: [FormBuilder, AlertComponent, NgbActiveModal, ReceitaService ]
     });
     fixture = TestBed.createComponent(ReceitasFormComponent);
     component = fixture.componentInstance;
     receitaService = TestBed.inject(ReceitaService);
-    localStorage.setItem('idUsuario', '1');
     fixture.detectChanges();
   });
 
@@ -56,8 +50,6 @@ describe('Unit Test ReceitasFormComponent', () => {
 
   it('should getCategoriasReceutasw ', fakeAsync(() => {
     // Arrange
-    const mockIdUsuario = 1;
-    localStorage.setItem('idUsuario', mockIdUsuario.toString());
     const getCategoriasSpy = spyOn(receitaService, 'getReceitasCategorias').and.returnValue(from(Promise.resolve(mockCategorias)));
 
     // Act
@@ -73,7 +65,6 @@ describe('Unit Test ReceitasFormComponent', () => {
   it('should thorws errro when call getCategorias and open modal alert ', () => {
     // Arrange
     const errorMessage = { message: 'Fake Error Message' };
-    const mockIdUsuario = 1;
     const getCategoriasSpy = spyOn(receitaService, 'getReceitasCategorias').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
@@ -90,7 +81,6 @@ describe('Unit Test ReceitasFormComponent', () => {
     // Arrange
     const receita: IReceita = {
       id: 0,
-      idUsuario: 1,
       idCategoria: 1,
       data: dayjs(),
       descricao: 'Teste Create Receitas',
@@ -121,7 +111,6 @@ describe('Unit Test ReceitasFormComponent', () => {
     const errorMessage = { message: 'Fake Error Message Create Receita' };
     const receita: IReceita = {
       id: 0,
-      idUsuario: 1,
       idCategoria: 1,
       data: dayjs(),
       descricao: 'Teste Create Receitas',
@@ -148,7 +137,6 @@ describe('Unit Test ReceitasFormComponent', () => {
     // Arrange
     const mockReceita: IReceita = {
       id: 1,
-      idUsuario: 1,
       idCategoria: 1,
       data: dayjs().format('YYYY-MM-DD'),
       descricao: 'Teste Edit Receitas',
@@ -179,7 +167,6 @@ describe('Unit Test ReceitasFormComponent', () => {
     const errorMessage = { message: 'Fake Error Message Edit Receita' };
     const receita: IReceita = {
       id: 1,
-      idUsuario: 2,
       idCategoria: 2,
       data: dayjs().format('YYYY-MM-DD'),
       descricao: 'Teste Edit Receitas',

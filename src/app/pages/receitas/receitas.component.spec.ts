@@ -1,3 +1,4 @@
+import { MenuService } from 'src/app/shared/services';
 import { CommonModule } from "@angular/common";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed, fakeAsync, flush } from "@angular/core/testing";
@@ -11,22 +12,19 @@ import { from, throwError } from "rxjs";
 import { AlertComponent, ModalFormComponent, ModalConfirmComponent, DataTableComponent, AlertType } from "src/app/shared/components";
 import { ReceitaDataSet } from "src/app/shared/datatable-config/receitas";
 import { IReceita } from "src/app/shared/interfaces";
-import { MenuService } from "src/app/shared/services";
 import { ReceitaService } from "src/app/shared/services/api";
 import { SharedModule } from "src/app/shared/shared.module";
 import { ReceitasFormComponent } from "./receitas-form/receitas.form.component";
 import { ReceitasComponent } from "./receitas.component";
-import { MockLocalStorage } from "__mock__";
 
 describe('Unit Test ReceitasComponent', () => {
   let component: ReceitasComponent;
   let fixture: ComponentFixture<ReceitasComponent>;
-  let localStorageSpy: MockLocalStorage;
   let receitaService: ReceitaService;
   let mockReceitas: IReceita[] = [
-    { id: 1, idUsuario: 1, idCategoria: 1, data: dayjs(), descricao: 'Teste Receitas 1', valor: 1.05, categoria: 'Categoria 1' },
-    { id: 2, idUsuario: 2, idCategoria: 2, data: dayjs(), descricao: 'Teste Receitas 2', valor: 2.05, categoria: 'Categoria 2' },
-    { id: 3, idUsuario: 1, idCategoria: 4, data: dayjs(), descricao: 'Teste Receitas 3', valor: 3.05, categoria: 'Categoria 3' },
+    { id: 1, idCategoria: 1, data: dayjs(), descricao: 'Teste Receitas 1', valor: 1.05, categoria: 'Categoria 1' },
+    { id: 2, idCategoria: 2, data: dayjs(), descricao: 'Teste Receitas 2', valor: 2.05, categoria: 'Categoria 2' },
+    { id: 3, idCategoria: 4, data: dayjs(), descricao: 'Teste Receitas 3', valor: 3.05, categoria: 'Categoria 3' },
   ];
   let mockReceitasData: ReceitaDataSet[] = [
     { id: 1, data: dayjs().format('DD/MM/YYYY'), descricao: 'Teste Receitas 1', valor: 'R$ 1.05', categoria: 'Categoria 1' },
@@ -35,23 +33,16 @@ describe('Unit Test ReceitasComponent', () => {
   ];
 
   beforeEach(() => {
-    localStorageSpy = new MockLocalStorage();
     TestBed.configureTestingModule({
       declarations: [ReceitasComponent, ReceitasFormComponent, MatDatepicker, MatSelect],
       imports: [CommonModule, RouterTestingModule, SharedModule, HttpClientTestingModule, MatSelectModule , MatDatepickerModule, MatNativeDateModule],
-      providers: [MenuService, AlertComponent, ModalFormComponent, ModalConfirmComponent, NgbActiveModal, ReceitaService, ReceitasFormComponent,
-        { provide: Storage, useValue: localStorageSpy.instance() }
-      ]
+      providers: [MenuService, AlertComponent, ModalFormComponent, ModalConfirmComponent, NgbActiveModal, ReceitaService, ReceitasFormComponent ]
     });
     fixture = TestBed.createComponent(ReceitasComponent);
     component = fixture.componentInstance;
     component.dataTable = TestBed.inject(DataTableComponent);
     receitaService = TestBed.inject(ReceitaService);
     fixture.detectChanges();
-  });
-
-  afterEach(() => {
-    localStorageSpy.cleanup();
   });
 
   it('should create', () => {
@@ -61,27 +52,21 @@ describe('Unit Test ReceitasComponent', () => {
 
   it('should initializeDataTable', fakeAsync(() => {
     // Arrange
-    let mockIdUsuario = 1;
-    localStorageSpy.setItem('idUsuario', mockIdUsuario);
-    let receitas = mockReceitas.filter(receita => receita.idUsuario === mockIdUsuario);
-    const getReceitasByIdUsuarioSpy = spyOn(receitaService, 'getReceitaByIdUsuario').and.returnValue(from(Promise.resolve(receitas)));
-    spyOn(component, 'getReceitasData').and.returnValue(mockReceitasData);
+    const spyOnGetReceitas = spyOn(receitaService, 'getReceitas').and.returnValue(from(Promise.resolve(mockReceitas)));
 
     // Act
     component.initializeDataTable();
     flush();
 
     // Assert
-    expect(getReceitasByIdUsuarioSpy).toHaveBeenCalled();
-    expect(getReceitasByIdUsuarioSpy).toHaveBeenCalledWith(mockIdUsuario);
+    expect(spyOnGetReceitas).toHaveBeenCalled();
     expect(component.receitasData.length).toBeGreaterThan(1);
   }));
 
   it('should initializeDataTable and return empty Datatable', fakeAsync(() => {
     // Arrange
     const errorMessage = { message: 'Fake Error Message Empty DataTable Receitas'};
-    const getReceitasByIdUsuarioSpy = spyOn(receitaService, 'getReceitaByIdUsuario').and.returnValue(throwError(errorMessage));
-    spyOn(component, 'getReceitasData').and.returnValue(mockReceitasData);
+    const spyOnGetReceitas = spyOn(receitaService, 'getReceitas').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
     // Act
@@ -89,7 +74,7 @@ describe('Unit Test ReceitasComponent', () => {
     flush();
 
     // Assert
-    expect(getReceitasByIdUsuarioSpy).toHaveBeenCalled();
+    expect(spyOnGetReceitas).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
   }));
@@ -97,59 +82,44 @@ describe('Unit Test ReceitasComponent', () => {
   it('should throw error when try to initializeDataTable', () => {
     // Arrange
     const errorMessage = { message: 'Fake Error Message initialize DataTable Receitas'};
-    const getReceitasByIdUsuarioSpy = spyOn(receitaService, 'getReceitaByIdUsuario').and.returnValue(throwError(errorMessage));
+    const spyOnGetReceitas = spyOn(receitaService, 'getReceitas').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
     // Act
     component.initializeDataTable();
 
     // Assert
-    expect(getReceitasByIdUsuarioSpy).toHaveBeenCalled();
+    expect(spyOnGetReceitas).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
   });
 
-  it('should return receitaData when call getReceitasData', () => {
-    // Arrange
-    component.receitasData = mockReceitasData;
-
-    // Act
-    let receitasData =  component.getReceitasData();
-
-    // Assert
-    expect(receitasData).not.toBeNull();
-    expect(receitasData.length).toBeGreaterThan(0);
-  });
 
   it('should updateDatatable when is called', fakeAsync(() => {
     // Arrange
-    let mockIdUsuario = 2;
-    localStorageSpy.setItem('idUsuario', mockIdUsuario);
-    let receitas = mockReceitas.filter(receita => receita.idUsuario === mockIdUsuario);
-    const getReceitasByIdUsuarioSpy = spyOn(receitaService, 'getReceitaByIdUsuario').and.returnValue(from(Promise.resolve(receitas)));
-    spyOn(component, 'getReceitasData').and.returnValue(mockReceitasData);
+    const spyOnGetReceitas = spyOn(receitaService, 'getReceitas').and.returnValue(from(Promise.resolve(mockReceitas)));
+
 
     // Act
     component.updateDatatable();
     flush();
 
     // Assert
-    expect(getReceitasByIdUsuarioSpy).toHaveBeenCalled();
-    expect(getReceitasByIdUsuarioSpy).toHaveBeenCalledWith(mockIdUsuario);
+    expect(spyOnGetReceitas).toHaveBeenCalled();
     expect(component.receitasData.length).toBeGreaterThan(0);
   }));
 
   it('should throw error when try to updateDataTable', () => {
     // Arrange
     const errorMessage = { message: 'Fake Error Message Recitas UpdateDataTable'};
-    const getReceitasByIdUsuarioSpy = spyOn(receitaService, 'getReceitaByIdUsuario').and.returnValue(throwError(errorMessage));
+    const spyOnGetReceitas = spyOn(receitaService, 'getReceitas').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
     // Act
     component.updateDatatable();
 
     // Assert
-    expect(getReceitasByIdUsuarioSpy).toHaveBeenCalled();
+    expect(spyOnGetReceitas).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
   });

@@ -55,7 +55,7 @@ describe('Unit Test UsuarioService', () => {
     }
   ));
 
-  it('should send a getUsuarioById request to the Usuario endpoint', inject(
+  it('should send a getUsuario request to the Usuario endpoint', inject(
     [UsuarioService, HttpTestingController],
     (service: UsuarioService, httpMock: HttpTestingController) => {
 
@@ -68,11 +68,11 @@ describe('Unit Test UsuarioService', () => {
         telefone: '(21) 9999-9999'
       };
 
-      service.getUsuario(idUsuario).subscribe((response: any) => {
+      service.getUsuario().subscribe((response: any) => {
         expect(response).toBeTruthy();
       });
 
-      const expectedUrl = `${environment.endPoint}/Usuario/GetById/${idUsuario}`;
+      const expectedUrl = `${environment.endPoint}/Usuario/GetUsuario`;
       const req = httpMock.expectOne(expectedUrl);
       expect(req.request.method).toBe('GET');
 

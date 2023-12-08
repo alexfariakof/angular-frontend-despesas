@@ -1,3 +1,4 @@
+import { MenuService } from 'src/app/shared/services';
 import { CommonModule } from "@angular/common";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed, fakeAsync, tick, flush } from "@angular/core/testing";
@@ -8,7 +9,6 @@ import { from, throwError, of } from "rxjs";
 import { AlertComponent, ModalFormComponent, ModalConfirmComponent, DataTableComponent, AlertType } from "src/app/shared/components";
 import { CategoriaDataSet } from "src/app/shared/datatable-config/categorias";
 import { ICategoria } from "src/app/shared/interfaces";
-import { AuthService, MenuService } from "src/app/shared/services";
 import { CategoriaService } from "src/app/shared/services/api";
 import { SharedModule } from "src/app/shared/shared.module";
 import { CategoriasFormComponent } from "./categorias-form/categorias.form.component";
@@ -18,23 +18,19 @@ import { CategoriasComponent } from "./categorias.component";
 describe('Unit Test CategoriasComponent', () => {
   let component: CategoriasComponent;
   let fixture: ComponentFixture<CategoriasComponent>;
-  let mockAuthService: jasmine.SpyObj<AuthService>;
   let categoriaService: CategoriaService;
   let mockCategoriaData: CategoriaDataSet = { id: 1, descricao: 'Teste Categoria', tipoCategoria: 'Despesas' };
-  let mockCategoria: ICategoria = { id: 1, descricao: 'Teste Categoria Despesas', idTipoCategoria: 1, idUsuario: 1 };
+  let mockCategoria: ICategoria = { id: 1, descricao: 'Teste Categoria Despesas', idTipoCategoria: 1 };
   let mockCategorias: ICategoria[] = [
-    { id: 1, descricao: 'Teste Categoria Despesas', idTipoCategoria: 1, idUsuario: 1 },
-    { id: 2, descricao: 'Teste Categoria Receitas', idTipoCategoria: 2, idUsuario: 1 }
+    { id: 1, descricao: 'Teste Categoria Despesas', idTipoCategoria: 1 },
+    { id: 2, descricao: 'Teste Categoria Receitas', idTipoCategoria: 2 }
   ];
 
   beforeEach(() => {
-    mockAuthService = jasmine.createSpyObj('AuthService', ['isAuthenticated']);
-    mockAuthService.isAuthenticated.and.returnValue(true);
     TestBed.configureTestingModule({
       declarations: [CategoriasComponent, CategoriasFormComponent],
       imports: [CommonModule, ReactiveFormsModule, MdbFormsModule, SharedModule, HttpClientTestingModule ],
-      providers: [MenuService, AlertComponent, ModalFormComponent, ModalConfirmComponent,  NgbActiveModal, CategoriaService,
-        { provide: AuthService, useValue: mockAuthService },
+      providers: [MenuService, AlertComponent, ModalFormComponent, ModalConfirmComponent,  NgbActiveModal, CategoriaService
       ]
     });
     fixture = TestBed.createComponent(CategoriasComponent);
@@ -129,7 +125,7 @@ describe('Unit Test CategoriasComponent', () => {
 
   it('should parse categorias to CategoriaData on parseToCategoriaData', () => {
     // Arrange
-    const categorias: ICategoria[] = [{ id: 1, descricao: 'Teste Categoria', idUsuario: 1,  idTipoCategoria: 1 }];
+    const categorias: ICategoria[] = [{ id: 1, descricao: 'Teste Categoria', idTipoCategoria: 1 }];
 
     // Act
     const result = component.parseToCategoriaData(categorias);

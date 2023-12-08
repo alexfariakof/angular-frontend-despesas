@@ -25,7 +25,6 @@ describe('Unit Test CategoriasFormComponent', () => {
     component = fixture.componentInstance;
     categoriaService = TestBed.inject(CategoriaService);
     alertComponent = TestBed.inject(AlertComponent);
-    localStorage.setItem('idUsuario', '1');
     fixture.detectChanges();
   });
 
@@ -36,7 +35,7 @@ describe('Unit Test CategoriasFormComponent', () => {
 
   it('should create categoria and show successfully message', () => {
     // Arrange
-    const categoria: ICategoria = { id: 0, descricao: 'Teste categoria Despesa.', idUsuario: 1, idTipoCategoria: 1 };
+    const categoria: ICategoria = { id: 0, descricao: 'Teste categoria Despesa.', idTipoCategoria: 1 };
     const categoriaServiceSpy = spyOn(categoriaService, 'postCategoria').and.returnValue(of({ message: true }));
     const modalCloseSpy = spyOn(component.activeModal, 'close').and.callThrough();
     const spyRefresh = spyOn(component, "setRefresh");
@@ -59,12 +58,11 @@ describe('Unit Test CategoriasFormComponent', () => {
 
   it('should edit categoria and show successfully message', fakeAsync(() => {
     // Arrange
-    const categoria: ICategoria = { id: 1, descricao: "Teste categoria", idUsuario: 1, idTipoCategoria: 2 };
+    const categoria: ICategoria = { id: 1, descricao: "Teste categoria", idTipoCategoria: 2 };
     const categoriaServiceSpy = spyOn(categoriaService, 'putCategoria').and.returnValue(from(Promise.resolve({ message: true, categoria: categoria })));
     const modalCloseSpy = spyOn(component.activeModal, 'close').and.callThrough();;
     const spyRefresh = spyOn(component, "setRefresh");
     const alertOpenSpy = spyOn(alertComponent, 'open').and.callThrough();
-    localStorage.setItem('idUsuario', '1');
     spyOn(component, 'onSaveClick').and.callThrough();
 
     // Act
@@ -84,7 +82,7 @@ describe('Unit Test CategoriasFormComponent', () => {
 
   it('should call try create categoria throw error and show error message', fakeAsync(() => {
     // Arrange
-    const categoria: ICategoria = { id: 0, descricao: "Teste categoria", idUsuario: 1, idTipoCategoria: 2 };
+    const categoria: ICategoria = { id: 0, descricao: "Teste categoria", idTipoCategoria: 2 };
     const errorMessage = 'Fake Error Message';
     spyOn(categoriaService, 'postCategoria').and.callFake(() => { throw Error }).and.throwError(errorMessage);
     const alertOpenSpy = spyOn(alertComponent, 'open');
@@ -100,7 +98,7 @@ describe('Unit Test CategoriasFormComponent', () => {
 
   it('should return FormGroup', () => {
     // Arrange
-    const categoria: ICategoria = { id: 1, descricao: "Teste categoria", idUsuario: 1, idTipoCategoria: 2 };
+    const categoria: ICategoria = { id: 1, descricao: "Teste categoria", idTipoCategoria: 2 };
     const spyFormGroup = spyOn(component, 'setCategoria').and.callThrough();;
 
     // Act
@@ -113,7 +111,7 @@ describe('Unit Test CategoriasFormComponent', () => {
 
   it('should throw error when try to postCategoria', fakeAsync(() => {
     // Arrange
-    const categoria: ICategoria = { id: 0, descricao: "Teste categoria", idUsuario: 1, idTipoCategoria: 2 };
+    const categoria: ICategoria = { id: 0, descricao: "Teste categoria", idTipoCategoria: 2 };
     const errorMessage = 'Fake Error Message';
     spyOn(categoriaService, 'postCategoria').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(alertComponent, 'open');
@@ -129,7 +127,7 @@ describe('Unit Test CategoriasFormComponent', () => {
 
   it('should throw error when try to putCategoria', fakeAsync(() => {
     // Arrange
-    const categoria: ICategoria = { id: 0, descricao: "Teste categoria", idUsuario: 1, idTipoCategoria: 2 };
+    const categoria: ICategoria = { id: 0, descricao: "Teste categoria", idTipoCategoria: 2 };
     const errorMessage = 'Fake Error Message';
     spyOn(categoriaService, 'putCategoria').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(alertComponent, 'open');

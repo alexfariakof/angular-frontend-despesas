@@ -6,7 +6,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CustomInterceptor } from '../../interceptors/http.interceptor.service';
 import { LancamentoService } from "./lancamento.service";
 import * as dayjs from "dayjs";
-import { Dayjs } from 'dayjs';
 
 describe('Unit Test LancamentoService', () => {
 
@@ -29,11 +28,11 @@ describe('Unit Test LancamentoService', () => {
 
       const mockResponse : ILancamento[] = [ ];
 
-      service.getLancamentosByMesAnoIdUsuario(dayjs(), 1).subscribe((response: any) => {
+      service.getLancamentosByMesAnoIdUsuario(dayjs()).subscribe((response: any) => {
         expect(response).toBeTruthy();
       });
 
-      const expectedUrl = `${environment.endPoint}/lancamento/${ dayjs() }/1`;
+      const expectedUrl = `${environment.endPoint}/lancamento/${ dayjs() }`;
       const req = httpMock.expectOne(expectedUrl);
       expect(req.request.method).toBe('GET');
 
