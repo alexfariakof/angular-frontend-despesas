@@ -8,7 +8,8 @@
 
   > This project can be access at [Despesas Pessoais In Development](http://alexfariakof.com:4200).
 
-![project_dashboard](https://github.com/alexfariakof/despesas-frontend-angular/assets/42475620/58fe0fc0-ae29-4720-b45e-bfca6dc3b571)
+![image](https://github.com/alexfariakof/despesas-frontend-angular/assets/42475620/9f614cb1-434f-4d26-a795-ae4ada0c571a)
+
 
 ## Run Local Development Server
   > This server points the endpoint to the local application API.
@@ -76,7 +77,7 @@ Run `npm run test:coverage ` or `ng test --code-coverage --no-watch` to execute 
 
 Run  `./generate_coverage_report.ps1` if using windows, or Run `./generate_coverage_report.sh` if using linux. The Report will open in default browser automatically.
 
-![report_Test_Coverage_Angular](https://github.com/alexfariakof/despesas-frontend-angular/assets/42475620/a8263791-b4dd-403c-8d5a-8da80c684c98)
+![image](https://github.com/alexfariakof/despesas-frontend-angular/assets/42475620/4c113589-e49a-40eb-af94-673da9a43c27)
 
 ## Tests End-to-End With Python/Playwright
 > This project can be access at [Tests End-to-End With Python/Playwright](https://github.com/alexfariakof/despesas-frontend-angular-tests-e2e).

@@ -6,9 +6,7 @@ git flow release start 1.0.3
 #obs.: Padrão do projeto v*.*.*
 git tag -a <v*.*.*> -m "Version tag"
 
-git tag -a v1.'0.6 -m "Implementations Maked In Iyteration 2"
-
-git tag -a v1.1.3 -m "New Implementations Iteration 3"
+git tag -a v1.1.5 -m "Hotfix/Fixing Error in Authentication Logout/Login"
 
 # Envia as alterações(commits) e as tags locais para o repositório remoto
 git push --follow-tags
