@@ -34,7 +34,7 @@ describe('Unit Test AuthService', () => {
 
     // Assert
     expect(authService.isAuthenticated()).toBe(true);
-    expect(localStorage.getItem('@@token')).toBe('fakeToken');
+    expect(localStorage.getItem('@token')).toBe('fakeToken');
   });
 
   it('should clear local storage', () => {
@@ -43,7 +43,7 @@ describe('Unit Test AuthService', () => {
 
     // Assert
     expect(authService.isAuthenticated()).toBeFalsy();
-    expect(localStorage.getItem('@@token')).toBeNull();
+    expect(localStorage.getItem('@token')).toBeNull();
   });
 
   it('should catch error on creating access token', () => {
