@@ -18,7 +18,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
-import { MockLocalStorage } from '__mock__';
 
 describe('Unit Test LancamentosComponent', () => {
   let component: LancamentosComponent;
@@ -57,7 +56,7 @@ describe('Unit Test LancamentosComponent', () => {
 
   it('should initializeDataTable', fakeAsync(() => {
     // Arrange
-    const getLancamntosByMesAnoSpy = spyOn(lancamentoService, 'getLancamentosByMesAnoIdUsuario').and.returnValue(from(Promise.resolve({ message: true, lancamentos: mockLancamentos })));
+    const getLancamntosByMesAnoSpy = spyOn(lancamentoService, 'getLancamentosByMesAno').and.returnValue(from(Promise.resolve({ message: true, lancamentos: mockLancamentos })));
 
     // Act
     component.initializeDataTable();
@@ -65,15 +64,15 @@ describe('Unit Test LancamentosComponent', () => {
 
     // Assert
     expect(getLancamntosByMesAnoSpy).toHaveBeenCalled();
-    console.log('Pode Ocorrer erro nesta asertividade conta da data  ')
-    expect(getLancamntosByMesAnoSpy).toHaveBeenCalledWith(dayjs(dayjs().format('YYYY-MM')));
+    console.log('Pode Ocorrer erro nesta asertividade conta da data')
+    expect(getLancamntosByMesAnoSpy).toHaveBeenCalledWith(dayjs(component.filterMesAnoService.dataMesAno));
     expect(component.lancamentosData.length).toBeGreaterThan(1);
   }));
 
   it('should throws error when initializeDataTable and show modal alert', fakeAsync(() => {
     // Arrange
     const errorMessage = { message: 'Fake Error Message' };
-    const getLancamntosByMesAnoSpy = spyOn(lancamentoService, 'getLancamentosByMesAnoIdUsuario').and.returnValue(throwError(errorMessage));
+    const getLancamntosByMesAnoSpy = spyOn(lancamentoService, 'getLancamentosByMesAno').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
     // Act
@@ -89,7 +88,7 @@ describe('Unit Test LancamentosComponent', () => {
   it('should updateDatatable when is called', fakeAsync(() => {
     // Arrange
     let mockDAtaMesAno = dayjs().toISOString();
-    const getLancamntosByMesAnoSpy = spyOn(lancamentoService, 'getLancamentosByMesAnoIdUsuario').and.returnValue(from(Promise.resolve({ message: true, lancamentos: mockLancamentos })));
+    const getLancamntosByMesAnoSpy = spyOn(lancamentoService, 'getLancamentosByMesAno').and.returnValue(from(Promise.resolve({ message: true, lancamentos: mockLancamentos })));
 
     // Act
     component.barraFerramenta.filterMesAnoService.dataMesAno = mockDAtaMesAno;
@@ -105,7 +104,7 @@ describe('Unit Test LancamentosComponent', () => {
   it('should throw error when try to updateDataTable', () => {
     // Arrange
     const errorMessage = { message: 'Fake Error Message Lançamentos UpdateDataTable' };
-    const getLancamntosByMesAnoSpy = spyOn(lancamentoService, 'getLancamentosByMesAnoIdUsuario').and.returnValue(throwError(errorMessage));
+    const getLancamntosByMesAnoSpy = spyOn(lancamentoService, 'getLancamentosByMesAno').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
     // Act

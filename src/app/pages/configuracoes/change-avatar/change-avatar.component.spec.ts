@@ -34,16 +34,15 @@ describe('Unit Test ChangeAvatarComponent', () => {
 
   it('should initialize Change Avatar Component ', fakeAsync(() => {
     // Arrange
-    const mockIdUsuario = 2;
-    const mockRespose = { message: true, imagemPerfilUsuario: mockImagemPerfilUsuario };
-    const spyOnGetImagemPerfilUsuarioByIdUsuario = spyOn(mockImagemPerfilService, 'getImagemPerfilUsuario').and.returnValue(from(Promise.resolve(mockRespose)));
+        const mockRespose = { message: true, imagemPerfilUsuario: mockImagemPerfilUsuario };
+    const spyOnGetImagemPerfilUsuario = spyOn(mockImagemPerfilService, 'getImagemPerfilUsuario').and.returnValue(from(Promise.resolve(mockRespose)));
 
     // Act
     component.initialize();
     flush();
 
     // Assert
-    expect(spyOnGetImagemPerfilUsuarioByIdUsuario).toHaveBeenCalled();
+    expect(spyOnGetImagemPerfilUsuario).toHaveBeenCalled();
     expect(component.imagemPerfilUsuario.url).not.toBeNull();
     expect(component.imagemPerfilUsuario.url).not.toEqual('../../../../assets/perfil_static.png');
     expect(component.imagemPerfilUsuario.url).toEqual(mockImagemPerfilUsuario.url);
@@ -52,14 +51,14 @@ describe('Unit Test ChangeAvatarComponent', () => {
   it('should initialize Change Avatar Component adn Thnrows Error ', fakeAsync(() => {
     // Arrange
     const errorMessage = { message: 'Fake Error Message Initialize Chart' };
-    const spyOnGetImagemPerfilUsuarioByIdUsuario = spyOn(mockImagemPerfilService, 'getImagemPerfilUsuario').and.returnValue(throwError(errorMessage));
+    const spyOnGetImagemPerfilUsuario = spyOn(mockImagemPerfilService, 'getImagemPerfilUsuario').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
     // Act
     component.initialize();
 
     // Assert
-    expect(spyOnGetImagemPerfilUsuarioByIdUsuario).toHaveBeenCalled();
+    expect(spyOnGetImagemPerfilUsuario).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
   }));

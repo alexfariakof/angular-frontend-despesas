@@ -8,8 +8,8 @@
     "editor.formatOnSave": false,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true,
-      "source.fixAll.tslint": true
+      "source.fixAll.eslint": "explicit",
+      "source.fixAll.tslint": "explicit"
     },
     "eslint.validate": ["typescript"],
     "typescript.tsdk": "node_modules/typescript/lib",

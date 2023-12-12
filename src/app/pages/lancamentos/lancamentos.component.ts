@@ -27,7 +27,7 @@ export class LancamentosComponent implements OnInit {
     public lancamentoservice: LancamentoService,
     private despesasFormComponent: DespesasFormComponent,
     private receitasFormComponent: ReceitasFormComponent,
-    private filterMesAnoService: FilterMesAnoService
+    public filterMesAnoService: FilterMesAnoService
   ) { }
 
   ngOnInit() {
@@ -36,7 +36,7 @@ export class LancamentosComponent implements OnInit {
   }
 
   initializeDataTable = () => {
-    this.lancamentoservice.getLancamentosByMesAnoIdUsuario(dayjs(this.filterMesAnoService.dataMesAno))
+    this.lancamentoservice.getLancamentosByMesAno(dayjs(this.filterMesAnoService.dataMesAno))
       .subscribe({
         next: (response: any) => {
           if (response.message === true) {
@@ -53,7 +53,7 @@ export class LancamentosComponent implements OnInit {
   }
 
   updateDatatable = () => {
-    this.lancamentoservice.getLancamentosByMesAnoIdUsuario(dayjs(this.filterMesAnoService.dataMesAno))
+    this.lancamentoservice.getLancamentosByMesAno(dayjs(this.filterMesAnoService.dataMesAno))
       .subscribe({
         next: (response: any) => {
           if (response.message === true) {

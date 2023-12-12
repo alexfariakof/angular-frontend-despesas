@@ -6,7 +6,6 @@ import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { MockLocalStorage } from '__mock__';
 import { ImagemPerfilService } from '../../services/api';
 import { from, throwError } from 'rxjs';
 
