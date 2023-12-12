@@ -8,7 +8,7 @@ git commit -m "Implementations Finish"
 #obs.: Padrão do projeto v*.*.*
 git tag -a <v*.*.*> -m "Version tag"
 
-git tag -a v1.0.4 -m "Version Iteration 2 Finished"
+git tag -a v1.0.4 -m "Refactory and Security Implementations API .net Core v5.0.0 #78"
 
 # Envia as alterações(commits) e as tags locais para o repositório remoto
 git push --follow-tags
