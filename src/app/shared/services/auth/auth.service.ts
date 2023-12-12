@@ -5,20 +5,20 @@ import { IAuth } from '../../interfaces/IAuth';
   providedIn: 'root'
 })
 
-export class AuthService  {
+export class AuthService {
   private accessTokenSubject = new BehaviorSubject<string | undefined>(undefined);
 
   accessToken$ = this.accessTokenSubject.asObservable();
 
   constructor() {
     try {
-      const accessToken = localStorage.getItem('@dpApiAccess');
+      const accessToken = localStorage.getItem('@token');
       if (accessToken) {
         this.setAccessToken(accessToken);
       } else {
         this.clearLocalStorage();
       }
-    } catch{
+    } catch {
       this.clearLocalStorage();
     }
   }
@@ -33,7 +33,7 @@ export class AuthService  {
   }
 
   isAuthenticated(): boolean {
-    const accessToken = this.accessTokenSubject.getValue() || localStorage.getItem('@dpApiAccess');
+    const accessToken = this.accessTokenSubject.getValue() || localStorage.getItem('@token');
     if (accessToken === null || accessToken === undefined) {
       this.clearLocalStorage();
       return false;
@@ -43,9 +43,7 @@ export class AuthService  {
 
   createAccessToken(auth: IAuth): Boolean {
     try {
-      localStorage.setItem('idUsuario', auth.usuario.id);
-      localStorage.setItem('@dpApiAccess', auth.accessToken);
-      localStorage.setItem('@expiration', auth.expiration);
+      localStorage.setItem('@token', auth.accessToken);
       this.setAccessToken(auth.accessToken);
       return true;
     } catch (error) {

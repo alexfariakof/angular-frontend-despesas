@@ -23,7 +23,7 @@ export class LayoutComponent implements OnInit {
   }
 
   initialize = (): void => {
-    this.imagemPerfilService.getImagemPerfilUsuarioByIdUsuario()
+    this.imagemPerfilService.getImagemPerfilUsuario()
       .subscribe({
         next: (response: any) => {
           if (response.message === true && response.imagemPerfilUsuario !== undefined && response.imagemPerfilUsuario !== null) {

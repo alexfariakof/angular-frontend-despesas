@@ -6,7 +6,6 @@ import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { MockLocalStorage } from '__mock__';
 import { ImagemPerfilService } from '../../services/api';
 import { from, throwError } from 'rxjs';
 
@@ -14,20 +13,17 @@ describe('Unit Test LayoutComponent', () => {
   let component: LayoutComponent;
   let fixture: ComponentFixture<LayoutComponent>;
   let mockAuthService: jasmine.SpyObj<AuthService>;
-  let localStorageSpy: MockLocalStorage;
   let imagemPerfilService: ImagemPerfilService;
   let router: Router;
 
   beforeEach(() => {
     mockAuthService = jasmine.createSpyObj('AuthService', ['clearLocalStorage']);
     mockAuthService.clearLocalStorage.and.callThrough();
-    localStorageSpy = new MockLocalStorage();
     TestBed.configureTestingModule({
       declarations: [LayoutComponent],
       imports: [CommonModule, RouterTestingModule, HttpClientTestingModule],
       providers: [MenuService,
-        { provide: AuthService, useValue: mockAuthService },
-        { provide: Storage, useValue: localStorageSpy.instance() }
+        { provide: AuthService, useValue: mockAuthService }
       ]
     });
     fixture = TestBed.createComponent(LayoutComponent);
@@ -37,11 +33,6 @@ describe('Unit Test LayoutComponent', () => {
     fixture.detectChanges();
   });
 
-  afterEach(() => {
-    localStorageSpy.cleanup();
-    TestBed.resetTestingModule();
-  });
-
   it('should create', () => {
     // Assert
     expect(component).toBeTruthy();
@@ -49,10 +40,8 @@ describe('Unit Test LayoutComponent', () => {
 
   it('should initialize correctlly', fakeAsync(() => {
     // Arrange
-    const mockIdUsuario = 500;
     let mockResponse = { message: true, imagemPerfilUsuario: { url: 'http://testeimagemperfil.png' } };
-    localStorageSpy.setItem('idUsuario', mockIdUsuario);
-    const spyOnImagemPerfilService = spyOn(imagemPerfilService, 'getImagemPerfilUsuarioByIdUsuario').and.returnValue(from(Promise.resolve(mockResponse)));
+    const spyOnImagemPerfilService = spyOn(imagemPerfilService, 'getImagemPerfilUsuario').and.returnValue(from(Promise.resolve(mockResponse)));
 
     // Act
     component.initialize();
@@ -65,7 +54,7 @@ describe('Unit Test LayoutComponent', () => {
 
   it('should throws error and fill with default path imagemPerfil', fakeAsync(() => {
     // Arrange
-    const spyOnImagemPerfilService = spyOn(imagemPerfilService, 'getImagemPerfilUsuarioByIdUsuario').and.returnValue(throwError('Imagem não encontrada!'));
+    const spyOnImagemPerfilService = spyOn(imagemPerfilService, 'getImagemPerfilUsuario').and.returnValue(throwError('Imagem não encontrada!'));
 
     // Act
     component.initialize();

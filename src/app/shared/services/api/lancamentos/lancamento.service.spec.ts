@@ -6,7 +6,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CustomInterceptor } from '../../interceptors/http.interceptor.service';
 import { LancamentoService } from "./lancamento.service";
 import * as dayjs from "dayjs";
-import { Dayjs } from 'dayjs';
 
 describe('Unit Test LancamentoService', () => {
 
@@ -18,22 +17,22 @@ describe('Unit Test LancamentoService', () => {
       ]
     });
   });
+
   it('should be created', inject([LancamentoService], (service: LancamentoService) => {
+    // Assert
     expect(service).toBeTruthy();
   }));
 
-
-  it('should send a getLancamentoByMesAnoIdUsuario request to the Lancamento endpoint', inject(
+  it('should send a getLancamentoByMesAno request to the Lancamento endpoint', inject(
     [LancamentoService, HttpTestingController],
     (service: LancamentoService, httpMock: HttpTestingController) => {
-
       const mockResponse : ILancamento[] = [ ];
 
-      service.getLancamentosByMesAnoIdUsuario(dayjs(), 1).subscribe((response: any) => {
+      service.getLancamentosByMesAno(dayjs()).subscribe((response: any) => {
         expect(response).toBeTruthy();
       });
 
-      const expectedUrl = `${environment.endPoint}/lancamento/${ dayjs() }/1`;
+      const expectedUrl = `${environment.endPoint}/Lancamento/${ dayjs() }`;
       const req = httpMock.expectOne(expectedUrl);
       expect(req.request.method).toBe('GET');
 
@@ -41,5 +40,4 @@ describe('Unit Test LancamentoService', () => {
       httpMock.verify();
     }
   ));
-
 });

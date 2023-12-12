@@ -29,13 +29,11 @@ describe('Unit Test CategoriaService', () => {
         {
           id: 1,
           descricao: "Teste categoria despesa",
-          idUsuario: 1,
           idTipoCategoria: 1
         },
         {
           id: 2,
           descricao: "Teste categoria receita",
-          idUsuario: 1,
           idTipoCategoria: 2
         }
       ];
@@ -62,7 +60,6 @@ describe('Unit Test CategoriaService', () => {
       {
           id: idCategoria,
           descricao: "Teste categoria despesa",
-          idUsuario: 1,
           idTipoCategoria: 1
       };
 
@@ -85,7 +82,6 @@ describe('Unit Test CategoriaService', () => {
       const categoria : ICategoria = {
         id: 0,
         descricao: "Teste categoria",
-        idUsuario: 1,
         idTipoCategoria: 2
       };
 
@@ -109,7 +105,6 @@ describe('Unit Test CategoriaService', () => {
       const categoria : ICategoria = {
         id: 1,
         descricao: "Teste categoria",
-        idUsuario: 1,
         idTipoCategoria: 2
       };
 

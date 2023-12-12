@@ -25,12 +25,11 @@ describe('Unit Test ImagemPerfilService', () => {
     [ImagemPerfilService, HttpTestingController],
     (service: ImagemPerfilService, httpMock: HttpTestingController) => {
 
-      const idUsuario = 1;
       const mockResponse = { message: true };
-      service.getImagemPerfilUsuarioByIdUsuario().subscribe((response: any) => {
+      service.getImagemPerfilUsuario().subscribe((response: any) => {
         expect(response).toBeTruthy();
       });
-      const expectedUrl = `${environment.endPoint}/ImagemPerfilUsuario`;
+      const expectedUrl = `${environment.endPoint}/Usuario/ImagemPerfil`;
       const req = httpMock.expectOne(expectedUrl);
       expect(req.request.method).toBe('GET');
       req.flush(mockResponse);
@@ -41,12 +40,11 @@ describe('Unit Test ImagemPerfilService', () => {
   it('should send a POST request to the ImagemPerfilUsuario endpoint', inject(
     [ImagemPerfilService, HttpTestingController],
     (service: ImagemPerfilService, httpMock: HttpTestingController) => {
-      const idUsuario = 10;
       const mockResponse = { message: true };
       service.createImagemPerfilUsuario(file).subscribe((response: any) => {
         expect(response).toBeTruthy();
       });
-      const expectedUrl = `${environment.endPoint}/ImagemPerfilUsuario`;
+      const expectedUrl = `${environment.endPoint}/Usuario/ImagemPerfil`;
       const req = httpMock.expectOne(expectedUrl);
       expect(req.request.method).toBe('POST');
       req.flush(mockResponse);
@@ -57,12 +55,11 @@ describe('Unit Test ImagemPerfilService', () => {
   it('should send a PUT request to the /ImagemPerfilUsuario endpoint', inject(
     [ImagemPerfilService, HttpTestingController],
     (service: ImagemPerfilService, httpMock: HttpTestingController) => {
-      const idUsuario = 22;
       const mockResponse = { message: true };
       service.updateImagemPerfilUsuario(file).subscribe((response: any) => {
         expect(response).toBeTruthy();
       });
-      const expectedUrl = `${environment.endPoint}/ImagemPerfilUsuario`;
+      const expectedUrl = `${environment.endPoint}/Usuario/ImagemPerfil`;
       const req = httpMock.expectOne(expectedUrl);
       expect(req.request.method).toBe('PUT');
       req.flush(mockResponse);
@@ -73,13 +70,12 @@ describe('Unit Test ImagemPerfilService', () => {
   it('should send a DELETE request to the /ImagemPerfilUsuario endpoint', inject(
     [ImagemPerfilService, HttpTestingController],
     (service: ImagemPerfilService, httpMock: HttpTestingController) => {
-      const idUsuario = 100;
       const mockResponse = { message: true };
-      service.deleteImagemPerfilUsuario(idUsuario).subscribe((response: any) => {
+      service.deleteImagemPerfilUsuario().subscribe((response: any) => {
         expect(response).toBeTruthy();
       });
 
-      const expectedUrl = `${environment.endPoint}/ImagemPerfilUsuario/${idUsuario}`;
+      const expectedUrl = `${environment.endPoint}/Usuario/ImagemPerfil`;
       const req = httpMock.expectOne(expectedUrl);
       expect(req.request.method).toBe('DELETE');
       req.flush(mockResponse);

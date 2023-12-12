@@ -1,4 +1,3 @@
-import { UserDataService } from './../../shared/services/utils/user-data-service/user.data.service';
 import { Component, ViewChild } from "@angular/core";
 import * as dayjs from "dayjs";
 import { BarraFerramentaClass, DataTableComponent, AlertComponent, ModalFormComponent, ModalConfirmComponent, AlertType } from "src/app/shared/components";
@@ -24,8 +23,7 @@ export class ReceitasComponent implements BarraFerramentaClass {
     public modalForm: ModalFormComponent,
     public modalConfirm: ModalConfirmComponent,
     public receitaService: ReceitaService,
-    private receitasFormComponent: ReceitasFormComponent,
-    private userDataService: UserDataService
+    private receitasFormComponent: ReceitasFormComponent
   ) { menuService.setMenuSelecionado(4); }
 
   ngOnInit() {
@@ -33,12 +31,12 @@ export class ReceitasComponent implements BarraFerramentaClass {
   }
 
   initializeDataTable = () => {
-    this.receitaService.getReceitaByIdUsuario(this.userDataService.getIdUsuario())
+    this.receitaService.getReceitas()
       .subscribe({
         next: (result: IReceita[]) => {
           if (result) {
             this.receitasData = this.parseToReceitaData(result);
-            this.dataTable.loadData(this.getReceitasData());
+            this.dataTable.loadData(this.receitasData);
             this.dataTable.rerender();
           }
 
@@ -50,7 +48,7 @@ export class ReceitasComponent implements BarraFerramentaClass {
   }
 
   updateDatatable = () => {
-    this.receitaService.getReceitaByIdUsuario(this.userDataService.getIdUsuario())
+    this.receitaService.getReceitas()
       .subscribe({
         next: (result: any) => {
           if (result) {
@@ -62,10 +60,6 @@ export class ReceitasComponent implements BarraFerramentaClass {
           this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
         }
       });
-  }
-
-  getReceitasData = () => {
-    return this.receitasData;
   }
 
   parseToReceitaData(receitas: IReceita[]): ReceitaDataSet[] {

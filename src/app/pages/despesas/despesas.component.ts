@@ -1,4 +1,3 @@
-import { UserDataService } from './../../shared/services/utils/user-data-service/user.data.service';
 import { Component, OnInit, ViewChild } from "@angular/core";
 import * as dayjs from "dayjs";
 import { BarraFerramentaClass, DataTableComponent, AlertComponent, ModalFormComponent, ModalConfirmComponent, AlertType } from "src/app/shared/components";
@@ -23,11 +22,7 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
     public modalForm: ModalFormComponent,
     public modalConfirm: ModalConfirmComponent,
     public despesaService: DespesaService,
-    private despesasFormComponent: DespesasFormComponent,
-    private userDataService: UserDataService
-  ) {
-
-  }
+    private despesasFormComponent: DespesasFormComponent) { }
 
   ngOnInit() {
     this.menuService.setMenuSelecionado(3);
@@ -35,7 +30,7 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
   }
 
   initializeDataTable = () => {
-    this.despesaService.getDespesaByIdUsuario(this.userDataService.getIdUsuario())
+    this.despesaService.getDespesas()
       .subscribe({
         next: (result: IDespesa[]) => {
           if (result) {
@@ -51,7 +46,7 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
   }
 
   updateDatatable = () => {
-    this.despesaService.getDespesaByIdUsuario(this.userDataService.getIdUsuario())
+    this.despesaService.getDespesas()
       .subscribe({
         next: (result: any) => {
           if (result) {

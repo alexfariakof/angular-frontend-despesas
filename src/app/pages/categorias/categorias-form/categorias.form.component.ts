@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertComponent, AlertType } from 'src/app/shared/components';
 import { ICategoria, IAction } from 'src/app/shared/interfaces';
-import { UserDataService } from 'src/app/shared/services';
 import { CategoriaService } from 'src/app/shared/services/api';
 @Component({
   selector: 'app-categorias-form',
@@ -18,11 +17,11 @@ export class CategoriasFormComponent implements OnInit {
   }
 
   private action: IAction = IAction.Create;
-  setAction(_action: IAction){
+  setAction(_action: IAction) {
     this.action = _action;
   }
 
-  private refresh: Function = () => {};
+  private refresh: Function = () => { };
   setRefresh(_refresh: Function) {
     this.refresh = _refresh;
   }
@@ -30,58 +29,54 @@ export class CategoriasFormComponent implements OnInit {
   constructor(
     public formbuilder: FormBuilder,
     public modalAlert: AlertComponent,
-    public activeModal:NgbActiveModal,
-    public categoriaService: CategoriaService,
-    private userDataService: UserDataService
-    ) {}
+    public activeModal: NgbActiveModal,
+    public categoriaService: CategoriaService
+  ) { }
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     this.categoriatForm = this.formbuilder.group({
       id: [0, Validators.required],
       descricao: ['', Validators.required],
-      idUsuario: this.userDataService.getIdUsuario(),
       idTipoCategoria: ['', Validators.required]
-      }) as FormGroup & ICategoria;
+    }) as FormGroup & ICategoria;
   }
 
   onSaveClick = () => {
     let categoria = this.categoriatForm.getRawValue();
     try {
-      if (this.action === IAction.Create){
+      if (this.action === IAction.Create) {
 
         this.categoriaService.postCategoria(categoria)
-        .subscribe({
-          next: (response: any ) => {
-            if (response.message === true)
-            {
-              this.activeModal.close();
-              this.refresh();
-              this.modalAlert.open(AlertComponent, "Categoria cadastrada com Sucesso.", AlertType.Success);
+          .subscribe({
+            next: (response: any) => {
+              if (response.message === true) {
+                this.activeModal.close();
+                this.refresh();
+                this.modalAlert.open(AlertComponent, "Categoria cadastrada com Sucesso.", AlertType.Success);
+              }
+            },
+            error: (error: any) => {
+              this.modalAlert.open(AlertComponent, error.message, AlertType.Warning);
             }
-          },
-          error :(error : any) =>  {
-            this.modalAlert.open(AlertComponent, error.message, AlertType.Warning);
-          }
-        });
+          });
       }
       else if (this.action === IAction.Edit) {
         this.categoriaService.putCategoria(categoria)
-        .subscribe({
-          next: (response: any ) => {
-            if (response.message === true && response !== undefined && response !== null)
-            {
-              this.activeModal.close();
-              this.refresh();
-              this.modalAlert.open(AlertComponent, "Categoria alterada com Sucesso.", AlertType.Success);
+          .subscribe({
+            next: (response: any) => {
+              if (response.message === true && response !== undefined && response !== null) {
+                this.activeModal.close();
+                this.refresh();
+                this.modalAlert.open(AlertComponent, "Categoria alterada com Sucesso.", AlertType.Success);
+              }
+            },
+            error: (error: any) => {
+              this.modalAlert.open(AlertComponent, error.message, AlertType.Warning);
             }
-          },
-          error :(error : any) =>  {
-            this.modalAlert.open(AlertComponent, error.message, AlertType.Warning);
-          }
-        });
+          });
       }
     }
-    catch(error){
+    catch (error) {
       this.modalAlert.open(AlertComponent, error.message, AlertType.Warning);
     }
   }
