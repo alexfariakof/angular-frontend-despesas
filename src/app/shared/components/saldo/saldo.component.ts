@@ -4,16 +4,20 @@ import { SaldoService } from '../../services/api';
 import * as dayjs from 'dayjs';
 import 'dayjs/locale/pt-br';
 import { Dayjs } from 'dayjs';
+import { CommonModule } from '@angular/common';
 dayjs.locale('pt-br');
 @Component({
   selector: 'app-saldo',
   standalone: true,
   templateUrl: './saldo.component.html',
-  styleUrls: ['./saldo.component.scss']
+  styleUrls: ['./saldo.component.scss'],
+  imports: [CommonModule]
 })
 export class SaldoComponent implements OnInit {
   saldoAnual: number | string;
   saldoMensal: number | string;
+  saldoAnualNegativo: string = 'text-danger';
+  saldoMensalNegativo: string = 'text-danger';
 
   constructor(private saldoService: SaldoService, public filterMesService: FilterMesService) { }
 
@@ -26,6 +30,7 @@ export class SaldoComponent implements OnInit {
       .subscribe({
         next: (response: any) => {
           if (response.message === true && response.saldo !== undefined && response.saldo !== null) {
+            this.saldoAnualNegativo = this.isSaldoNegativo(response.saldo) ? 'text-danger' : '';
             this.saldoAnual = response.saldo.toLocaleString('pt-br', {
               style: 'currency',
               currency: 'BRL',
@@ -47,6 +52,7 @@ export class SaldoComponent implements OnInit {
       .subscribe({
         next: (response: any) => {
           if (response.message === true && response.saldo !== undefined && response.saldo !== null) {
+            this.saldoMensalNegativo = this.isSaldoNegativo(response.saldo) ? 'text-danger' : '';
             this.saldoMensal = response.saldo.toLocaleString('pt-br', {
               style: 'currency',
               currency: 'BRL',
@@ -65,5 +71,9 @@ export class SaldoComponent implements OnInit {
     this.filterMesService.selectMonth = Number(mes);
     this.handleSaldoMesAno(dayjs(dayjs().format(`YYYY-${mes}-01`)));
 
+  }
+
+  private isSaldoNegativo = (saldo: number): boolean => {
+    return saldo < 0;
   }
 }

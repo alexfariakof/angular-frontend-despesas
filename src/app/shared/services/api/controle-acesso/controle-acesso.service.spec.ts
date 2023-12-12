@@ -70,8 +70,6 @@ describe('Unit Test ControleAcessoService', () => {
     [ControleAcessoService, HttpTestingController],
     (service: ControleAcessoService, httpMock: HttpTestingController) => {
       const login: ILogin = {
-        idUsuario: 12,
-        email: 'teste@teste.com',
         senha: '12345',
         confirmaSenha: '12345'
       };

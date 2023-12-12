@@ -1,39 +1,38 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IDespesa } from '../../../interfaces/IDespesa';
+import { AbstractService } from '../base/AbstractService';
 @Injectable({
   providedIn: 'root'
 })
 
-export class DespesaService {
-
-  constructor(public httpClient: HttpClient) {  }
-
-  getDespesas() : any {
-    return this.httpClient.get(`Despesa`);
+export class DespesaService extends AbstractService {
+  constructor(public httpClient: HttpClient) {
+    super();
+    this.urlPath = "Despesa";
   }
 
-  getDespesaById(idDespesa: number) : any {
-    return this.httpClient.get(`Despesa/GetById/${idDespesa}`);
+  getDespesas(): any {
+    return this.httpClient.get(`${ this.urlPath }`);
+  }
+
+  getDespesaById(idDespesa: number): any {
+    return this.httpClient.get(`${ this.urlPath }/GetById/${idDespesa}`);
   }
 
   getDespesasCategorias(): any {
     return this.httpClient.get(`Categoria/GetByTipoCategoria/1`);
   }
 
-  getDespesaByIdUsuario(idUsuario: number) : any {
-    return this.httpClient.get(`Despesa/GetByIdUsuario/${idUsuario}`);
-  }
-
   postDespesa(despesa: IDespesa): any {
-    return this.httpClient.post<IDespesa>(`Despesa`, despesa);
+    return this.httpClient.post<IDespesa>(`${ this.urlPath }`, despesa);
   }
 
   putDespesa(despesa: IDespesa): any {
-    return this.httpClient.put<IDespesa>(`Despesa`, despesa);
+    return this.httpClient.put<IDespesa>(`${ this.urlPath }`, despesa);
   }
 
   deleteDespesa(idDespesa: number): any {
-    return this.httpClient.delete(`Despesa/${idDespesa}`);
+    return this.httpClient.delete(`${ this.urlPath }/${idDespesa}`);
   }
 }

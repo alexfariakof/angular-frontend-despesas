@@ -1,5 +1,4 @@
-export interface ILogin{
-  idUsuario?: number;
+export interface ILogin {
   email?: string;
   senha: string;
   confirmaSenha?: string;

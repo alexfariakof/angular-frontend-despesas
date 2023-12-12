@@ -4,7 +4,6 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import * as dayjs from 'dayjs';
 import { AlertComponent, AlertType } from 'src/app/shared/components';
 import { IDespesa, ICategoria, IAction } from 'src/app/shared/interfaces';
-import { UserDataService } from 'src/app/shared/services';
 import { DespesaService } from 'src/app/shared/services/api';
 import { CustomValidators } from 'src/app/shared/validators';
 
@@ -27,15 +26,13 @@ export class DespesasFormComponent {
     public formbuilder: FormBuilder,
     public modalAlert: AlertComponent,
     public activeModal: NgbActiveModal,
-    public despesaService: DespesaService,
-    private userDataService: UserDataService
+    public despesaService: DespesaService
   ) { }
 
   ngOnInit(): void {
     this.getCatgeoriasFromDespesas();
     this.despesaForm = this.formbuilder.group({
       id: [0],
-      idUsuario: this.userDataService.getIdUsuario(),
       idCategoria: [null, Validators.required],
       categoria: null,
       data: [dayjs().format('YYYY-MM-DD'), Validators.required],

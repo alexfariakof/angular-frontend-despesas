@@ -13,7 +13,6 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { from, throwError, of } from 'rxjs';
 import { AlertComponent, AlertType } from 'src/app/shared/components';
 import { ICategoria, IDespesa, IAction } from 'src/app/shared/interfaces';
-import { AuthService } from 'src/app/shared/services';
 import { DespesaService } from 'src/app/shared/services/api';
 import { DespesasFormComponent } from './despesas.form.component';
 
@@ -21,37 +20,27 @@ import { DespesasFormComponent } from './despesas.form.component';
 describe('Unit Test DespesasFormComponent', () => {
   let component: DespesasFormComponent;
   let fixture: ComponentFixture<DespesasFormComponent>;
-  let mockAuthService: jasmine.SpyObj<AuthService>;
   let despesaService: DespesaService;
   let mockDespesas: IDespesa[] = [
-    { id: 1, idUsuario: 1, idCategoria: 1, data: dayjs(), descricao: 'Teste Despesas 1', valor: 1.05, dataVencimento: dayjs(), categoria: 'Categoria 1' },
-    { id: 2, idUsuario: 2, idCategoria: 2, data: dayjs(), descricao: 'Teste Despesas 2', valor: 2.05, dataVencimento: dayjs(), categoria: 'Categoria 2' },
-    { id: 3, idUsuario: 1, idCategoria: 4, data: dayjs(), descricao: 'Teste Despesas 3', valor: 3.05, dataVencimento: dayjs(), categoria: 'Categoria 3' },
+    { id: 1, idCategoria: 1, data: dayjs(), descricao: 'Teste Despesas 1', valor: 1.05, dataVencimento: dayjs(), categoria: 'Categoria 1' },
+    { id: 2, idCategoria: 2, data: dayjs(), descricao: 'Teste Despesas 2', valor: 2.05, dataVencimento: dayjs(), categoria: 'Categoria 2' },
+    { id: 3, idCategoria: 4, data: dayjs(), descricao: 'Teste Despesas 3', valor: 3.05, dataVencimento: dayjs(), categoria: 'Categoria 3' },
   ];
   let mockCategorias: ICategoria[] = [
-    { id: 1, descricao: 'Teste Categoria Despesas 1', idTipoCategoria: 1, idUsuario: 1 },
-    { id: 2, descricao: 'Teste Categoria Despesas 2', idTipoCategoria: 2, idUsuario: 1 }
+    { id: 1, descricao: 'Teste Categoria Despesas 1', idTipoCategoria: 1 },
+    { id: 2, descricao: 'Teste Categoria Despesas 2', idTipoCategoria: 2 }
   ];
 
   beforeEach(() => {
-    mockAuthService = jasmine.createSpyObj('AuthService', ['isAuthenticated']);
-    mockAuthService.isAuthenticated.and.returnValue(true);
     TestBed.configureTestingModule({
       declarations: [DespesasFormComponent, MatDatepicker, MatSelect],
       imports: [ReactiveFormsModule, HttpClientTestingModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, BrowserAnimationsModule, CurrencyMaskModule],
-      providers: [FormBuilder, AlertComponent, NgbActiveModal, DespesaService,
-        { provide: AuthService, useValue: mockAuthService },
-      ]
+      providers: [FormBuilder, AlertComponent, NgbActiveModal, DespesaService ]
     });
     fixture = TestBed.createComponent(DespesasFormComponent);
     component = fixture.componentInstance;
     despesaService = TestBed.inject(DespesaService);
-    localStorage.setItem('idUsuario', '1');
     fixture.detectChanges();
-  });
-
-  afterEach(() => {
-    localStorage.clear();
   });
 
   it('should create', () => {
@@ -61,8 +50,6 @@ describe('Unit Test DespesasFormComponent', () => {
 
   it('should getCategorias ', fakeAsync(() => {
     // Arrange
-    const mockIdUsuario = 1;
-    localStorage.setItem('idUsuario', '1');
     const getCategoriasSpy = spyOn(despesaService, 'getDespesasCategorias').and.returnValue(from(Promise.resolve(mockCategorias)));
 
     // Act
@@ -78,7 +65,6 @@ describe('Unit Test DespesasFormComponent', () => {
   it('should thorws errro when call getCategorias and open modal alert ', () => {
     // Arrange
     const errorMessage = { message: 'Fake Error Message' };
-    const mockIdUsuario = 1;
     const getCategoriasSpy = spyOn(despesaService, 'getDespesasCategorias').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
@@ -95,7 +81,6 @@ describe('Unit Test DespesasFormComponent', () => {
     // Arrange
     const despesa: IDespesa = {
       id: 0,
-      idUsuario: 1,
       idCategoria: 1,
       data: dayjs(),
       descricao: 'Teste Create Despesas',
@@ -127,7 +112,6 @@ describe('Unit Test DespesasFormComponent', () => {
     const errorMessage = { message: 'Fake Error Message Create Despesa' };
     const despesa: IDespesa = {
       id: 0,
-      idUsuario: 1,
       idCategoria: 1,
       data: dayjs(),
       descricao: 'Teste Create Despesas',
@@ -155,7 +139,6 @@ describe('Unit Test DespesasFormComponent', () => {
     // Arrange
     const mockDespesa: IDespesa = {
       id: 1,
-      idUsuario: 1,
       idCategoria: 1,
       data: dayjs().format('YYYY-MM-DD'),
       descricao: 'Teste Edit Despesas',
@@ -188,7 +171,6 @@ describe('Unit Test DespesasFormComponent', () => {
     const errorMessage = { message: 'Fake Error Message Edit Despesa' };
     const despesa: IDespesa = {
       id: 1,
-      idUsuario: 2,
       idCategoria: 2,
       data: dayjs().format('YYYY-MM-DD'),
       descricao: 'Teste Edit Despesas',

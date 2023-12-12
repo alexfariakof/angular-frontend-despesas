@@ -9,7 +9,7 @@ describe('Unit Test AuthService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers:[AuthService ]
+      providers:[AuthService]
     });
     authService = TestBed.inject(AuthService);
   });
@@ -22,7 +22,6 @@ describe('Unit Test AuthService', () => {
   it('should set and get access token', () => {
     // Arrange
     const fakeAuth: IAuth = {
-      usuario: { id: '123' },
       accessToken: 'fakeToken',
       expiration: '2023-01-01T00:00:00Z',
       authenticated: true,
@@ -35,7 +34,7 @@ describe('Unit Test AuthService', () => {
 
     // Assert
     expect(authService.isAuthenticated()).toBe(true);
-    expect(localStorage.getItem('@dpApiAccess')).toBe('fakeToken');
+    expect(localStorage.getItem('@token')).toBe('fakeToken');
   });
 
   it('should clear local storage', () => {
@@ -44,7 +43,7 @@ describe('Unit Test AuthService', () => {
 
     // Assert
     expect(authService.isAuthenticated()).toBeFalsy();
-    expect(localStorage.getItem('@dpApiAccess')).toBeNull();
+    expect(localStorage.getItem('@token')).toBeNull();
   });
 
   it('should catch error on creating access token', () => {
@@ -52,7 +51,6 @@ describe('Unit Test AuthService', () => {
     spyOn(localStorage, 'setItem').and.throwError('Fake error');
 
     const fakeAuth: IAuth = {
-      usuario: { id: '0' },
       accessToken: undefined,
       expiration: '2023-01-01T00:00:00Z',
       authenticated: false,
@@ -60,7 +58,7 @@ describe('Unit Test AuthService', () => {
       message: ''
     };
 
-    // ACt
+    // Act
     const result = authService.createAccessToken(fakeAuth);
 
     // Assert

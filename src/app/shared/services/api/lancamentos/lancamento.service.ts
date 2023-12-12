@@ -1,16 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Dayjs } from 'dayjs';
+import { AbstractService } from '../base/AbstractService';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class LancamentoService {
+export class LancamentoService extends AbstractService {
 
-  constructor(public httpClient: HttpClient) {  }
+  constructor(public httpClient: HttpClient) {
+    super();
+    this.urlPath = 'Lancamento';
+  }
 
-  getLancamentosByMesAnoIdUsuario(mesAno: Dayjs, idUsuario:number) : any {
-    return this.httpClient.get(`lancamento/${ mesAno }/${ idUsuario }`);
+  getLancamentosByMesAno(mesAno: Dayjs): any {
+    return this.httpClient.get(`${ this.urlPath }/${mesAno}`);
   }
 }
