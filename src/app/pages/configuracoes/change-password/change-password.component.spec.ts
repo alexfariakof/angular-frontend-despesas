@@ -7,33 +7,23 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { ControleAcessoService } from 'src/app/shared/services/api';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { MockLocalStorage } from '__mock__';
-import { UserDataService } from 'src/app/shared/services';
 import { ILogin } from 'src/app/shared/interfaces';
 import { from, throwError } from 'rxjs';
 
 describe('ChangePasswordComponent', () => {
   let component: ChangePasswordComponent;
   let fixture: ComponentFixture<ChangePasswordComponent>;
-  let localStorageSpy: MockLocalStorage;
   let controleAcessoService: ControleAcessoService;
   beforeEach(() => {
-    localStorageSpy = new MockLocalStorage();
     TestBed.configureTestingModule({
       declarations: [ChangePasswordComponent],
       imports:[CommonModule, MdbFormsModule,  HttpClientTestingModule, FormsModule, ReactiveFormsModule],
-      providers: [AlertComponent, ControleAcessoService, NgbActiveModal, UserDataService,
-        { provide: Storage, useValue: localStorageSpy.instance() }
-      ]
+      providers: [AlertComponent, ControleAcessoService, NgbActiveModal ]
     });
     fixture = TestBed.createComponent(ChangePasswordComponent);
     component = fixture.componentInstance;
     controleAcessoService = TestBed.inject(ControleAcessoService);
     fixture.detectChanges();
-  });
-
-  afterEach(() => {
-    localStorageSpy.cleanup();
   });
 
   it('should create and execute NgOnInit', () => {
@@ -48,8 +38,6 @@ describe('ChangePasswordComponent', () => {
 
   it('should initialize correctly', () => {
     // Arrange
-    const mockIdUsuario = 415789;
-    localStorageSpy.setItem('idUsuario', mockIdUsuario);
     const spyOnInitialize  = spyOn(component, 'initialize').and.callThrough();
 
     // Act
@@ -57,17 +45,13 @@ describe('ChangePasswordComponent', () => {
 
     // Assert
     expect(spyOnInitialize).toHaveBeenCalled();
-    expect(component.changePasswordFrom.value.idUsuario).toEqual(mockIdUsuario);
     expect(component.changePasswordFrom.value.senha).toBe('');
     expect(component.changePasswordFrom.value.confirmaSenha).toBe('');
   });
 
   it('should change password onSaveClick and open Modal Alert Success', fakeAsync(() => {
     // Arrange
-    const mockIdUsuario = 47;
-    localStorageSpy.setItem('idUsuario', mockIdUsuario);
     let mockForm: ILogin = {
-      idUsuario: mockIdUsuario,
       senha: '12345!',
       confirmaSenha: '12345!'
     }
@@ -92,7 +76,7 @@ describe('ChangePasswordComponent', () => {
     // Arrange
     const errorMessage = { message: 'Fake Error Message on Change Passawrod '};
     const spyOnControleAcessoService = spyOn(controleAcessoService, 'changePassword').and.returnValue(throwError(errorMessage));
-        const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
+    const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
     // Act
     component.onSaveClick();

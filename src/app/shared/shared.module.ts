@@ -6,13 +6,12 @@ import { CurrencyMaskModule } from "ng2-currency-mask";
 import { LayoutComponent, BarraFerramentaComponent, DataTableComponent } from "./components";
 import { BarraFerramentaModule } from "./components/barra-ferramenta-component/barra-ferramenta.component.module";
 import { DataTableModule } from "./components/data-table/data-table.component.module";
-import { UserDataService } from "./services";
 
 @NgModule({
   declarations: [LayoutComponent],
   imports: [CommonModule, FormsModule, BarraFerramentaModule, CurrencyMaskModule],
   exports: [LayoutComponent, BarraFerramentaComponent, DataTableModule, CurrencyMaskModule, MatSelectModule],
-  providers: [DataTableComponent, UserDataService]
+  providers: [DataTableComponent]
 })
 
 export class SharedModule { }

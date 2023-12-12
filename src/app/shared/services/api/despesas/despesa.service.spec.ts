@@ -28,9 +28,9 @@ describe('Unit Test DespesaService', () => {
     (service: DespesaService, httpMock: HttpTestingController) => {
 
       const mockResponse : IDespesa[] = [
-        { id: 1, idUsuario: 1, idCategoria: 1, data: dayjs(), descricao: 'Teste Despesas 1', valor: 1.05, dataVencimento: dayjs(), categoria: null },
-        { id: 2, idUsuario: 2, idCategoria: 2, data: dayjs(), descricao: 'Teste Despesas 2', valor: 2.05, dataVencimento: dayjs(), categoria: null },
-        { id: 3, idUsuario: 1, idCategoria: 4, data: dayjs(), descricao: 'Teste Despesas 3', valor: 3.05, dataVencimento: dayjs(), categoria: null },
+        { id: 1, idCategoria: 1, data: dayjs(), descricao: 'Teste Despesas 1', valor: 1.05, dataVencimento: dayjs(), categoria: null },
+        { id: 2, idCategoria: 2, data: dayjs(), descricao: 'Teste Despesas 2', valor: 2.05, dataVencimento: dayjs(), categoria: null },
+        { id: 3, idCategoria: 4, data: dayjs(), descricao: 'Teste Despesas 3', valor: 3.05, dataVencimento: dayjs(), categoria: null },
       ];
 
       service.getDespesas().subscribe((response: any) => {
@@ -53,7 +53,6 @@ describe('Unit Test DespesaService', () => {
       const idDespesa = 1;
       const mockResponse: IDespesa = {
         id: 1,
-        idUsuario: 1,
         idCategoria: 1,
         data: dayjs(),
         descricao: 'Teste Despesas 1',
@@ -83,13 +82,11 @@ describe('Unit Test DespesaService', () => {
         {
           id: 1,
           descricao: "Teste categoria despesa",
-          idUsuario: 1,
           idTipoCategoria: 1
         },
         {
           id: 2,
           descricao: "Teste categoria receita",
-          idUsuario: 1,
           idTipoCategoria: 2
         }
       ];
@@ -112,7 +109,6 @@ describe('Unit Test DespesaService', () => {
     (service: DespesaService, httpMock: HttpTestingController) => {
       const despesa : IDespesa = {
         id: 1,
-        idUsuario: 2,
         idCategoria: 2,
         data: dayjs(),
         descricao: 'Teste Despesas 1',
@@ -140,7 +136,6 @@ describe('Unit Test DespesaService', () => {
     (service: DespesaService, httpMock: HttpTestingController) => {
       const despesa : IDespesa = {
         id: 1,
-        idUsuario: 2,
         idCategoria: 2,
         data: dayjs(),
         descricao: 'Teste Despesas 1',
@@ -166,15 +161,14 @@ describe('Unit Test DespesaService', () => {
   it('should send a deleteDespesa request to the Despesa endpoint', inject(
     [DespesaService, HttpTestingController],
     (service: DespesaService, httpMock: HttpTestingController) => {
-
-      const idDespesa = 1;
       const mockResponse = true;
+      const mockIdDespesa = 200;
 
-      service.deleteDespesa(1).subscribe((response: any) => {
+      service.deleteDespesa(mockIdDespesa).subscribe((response: any) => {
         expect(response).toBeTruthy();
       });
 
-      const expectedUrl = `${environment.endPoint}/Despesa/${idDespesa}`;
+      const expectedUrl = `${environment.endPoint}/Despesa/${ mockIdDespesa }`;
       const req = httpMock.expectOne(expectedUrl);
       expect(req.request.method).toBe('DELETE');
 

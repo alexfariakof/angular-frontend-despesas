@@ -11,7 +11,7 @@ describe('Unit Test UsuarioService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers:[UsuarioService,
+      providers: [UsuarioService,
         { provide: HTTP_INTERCEPTORS, useClass: CustomInterceptor, multi: true, }
       ]
     });
@@ -21,45 +21,10 @@ describe('Unit Test UsuarioService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('should send a getUsuarios request to the Usuario endpoint', inject(
+  it('should send a getUsuario request to the Usuario endpoint', inject(
     [UsuarioService, HttpTestingController],
     (service: UsuarioService, httpMock: HttpTestingController) => {
 
-      const mockResponse : IUsuario[] = [
-        {
-          id: 1,
-          email: 'teste@teste.com',
-          nome: 'Teste Usaurio',
-          sobreNome: 'Teste',
-          telefone: '(21) 9999-9999'
-        },
-        {
-          id: 2,
-          email: 'teste2@teste.com',
-          nome: 'Teste Usaurio 2',
-          sobreNome: 'Teste',
-          telefone: '(21) 9999-9999'
-        }
-      ];
-
-      service.getUsuarios(1).subscribe((response: any) => {
-        expect(response).toBeTruthy();
-      });
-
-      const expectedUrl = `${environment.endPoint}/Usuario/1`;
-      const req = httpMock.expectOne(expectedUrl);
-      expect(req.request.method).toBe('GET');
-
-      req.flush(mockResponse);
-      httpMock.verify();
-    }
-  ));
-
-  it('should send a getUsuarioById request to the Usuario endpoint', inject(
-    [UsuarioService, HttpTestingController],
-    (service: UsuarioService, httpMock: HttpTestingController) => {
-
-      const idUsuario = 1;
       const mockResponse: IUsuario = {
         id: 2,
         email: 'teste@teste.com',
@@ -68,11 +33,11 @@ describe('Unit Test UsuarioService', () => {
         telefone: '(21) 9999-9999'
       };
 
-      service.getUsuarioById(idUsuario).subscribe((response: any) => {
+      service.getUsuario().subscribe((response: any) => {
         expect(response).toBeTruthy();
       });
 
-      const expectedUrl = `${environment.endPoint}/Usuario/GetById/${idUsuario}`;
+      const expectedUrl = `${environment.endPoint}/Usuario/GetUsuario`;
       const req = httpMock.expectOne(expectedUrl);
       expect(req.request.method).toBe('GET');
 
@@ -84,7 +49,7 @@ describe('Unit Test UsuarioService', () => {
   it('should send a postUsuario request to the Usuario endpoint', inject(
     [UsuarioService, HttpTestingController],
     (service: UsuarioService, httpMock: HttpTestingController) => {
-      const usuario : IUsuario = {
+      const usuario: IUsuario = {
         id: 1,
         email: 'teste@teste.com',
         nome: 'Teste Usaurio',
@@ -92,7 +57,7 @@ describe('Unit Test UsuarioService', () => {
         telefone: '(21) 9999-9999'
       };
 
-      const mockResponse = { message: true, Usuario: usuario  };
+      const mockResponse = { message: true, Usuario: usuario };
       service.postUsuario(usuario).subscribe((response: any) => {
         expect(response).toBeTruthy();
       });
@@ -109,7 +74,7 @@ describe('Unit Test UsuarioService', () => {
   it('should send a putUsuario request to the Usuario endpoint', inject(
     [UsuarioService, HttpTestingController],
     (service: UsuarioService, httpMock: HttpTestingController) => {
-      const usuario : IUsuario = {
+      const usuario: IUsuario = {
         id: 1,
         email: 'teste@teste.com',
         nome: 'Teste Usaurio',
@@ -118,7 +83,7 @@ describe('Unit Test UsuarioService', () => {
 
       };
 
-      const mockResponse = { message: true, Usuario: usuario  };
+      const mockResponse = { message: true, Usuario: usuario };
       service.putUsuario(usuario).subscribe((response: any) => {
         expect(response).toBeTruthy();
       });
@@ -135,8 +100,8 @@ describe('Unit Test UsuarioService', () => {
   it('should send a deleteUsuario request to the Usuario endpoint', inject(
     [UsuarioService, HttpTestingController],
     (service: UsuarioService, httpMock: HttpTestingController) => {
-      const usuario : IUsuario = {
-        id : 4,
+      const usuario: IUsuario = {
+        id: 4,
         email: 'teste@teste.com',
         nome: 'Teste Usaurio',
         sobreNome: 'Teste',
@@ -147,11 +112,11 @@ describe('Unit Test UsuarioService', () => {
       const idUsuario = 1;
       const mockResponse = true;
 
-      service.deleteUsuario(usuario, idUsuario).subscribe((response: any) => {
+      service.deleteUsuario(usuario).subscribe((response: any) => {
         expect(response).toBeTruthy();
       });
 
-      const expectedUrl = `${environment.endPoint}/Usuario/${idUsuario}`;
+      const expectedUrl = `${environment.endPoint}/Usuario`;
       const req = httpMock.expectOne(expectedUrl);
       expect(req.request.method).toBe('DELETE');
 

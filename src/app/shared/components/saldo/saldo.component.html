@@ -7,7 +7,7 @@
     <span class="header">Saldo Corrente</span>
     <div class="d-flex flex-row m-0 p-0">
       <div id="saldoAnual" class="m-0 p-0 headerSaldo">
-        Anual: <span class="textSaldo">{{ saldoAnual }} /</span>
+        Anual: <span class="textSaldo" [ngClass]="saldoAnualNegativo">{{ saldoAnual }} </span>/
       </div>
       <div class="dropdown headerSaldo m-0 mx-1 p-0">
         <div
@@ -15,12 +15,10 @@
           id="ddbSaldoMensal"
           data-bs-toggle="dropdown"
           aria-expanded="false"
-          class="dropdown-toggle headerSaldo"
-        >
-          <span class="headerSaldo"
-            >Mês de {{ filterMesService.selectMonthExt }}</span
-          >
-          <span class="textSaldo">: {{ saldoMensal }}</span>
+          class="dropdown-toggle headerSaldo" >
+          <span class="headerSaldo" >
+            Mês de {{ filterMesService.selectMonthExt }}</span>
+          <span class="textSaldo" [ngClass]="saldoMensalNegativo" >: {{ saldoMensal }}</span>
         </div>
         <ul class="dropdown-menu" aria-labelledby="ddbSaldoMensal">
           <li class="dropdown-item" (click)="handleSelectMes('01')">Janeiro</li>

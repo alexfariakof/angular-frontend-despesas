@@ -2,23 +2,26 @@
   import { Injectable } from '@angular/core';
   import { ILogin } from '../../../interfaces/ILogin';
   import { IControleAcesso } from 'src/app/shared/interfaces/IControleAcesso';
+import { AbstractService } from '../base/AbstractService';
   @Injectable({
       providedIn: 'root'
   })
 
-  export class ControleAcessoService {
-
-    constructor(private httpClient: HttpClient) { }
+  export class ControleAcessoService extends AbstractService {
+    constructor(private httpClient: HttpClient) {
+      super();
+      this.urlPath = 'ControleAcesso';
+    }
 
     signIn(login: ILogin): any {
-      return this.httpClient.post<ILogin>(`ControleAcesso/SignIn`, login);
+      return this.httpClient.post<ILogin>(`${ this.urlPath }/SignIn`, login);
     }
 
     createUsuario(controleAcesso: IControleAcesso) : any {
-      return this.httpClient.post<IControleAcesso>(`ControleAcesso`, controleAcesso);
+      return this.httpClient.post<IControleAcesso>(`${ this.urlPath }`, controleAcesso);
     }
 
     changePassword(login: ILogin): any {
-      return this.httpClient.post<ILogin>(`ControleAcesso/ChangePassword`, login);
+      return this.httpClient.post<ILogin>(`${ this.urlPath }/ChangePassword`, login);
     }
   }

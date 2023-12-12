@@ -4,5 +4,4 @@ export interface IAuth {
   expiration: string
   accessToken: string,
   message: string;
-  usuario: any;
 }

@@ -3,28 +3,23 @@ import { ComponentFixture, TestBed, fakeAsync, flush } from "@angular/core/testi
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { AlertComponent, AlertType } from "src/app/shared/components";
-import { MenuService } from "src/app/shared/services";
 import { PerfilComponent } from "./perfil.component";
 import { FormsModule } from "@angular/forms";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { UsuarioService } from "src/app/shared/services/api";
 import { from, of, throwError } from "rxjs";
 import { IUsuario } from "src/app/shared/interfaces";
-import { MockLocalStorage } from "__mock__";
+import { MenuService } from "src/app/shared/services";
 
 describe('Unit Test PerfilComponent', () => {
   let component: PerfilComponent;
   let fixture: ComponentFixture<PerfilComponent>;
-  let localStorageSpy: MockLocalStorage;
   let usuarioService: UsuarioService;
 
   beforeEach(() => {
-    localStorageSpy = new MockLocalStorage();
-    TestBed.configureTestingModule({
+      TestBed.configureTestingModule({
       imports: [ CommonModule, RouterTestingModule, FormsModule, HttpClientTestingModule],
-      providers: [MenuService, AlertComponent, NgbActiveModal, UsuarioService,
-        { provide: Storage, useValue: localStorageSpy.instance() }
-      ]
+      providers: [MenuService, AlertComponent, NgbActiveModal, UsuarioService ]
     });
     fixture = TestBed.createComponent(PerfilComponent);
     component = fixture.componentInstance;
@@ -32,20 +27,9 @@ describe('Unit Test PerfilComponent', () => {
     fixture.detectChanges();
   });
 
-  afterEach(() => {
-    localStorageSpy.cleanup();
-  });
-
   it('should create', () => {
-    // Arrange
-    localStorageSpy.setItem('idUsuario', 10);
-
-    // Act
-    component.ngOnInit();
-
     // Assert
     expect(component).toBeTruthy();
-    expect(component.prefilFrom.value.id).toEqual(10);
   });
 
   it('should initialize and fill perilForm', fakeAsync(() => {
@@ -57,16 +41,14 @@ describe('Unit Test PerfilComponent', () => {
       sobreNome: 'Teste',
       telefone: '(21) 9999-9999'
     };
-    localStorageSpy.setItem('idUsuario', mockUsuario.id);
-    const spyOnGetUsuarioById = spyOn(usuarioService, 'getUsuarioById').and.returnValue(from(Promise.resolve(mockUsuario)));
+        const spyOnGetUsuario = spyOn(usuarioService, 'getUsuario').and.returnValue(from(Promise.resolve(mockUsuario)));
 
     // Act
     component.initialize();
     flush();
 
     // Assert
-    expect(spyOnGetUsuarioById).toHaveBeenCalled();
-    expect(spyOnGetUsuarioById).toHaveBeenCalledWith(mockUsuario.id);
+    expect(spyOnGetUsuario).toHaveBeenCalled();
     expect(component.prefilFrom.value.id).toEqual(mockUsuario.id);
     expect(component.prefilFrom.value.email).toEqual(mockUsuario.email);
     expect(component.prefilFrom.value.nome).toEqual(mockUsuario.nome);
@@ -77,15 +59,14 @@ describe('Unit Test PerfilComponent', () => {
   it('should throw error when try to initialize', () => {
     // Arrange
     const errorMessage = { message: 'Fake Error Message Perfil Usuário' };
-    const spyOnGetUsuarioById = spyOn(usuarioService, 'getUsuarioById').and.returnValue(throwError(errorMessage));
+    const spyOnGetUsuario = spyOn(usuarioService, 'getUsuario').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
-    localStorageSpy['idUsuario'] = '4';
 
     // Act
     component.initialize();
 
     // Assert
-    expect(spyOnGetUsuarioById).toHaveBeenCalled();
+    expect(spyOnGetUsuario).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
   });
@@ -99,8 +80,7 @@ describe('Unit Test PerfilComponent', () => {
       sobreNome: 'Teste',
       telefone: '(21) 9999-9999'
     };
-    localStorageSpy.setItem('idUsuario',mockUsuario.id);
-    const spyOnGetUsuarioById = spyOn(usuarioService, 'getUsuarioById').and.returnValue(from(Promise.resolve(mockUsuario)));
+    const spyOnGetUsuario = spyOn(usuarioService, 'getUsuario').and.returnValue(from(Promise.resolve(mockUsuario)));
     const editedData = {
       id : 22,
       email: 'teste@teste.com',
@@ -119,8 +99,7 @@ describe('Unit Test PerfilComponent', () => {
     flush();
 
     // Assert
-    expect(spyOnGetUsuarioById).toHaveBeenCalled();
-    expect(spyOnGetUsuarioById).toHaveBeenCalledOnceWith(mockUsuario.id);
+    expect(spyOnGetUsuario).toHaveBeenCalled();
     expect(spyOnPutUsuario).toHaveBeenCalled();
     expect(spyOnPutUsuario).toHaveBeenCalledOnceWith(editedData);
     expect(component.prefilFrom.value.id).toEqual(editedData.id);

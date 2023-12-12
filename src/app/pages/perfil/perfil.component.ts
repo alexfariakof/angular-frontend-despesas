@@ -1,4 +1,4 @@
-import { MenuService, UserDataService } from 'src/app/shared/services';
+import { MenuService } from 'src/app/shared/services';
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { IUsuario } from 'src/app/shared/interfaces';
@@ -17,26 +17,26 @@ export class PerfilComponent implements OnInit {
     private menuService: MenuService,
     public formbuilder: FormBuilder,
     public modalAlert: AlertComponent,
-    public usuarioService: UsuarioService,
-    private userDataService: UserDataService
-    ) { menuService.setMenuSelecionado(6); }
+    public usuarioService: UsuarioService
+  ) { menuService.setMenuSelecionado(6); }
 
-  ngOnInit(): void{
-    this.prefilFrom = this.formbuilder.group({ email: ['', [Validators.required, Validators.email]],
-    id: this.userDataService.getIdUsuario(),
-    nome: ['', [Validators.required]],
-    sobreNome: '',
-    telefone: ['', [Validators.required]],
+  ngOnInit(): void {
+    this.prefilFrom = this.formbuilder.group({
+      id: 0,
+      email: ['', [Validators.required, Validators.email]],
+      nome: ['', [Validators.required]],
+      sobreNome: '',
+      telefone: ['', [Validators.required]],
     }) as FormGroup & IUsuario;
     this.initialize();
   }
 
   initialize = () => {
-    this.usuarioService.getUsuarioById(this.userDataService.getIdUsuario())
+    this.usuarioService.getUsuario()
       .subscribe({
-        next: (result: IUsuario) => {
-          if (result && result !== undefined && result !== null) {
-            this.prefilFrom.patchValue(result);
+        next: (response: IUsuario) => {
+          if (response && response !== undefined && response !== null) {
+            this.prefilFrom.patchValue(response);
           }
         },
         error: (response: any) => {
@@ -47,15 +47,15 @@ export class PerfilComponent implements OnInit {
 
   onSaveClick() {
     this.usuarioService.putUsuario(this.prefilFrom.getRawValue() as IUsuario)
-    .subscribe({
-      next: (result: IUsuario) => {
-        if (result && result !== undefined && result !== null) {
-          this.modalAlert.open(AlertComponent, 'Dados atualizados com Sucesso.', AlertType.Success);
+      .subscribe({
+        next: (response: IUsuario) => {
+          if (response && response !== undefined && response !== null) {
+            this.modalAlert.open(AlertComponent, 'Dados atualizados com Sucesso.', AlertType.Success);
+          }
+        },
+        error: (error: any) => {
+          this.modalAlert.open(AlertComponent, error.message, AlertType.Warning);
         }
-      },
-      error: (error: any) => {
-        this.modalAlert.open(AlertComponent, error.message, AlertType.Warning);
-      }
-    });
+      });
   }
 }
