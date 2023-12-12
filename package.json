@@ -1,6 +1,6 @@
 {
   "name": "despesas-frontend-angular",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "scripts": {
     "start": "ng serve --host 0.0.0.0 --disable-host-check --configuration local-development",
     "start:dev": "ng serve --host 0.0.0.0 --disable-host-check --configuration development",
