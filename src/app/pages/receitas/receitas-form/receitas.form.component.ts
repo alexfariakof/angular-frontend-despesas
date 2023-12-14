@@ -33,8 +33,7 @@ export class ReceitasFormComponent {
     this.getCatgeoriasFromReceitas();
     this.receitaForm = this.formbuilder.group({
       id: [0],
-      idCategoria: [null, Validators.required],
-      categoria: null,
+      categoria: [null, Validators.required],
       data: [dayjs().format('YYYY-MM-DD'), Validators.required],
       descricao: ['', Validators.required],
       valor: [0, [Validators.required, CustomValidators.isGreaterThanZero]],
@@ -103,8 +102,14 @@ export class ReceitasFormComponent {
     this.receitaService.getReceitaById(idReceita)
       .subscribe({
         next: (response: any) => {
-          if (response.message === true && response.receita !== undefined && response.receita !== null)
-            this.receitaForm.patchValue(response.receita);
+          if (response.message === true && response.receita !== undefined && response.receita !== null){
+            const receitaData = response.receita
+            this.receitaForm.patchValue(receitaData);
+            const categoriaSelecionada = this.categorias.find(c => c.id === receitaData.categoria.id);
+            if (categoriaSelecionada) {
+              this.receitaForm.get('categoria')?.setValue(categoriaSelecionada);
+            }
+          }
         },
         error: (response: any) => {
           this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);

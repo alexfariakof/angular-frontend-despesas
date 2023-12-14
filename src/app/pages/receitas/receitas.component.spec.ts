@@ -22,9 +22,9 @@ describe('Unit Test ReceitasComponent', () => {
   let fixture: ComponentFixture<ReceitasComponent>;
   let receitaService: ReceitaService;
   let mockReceitas: IReceita[] = [
-    { id: 1, idCategoria: 1, data: dayjs(), descricao: 'Teste Receitas 1', valor: 1.05, categoria: 'Categoria 1' },
-    { id: 2, idCategoria: 2, data: dayjs(), descricao: 'Teste Receitas 2', valor: 2.05, categoria: 'Categoria 2' },
-    { id: 3, idCategoria: 4, data: dayjs(), descricao: 'Teste Receitas 3', valor: 3.05, categoria: 'Categoria 3' },
+    { id: 1, data: dayjs(), descricao: 'Teste Receitas 1', valor: 1.05, categoria: { id: 1, descricao: 'Categoria 1', idTipoCategoria: 2 } },
+    { id: 2, data: dayjs(), descricao: 'Teste Receitas 2', valor: 2.05, categoria: { id: 2, descricao: 'Categoria 2', idTipoCategoria: 2 } },
+    { id: 3, data: dayjs(), descricao: 'Teste Receitas 3', valor: 3.05, categoria: { id: 4, descricao: 'Categoria 4', idTipoCategoria: 2 } },
   ];
   let mockReceitasData: ReceitaDataSet[] = [
     { id: 1, data: dayjs().format('DD/MM/YYYY'), descricao: 'Teste Receitas 1', valor: 'R$ 1.05', categoria: 'Categoria 1' },

@@ -33,8 +33,7 @@ export class DespesasFormComponent {
     this.getCatgeoriasFromDespesas();
     this.despesaForm = this.formbuilder.group({
       id: [0],
-      idCategoria: [null, Validators.required],
-      categoria: null,
+      categoria: [null, Validators.required],
       data: [dayjs().format('YYYY-MM-DD'), Validators.required],
       descricao: ['', Validators.required],
       valor: [0, [Validators.required, CustomValidators.isGreaterThanZero]],
@@ -85,7 +84,8 @@ export class DespesasFormComponent {
   }
 
   saveEditDespesa = () => {
-    this.despesaService.putDespesa(this.despesaForm.getRawValue() as IDespesa)
+    const despesa = this.despesaForm.getRawValue() as IDespesa;
+    this.despesaService.putDespesa(despesa)
       .subscribe({
         next: (response: any) => {
           if (response !== undefined && response !== null && response.message === true) {
@@ -105,8 +105,15 @@ export class DespesasFormComponent {
     this.despesaService.getDespesaById(idDespesa)
       .subscribe({
         next: (response: any) => {
-          if (response.message === true && response.despesa !== undefined && response.despesa !== null)
-            this.despesaForm.patchValue(response.despesa);
+          if (response.message === true && response.despesa !== undefined && response.despesa !== null){
+            const despesaData = response.despesa;
+            this.despesaForm.patchValue(despesaData);
+            const categoriaSelecionada = this.categorias.find(c => c.id === despesaData.categoria.id);
+            if (categoriaSelecionada) {
+              this.despesaForm.get('categoria')?.setValue(categoriaSelecionada);
+            }
+          }
+
         },
         error: (response: any) => {
           this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);

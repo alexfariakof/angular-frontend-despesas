@@ -22,11 +22,11 @@ describe('Unit Test DespesasComponent', () => {
   let fixture: ComponentFixture<DespesasComponent>;
   let despesaService: DespesaService;
   let mockDespesas: IDespesa[] = [
-    { id: 1, idCategoria: 1, data: dayjs(), descricao: 'Teste Despesas 1', valor: 1.05, dataVencimento: dayjs(), categoria: 'Categoria 1' },
-    { id: 2, idCategoria: 2, data: dayjs(), descricao: 'Teste Despesas 2', valor: 2.05, dataVencimento: dayjs(), categoria: 'Categoria 2' },
-    { id: 3, idCategoria: 4, data: dayjs(), descricao: 'Teste Despesas 3', valor: 3.05, dataVencimento: null, categoria: 'Categoria 3' },
-    { id: 4, idCategoria: 4, data: dayjs(), descricao: 'Teste Despesas 4', valor: 4.44, dataVencimento: null, categoria: 'Categoria 4' },
-    { id: 5, idCategoria: 4, data: dayjs(), descricao: 'Teste Despesas 5', valor: 5.55, dataVencimento: null, categoria: 'Categoria 5' },
+    { id: 1, data: dayjs(), descricao: 'Teste Despesas 1', valor: 1.05, dataVencimento: dayjs(), categoria: { id: 1, descricao: 'Categoria 1', idTipoCategoria: 1 }},
+    { id: 2, data: dayjs(), descricao: 'Teste Despesas 2', valor: 2.05, dataVencimento: dayjs(), categoria: { id: 2, descricao: 'Categoria 2', idTipoCategoria: 1 }},
+    { id: 3, data: dayjs(), descricao: 'Teste Despesas 3', valor: 3.05, dataVencimento: null, categoria: { id: 4, descricao: 'Categoria 4', idTipoCategoria: 1 }},
+    { id: 4, data: dayjs(), descricao: 'Teste Despesas 4', valor: 4.44, dataVencimento: null, categoria: { id: 5, descricao: 'Categoria 5', idTipoCategoria: 1 }},
+    { id: 5, data: dayjs(), descricao: 'Teste Despesas 5', valor: 5.55, dataVencimento: null, categoria: { id: 6, descricao: 'Categoria 6', idTipoCategoria: 1 }},
   ];
   let mockDespesasData: DespesaDataSet[] = [
     { id: 1, data: dayjs().format('DD/MM/YYYY'), descricao: 'Teste Despesas 1', valor: 'R$ 1.05', dataVencimento: dayjs().format('DD/MM/YYY'), categoria: 'Categoria 1' },
