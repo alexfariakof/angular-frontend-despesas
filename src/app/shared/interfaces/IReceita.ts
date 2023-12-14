@@ -1,9 +1,8 @@
 import { Dayjs } from "dayjs";
-
+import { ICategoria } from "./ICategoria";
 export interface IReceita {
   id: number | null;
-  idCategoria: number | string;
-  categoria: string;
+  categoria: ICategoria;
   data: Dayjs | string | null;
   descricao: string;
   valor: number;

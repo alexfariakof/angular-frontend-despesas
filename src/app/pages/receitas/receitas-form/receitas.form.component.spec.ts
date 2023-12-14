@@ -22,12 +22,12 @@ describe('Unit Test ReceitasFormComponent', () => {
   let fixture: ComponentFixture<ReceitasFormComponent>;
   let receitaService: ReceitaService;
   let mockReceitas: IReceita[] = [
-    { id: 1, idCategoria: 1, data: dayjs(), descricao: 'Teste Receitas 1', valor: 1.05, categoria: 'Categoria 1' },
-    { id: 2, idCategoria: 2, data: dayjs(), descricao: 'Teste Receitas 2', valor: 2.05, categoria: 'Categoria 2' },
-    { id: 3, idCategoria: 4, data: dayjs(), descricao: 'Teste Receitas 3', valor: 3.05, categoria: 'Categoria 3' },
+    { id: 1, data: dayjs(), descricao: 'Teste Receitas 1', valor: 1.05, categoria: { id: 1, descricao: 'Categoria 1', idTipoCategoria: 2 }},
+    { id: 2, data: dayjs(), descricao: 'Teste Receitas 2', valor: 2.05, categoria: { id: 2, descricao: 'Categoria 2', idTipoCategoria: 2 }},
+    { id: 3, data: dayjs(), descricao: 'Teste Receitas 3', valor: 3.05, categoria: { id: 4, descricao: 'Categoria 4', idTipoCategoria: 2 }},
   ];
   let mockCategorias: ICategoria[] = [
-    { id: 1, descricao: 'Teste Categoria Recaita 1', idTipoCategoria: 1},
+    { id: 1, descricao: 'Teste Categoria Recaita 1', idTipoCategoria: 2},
     { id: 2, descricao: 'Teste Categoria Receita 2', idTipoCategoria: 2}
   ];
 
@@ -81,11 +81,10 @@ describe('Unit Test ReceitasFormComponent', () => {
     // Arrange
     const receita: IReceita = {
       id: 0,
-      idCategoria: 1,
       data: dayjs(),
       descricao: 'Teste Create Receitas',
       valor: 10.23,
-      categoria: ''
+      categoria: { id: 1, descricao: 'Categoria 1', idTipoCategoria: 2 }
     };
     const receitaPostServiceSpy = spyOn(receitaService, 'postReceita').and.returnValue(of({ message: true }));
     const modalCloseSpy = spyOn(component.activeModal, 'close').and.callThrough();
@@ -111,11 +110,10 @@ describe('Unit Test ReceitasFormComponent', () => {
     const errorMessage = { message: 'Fake Error Message Create Receita' };
     const receita: IReceita = {
       id: 0,
-      idCategoria: 1,
       data: dayjs(),
       descricao: 'Teste Create Receitas',
       valor: 200.99,
-      categoria: ''
+      categoria: { id: 1, descricao: 'Categoria 1', idTipoCategoria: 2 }
     };
     const receitaPostServiceSpy = spyOn(receitaService, 'postReceita').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open').and.callThrough();
@@ -137,11 +135,10 @@ describe('Unit Test ReceitasFormComponent', () => {
     // Arrange
     const mockReceita: IReceita = {
       id: 1,
-      idCategoria: 1,
       data: dayjs().format('YYYY-MM-DD'),
       descricao: 'Teste Edit Receitas',
       valor: 10.58,
-      categoria: null
+      categoria: { id: 1, descricao: 'Categoria 1', idTipoCategoria: 2 }
     };
     const receitaPutServiceSpy = spyOn(receitaService, 'putReceita').and.returnValue(of({ message: true, receita: mockReceita }));
     const modalCloseSpy = spyOn(component.activeModal, 'close').and.callThrough();
@@ -167,11 +164,10 @@ describe('Unit Test ReceitasFormComponent', () => {
     const errorMessage = { message: 'Fake Error Message Edit Receita' };
     const receita: IReceita = {
       id: 1,
-      idCategoria: 2,
       data: dayjs().format('YYYY-MM-DD'),
       descricao: 'Teste Edit Receitas',
       valor: 20.87,
-      categoria: ''
+      categoria: { id: 2, descricao: 'Categoria 2', idTipoCategoria: 1 }
     };
     const receitaPutServiceSpy = spyOn(receitaService, 'putReceita').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open').and.callThrough();
