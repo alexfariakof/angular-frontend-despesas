@@ -27,6 +27,7 @@ export class ReceitasComponent implements BarraFerramentaClass {
   ) { menuService.setMenuSelecionado(4); }
 
   ngOnInit() {
+    this.menuService.setMenuSelecionado(4);
     this.initializeDataTable();
   }
 
@@ -66,7 +67,7 @@ export class ReceitasComponent implements BarraFerramentaClass {
     return receitas.map((receita: IReceita) => ({
       id: receita.id,
       data: dayjs(receita.data).format('DD/MM/YYYY'),
-      categoria: receita.categoria,
+      categoria: receita.categoria.descricao,
       descricao: receita.descricao,
       valor: `${receita.valor.toLocaleString('pt-BR', {
         style: 'currency',
