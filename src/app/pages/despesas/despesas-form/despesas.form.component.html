@@ -30,13 +30,13 @@
       <mat-label>Categorias</mat-label>
       <mat-select
         matInput
-        id="idCategoria"
-        name="idCategoria"
-        formControlName="idCategoria"
+        id="categoria"
+        name="categoria"
+        formControlName="categoria"
         [ngClass]="{
           'is-invalid':
-            despesaForm.get('idCategoria')?.errors?.['required'] &&
-            despesaForm.get('idCategoria')?.touched
+            despesaForm.get('categoria')?.errors?.['required'] &&
+            despesaForm.get('categoria')?.touched
         }"
       >
         <mat-option [value]="null" disabled selected
@@ -44,7 +44,7 @@
         >
         <mat-option
           *ngFor="let categoria of categorias"
-          [value]="categoria.id"
+          [value]="categoria"
           >{{ categoria.descricao }}</mat-option
         >
       </mat-select>

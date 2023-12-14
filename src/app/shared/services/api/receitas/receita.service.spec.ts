@@ -28,9 +28,9 @@ describe('Unit Test ReceitaService', () => {
     (service: ReceitaService, httpMock: HttpTestingController) => {
 
       const mockResponse : IReceita[] = [
-        { id: 1, idCategoria: 1, data: dayjs(), descricao: 'Teste Receitas 1', valor: 1.05, categoria: null },
-        { id: 2, idCategoria: 2, data: dayjs(), descricao: 'Teste Receitas 2', valor: 2.05, categoria: null },
-        { id: 3, idCategoria: 4, data: dayjs(), descricao: 'Teste Receitas 3', valor: 3.05, categoria: null },
+        { id: 1, data: dayjs(), descricao: 'Teste Receitas 1', valor: 1.05, categoria: { id: 1, descricao: 'Categoria 1', idTipoCategoria: 2 } },
+        { id: 2, data: dayjs(), descricao: 'Teste Receitas 2', valor: 2.05, categoria: { id: 1, descricao: 'Categoria 2', idTipoCategoria: 2 } },
+        { id: 3, data: dayjs(), descricao: 'Teste Receitas 3', valor: 3.05, categoria: { id: 1, descricao: 'Categoria 2', idTipoCategoria: 2 } },
       ];
 
       service.getReceitas().subscribe((response: any) => {
@@ -53,11 +53,10 @@ describe('Unit Test ReceitaService', () => {
       const idReceita = 1;
       const mockResponse: IReceita = {
         id: 1,
-        idCategoria: 1,
         data: dayjs(),
         descricao: 'Teste Receitas 1',
         valor: 2.05,
-        categoria: ''
+        categoria: { id: 1, descricao: 'Categoria 1', idTipoCategoria: 2 }
       };
 
       service.getReceitaById(1).subscribe((response: any) => {
@@ -108,11 +107,10 @@ describe('Unit Test ReceitaService', () => {
     (service: ReceitaService, httpMock: HttpTestingController) => {
       const despesa : IReceita = {
         id: 1,
-        idCategoria: 2,
         data: dayjs(),
         descricao: 'Teste Receitas 1',
         valor: 4.25,
-        categoria: ''
+        categoria: { id: 1, descricao: 'Categoria 1', idTipoCategoria: 2 }
       };
 
       const mockResponse = { message: true, Receita: despesa  };
@@ -134,11 +132,10 @@ describe('Unit Test ReceitaService', () => {
     (service: ReceitaService, httpMock: HttpTestingController) => {
       const despesa : IReceita = {
         id: 1,
-        idCategoria: 2,
         data: dayjs(),
         descricao: 'Teste Receitas 1',
         valor: 50.50,
-        categoria: ''
+        categoria: { id: 2, descricao: 'Categoria 1', idTipoCategoria: 2 }
       };
 
       const mockResponse = { message: true, Receita: despesa  };

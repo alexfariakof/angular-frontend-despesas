@@ -32,23 +32,23 @@
       readonly
       [ngClass]="{
         'is-invalid':
-          receitaForm.get('idCategoria')?.errors?.['required'] &&
-          receitaForm.get('idCategoria')?.touched
+          receitaForm.get('categoria')?.errors?.['required'] &&
+          receitaForm.get('categoria')?.touched
       }"
     >
       <mat-label>Categorias</mat-label>
       <mat-select
         matInput
-        id="idCategoria"
-        name="idCategoria"
-        formControlName="idCategoria"
+        id="categoria"
+        name="categoria"
+        formControlName="categoria"
       >
         <mat-option [value]="null" disabled selected
           >Nenhuma categoria selecionada</mat-option
         >
         <mat-option
           *ngFor="let categoria of categorias"
-          [value]="categoria.id"
+          [value]="categoria"
           >{{ categoria.descricao }}</mat-option
         >
       </mat-select>
