@@ -22,9 +22,9 @@ describe('Unit Test DespesasFormComponent', () => {
   let fixture: ComponentFixture<DespesasFormComponent>;
   let despesaService: DespesaService;
   let mockDespesas: IDespesa[] = [
-    { id: 1, idCategoria: 1, data: dayjs(), descricao: 'Teste Despesas 1', valor: 1.05, dataVencimento: dayjs(), categoria: 'Categoria 1' },
-    { id: 2, idCategoria: 2, data: dayjs(), descricao: 'Teste Despesas 2', valor: 2.05, dataVencimento: dayjs(), categoria: 'Categoria 2' },
-    { id: 3, idCategoria: 4, data: dayjs(), descricao: 'Teste Despesas 3', valor: 3.05, dataVencimento: dayjs(), categoria: 'Categoria 3' },
+    { id: 1, data: dayjs(), descricao: 'Teste Despesas 1', valor: 1.05, dataVencimento: dayjs(), categoria: { id: 1, descricao: 'Categoria 1', idTipoCategoria: 1 }},
+    { id: 2, data: dayjs(), descricao: 'Teste Despesas 2', valor: 2.05, dataVencimento: dayjs(), categoria: { id: 2, descricao: 'Categoria 2', idTipoCategoria: 1 }},
+    { id: 3, data: dayjs(), descricao: 'Teste Despesas 3', valor: 3.05, dataVencimento: dayjs(), categoria: { id:41, descricao: 'Categoria 4', idTipoCategoria: 1 }},
   ];
   let mockCategorias: ICategoria[] = [
     { id: 1, descricao: 'Teste Categoria Despesas 1', idTipoCategoria: 1 },
@@ -81,12 +81,11 @@ describe('Unit Test DespesasFormComponent', () => {
     // Arrange
     const despesa: IDespesa = {
       id: 0,
-      idCategoria: 1,
       data: dayjs(),
       descricao: 'Teste Create Despesas',
       valor: 100.88,
       dataVencimento: null,
-      categoria: ''
+      categoria: { id: 1, descricao: 'Categoria 1', idTipoCategoria: 1 }
     };
     const despesaPostServiceSpy = spyOn(despesaService, 'postDespesa').and.returnValue(of({ message: true }));
     const modalCloseSpy = spyOn(component.activeModal, 'close').and.callThrough();
@@ -112,12 +111,11 @@ describe('Unit Test DespesasFormComponent', () => {
     const errorMessage = { message: 'Fake Error Message Create Despesa' };
     const despesa: IDespesa = {
       id: 0,
-      idCategoria: 1,
       data: dayjs(),
       descricao: 'Teste Create Despesas',
       valor: 100.88,
       dataVencimento: null,
-      categoria: ''
+      categoria: { id: 1, descricao: 'Categoria 1', idTipoCategoria: 1 }
     };
     const despesaPostServiceSpy = spyOn(despesaService, 'postDespesa').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open').and.callThrough();
@@ -139,12 +137,11 @@ describe('Unit Test DespesasFormComponent', () => {
     // Arrange
     const mockDespesa: IDespesa = {
       id: 1,
-      idCategoria: 1,
       data: dayjs().format('YYYY-MM-DD'),
       descricao: 'Teste Edit Despesas',
       valor: 10.58,
       dataVencimento: null,
-      categoria: null
+      categoria: { id: 1, descricao: 'Categoria 1', idTipoCategoria: 1 }
     };
     const despesaPutServiceSpy = spyOn(despesaService, 'putDespesa').and.returnValue(of({ message: true, despesa: mockDespesa }));
     const modalCloseSpy = spyOn(component.activeModal, 'close').and.callThrough();
@@ -171,12 +168,11 @@ describe('Unit Test DespesasFormComponent', () => {
     const errorMessage = { message: 'Fake Error Message Edit Despesa' };
     const despesa: IDespesa = {
       id: 1,
-      idCategoria: 2,
       data: dayjs().format('YYYY-MM-DD'),
       descricao: 'Teste Edit Despesas',
       valor: 20.42,
       dataVencimento: dayjs().format('YYYY-MM-DD'),
-      categoria: ''
+      categoria: { id: 2, descricao: 'Categoria 2', idTipoCategoria: 1 }
     };
     const despesaPutServiceSpy = spyOn(despesaService, 'putDespesa').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open').and.callThrough();
