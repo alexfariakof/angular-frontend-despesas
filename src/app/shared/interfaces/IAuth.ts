@@ -3,5 +3,6 @@ export interface IAuth {
   created: string,
   expiration: string
   accessToken: string,
+  refreshToken: string,
   message: string;
 }

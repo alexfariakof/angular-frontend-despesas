@@ -12,20 +12,20 @@ export class AuthService {
 
   constructor() {
     try {
-      const accessToken = localStorage.getItem('@token');
+      const accessToken = sessionStorage.getItem('@token');
       if (accessToken) {
         this.setAccessToken(accessToken);
       } else {
-        this.clearLocalStorage();
+        this.clearSessionStorage();
       }
     } catch {
-      this.clearLocalStorage();
+      this.clearSessionStorage();
     }
   }
 
-  public clearLocalStorage() {
+  public clearSessionStorage() {
     this.setAccessToken(undefined);
-    localStorage.clear();
+    sessionStorage.clear();
   }
 
   private setAccessToken(token: string | undefined) {
@@ -33,9 +33,9 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    const accessToken = this.accessTokenSubject.getValue() || localStorage.getItem('@token');
+    const accessToken = this.accessTokenSubject.getValue() || sessionStorage.getItem('@token');
     if (accessToken === null || accessToken === undefined) {
-      this.clearLocalStorage();
+      this.clearSessionStorage();
       return false;
     }
     return true;
@@ -43,7 +43,7 @@ export class AuthService {
 
   createAccessToken(auth: IAuth): Boolean {
     try {
-      localStorage.setItem('@token', auth.accessToken);
+      sessionStorage.setItem('@token', auth.accessToken);
       this.setAccessToken(auth.accessToken);
       return true;
     } catch (error) {

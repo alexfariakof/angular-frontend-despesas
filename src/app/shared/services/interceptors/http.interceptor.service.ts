@@ -24,7 +24,7 @@ export class CustomInterceptor implements HttpInterceptor {
           const modifiedRequest = request.clone({
           url: `${baseUrl}/${request.url}`,
           setHeaders: {
-            Authorization: `Bearer ${localStorage.getItem('@token') || accessToken}`
+            Authorization: `Bearer ${sessionStorage.getItem('@token') || accessToken}`
           }
         });
 
@@ -40,7 +40,7 @@ export class CustomInterceptor implements HttpInterceptor {
               return throwError(error.error);
             }
             else if (error.status === 401) {
-              localStorage.clear();
+              sessionStorage.clear();
               window.location.reload();
               return throwError({message: 'Erro de autenticação, tente atualizar a página ou realize novamente o login.'});
             }
