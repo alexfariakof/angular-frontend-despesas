@@ -7,7 +7,7 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { MdbFormsModule } from "mdb-angular-ui-kit/forms";
 import { of } from "rxjs";
 import { AlertComponent } from "src/app/shared/components";
-import { IControleAcesso } from "src/app/shared/interfaces";
+import { IControleAcesso } from "src/app/shared/models";
 import { PrimeiroAcessoComponent } from "./primeiro-acesso.component";
 
 describe('PrimeiroAcessoComponent', () => {

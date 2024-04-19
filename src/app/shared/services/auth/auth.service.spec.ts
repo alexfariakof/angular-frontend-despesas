@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { IAuth } from '../../interfaces/IAuth';
+import { IAuth } from '../../models/IAuth';
 import { AuthService } from './auth.service';
 
 describe('Unit Test AuthService', () => {
@@ -35,7 +35,7 @@ describe('Unit Test AuthService', () => {
 
     // Assert
     expect(authService.isAuthenticated()).toBe(true);
-    expect(sessionStorage.getItem('@token')).toBe('fakeToken');
+    expect(sessionStorage.getItem('@auth')).toBe('fakeToken');
   });
 
   it('should clear local storage', () => {
@@ -44,7 +44,7 @@ describe('Unit Test AuthService', () => {
 
     // Assert
     expect(authService.isAuthenticated()).toBeFalsy();
-    expect(sessionStorage.getItem('@token')).toBeNull();
+    expect(sessionStorage.getItem('@auth')).toBeNull();
   });
 
   it('should catch error on creating access token', () => {

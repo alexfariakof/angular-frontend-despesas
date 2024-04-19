@@ -6,7 +6,7 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { of } from "rxjs";
 import { AlertComponent } from "src/app/shared/components";
-import { ILogin, IAuth } from "src/app/shared/interfaces";
+import { ILogin, IAuth } from "src/app/shared/models";
 import { AuthService } from "src/app/shared/services";
 import { LoginComponent } from "./login.component";
 import { MatInputModule } from "@angular/material/input";

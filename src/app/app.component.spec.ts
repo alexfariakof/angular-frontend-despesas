@@ -10,7 +10,7 @@ import { AppRoutingModule } from './app.routing.module';
 import { PrimeiroAcessoComponent } from './pages/primeiro-acesso/primeiro-acesso.component';
 import { AuthService } from './shared/services/auth/auth.service';
 import { Router } from '@angular/router';
-import { AuthProvider } from './shared/services/provider/auth.provider';
+import { AuthProvider } from './shared/provider/auth.provider';
 import { MatDatepickerIntl } from '@angular/material/datepicker';
 import { DateAdapter } from '@angular/material/core';
 

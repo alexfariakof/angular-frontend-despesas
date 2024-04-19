@@ -7,7 +7,7 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { from, throwError } from 'rxjs';
-import { IImagemPerfil } from 'src/app/shared/interfaces';
+import { IImagemPerfil } from 'src/app/shared/models';
 
 describe('Unit Test ChangeAvatarComponent', () => {
   let component: ChangeAvatarComponent;

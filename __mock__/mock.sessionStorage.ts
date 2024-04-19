@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-export class MockLocalStorage {
+export class MockSessionStorage {
   private storage: { [key: string]: string } = {};
 
   constructor() {
@@ -9,17 +9,17 @@ export class MockLocalStorage {
     const removeItemSpy = jasmine.createSpy('removeItem').and.callFake((key: string) => delete this.storage[key]);
     const clearSpy = jasmine.createSpy('clear').and.callFake(() => this.storage = {});
 
-    spyOn(localStorage, 'getItem').and.callFake(getItemSpy);
-    spyOn(localStorage, 'setItem').and.callFake(setItemSpy);
-    spyOn(localStorage, 'removeItem').and.callFake(removeItemSpy);
-    spyOn(localStorage, 'clear').and.callFake(clearSpy);
+    spyOn(sessionStorage, 'getItem').and.callFake(getItemSpy);
+    spyOn(sessionStorage, 'setItem').and.callFake(setItemSpy);
+    spyOn(sessionStorage, 'removeItem').and.callFake(removeItemSpy);
+    spyOn(sessionStorage, 'clear').and.callFake(clearSpy);
     this.setup();
   }
 
   private setup() {
     TestBed.configureTestingModule({
       providers: [
-        { provide: Storage, useValue: localStorage }
+        { provide: Storage, useValue: sessionStorage }
       ]
     });
   }
@@ -29,10 +29,10 @@ export class MockLocalStorage {
   }
 
   instance = (): jasmine.SpyObj<Storage> =>  {
-    return localStorage as jasmine.SpyObj<Storage>;
+    return sessionStorage as jasmine.SpyObj<Storage>;
   }
 
   setItem = (key: any, value: any): void => {
-    (localStorage as jasmine.SpyObj<Storage>).setItem(key, value);
+    (sessionStorage as jasmine.SpyObj<Storage>).setItem(key, value);
   }
 }

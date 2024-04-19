@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { AuthProvider } from './auth.provider';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../services/auth/auth.service';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 

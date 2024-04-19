@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { IAuth } from '../../interfaces/IAuth';
+import { TokenStorageService } from '..';
+import { IAuth } from '../../models';
 @Injectable({
   providedIn: 'root'
 })
@@ -10,9 +11,9 @@ export class AuthService {
 
   accessToken$ = this.accessTokenSubject.asObservable();
 
-  constructor() {
+  constructor(private tokenStorage: TokenStorageService) {
     try {
-      const accessToken = sessionStorage.getItem('@token');
+      const accessToken = this.tokenStorage.getToken();
       if (accessToken) {
         this.setAccessToken(accessToken);
       } else {
@@ -33,7 +34,7 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    const accessToken = this.accessTokenSubject.getValue() || sessionStorage.getItem('@token');
+    const accessToken = this.tokenStorage.getToken() ?? this.accessTokenSubject.getValue();
     if (accessToken === null || accessToken === undefined) {
       this.clearSessionStorage();
       return false;
@@ -43,7 +44,9 @@ export class AuthService {
 
   createAccessToken(auth: IAuth): Boolean {
     try {
-      sessionStorage.setItem('@token', auth.accessToken);
+      this.tokenStorage.saveToken(auth.accessToken);
+      this.tokenStorage.saveRefreshToken(auth.refreshToken);
+      this.tokenStorage.saveUser(auth);
       this.setAccessToken(auth.accessToken);
       return true;
     } catch (error) {

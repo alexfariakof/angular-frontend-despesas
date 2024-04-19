@@ -6,7 +6,7 @@ import { DespesasFormComponent } from './../despesas/despesas-form/despesas.form
 import { LancamentoService } from "src/app/shared/services/api";
 import * as dayjs from "dayjs";
 import { LancamentoDataSet, LancamentoColumns } from "src/app/shared/datatable-config/lancamentos";
-import { IAction, ILancamento } from "src/app/shared/interfaces";
+import { IAction, ILancamento } from "src/app/shared/models";
 @Component({
   selector: 'app-lancamentos',
   templateUrl: './lancamentos.component.html',

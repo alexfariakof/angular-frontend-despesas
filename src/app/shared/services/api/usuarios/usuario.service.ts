@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IUsuario } from 'src/app/shared/interfaces';
+import { IUsuario } from 'src/app/shared/models';
 import { AbstractService } from '../base/AbstractService';
 
 @Injectable({
