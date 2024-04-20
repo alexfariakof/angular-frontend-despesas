@@ -2,8 +2,8 @@ import { TestBed, inject } from "@angular/core/testing";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
 import { environment } from "src/app/shared/environments/environment";
-import { IUsuario } from "src/app/shared/interfaces";
-import { CustomInterceptor } from "../../interceptors/http.interceptor.service";
+import { IUsuario } from "src/app/shared/models";
+import { CustomInterceptor } from "../../../interceptors/http.interceptor.service";
 import { UsuarioService } from "./usuario.service";
 
 describe('Unit Test UsuarioService', () => {

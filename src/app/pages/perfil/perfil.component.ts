@@ -1,7 +1,7 @@
 import { MenuService } from 'src/app/shared/services';
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { IUsuario } from 'src/app/shared/interfaces';
+import { IUsuario } from 'src/app/shared/models';
 import { AlertComponent, AlertType } from 'src/app/shared/components';
 import { UsuarioService } from 'src/app/shared/services/api';
 

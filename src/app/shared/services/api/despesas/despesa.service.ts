@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IDespesa } from '../../../interfaces/IDespesa';
+import { IDespesa } from '../../../models/IDespesa';
 import { AbstractService } from '../base/AbstractService';
 @Injectable({
   providedIn: 'root'

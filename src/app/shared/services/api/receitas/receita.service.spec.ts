@@ -2,11 +2,11 @@ import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ReceitaService } from './receita.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { CustomInterceptor } from '../../interceptors/http.interceptor.service';
+import { CustomInterceptor } from '../../../interceptors/http.interceptor.service';
 import { environment } from 'src/app/shared/environments/environment';
-import { IReceita } from 'src/app/shared/interfaces/IReceita';
+import { IReceita } from 'src/app/shared/models/IReceita';
 import * as dayjs from 'dayjs';
-import { ICategoria } from 'src/app/shared/interfaces/ICategoria';
+import { ICategoria } from 'src/app/shared/models/ICategoria';
 
 describe('Unit Test ReceitaService', () => {
 

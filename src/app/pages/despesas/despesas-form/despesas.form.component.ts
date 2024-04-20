@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import * as dayjs from 'dayjs';
 import { AlertComponent, AlertType } from 'src/app/shared/components';
-import { IDespesa, ICategoria, IAction } from 'src/app/shared/interfaces';
+import { IDespesa, ICategoria, IAction } from 'src/app/shared/models';
 import { DespesaService } from 'src/app/shared/services/api';
 import { CustomValidators } from 'src/app/shared/validators';
 

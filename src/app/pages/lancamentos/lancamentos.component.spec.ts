@@ -10,7 +10,7 @@ import { DespesasFormComponent } from "../despesas/despesas-form/despesas.form.c
 import { ReceitasFormComponent } from "../receitas/receitas-form/receitas.form.component";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { RouterTestingModule } from "@angular/router/testing";
-import { ILancamento } from 'src/app/shared/interfaces';
+import { ILancamento } from 'src/app/shared/models';
 import { LancamentoDataSet } from 'src/app/shared/datatable-config/lancamentos';
 import { from, throwError } from 'rxjs';
 import * as dayjs from 'dayjs';

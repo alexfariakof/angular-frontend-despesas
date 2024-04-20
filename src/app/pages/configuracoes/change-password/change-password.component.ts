@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertComponent, AlertType } from 'src/app/shared/components';
-import { ILogin } from 'src/app/shared/interfaces';
+import { ILogin } from 'src/app/shared/models';
 import { ControleAcessoService } from 'src/app/shared/services/api';
 
 @Component({

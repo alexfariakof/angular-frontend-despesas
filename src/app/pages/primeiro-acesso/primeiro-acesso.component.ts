@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { map, catchError } from "rxjs";
 import { AlertComponent, AlertType } from "src/app/shared/components";
-import { IControleAcesso } from "src/app/shared/interfaces";
+import { IControleAcesso } from "src/app/shared/models";
 import { ControleAcessoService } from "src/app/shared/services/api";
 @Component({
   selector: 'app-primeiro-acesso',

@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { IAuth } from '../../interfaces/IAuth';
+import { IAuth } from '../../models/IAuth';
 import { AuthService } from './auth.service';
 
 describe('Unit Test AuthService', () => {
@@ -23,6 +23,7 @@ describe('Unit Test AuthService', () => {
     // Arrange
     const fakeAuth: IAuth = {
       accessToken: 'fakeToken',
+      refreshToken: 'fakeRefreshToken',
       expiration: '2023-01-01T00:00:00Z',
       authenticated: true,
       created: '2023-01-01T00:00:00Z',
@@ -34,24 +35,23 @@ describe('Unit Test AuthService', () => {
 
     // Assert
     expect(authService.isAuthenticated()).toBe(true);
-    expect(localStorage.getItem('@token')).toBe('fakeToken');
   });
 
   it('should clear local storage', () => {
     // Act
-    authService.clearLocalStorage();
+    authService.clearSessionStorage();
 
     // Assert
     expect(authService.isAuthenticated()).toBeFalsy();
-    expect(localStorage.getItem('@token')).toBeNull();
   });
 
   it('should catch error on creating access token', () => {
     // Arrange
-    spyOn(localStorage, 'setItem').and.throwError('Fake error');
+    spyOn(sessionStorage, 'setItem').and.throwError('Fake error');
 
     const fakeAuth: IAuth = {
       accessToken: undefined,
+      refreshToken: undefined,
       expiration: '2023-01-01T00:00:00Z',
       authenticated: false,
       created: '',

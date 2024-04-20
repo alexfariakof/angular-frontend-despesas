@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ICategoria } from './../../../interfaces/ICategoria';
+import { ICategoria } from '../../../models/ICategoria';
 import { AbstractService } from '../base/AbstractService';
 @Injectable({
   providedIn: 'root'

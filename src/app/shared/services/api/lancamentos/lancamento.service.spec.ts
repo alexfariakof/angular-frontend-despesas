@@ -1,9 +1,9 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
 import { environment } from "src/app/shared/environments/environment";
-import { ILancamento } from "src/app/shared/interfaces";
+import { ILancamento } from "src/app/shared/models";
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { CustomInterceptor } from '../../interceptors/http.interceptor.service';
+import { CustomInterceptor } from '../../../interceptors/http.interceptor.service';
 import { LancamentoService } from "./lancamento.service";
 import * as dayjs from "dayjs";
 

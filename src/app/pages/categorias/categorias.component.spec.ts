@@ -8,7 +8,7 @@ import { MdbFormsModule } from "mdb-angular-ui-kit/forms";
 import { from, throwError, of } from "rxjs";
 import { AlertComponent, ModalFormComponent, ModalConfirmComponent, DataTableComponent, AlertType } from "src/app/shared/components";
 import { CategoriaDataSet } from "src/app/shared/datatable-config/categorias";
-import { ICategoria } from "src/app/shared/interfaces";
+import { ICategoria } from "src/app/shared/models";
 import { CategoriaService } from "src/app/shared/services/api";
 import { SharedModule } from "src/app/shared/shared.module";
 import { CategoriasFormComponent } from "./categorias-form/categorias.form.component";

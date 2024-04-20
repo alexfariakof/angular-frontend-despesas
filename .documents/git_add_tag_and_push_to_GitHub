@@ -8,6 +8,8 @@ git commit -m "Implementations Finish"
 #obs.: Padrão do projeto v*.*.*
 git tag -a <v*.*.*> -m "Version tag"
 
+git tag -a v5.0.1 -m "Nem Implementations In Workflow"
+
 git tag -a v1.0.4 -m "Refactory and Security Implementations API .net Core v5.0.0 #78"
 
 # Envia as alterações(commits) e as tags locais para o repositório remoto
@@ -15,6 +17,7 @@ git push --follow-tags
 
 # Deleta a tag localmente
 git tag -d v1.1.5
+git tag -d v5.0.1
 
 # Deleta a tag remotamente
 git push origin --delete <v*.*.*>

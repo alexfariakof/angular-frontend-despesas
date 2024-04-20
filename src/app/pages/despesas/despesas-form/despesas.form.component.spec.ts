@@ -12,7 +12,7 @@ import * as dayjs from 'dayjs';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { from, throwError, of } from 'rxjs';
 import { AlertComponent, AlertType } from 'src/app/shared/components';
-import { ICategoria, IDespesa, IAction } from 'src/app/shared/interfaces';
+import { ICategoria, IDespesa, IAction } from 'src/app/shared/models';
 import { DespesaService } from 'src/app/shared/services/api';
 import { DespesasFormComponent } from './despesas.form.component';
 
