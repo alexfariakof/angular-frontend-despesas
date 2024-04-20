@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertComponent, AlertType } from 'src/app/shared/components';
-import { ICategoria, IAction } from 'src/app/shared/interfaces';
+import { ICategoria, IAction } from 'src/app/shared/models';
 import { CategoriaService } from 'src/app/shared/services/api';
 @Component({
   selector: 'app-categorias-form',

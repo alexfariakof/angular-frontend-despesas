@@ -17,8 +17,8 @@ describe('Unit Test LayoutComponent', () => {
   let router: Router;
 
   beforeEach(() => {
-    mockAuthService = jasmine.createSpyObj('AuthService', ['clearLocalStorage']);
-    mockAuthService.clearLocalStorage.and.callThrough();
+    mockAuthService = jasmine.createSpyObj('AuthService', ['clearSessionStorage']);
+    mockAuthService.clearSessionStorage.and.callThrough();
     TestBed.configureTestingModule({
       declarations: [LayoutComponent],
       imports: [CommonModule, RouterTestingModule, HttpClientTestingModule],

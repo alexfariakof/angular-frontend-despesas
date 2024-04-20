@@ -8,7 +8,7 @@ import { FormsModule } from "@angular/forms";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { UsuarioService } from "src/app/shared/services/api";
 import { from, of, throwError } from "rxjs";
-import { IUsuario } from "src/app/shared/interfaces";
+import { IUsuario } from "src/app/shared/models";
 import { MenuService } from "src/app/shared/services";
 
 describe('Unit Test PerfilComponent', () => {

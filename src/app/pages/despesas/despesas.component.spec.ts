@@ -11,7 +11,7 @@ import * as dayjs from "dayjs";
 import { from, throwError } from "rxjs";
 import { AlertComponent, ModalFormComponent, ModalConfirmComponent, DataTableComponent, AlertType } from "src/app/shared/components";
 import { DespesaDataSet } from "src/app/shared/datatable-config/despesas";
-import { IDespesa } from "src/app/shared/interfaces";
+import { IDespesa } from "src/app/shared/models";
 import { DespesaService } from "src/app/shared/services/api";
 import { SharedModule } from "src/app/shared/shared.module";
 import { DespesasFormComponent } from "./despesas-form/despesas.form.component";

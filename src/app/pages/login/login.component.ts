@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { map, catchError } from "rxjs";
 import { AlertComponent, AlertType } from "src/app/shared/components";
-import { ILogin, IAuth } from "src/app/shared/interfaces";
+import { ILogin, IAuth } from "src/app/shared/models";
 import { AuthService } from "src/app/shared/services";
 import { ControleAcessoService } from "src/app/shared/services/api";
 @Component({
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit{
     let login: ILogin = this.loginForm.getRawValue();
 
     this.controleAcessoService.signIn(login).pipe(
-      map((response: IAuth | any) => {
+       map((response: IAuth | any) => {
         if (response.authenticated) {
           return this.authProviderService.createAccessToken(response);
         }

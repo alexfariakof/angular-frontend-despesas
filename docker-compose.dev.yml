@@ -6,7 +6,7 @@ services:
     image: alexfariakof/despesas-frontend-angular-dev-img
     build:
       context: .
-      dockerfile: ./Dockerfile-Development
+      dockerfile: ./Dockerfile.development
     environment:
       NODE_ENV: development
     ports:

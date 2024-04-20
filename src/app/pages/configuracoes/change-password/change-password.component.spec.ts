@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { ControleAcessoService } from 'src/app/shared/services/api';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ILogin } from 'src/app/shared/interfaces';
+import { ILogin } from 'src/app/shared/models';
 import { from, throwError } from 'rxjs';
 
 describe('ChangePasswordComponent', () => {

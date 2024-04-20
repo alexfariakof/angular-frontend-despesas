@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import * as dayjs from "dayjs";
 import { BarraFerramentaClass, DataTableComponent, AlertComponent, ModalFormComponent, ModalConfirmComponent, AlertType } from "src/app/shared/components";
 import { DespesaDataSet, DespesaColumns } from "src/app/shared/datatable-config/despesas";
-import { IDespesa, IAction } from "src/app/shared/interfaces";
+import { IDespesa, IAction } from "src/app/shared/models";
 import { MenuService } from "src/app/shared/services";
 import { DespesaService } from "src/app/shared/services/api";
 import { DespesasFormComponent } from "./despesas-form/despesas.form.component";

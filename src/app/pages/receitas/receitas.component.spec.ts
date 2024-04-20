@@ -11,7 +11,7 @@ import * as dayjs from "dayjs";
 import { from, throwError } from "rxjs";
 import { AlertComponent, ModalFormComponent, ModalConfirmComponent, DataTableComponent, AlertType } from "src/app/shared/components";
 import { ReceitaDataSet } from "src/app/shared/datatable-config/receitas";
-import { IReceita } from "src/app/shared/interfaces";
+import { IReceita } from "src/app/shared/models";
 import { ReceitaService } from "src/app/shared/services/api";
 import { SharedModule } from "src/app/shared/shared.module";
 import { ReceitasFormComponent } from "./receitas-form/receitas.form.component";
