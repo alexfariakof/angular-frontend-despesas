@@ -22,7 +22,7 @@ jobs:
         run: |
             repo=${{ github.repository }}
             file_path=$(echo "workflow_tests_e2e")
-            echo ${{ secrets.ENV_PAT }}
+            echo ${{ secrets.WORKFLOW_TRIGGER_TOKEN }}
 
             curl -X POST \
               -H "Authorization: token ${{ secrets.ENV_PAT }}" \
