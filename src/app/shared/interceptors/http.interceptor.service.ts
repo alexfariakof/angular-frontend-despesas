@@ -48,8 +48,8 @@ export class CustomInterceptor implements HttpInterceptor {
       this.isRefreshing = true;
       this.refreshTokenSubject.next(null);
 
-      const auth = this.tokenService.getUser();
-
+      const auth = this.tokenService.getUser() as IAuth;
+      auth.refreshToken = this.tokenService.getRefreshToken();
       if (auth)
         return this.authService.refreshToken(auth).pipe(
           switchMap((auth: IAuth) => {

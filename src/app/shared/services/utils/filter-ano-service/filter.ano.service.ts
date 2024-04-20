@@ -9,7 +9,7 @@ export class FilterAnoService {
   private _dataAno: BehaviorSubject<string>;
 
   constructor() {
-    const storedYear = sessionStorage.getItem('selectedYear');
+    const storedYear = localStorage.getItem('selectedYear');
     const initialYear = storedYear || dayjs().format('YYYY');
     this._dataAno = new BehaviorSubject<string>(initialYear);
   }
@@ -24,6 +24,6 @@ export class FilterAnoService {
 
   set dataAno(value: string) {
     this._dataAno.next(value);
-    sessionStorage.setItem('selectedYear', value);
+    localStorage.setItem('selectedYear', value);
   }
 }
