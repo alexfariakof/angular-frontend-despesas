@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { TokenStorageService } from '..';
 import { IAuth } from '../../models';
+import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
   private accessTokenSubject = new BehaviorSubject<string | undefined>(undefined);
+  private urlPath: string =  'ControleAcesso';
 
   accessToken$ = this.accessTokenSubject.asObservable();
 
-  constructor(private tokenStorage: TokenStorageService) {
+  constructor(private tokenStorage: TokenStorageService, private httpClient: HttpClient) {
     try {
       const accessToken = this.tokenStorage.getToken();
       if (accessToken) {
@@ -52,5 +54,13 @@ export class AuthService {
     } catch (error) {
       return false;
     }
+  }
+
+  refreshToken(auth: IAuth): Observable<IAuth>{
+    return this.httpClient.post<IAuth>(`${ this.urlPath }/refresh`, auth);
+  }
+
+  revoke(): Observable<any> {
+    return this.httpClient.get(`${ this.urlPath }/revoke`);
   }
 }

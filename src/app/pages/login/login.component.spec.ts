@@ -48,6 +48,7 @@ describe('LoginComponent', () => {
       created: '2023-10-01',
       expiration: '2023-10-30',
       accessToken: 'teste#token',
+      refreshToken: 'testeRefreshToken',
       message: 'OK'
     };
 

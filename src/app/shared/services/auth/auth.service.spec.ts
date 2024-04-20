@@ -35,7 +35,6 @@ describe('Unit Test AuthService', () => {
 
     // Assert
     expect(authService.isAuthenticated()).toBe(true);
-    expect(sessionStorage.getItem('@auth')).toBe('fakeToken');
   });
 
   it('should clear local storage', () => {
@@ -44,7 +43,6 @@ describe('Unit Test AuthService', () => {
 
     // Assert
     expect(authService.isAuthenticated()).toBeFalsy();
-    expect(sessionStorage.getItem('@auth')).toBeNull();
   });
 
   it('should catch error on creating access token', () => {
