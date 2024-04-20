@@ -3,7 +3,7 @@ import { IAuth } from '../../models';
 
 const TOKEN_KEY = 'auth-token';
 const REFRESHTOKEN_KEY = 'auth-refreshtoken';
-const USER_KEY = 'auth-user';
+const USER_KEY = 'auth';
 
 @Injectable({
   providedIn: 'root'
