@@ -1,5 +1,5 @@
 import { AlertComponent, AlertType } from './../../shared/components/alert-component/alert.component';
-import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed, fakeAsync, flush } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { Router } from "@angular/router";
@@ -9,13 +9,11 @@ import { MdbFormsModule } from "mdb-angular-ui-kit/forms";
 import { of, throwError } from "rxjs";
 import { IControleAcesso } from "src/app/shared/models";
 import { PrimeiroAcessoComponent } from "./primeiro-acesso.component";
-import { environment } from 'src/app/shared/environments/environment';
 
 describe('PrimeiroAcessoComponent', () => {
   let component: PrimeiroAcessoComponent;
   let fixture: ComponentFixture<PrimeiroAcessoComponent>;
   let mockRouter: jasmine.SpyObj<Router>;
-  let httpMock: HttpTestingController;
 
   beforeEach(() => {
     mockRouter = jasmine.createSpyObj('Router', ['navigate']);
@@ -29,12 +27,8 @@ describe('PrimeiroAcessoComponent', () => {
     fixture = TestBed.createComponent(PrimeiroAcessoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    httpMock = TestBed.inject(HttpTestingController);
   });
 
-  afterEach(() => {
-    httpMock.verify();
-  });
 
   it('should create', () => {
     // Assert

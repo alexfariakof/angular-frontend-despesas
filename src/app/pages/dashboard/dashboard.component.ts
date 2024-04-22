@@ -38,8 +38,8 @@ export class DashboardComponent {
 
           }
         },
-        error: (response: any) => {
-          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
+        error: (errorMessage: string) => {
+          this.modalAlert.open(AlertComponent, errorMessage, AlertType.Warning);
         }
       });
   }
@@ -53,8 +53,8 @@ export class DashboardComponent {
             this.baseChart.updateBarChart(response.datasets);
           }
         },
-        error: (response: any) => {
-          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
+        error: (errorMessage: string) => {
+          this.modalAlert.open(AlertComponent, errorMessage, AlertType.Warning);
         }
       });
   }
