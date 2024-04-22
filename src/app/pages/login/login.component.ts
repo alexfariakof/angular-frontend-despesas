@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit{
   ngOnInit(): void{
     this.loginForm = this.formbuilder.group({
         email: ['teste@teste.com', [Validators.required, Validators.email]],
-        senha: ['12345T!', Validators.required]
+        senha: ['12345T!', [Validators.required, Validators.nullValidator]]
     }) as FormGroup & ILogin;
   }
 
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit{
     let login: ILogin = this.loginForm.getRawValue();
 
     this.controleAcessoService.signIn(login).pipe(
-       map((response: IAuth | any) => {
+      map((response: IAuth) => {
         if (response.authenticated) {
           return this.authProviderService.createAccessToken(response);
         }
@@ -46,6 +46,14 @@ export class LoginComponent implements OnInit{
         }
       }),
       catchError((error) => {
+        if (error.status === 400) {
+          const validationErrors = error.errors;
+          if (validationErrors) {
+            Object.keys(validationErrors).forEach(field => {
+              throw validationErrors[field][0];
+            });
+          }
+        }
         throw (error);
       })
     )
@@ -54,11 +62,8 @@ export class LoginComponent implements OnInit{
         if (result === true)
           this.router.navigate(['/dashboard']);
       },
-      error :(response : any) =>  {
-        this.modalALert.open(AlertComponent, response.message, AlertType.Warning);
-      },
-      complete() {
-
+      error :(errorMessage: string) =>  {
+        this.modalALert.open(AlertComponent, errorMessage, AlertType.Warning);
       }
     });
   }

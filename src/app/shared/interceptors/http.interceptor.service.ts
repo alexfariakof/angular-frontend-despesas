@@ -28,7 +28,7 @@ export class CustomInterceptor implements HttpInterceptor {
         modalRef.close();
 
         if (error.ok === false && error.status === 0)
-          return throwError(() => { message: 'Erro de conexão tente mais tarde.' });
+          return throwError(() => 'Erro de conexão tente mais tarde.');
         else if (error.status === 400) {
           return throwError(() => error.error);
         }
@@ -36,7 +36,7 @@ export class CustomInterceptor implements HttpInterceptor {
           return this.handle401Error(request, next);
         }
         console.log(error);
-        return throwError(() => { message: 'Erro tente atualizar a página ou realize novamente o login..' });
+        return throwError(() => 'Erro tente atualizar a página ou realize novamente o login..');
       }),
       finalize(() => {
         modalRef.close();
@@ -63,7 +63,7 @@ export class CustomInterceptor implements HttpInterceptor {
             this.isRefreshing = false;
             sessionStorage.clear();
             this.tokenService.signOut();
-            return throwError(() => { message: 'Erro de autenticação, tente atualizar a página ou realize novamente o login.' });
+            return throwError(() => 'Erro de autenticação, tente atualizar a página ou realize novamente o login.');
 
           })
         );
