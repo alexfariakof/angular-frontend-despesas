@@ -42,8 +42,8 @@ export class ReceitasComponent implements BarraFerramentaClass {
           }
 
         },
-        error: (response: any) => {
-          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
+        error: (errorMessage: string) => {
+          this.modalAlert.open(AlertComponent, errorMessage, AlertType.Warning);
         }
       });
   }
@@ -57,8 +57,8 @@ export class ReceitasComponent implements BarraFerramentaClass {
             this.dataTable.rerender();
           }
         },
-        error: (response: any) => {
-          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
+        error: (errorMessage: string) => {
+          this.modalAlert.open(AlertComponent, errorMessage, AlertType.Warning);
         }
       });
   }
