@@ -84,7 +84,7 @@ describe('Unit Test CategoriasFormComponent', () => {
     // Arrange
     const categoria: ICategoria = { id: 0, descricao: "Teste categoria", idTipoCategoria: 2 };
     const errorMessage = 'Fake Error Message';
-    spyOn(categoriaService, 'postCategoria').and.callFake(() => { throw Error }).and.throwError(errorMessage);
+    spyOn(categoriaService, 'postCategoria').and.returnValue(throwError(() => { throw errorMessage}));
     const alertOpenSpy = spyOn(alertComponent, 'open');
 
     // Act

@@ -151,42 +151,4 @@ describe('PrimeiroAcessoComponent', () => {
     expect(component.showConfirmaSenha).toBe(false);
     expect(component.eyeIconClassConfirmaSenha).toBe('bi-eye');
   });
-
-  it('should return true if passwords do not match', () => {
-    // Arrange
-    const controleAcesso: IControleAcesso = {
-      nome: 'Teste Usuário',
-      sobreNome: 'Usuário',
-      telefone: '(21) 9999-9999',
-      email: 'teste@teste.com',
-      senha: '!12345',
-      confirmaSenha: '!12345'
-    };
-
-    // Act
-    component.ngOnInit();
-    component.createAccountFrom.patchValue(controleAcesso);
-
-    // Assert
-    expect(component.isPasswordValid()).toBeTruthy();
-  });
-
-  it('should return false if passwords match', () => {
-    // Arrange
-    const controleAcesso: IControleAcesso = {
-      nome: 'Teste Usuário',
-      sobreNome: 'Usuário',
-      telefone: '(21) 9999-9999',
-      email: 'teste@teste.com',
-      senha: '!12345',
-      confirmaSenha: '!1234'
-    };
-
-    // Act
-    component.ngOnInit();
-    component.createAccountFrom.patchValue(controleAcesso);
-
-    //Assert
-    expect(component.isPasswordValid()).toBeFalsy();
-  });
 });

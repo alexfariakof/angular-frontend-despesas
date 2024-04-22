@@ -22,9 +22,7 @@ export class LoginComponent implements OnInit{
     public router: Router,
     public controleAcessoService: ControleAcessoService,
     public authProviderService: AuthService,
-    public modalALert: AlertComponent ){
-
-  }
+    public modalALert: AlertComponent ){  }
 
   ngOnInit(): void{
     this.loginForm = this.formbuilder.group({
