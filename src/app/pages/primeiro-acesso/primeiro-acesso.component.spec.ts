@@ -1,19 +1,21 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { ComponentFixture, TestBed, fakeAsync } from "@angular/core/testing";
+import { AlertComponent, AlertType } from './../../shared/components/alert-component/alert.component';
+import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
+import { ComponentFixture, TestBed, fakeAsync, flush } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { MdbFormsModule } from "mdb-angular-ui-kit/forms";
-import { of } from "rxjs";
-import { AlertComponent } from "src/app/shared/components";
+import { of, throwError } from "rxjs";
 import { IControleAcesso } from "src/app/shared/models";
 import { PrimeiroAcessoComponent } from "./primeiro-acesso.component";
+import { environment } from 'src/app/shared/environments/environment';
 
 describe('PrimeiroAcessoComponent', () => {
   let component: PrimeiroAcessoComponent;
   let fixture: ComponentFixture<PrimeiroAcessoComponent>;
   let mockRouter: jasmine.SpyObj<Router>;
+  let httpMock: HttpTestingController;
 
   beforeEach(() => {
     mockRouter = jasmine.createSpyObj('Router', ['navigate']);
@@ -27,6 +29,11 @@ describe('PrimeiroAcessoComponent', () => {
     fixture = TestBed.createComponent(PrimeiroAcessoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    httpMock = TestBed.inject(HttpTestingController);
+  });
+
+  afterEach(() => {
+    httpMock.verify();
   });
 
   it('should create', () => {
@@ -151,4 +158,33 @@ describe('PrimeiroAcessoComponent', () => {
     expect(component.showConfirmaSenha).toBe(false);
     expect(component.eyeIconClassConfirmaSenha).toBe('bi-eye');
   });
+
+  it('should open modal with validation error message when API returns 400 with validation errors', fakeAsync(() => {
+    // Arrange
+    const controleAcesso: IControleAcesso = {
+      nome: 'Teste Usuário',
+      sobreNome: 'Usuário',
+      telefone: '(21) 9999-9999',
+      email: 'teste@teste.com',
+      senha: '!12345',
+      confirmaSenha: '!12345'
+    };
+    const errorResponse = {
+      status: 400,
+      errors: {
+        email: ['Email inválido']
+      }
+    };
+    spyOn(component.modalALert, 'open').and.callThrough();
+    spyOn(component.controleAcessoService, 'createUsuario').and.returnValue(throwError(errorResponse));
+    spyOn(component, 'onSaveClick').and.callThrough();
+
+    // Act
+    component.createAccountFrom.patchValue(controleAcesso);
+    component.onSaveClick();
+    flush();
+
+    // Assert
+    expect(component.modalALert.open).toHaveBeenCalledWith(AlertComponent, 'Email inválido', AlertType.Warning);
+  }));
 });
