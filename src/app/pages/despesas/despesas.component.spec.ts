@@ -68,7 +68,7 @@ describe('Unit Test DespesasComponent', () => {
 
   it('should initializeDataTable and return empty Datatable', fakeAsync(() => {
     // Arrange
-    const errorMessage = { message: 'Fake Message Datatable Despesas Empty' };
+    const errorMessage = 'Fake Message Datatable Despesas Empty';
     const spyOnGetDespesas = spyOn(despesaService, 'getDespesas').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
@@ -79,12 +79,12 @@ describe('Unit Test DespesasComponent', () => {
     // Assert
     expect(spyOnGetDespesas).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, AlertType.Warning);
   }));
 
   it('should throw error when try to initializeDataTable', () => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message' };
+    const errorMessage = 'Fake Error Message';
     const spyOnGetDespesas = spyOn(despesaService, 'getDespesas').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
@@ -94,7 +94,7 @@ describe('Unit Test DespesasComponent', () => {
     // Assert
     expect(spyOnGetDespesas).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, AlertType.Warning);
   });
 
   it('should updateDatatable when is called', fakeAsync(() => {
@@ -112,7 +112,7 @@ describe('Unit Test DespesasComponent', () => {
 
   it('should throw error when try to updateDataTable', () => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message' };
+    const errorMessage = 'Fake Error Message';
     const spyOnGetDespesas = spyOn(despesaService, 'getDespesas').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
@@ -122,7 +122,7 @@ describe('Unit Test DespesasComponent', () => {
     // Assert
     expect(spyOnGetDespesas).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, AlertType.Warning);
   });
 
   it('should open modalForm on onClickNovo', fakeAsync(() => {
