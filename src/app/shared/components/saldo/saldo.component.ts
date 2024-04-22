@@ -28,10 +28,10 @@ export class SaldoComponent implements OnInit {
   initialize = (): void => {
     this.saldoService.getSaldoAnual(dayjs(dayjs().format('YYYY-01-01')))
       .subscribe({
-        next: (response: any) => {
-          if (response.message === true && response.saldo !== undefined && response.saldo !== null) {
-            this.saldoAnualNegativo = this.isSaldoNegativo(response.saldo) ? 'text-danger' : '';
-            this.saldoAnual = response.saldo.toLocaleString('pt-br', {
+        next: (saldoResponse: number) => {
+          if (saldoResponse && saldoResponse !== undefined && saldoResponse !== null) {
+            this.saldoAnualNegativo = this.isSaldoNegativo(saldoResponse) ? 'text-danger' : '';
+            this.saldoAnual = saldoResponse.toLocaleString('pt-br', {
               style: 'currency',
               currency: 'BRL',
               minimumFractionDigits: 2,
@@ -50,10 +50,10 @@ export class SaldoComponent implements OnInit {
   handleSaldoMesAno = (mes: Dayjs): void => {
     this.saldoService.getSaldoByMesANo(mes)
       .subscribe({
-        next: (response: any) => {
-          if (response.message === true && response.saldo !== undefined && response.saldo !== null) {
-            this.saldoMensalNegativo = this.isSaldoNegativo(response.saldo) ? 'text-danger' : '';
-            this.saldoMensal = response.saldo.toLocaleString('pt-br', {
+        next: (saldoResponse: number) => {
+          if (saldoResponse && saldoResponse !== undefined && saldoResponse !== null) {
+            this.saldoMensalNegativo = this.isSaldoNegativo(saldoResponse) ? 'text-danger' : '';
+            this.saldoMensal = saldoResponse.toLocaleString('pt-br', {
               style: 'currency',
               currency: 'BRL',
               minimumFractionDigits: 2,

@@ -28,7 +28,7 @@ describe('Unit Test SaldoComponent', () => {
 
   it('should initialize saldo component', fakeAsync(() => {
     // Arrange
-    const mockResponse = { message: true, saldo: 2.0 };
+    const mockResponse =  2.0;
     const spyOnGetSaldoAnual = spyOn(saldoService, 'getSaldoAnual').and.returnValue(from(Promise.resolve(mockResponse)));
 
     // Act
@@ -38,7 +38,7 @@ describe('Unit Test SaldoComponent', () => {
     // Assert
     expect(spyOnGetSaldoAnual).toHaveBeenCalled();
     expect(spyOnGetSaldoAnual).toHaveBeenCalledWith(dayjs(dayjs().format('YYYY-01-01')));
-    expect(component.saldoAnual).toEqual(mockResponse.saldo.toLocaleString('pt-br', {
+    expect(component.saldoAnual).toEqual(mockResponse.toLocaleString('pt-br', {
       style: 'currency',
       currency: 'BRL',
       minimumFractionDigits: 2,
@@ -48,7 +48,7 @@ describe('Unit Test SaldoComponent', () => {
 
   it('should try initialize and throws error and set saldo = 0', fakeAsync(() => {
     // Arrange
-    const mockResponse = { message: true, saldo: 2.0 };
+    const mockResponse = 4.0 ;
     const spyOnGetSaldoAnual = spyOn(saldoService, 'getSaldoAnual').and.returnValue(throwError('Erro initialize saldo'));
 
     // Act
@@ -63,7 +63,7 @@ describe('Unit Test SaldoComponent', () => {
 
   it('should handleSaldoMesAno and update saldoMensal ', fakeAsync(() => {
     // Arrange
-    const mockResponse = { message: true, saldo: 4.55 };
+    const mockResponse =  4.55;
     const mockMesAno = dayjs();
     const spyOnGetSaldoByMesAno = spyOn(saldoService, 'getSaldoByMesANo').and.returnValue(from(Promise.resolve(mockResponse)));
 
@@ -74,7 +74,7 @@ describe('Unit Test SaldoComponent', () => {
     // Assert
     expect(spyOnGetSaldoByMesAno).toHaveBeenCalled();
     expect(spyOnGetSaldoByMesAno).toHaveBeenCalledWith(mockMesAno);
-    expect(component.saldoMensal).toEqual(mockResponse.saldo.toLocaleString('pt-br', {
+    expect(component.saldoMensal).toEqual(mockResponse.toLocaleString('pt-br', {
       style: 'currency',
       currency: 'BRL',
       minimumFractionDigits: 2,
