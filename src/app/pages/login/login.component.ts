@@ -56,8 +56,8 @@ export class LoginComponent implements OnInit{
       })
     )
     .subscribe({
-      next: (result: Boolean) => {
-        if (result)
+      next: (response: Boolean) => {
+        if (response)
           this.router.navigate(['/dashboard']);
       },
       error :(errorMessage: string) =>  {
