@@ -56,8 +56,8 @@ export class AuthService {
     }
   }
 
-  refreshToken(auth: IAuth): Observable<IAuth>{
-    return this.httpClient.post<IAuth>(`${ this.urlPath }/refresh`, auth);
+  refreshToken(refreshToken: string): Observable<IAuth | any>{
+    return this.httpClient.get(`${ this.urlPath }/refresh/${ refreshToken }`);
   }
 
   revoke(): Observable<any> {

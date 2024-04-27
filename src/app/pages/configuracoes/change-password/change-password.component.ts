@@ -35,14 +35,14 @@ export class ChangePasswordComponent implements OnInit {
   onSaveClick = (): void => {
     this.controleAcessoService.changePassword(this.changePasswordFrom.getRawValue())
       .subscribe({
-        next: (result: any) => {
-          if (result.message === true) {
+        next: (response: boolean) => {
+          if (response) {
             this.initialize();
             this.modalAlert.open(AlertComponent, 'Senha alterada com sucesso!', AlertType.Success);
           }
         },
-        error: (response: any) => {
-          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
+        error: (errorMessage: string) => {
+          this.modalAlert.open(AlertComponent, errorMessage, AlertType.Warning);
         }
       });
   }

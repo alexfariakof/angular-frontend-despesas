@@ -1,5 +1,5 @@
 export interface IAuth {
-  authenticated : boolean,
+  authenticated: boolean,
   created: string,
   expiration: string
   accessToken: string,

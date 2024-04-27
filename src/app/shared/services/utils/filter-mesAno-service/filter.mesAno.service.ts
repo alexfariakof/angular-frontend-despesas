@@ -9,7 +9,7 @@ export class FilterMesAnoService {
   private _dataMesAno: BehaviorSubject<string>;
 
   constructor() {
-    const storedMonthYear = sessionStorage.getItem('selectedMonthYear');
+    const storedMonthYear = localStorage.getItem('selectedMonthYear');
     const initialMonthYear = storedMonthYear || dayjs().format('YYYY-MM');
     this._dataMesAno = new BehaviorSubject<string>(initialMonthYear);
   }
@@ -24,6 +24,6 @@ export class FilterMesAnoService {
 
   set dataMesAno(value: string) {
     this._dataMesAno.next(value);
-    sessionStorage.setItem('selectedMonthYear', value);
+    localStorage.setItem('selectedMonthYear', value);
   }
 }

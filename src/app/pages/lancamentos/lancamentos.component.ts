@@ -38,16 +38,16 @@ export class LancamentosComponent implements OnInit {
   initializeDataTable = () => {
     this.lancamentoservice.getLancamentosByMesAno(dayjs(this.filterMesAnoService.dataMesAno))
       .subscribe({
-        next: (response: any) => {
-          if (response.message === true) {
-            this.lancamentosData = this.parseToLancamentosData(response.lancamentos as ILancamento[]);
+        next: (response: ILancamento[]) => {
+          if (response) {
+            this.lancamentosData = this.parseToLancamentosData(response);
             this.dataTable.loadData(this.lancamentosData);
             this.barraFerramenta.setOnChangeDataMesAno(this.updateDatatable);
             this.dataTable.rerender();
           }
         },
-        error: (response: any) => {
-          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
+        error: (errorMessage: string) => {
+          this.modalAlert.open(AlertComponent, errorMessage, AlertType.Warning);
         }
       });
   }
@@ -55,14 +55,14 @@ export class LancamentosComponent implements OnInit {
   updateDatatable = () => {
     this.lancamentoservice.getLancamentosByMesAno(dayjs(this.filterMesAnoService.dataMesAno))
       .subscribe({
-        next: (response: any) => {
-          if (response.message === true) {
-            this.lancamentosData = this.parseToLancamentosData(response.lancamentos as ILancamento[]);
+        next: (response: ILancamento[]) => {
+          if (response) {
+            this.lancamentosData = this.parseToLancamentosData(response);
             this.dataTable.rerender();
           }
         },
-        error: (response: any) => {
-          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
+        error: (errorMessage: string) => {
+          this.modalAlert.open(AlertComponent, errorMessage, AlertType.Warning);
         }
       });
   }

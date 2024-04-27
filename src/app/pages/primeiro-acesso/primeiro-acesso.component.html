@@ -195,7 +195,7 @@
           class="form-control"
           [ngClass]="{
             'is-invalid':
-              createAccountFrom.get('confirmaSenha')?.errors?.['required'] &&
+              !createAccountFrom.get('confirmaSenha').valid &&
               createAccountFrom.get('confirmaSenha')?.touched
           }"
         />
@@ -206,10 +206,10 @@
           class="text-danger bi bi-exclamation-circle position-absolute px-2 mx-4 my-1 top-0 end-0"
           [ngClass]="{
             'error-bi-input':
-              createAccountFrom.get('confirmaSenha')?.hasError('required') &&
+              !createAccountFrom.get('confirmaSenha').valid &&
               createAccountFrom.get('confirmaSenha')?.touched,
             'not-error-input':
-              !createAccountFrom.get('confirmaSenha')?.hasError('required') ||
+              createAccountFrom.get('confirmaSenha').valid ||
               !createAccountFrom.get('confirmaSenha')?.touched
           }"
         >
