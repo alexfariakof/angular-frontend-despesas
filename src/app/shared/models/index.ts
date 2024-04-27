@@ -8,4 +8,5 @@ export * from './ITipoCategoria';
 export * from './ILogin';
 export * from './ILancamento';
 export * from './IUsuario';
-export * from './IImagemPerfil'
+export * from './IImagemPerfil';
+export * from './ISaldo';
