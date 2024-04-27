@@ -48,15 +48,15 @@ export class CategoriasFormComponent implements OnInit {
 
         this.categoriaService.postCategoria(categoria)
           .subscribe({
-            next: (response: any) => {
-              if (response.message === true) {
+            next: (response: ICategoria) => {
+              if (response) {
                 this.activeModal.close();
                 this.refresh();
                 this.modalAlert.open(AlertComponent, "Categoria cadastrada com Sucesso.", AlertType.Success);
               }
             },
             error: (error: any) => {
-              this.modalAlert.open(AlertComponent, error.message, AlertType.Warning);
+              this.modalAlert.open(AlertComponent, error, AlertType.Warning);
             }
           });
       }
@@ -64,20 +64,20 @@ export class CategoriasFormComponent implements OnInit {
         this.categoriaService.putCategoria(categoria)
           .subscribe({
             next: (response: any) => {
-              if (response.message === true && response !== undefined && response !== null) {
+              if (response !== undefined && response !== null) {
                 this.activeModal.close();
                 this.refresh();
                 this.modalAlert.open(AlertComponent, "Categoria alterada com Sucesso.", AlertType.Success);
               }
             },
             error: (error: any) => {
-              this.modalAlert.open(AlertComponent, error.message, AlertType.Warning);
+              this.modalAlert.open(AlertComponent, error, AlertType.Warning);
             }
           });
       }
     }
     catch (error) {
-      this.modalAlert.open(AlertComponent, error.message, AlertType.Warning);
+      this.modalAlert.open(AlertComponent, error, AlertType.Warning);
     }
   }
 }

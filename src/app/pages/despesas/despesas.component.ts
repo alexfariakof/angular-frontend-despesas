@@ -39,8 +39,8 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
             this.dataTable.rerender();
           }
         },
-        error: (response: any) => {
-          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
+        error: (errorMessage: string) => {
+          this.modalAlert.open(AlertComponent, errorMessage, AlertType.Warning);
         }
       });
   }
@@ -54,8 +54,8 @@ export class DespesasComponent implements BarraFerramentaClass, OnInit {
             this.dataTable.rerender();
           }
         },
-        error: (response: any) => {
-          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
+        error: (errorMessage: string) => {
+          this.modalAlert.open(AlertComponent, errorMessage, AlertType.Warning);
         }
       });
   }

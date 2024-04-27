@@ -64,7 +64,7 @@ describe('Unit Test DespesasFormComponent', () => {
 
   it('should thorws errro when call getCategorias and open modal alert ', () => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message' };
+    const errorMessage = 'Fake Error Message';
     const getCategoriasSpy = spyOn(despesaService, 'getDespesasCategorias').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
@@ -74,7 +74,7 @@ describe('Unit Test DespesasFormComponent', () => {
     // Assert
     expect(getCategoriasSpy).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, AlertType.Warning);
   });
 
   it('should Save despesa onSaveClick with Action is Create and show successfully message', fakeAsync(() => {
@@ -108,7 +108,7 @@ describe('Unit Test DespesasFormComponent', () => {
 
   it('should throws error when try to create despesa and show error message', () => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message Create Despesa' };
+    const errorMessage = 'Fake Error Message Create Despesa' ;
     const despesa: IDespesa = {
       id: 0,
       data: dayjs(),
@@ -130,7 +130,7 @@ describe('Unit Test DespesasFormComponent', () => {
 
     // Assert
     expect(despesaPostServiceSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, AlertType.Warning);
   });
 
   it('should Save despesa onSaveClick with Action is Edit', fakeAsync(() => {
@@ -165,7 +165,7 @@ describe('Unit Test DespesasFormComponent', () => {
 
   it('should throws error when try to edit despesa and show error message', () => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message Edit Despesa' };
+    const errorMessage = 'Fake Error Message Edit Despesa' ;
     const despesa: IDespesa = {
       id: 1,
       data: dayjs().format('YYYY-MM-DD'),
@@ -187,7 +187,7 @@ describe('Unit Test DespesasFormComponent', () => {
 
     // Assert
     expect(despesaPutServiceSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, AlertType.Warning);
   });
 
   it('should show error message when onClickSave', () => {
@@ -207,7 +207,7 @@ describe('Unit Test DespesasFormComponent', () => {
   it('should execute editDespesa and setFormDespesas', fakeAsync(() => {
     // Arrange
     const mockDespesa: IDespesa = mockDespesas[0];
-    const mockResponse: any = { message: true, despesa: mockDespesa };
+    const mockResponse: any =  mockDespesa;
     const getDespesasById = spyOn(despesaService, 'getDespesaById').and.returnValue(from(Promise.resolve(mockResponse)));
     const editDespesa = spyOn(component, 'editDespesa').and.callThrough();
 
@@ -223,7 +223,7 @@ describe('Unit Test DespesasFormComponent', () => {
 
   it('should throws error on editDespesa', fakeAsync(() => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message Edit Despesa' };
+    const errorMessage = 'Fake Error Message Edit Despesa';
     const mockDespesa: IDespesa = mockDespesas[1];
     const getDespesasById = spyOn(despesaService, 'getDespesaById').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
@@ -235,12 +235,12 @@ describe('Unit Test DespesasFormComponent', () => {
     // Assert
     expect(getDespesasById).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, AlertType.Warning);
   }));
 
   it('should  deleteDespesa and open modal alert success', fakeAsync(() => {
     // Arrange
-    const mockResponse = { message: true };
+    const mockResponse = true;
     const getDeleteDespesa = spyOn(despesaService, 'deleteDespesa').and.returnValue(from(Promise.resolve(mockResponse)));
     spyOn(component.modalAlert, 'open').and.callThrough();
 
@@ -256,7 +256,7 @@ describe('Unit Test DespesasFormComponent', () => {
 
   it('should try to deleteDespesa and open modal alert warning', fakeAsync(() => {
     // Arrange
-    const mockResponse = { message: false };
+    const mockResponse = false;
     const getDeleteDespesa = spyOn(despesaService, 'deleteDespesa').and.returnValue(from(Promise.resolve(mockResponse)));
     spyOn(component.modalAlert, 'open').and.callThrough();
 
@@ -272,7 +272,7 @@ describe('Unit Test DespesasFormComponent', () => {
 
   it('should throws error when try to deleteDespesa and open modal alert warning', fakeAsync(() => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message Delete Despesa' };
+    const errorMessage = 'Fake Error Message Delete Despesa';
     const spyOnDeleteDespesa = spyOn(despesaService, 'deleteDespesa').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
@@ -283,7 +283,7 @@ describe('Unit Test DespesasFormComponent', () => {
     // Assert
     expect(spyOnDeleteDespesa).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, AlertType.Warning);
   }));
 
 });

@@ -31,13 +31,13 @@ export class ChangeAvatarComponent implements OnInit {
   initialize = (): void => {
     this.imagemPerfilService.getImagemPerfilUsuario()
       .subscribe({
-        next: (response: any) => {
-          if (response.message === true && response.imagemPerfilUsuario !== undefined && response.imagemPerfilUsuario !== null) {
-            this.imagemPerfilUsuario = response.imagemPerfilUsuario;
+        next: (response: IImagemPerfil) => {
+          if (response && response !== undefined && response!== null) {
+            this.imagemPerfilUsuario = response;
           }
         },
-        error: (response: any) => {
-          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
+        error: (errorMessage: string) => {
+          this.modalAlert.open(AlertComponent, errorMessage, AlertType.Warning);
         }
       });;
   }
@@ -56,32 +56,32 @@ export class ChangeAvatarComponent implements OnInit {
       if (this.imagemPerfilUsuario.id === undefined || this.imagemPerfilUsuario.id === null) {
         this.imagemPerfilService.createImagemPerfilUsuario(this.file)
           .subscribe({
-            next: (result: any) => {
-              if (result.message === true) {
+            next: (result: IImagemPerfil) => {
+              if (result) {
                 this.file = null;
                 this.fileLoaded = false;
-                this.imagemPerfilUsuario = result.imagemPerfilUsuario;
+                this.imagemPerfilUsuario = result;
                 this.modalAlert.open(AlertComponent, 'Imagem adicionada com sucesso!', AlertType.Success);
               }
             },
-            error: (response: any) => {
-              this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
+            error: (errorMessage: string) => {
+              this.modalAlert.open(AlertComponent, errorMessage, AlertType.Warning);
             }
           });
       }
       else {
         this.imagemPerfilService.updateImagemPerfilUsuario(this.file)
           .subscribe({
-            next: (result: any) => {
-              if (result.message === true) {
+            next: (result: IImagemPerfil) => {
+              if (result) {
                 this.file = null;
                 this.fileLoaded = false;
-                this.imagemPerfilUsuario = result.imagemPerfilUsuario;
+                this.imagemPerfilUsuario = result;
                 this.modalAlert.open(AlertComponent, 'Imagem de perfil usuário alterada com sucesso!', AlertType.Success);
               }
             },
-            error: (response: any) => {
-              this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
+            error: (errorMessage: string) => {
+              this.modalAlert.open(AlertComponent, errorMessage, AlertType.Warning);
             }
           });
       }
@@ -94,8 +94,8 @@ export class ChangeAvatarComponent implements OnInit {
   handleDeleteImagePerfil = (): void => {
     this.imagemPerfilService.deleteImagemPerfilUsuario()
       .subscribe({
-        next: (result: any) => {
-          if (result.message === true) {
+        next: (result: boolean) => {
+          if (result) {
             const modalRef = this.modalAlert.open(AlertComponent, 'Imagem de perfil usuário excluída com sucesso!', AlertType.Success);
             modalRef.shown.subscribe(() => {
               this.file = null;
@@ -105,8 +105,8 @@ export class ChangeAvatarComponent implements OnInit {
             })
           }
         },
-        error: (response: any) => {
-          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
+        error: (errorMessage: string) => {
+          this.modalAlert.open(AlertComponent, errorMessage, AlertType.Warning);
         }
       });
   }

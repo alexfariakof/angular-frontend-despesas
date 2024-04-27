@@ -18,7 +18,7 @@ export class PerfilComponent implements OnInit {
     public formbuilder: FormBuilder,
     public modalAlert: AlertComponent,
     public usuarioService: UsuarioService
-  ) { menuService.setMenuSelecionado(6); }
+  ) { this.menuService.setMenuSelecionado(6); }
 
   ngOnInit(): void {
     this.prefilFrom = this.formbuilder.group({
@@ -39,8 +39,8 @@ export class PerfilComponent implements OnInit {
             this.prefilFrom.patchValue(response);
           }
         },
-        error: (response: any) => {
-          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
+        error: (errorMessage: string) => {
+          this.modalAlert.open(AlertComponent, errorMessage, AlertType.Warning);
         }
       });
   }
@@ -53,8 +53,8 @@ export class PerfilComponent implements OnInit {
             this.modalAlert.open(AlertComponent, 'Dados atualizados com Sucesso.', AlertType.Success);
           }
         },
-        error: (error: any) => {
-          this.modalAlert.open(AlertComponent, error.message, AlertType.Warning);
+        error: (errorMessage: string) => {
+          this.modalAlert.open(AlertComponent, errorMessage, AlertType.Warning);
         }
       });
   }

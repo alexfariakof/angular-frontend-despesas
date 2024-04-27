@@ -9,6 +9,6 @@ import { Component } from "@angular/core";
 export class ConfiguracoesComponent  {
 
   constructor(private menuService: MenuService){
-    menuService.setMenuSelecionado(7);
+    this.menuService.setMenuSelecionado(7);
   }
 }

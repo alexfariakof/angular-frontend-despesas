@@ -5,6 +5,7 @@ import * as dayjs from 'dayjs';
 import 'dayjs/locale/pt-br';
 import { Dayjs } from 'dayjs';
 import { CommonModule } from '@angular/common';
+import { ISaldo } from '../../models';
 dayjs.locale('pt-br');
 @Component({
   selector: 'app-saldo',
@@ -28,8 +29,8 @@ export class SaldoComponent implements OnInit {
   initialize = (): void => {
     this.saldoService.getSaldoAnual(dayjs(dayjs().format('YYYY-01-01')))
       .subscribe({
-        next: (response: any) => {
-          if (response.message === true && response.saldo !== undefined && response.saldo !== null) {
+        next: (response: ISaldo) => {
+          if (response && response !== undefined && response !== null) {
             this.saldoAnualNegativo = this.isSaldoNegativo(response.saldo) ? 'text-danger' : '';
             this.saldoAnual = response.saldo.toLocaleString('pt-br', {
               style: 'currency',
@@ -50,8 +51,8 @@ export class SaldoComponent implements OnInit {
   handleSaldoMesAno = (mes: Dayjs): void => {
     this.saldoService.getSaldoByMesANo(mes)
       .subscribe({
-        next: (response: any) => {
-          if (response.message === true && response.saldo !== undefined && response.saldo !== null) {
+        next: (response: ISaldo) => {
+          if (response && response !== undefined && response !== null) {
             this.saldoMensalNegativo = this.isSaldoNegativo(response.saldo) ? 'text-danger' : '';
             this.saldoMensal = response.saldo.toLocaleString('pt-br', {
               style: 'currency',

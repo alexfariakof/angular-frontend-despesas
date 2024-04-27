@@ -67,7 +67,7 @@ describe('Unit Test DashboardComponent', () => {
 
   it('should throw error when try to initializeChart', () => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message Initialize Chart' };
+    const errorMessage = 'Fake Error Message Initialize Chart';
     const spyOnGetDataGraphicByYear = spyOn(mockDashboardService, 'getDataGraphicByYear').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
@@ -77,7 +77,7 @@ describe('Unit Test DashboardComponent', () => {
     // Assert
     expect(spyOnGetDataGraphicByYear).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, AlertType.Warning);
   });
 
   it('should updateChart', fakeAsync(() => {
@@ -101,7 +101,7 @@ describe('Unit Test DashboardComponent', () => {
 
   it('should throw error when try to updateChart', () => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message Update Chart' };
+    const errorMessage = 'Fake Error Message Update Chart';
     const spyOnGetDataGraphicByYear = spyOn(mockDashboardService, 'getDataGraphicByYear').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
@@ -111,6 +111,6 @@ describe('Unit Test DashboardComponent', () => {
     // Assert
     expect(spyOnGetDataGraphicByYear).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, AlertType.Warning);
   });
 });

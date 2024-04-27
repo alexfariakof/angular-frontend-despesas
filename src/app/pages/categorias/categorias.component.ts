@@ -56,7 +56,7 @@ export class CategoriasComponent implements BarraFerramentaClass, OnInit {
           }
         },
         error: (response: any) => {
-          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
+          this.modalAlert.open(AlertComponent, response, AlertType.Warning);
         }
       });
   }
@@ -89,7 +89,7 @@ export class CategoriasComponent implements BarraFerramentaClass, OnInit {
             this.editCategoria(categoria);
         },
         error: (response: any) => {
-          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
+          this.modalAlert.open(AlertComponent, response, AlertType.Warning);
         }
       });
   }
@@ -112,7 +112,7 @@ export class CategoriasComponent implements BarraFerramentaClass, OnInit {
     this.categoriaService.deleteCategoria(idCategoria)
       .subscribe({
         next: (response: any) => {
-          if (response.message === true) {
+          if (response === true) {
             this.updateDatatable();
             this.modalAlert.open(AlertComponent, "Categoria excluída com sucesso", AlertType.Success);
           }
@@ -121,7 +121,7 @@ export class CategoriasComponent implements BarraFerramentaClass, OnInit {
           }
         },
         error: (response: any) => {
-          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
+          this.modalAlert.open(AlertComponent, response, AlertType.Warning);
         }
       });
   }
