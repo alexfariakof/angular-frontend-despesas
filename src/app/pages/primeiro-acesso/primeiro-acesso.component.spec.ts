@@ -1,13 +1,13 @@
+import { AlertComponent, AlertType } from './../../shared/components/alert-component/alert.component';
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { ComponentFixture, TestBed, fakeAsync } from "@angular/core/testing";
+import { ComponentFixture, TestBed, fakeAsync, flush } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { MdbFormsModule } from "mdb-angular-ui-kit/forms";
-import { of } from "rxjs";
-import { AlertComponent } from "src/app/shared/components";
-import { IControleAcesso } from "src/app/shared/interfaces";
+import { of, throwError } from "rxjs";
+import { IControleAcesso } from "src/app/shared/models";
 import { PrimeiroAcessoComponent } from "./primeiro-acesso.component";
 
 describe('PrimeiroAcessoComponent', () => {
@@ -28,6 +28,7 @@ describe('PrimeiroAcessoComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
+
 
   it('should create', () => {
     // Assert
@@ -152,7 +153,7 @@ describe('PrimeiroAcessoComponent', () => {
     expect(component.eyeIconClassConfirmaSenha).toBe('bi-eye');
   });
 
-  it('should return true if passwords do not match', () => {
+  it('should open modal with validation error message when API returns 400 with validation errors', fakeAsync(() => {
     // Arrange
     const controleAcesso: IControleAcesso = {
       nome: 'Teste Usuário',
@@ -162,31 +163,22 @@ describe('PrimeiroAcessoComponent', () => {
       senha: '!12345',
       confirmaSenha: '!12345'
     };
+    const errorResponse = {
+      status: 400,
+      errors: {
+        email: ['Email inválido']
+      }
+    };
+    spyOn(component.modalALert, 'open').and.callThrough();
+    spyOn(component.controleAcessoService, 'createUsuario').and.returnValue(throwError(errorResponse));
+    spyOn(component, 'onSaveClick').and.callThrough();
 
     // Act
-    component.ngOnInit();
     component.createAccountFrom.patchValue(controleAcesso);
+    component.onSaveClick();
+    flush();
 
     // Assert
-    expect(component.isPasswordValid()).toBeTruthy();
-  });
-
-  it('should return false if passwords match', () => {
-    // Arrange
-    const controleAcesso: IControleAcesso = {
-      nome: 'Teste Usuário',
-      sobreNome: 'Usuário',
-      telefone: '(21) 9999-9999',
-      email: 'teste@teste.com',
-      senha: '!12345',
-      confirmaSenha: '!1234'
-    };
-
-    // Act
-    component.ngOnInit();
-    component.createAccountFrom.patchValue(controleAcesso);
-
-    //Assert
-    expect(component.isPasswordValid()).toBeFalsy();
-  });
+    expect(component.modalALert.open).toHaveBeenCalledWith(AlertComponent, 'Email inválido', AlertType.Warning);
+  }));
 });

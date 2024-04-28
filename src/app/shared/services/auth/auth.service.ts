@@ -1,31 +1,34 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { IAuth } from '../../interfaces/IAuth';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { TokenStorageService } from '..';
+import { IAuth } from '../../models';
+import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
   private accessTokenSubject = new BehaviorSubject<string | undefined>(undefined);
+  private urlPath: string =  'ControleAcesso';
 
   accessToken$ = this.accessTokenSubject.asObservable();
 
-  constructor() {
+  constructor(private tokenStorage: TokenStorageService, private httpClient: HttpClient) {
     try {
-      const accessToken = localStorage.getItem('@token');
+      const accessToken = this.tokenStorage.getToken();
       if (accessToken) {
         this.setAccessToken(accessToken);
       } else {
-        this.clearLocalStorage();
+        this.clearSessionStorage();
       }
     } catch {
-      this.clearLocalStorage();
+      this.clearSessionStorage();
     }
   }
 
-  public clearLocalStorage() {
+  public clearSessionStorage() {
     this.setAccessToken(undefined);
-    localStorage.clear();
+    sessionStorage.clear();
   }
 
   private setAccessToken(token: string | undefined) {
@@ -33,9 +36,9 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    const accessToken = this.accessTokenSubject.getValue() || localStorage.getItem('@token');
+    const accessToken = this.tokenStorage.getToken() ?? this.accessTokenSubject.getValue();
     if (accessToken === null || accessToken === undefined) {
-      this.clearLocalStorage();
+      this.clearSessionStorage();
       return false;
     }
     return true;
@@ -43,11 +46,21 @@ export class AuthService {
 
   createAccessToken(auth: IAuth): Boolean {
     try {
-      localStorage.setItem('@token', auth.accessToken);
+      this.tokenStorage.saveToken(auth.accessToken);
+      this.tokenStorage.saveRefreshToken(auth.refreshToken);
+      this.tokenStorage.saveUser(auth);
       this.setAccessToken(auth.accessToken);
       return true;
     } catch (error) {
       return false;
     }
+  }
+
+  refreshToken(refreshToken: string): Observable<IAuth | any>{
+    return this.httpClient.get(`${ this.urlPath }/refresh/${ refreshToken }`);
+  }
+
+  revoke(): Observable<any> {
+    return this.httpClient.get(`${ this.urlPath }/revoke`);
   }
 }

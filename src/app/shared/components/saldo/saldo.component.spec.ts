@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testing';
-
 import { SaldoComponent } from './saldo.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { from, throwError } from 'rxjs';
 import { SaldoService } from '../../services/api';
 import * as dayjs from 'dayjs';
+import { ISaldo } from '../../models';
 
 describe('Unit Test SaldoComponent', () => {
   let component: SaldoComponent;
@@ -28,7 +28,7 @@ describe('Unit Test SaldoComponent', () => {
 
   it('should initialize saldo component', fakeAsync(() => {
     // Arrange
-    const mockResponse = { message: true, saldo: 2.0 };
+    const mockResponse: ISaldo = { saldo: 2.0};
     const spyOnGetSaldoAnual = spyOn(saldoService, 'getSaldoAnual').and.returnValue(from(Promise.resolve(mockResponse)));
 
     // Act
@@ -48,7 +48,7 @@ describe('Unit Test SaldoComponent', () => {
 
   it('should try initialize and throws error and set saldo = 0', fakeAsync(() => {
     // Arrange
-    const mockResponse = { message: true, saldo: 2.0 };
+    const mockResponse: ISaldo = { saldo: 4.0 } ;
     const spyOnGetSaldoAnual = spyOn(saldoService, 'getSaldoAnual').and.returnValue(throwError('Erro initialize saldo'));
 
     // Act
@@ -63,7 +63,7 @@ describe('Unit Test SaldoComponent', () => {
 
   it('should handleSaldoMesAno and update saldoMensal ', fakeAsync(() => {
     // Arrange
-    const mockResponse = { message: true, saldo: 4.55 };
+    const mockResponse: ISaldo =  { saldo : 4.55};
     const mockMesAno = dayjs();
     const spyOnGetSaldoByMesAno = spyOn(saldoService, 'getSaldoByMesANo').and.returnValue(from(Promise.resolve(mockResponse)));
 
@@ -110,6 +110,4 @@ describe('Unit Test SaldoComponent', () => {
     expect(spyOnHandleSaldoMesano).toHaveBeenCalledWith(dayjs(dayjs().format(`YYYY-${mes}-01`)));
     expect(component.filterMesService.selectMonth).toEqual(Number(mes));
   });
-
-
 });

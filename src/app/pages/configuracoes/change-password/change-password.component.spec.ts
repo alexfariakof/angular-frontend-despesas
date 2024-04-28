@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { ControleAcessoService } from 'src/app/shared/services/api';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ILogin } from 'src/app/shared/interfaces';
+import { ILogin } from 'src/app/shared/models';
 import { from, throwError } from 'rxjs';
 
 describe('ChangePasswordComponent', () => {
@@ -74,7 +74,7 @@ describe('ChangePasswordComponent', () => {
 
   it('should try change password onSaveClick and thrwos error', fakeAsync(() => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message on Change Passawrod '};
+    const errorMessage = 'Fake Error Message on Change Passawrod ';
     const spyOnControleAcessoService = spyOn(controleAcessoService, 'changePassword').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
@@ -85,7 +85,7 @@ describe('ChangePasswordComponent', () => {
     // Assert
     expect(spyOnControleAcessoService).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, AlertType.Warning);
   }));
 
 

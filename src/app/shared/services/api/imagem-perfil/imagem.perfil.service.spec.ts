@@ -1,7 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { environment } from '../../../environments/environment';
-import { CustomInterceptor } from '../../interceptors/http.interceptor.service';
+import { CustomInterceptor } from '../../../interceptors/http.interceptor.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ImagemPerfilService } from './imagem.perfil.service';
 

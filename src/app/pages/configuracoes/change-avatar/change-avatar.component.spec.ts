@@ -7,7 +7,7 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { from, throwError } from 'rxjs';
-import { IImagemPerfil } from 'src/app/shared/interfaces';
+import { IImagemPerfil } from 'src/app/shared/models';
 
 describe('Unit Test ChangeAvatarComponent', () => {
   let component: ChangeAvatarComponent;
@@ -34,7 +34,7 @@ describe('Unit Test ChangeAvatarComponent', () => {
 
   it('should initialize Change Avatar Component ', fakeAsync(() => {
     // Arrange
-        const mockRespose = { message: true, imagemPerfilUsuario: mockImagemPerfilUsuario };
+    const mockRespose = mockImagemPerfilUsuario;
     const spyOnGetImagemPerfilUsuario = spyOn(mockImagemPerfilService, 'getImagemPerfilUsuario').and.returnValue(from(Promise.resolve(mockRespose)));
 
     // Act
@@ -50,7 +50,7 @@ describe('Unit Test ChangeAvatarComponent', () => {
 
   it('should initialize Change Avatar Component adn Thnrows Error ', fakeAsync(() => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message Initialize Chart' };
+    const errorMessage = 'Fake Error Message Initialize Chart';
     const spyOnGetImagemPerfilUsuario = spyOn(mockImagemPerfilService, 'getImagemPerfilUsuario').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
@@ -60,7 +60,7 @@ describe('Unit Test ChangeAvatarComponent', () => {
     // Assert
     expect(spyOnGetImagemPerfilUsuario).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, AlertType.Warning);
   }));
 
   it('should handle avatar upload', () => {
@@ -81,7 +81,7 @@ describe('Unit Test ChangeAvatarComponent', () => {
     // Arrange
     let mockImagemPerfilUsuario: IImagemPerfil = { url: 'http://alexfariakof.com/testImage.jpp' };
     let mockFile = new File(['mock file'], 'avatar.jpg', { type: 'image/jpeg' });
-    const spyOnImagemPerfilService = spyOn(mockImagemPerfilService, 'createImagemPerfilUsuario').and.returnValue(from(Promise.resolve({ message: true, imagemPerfilUsuario: mockImagemPerfilUsuario })));
+    const spyOnImagemPerfilService = spyOn(mockImagemPerfilService, 'createImagemPerfilUsuario').and.returnValue(from(Promise.resolve(mockImagemPerfilUsuario)));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
     // Act
@@ -102,7 +102,7 @@ describe('Unit Test ChangeAvatarComponent', () => {
 
   it('should try to create imagem Perfil without upload image', fakeAsync(() => {
     // Arrange
-    let errorMessage = { message: 'Fake Error Message nto uplaod image' };
+    let errorMessage = 'Fake Error Message nto uplaod image';
     let mockFile = null;
     const spyOnImagemPerfilService = spyOn(mockImagemPerfilService, 'createImagemPerfilUsuario').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
@@ -121,7 +121,7 @@ describe('Unit Test ChangeAvatarComponent', () => {
 
   it('should handle and try create imagem Perfil and throws error', fakeAsync(() => {
     // Arrange
-    let errorMessage = { message: 'Fake Error Message ' };
+    let errorMessage = 'Fake Error Message ';
     let mockFile = new File(['mock file'], 'avatar.jpg', { type: 'image/jpeg' });
     const spyOnImagemPerfilService = spyOn(mockImagemPerfilService, 'createImagemPerfilUsuario').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
@@ -136,14 +136,14 @@ describe('Unit Test ChangeAvatarComponent', () => {
     expect(spyOnImagemPerfilService).toHaveBeenCalled();
     expect(spyOnImagemPerfilService).toHaveBeenCalledWith(mockFile);
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, AlertType.Warning);
   }));
 
   it('should handle and update imagem Perfil successfully', fakeAsync(() => {
     // Arrange
     let mockImagemPerfilUsuario: IImagemPerfil = { url: 'http://alexfariakof.com/testImage.jpp' };
     let mockFile = new File(['mock file'], 'avatar.jpg', { type: 'image/jpeg' });
-    const spyOnImagemPerfilService = spyOn(mockImagemPerfilService, 'updateImagemPerfilUsuario').and.returnValue(from(Promise.resolve({ message: true, imagemPerfilUsuario: mockImagemPerfilUsuario })));
+    const spyOnImagemPerfilService = spyOn(mockImagemPerfilService, 'updateImagemPerfilUsuario').and.returnValue(from(Promise.resolve(mockImagemPerfilUsuario)));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
     // Act
@@ -164,7 +164,7 @@ describe('Unit Test ChangeAvatarComponent', () => {
 
   it('should handle and try update imagem Perfil and throws error', fakeAsync(() => {
     // Arrange
-    let errorMessage = { message: 'Fake Error Message updateImagemPerfilUsuario' };
+    let errorMessage = 'Fake Error Message updateImagemPerfilUsuario';
     let mockFile = new File(['mock file'], 'avatar.jpg', { type: 'image/jpeg' });
     const spyOnImagemPerfilService = spyOn(mockImagemPerfilService, 'updateImagemPerfilUsuario').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
@@ -179,12 +179,12 @@ describe('Unit Test ChangeAvatarComponent', () => {
     expect(spyOnImagemPerfilService).toHaveBeenCalled();
     expect(spyOnImagemPerfilService).toHaveBeenCalledWith(mockFile);
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, AlertType.Warning);
   }));
 
   it('should handle and delete imagem Perfil successfully', fakeAsync(() => {
     // Arrange
-    const spyOnImagemPerfilService = spyOn(mockImagemPerfilService, 'deleteImagemPerfilUsuario').and.returnValue(from(Promise.resolve({ message: true })));
+    const spyOnImagemPerfilService = spyOn(mockImagemPerfilService, 'deleteImagemPerfilUsuario').and.returnValue(from(Promise.resolve(true)));
     const alertOpenSpy = spyOn(component.modalAlert, 'open').and.callThrough();
 
     // Act
@@ -202,7 +202,7 @@ describe('Unit Test ChangeAvatarComponent', () => {
 
   it('should handle and try delete imagem Perfil and throws error', fakeAsync(() => {
     // Arrange
-    let errorMessage = { message: 'Fake Error Message deleteImagemPerfilUsuario' };
+    let errorMessage = 'Fake Error Message deleteImagemPerfilUsuario';
     const spyOnImagemPerfilService = spyOn(mockImagemPerfilService, 'deleteImagemPerfilUsuario').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
@@ -213,6 +213,6 @@ describe('Unit Test ChangeAvatarComponent', () => {
     // Assert
     expect(spyOnImagemPerfilService).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, AlertType.Warning);
   }));
 });

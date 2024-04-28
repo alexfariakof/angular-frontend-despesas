@@ -11,7 +11,7 @@ export class FilterMesService {
   private _dayJs: dayjs.Dayjs;
 
   constructor() {
-    const storedMonth = localStorage.getItem('selectedMonth');
+    const storedMonth = sessionStorage.getItem('selectedMonth');
     const initialMonth = storedMonth ? Number(storedMonth) : Number(dayjs().format('MM'));
 
     this._selectMonth = new BehaviorSubject<number>(initialMonth);
@@ -32,7 +32,7 @@ export class FilterMesService {
     this._selectMonthExt = dayjs().set('month', value - 1).format('MMMM') as string;
     this._dayJs = dayjs(dayjs().format(`YYYY-${value}-01`));
 
-    localStorage.setItem('selectedMonth', value.toString());
+    sessionStorage.setItem('selectedMonth', value.toString());
   }
 
   get selectMonthExt(): string {

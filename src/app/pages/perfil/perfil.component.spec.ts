@@ -8,7 +8,7 @@ import { FormsModule } from "@angular/forms";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { UsuarioService } from "src/app/shared/services/api";
 import { from, of, throwError } from "rxjs";
-import { IUsuario } from "src/app/shared/interfaces";
+import { IUsuario } from "src/app/shared/models";
 import { MenuService } from "src/app/shared/services";
 
 describe('Unit Test PerfilComponent', () => {
@@ -58,7 +58,7 @@ describe('Unit Test PerfilComponent', () => {
 
   it('should throw error when try to initialize', () => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message Perfil Usuário' };
+    const errorMessage = 'Fake Error Message Perfil Usuário';
     const spyOnGetUsuario = spyOn(usuarioService, 'getUsuario').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
@@ -68,7 +68,7 @@ describe('Unit Test PerfilComponent', () => {
     // Assert
     expect(spyOnGetUsuario).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, AlertType.Warning);
   });
 
   it('should modify data when onSaveClick and show successfully message', fakeAsync(() => {
@@ -114,7 +114,7 @@ describe('Unit Test PerfilComponent', () => {
 
   it('should throw error when try to modify data onSaveClick', () => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message onSaveClick Perfil Usuário' };
+    const errorMessage = 'Fake Error Message onSaveClick Perfil Usuário';
     const spyOnPutUsuario = spyOn(usuarioService, 'putUsuario').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
@@ -124,6 +124,6 @@ describe('Unit Test PerfilComponent', () => {
     // Assert
     expect(spyOnPutUsuario).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, AlertType.Warning);
   });
 });

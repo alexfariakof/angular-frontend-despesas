@@ -17,8 +17,8 @@ describe('Unit Test LayoutComponent', () => {
   let router: Router;
 
   beforeEach(() => {
-    mockAuthService = jasmine.createSpyObj('AuthService', ['clearLocalStorage']);
-    mockAuthService.clearLocalStorage.and.callThrough();
+    mockAuthService = jasmine.createSpyObj('AuthService', ['clearSessionStorage']);
+    mockAuthService.clearSessionStorage.and.callThrough();
     TestBed.configureTestingModule({
       declarations: [LayoutComponent],
       imports: [CommonModule, RouterTestingModule, HttpClientTestingModule],
@@ -40,7 +40,7 @@ describe('Unit Test LayoutComponent', () => {
 
   it('should initialize correctlly', fakeAsync(() => {
     // Arrange
-    let mockResponse = { message: true, imagemPerfilUsuario: { url: 'http://testeimagemperfil.png' } };
+    let mockResponse =  { url: 'http://testeimagemperfil.png' };
     const spyOnImagemPerfilService = spyOn(imagemPerfilService, 'getImagemPerfilUsuario').and.returnValue(from(Promise.resolve(mockResponse)));
 
     // Act
@@ -49,7 +49,7 @@ describe('Unit Test LayoutComponent', () => {
 
     // Assert
     expect(spyOnImagemPerfilService).toHaveBeenCalled();
-    expect(component.urlPerfilImage).toEqual(mockResponse.imagemPerfilUsuario.url);
+    expect(component.urlPerfilImage).toEqual(mockResponse.url);
   }));
 
   it('should throws error and fill with default path imagemPerfil', fakeAsync(() => {

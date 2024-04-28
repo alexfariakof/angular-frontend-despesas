@@ -12,7 +12,7 @@ import * as dayjs from 'dayjs';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { from, throwError, of } from 'rxjs';
 import { AlertComponent, AlertType } from 'src/app/shared/components';
-import { ICategoria, IReceita, IAction } from 'src/app/shared/interfaces';
+import { ICategoria, IReceita, IAction } from 'src/app/shared/models';
 import { AuthService } from 'src/app/shared/services';
 import { ReceitaService } from 'src/app/shared/services/api';
 import { ReceitasFormComponent } from './receitas.form.component';
@@ -64,7 +64,7 @@ describe('Unit Test ReceitasFormComponent', () => {
 
   it('should thorws errro when call getCategorias and open modal alert ', () => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message' };
+    const errorMessage = 'Fake Error Message';
     const getCategoriasSpy = spyOn(receitaService, 'getReceitasCategorias').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
@@ -74,7 +74,7 @@ describe('Unit Test ReceitasFormComponent', () => {
     // Assert
     expect(getCategoriasSpy).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, AlertType.Warning);
   });
 
   it('should saveCreateReceita onSaveClick and show successfully message', fakeAsync(() => {
@@ -86,7 +86,7 @@ describe('Unit Test ReceitasFormComponent', () => {
       valor: 10.23,
       categoria: { id: 1, descricao: 'Categoria 1', idTipoCategoria: 2 }
     };
-    const receitaPostServiceSpy = spyOn(receitaService, 'postReceita').and.returnValue(of({ message: true }));
+    const receitaPostServiceSpy = spyOn(receitaService, 'postReceita').and.returnValue(of(true));
     const modalCloseSpy = spyOn(component.activeModal, 'close').and.callThrough();
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open').and.callThrough();
     spyOn(component, 'onSaveClick').and.callThrough();
@@ -107,7 +107,7 @@ describe('Unit Test ReceitasFormComponent', () => {
 
   it('should throws error when try to saveCreateReceita and show error message', () => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message Create Receita' };
+    const errorMessage = 'Fake Error Message Create Receita';
     const receita: IReceita = {
       id: 0,
       data: dayjs(),
@@ -128,7 +128,7 @@ describe('Unit Test ReceitasFormComponent', () => {
 
     // Assert
     expect(receitaPostServiceSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, AlertType.Warning);
   });
 
   it('should saveEditReceita onSaveClick', fakeAsync(() => {
@@ -140,7 +140,7 @@ describe('Unit Test ReceitasFormComponent', () => {
       valor: 10.58,
       categoria: { id: 1, descricao: 'Categoria 1', idTipoCategoria: 2 }
     };
-    const receitaPutServiceSpy = spyOn(receitaService, 'putReceita').and.returnValue(of({ message: true, receita: mockReceita }));
+    const receitaPutServiceSpy = spyOn(receitaService, 'putReceita').and.returnValue(of(mockReceita));
     const modalCloseSpy = spyOn(component.activeModal, 'close').and.callThrough();
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open').and.callThrough();
     spyOn(component, 'onSaveClick').and.callThrough();
@@ -161,7 +161,7 @@ describe('Unit Test ReceitasFormComponent', () => {
 
   it('should throws error when try to saveEditReceita and show error message', () => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message Edit Receita' };
+    const errorMessage = 'Fake Error Message Edit Receita';
     const receita: IReceita = {
       id: 1,
       data: dayjs().format('YYYY-MM-DD'),
@@ -182,7 +182,7 @@ describe('Unit Test ReceitasFormComponent', () => {
 
     // Assert
     expect(receitaPutServiceSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, AlertType.Warning);
   });
 
   it('should show error message when onClickSave', () => {
@@ -202,7 +202,7 @@ describe('Unit Test ReceitasFormComponent', () => {
   it('should execute editReceita and SetFormReceita ', fakeAsync(() => {
     // Arrange
     const mockReceita: IReceita = mockReceitas[0];
-    const mockResponse: any = { message: true, receita: mockReceita };
+    const mockResponse: IReceita = mockReceita;
     const getReceitasById = spyOn(receitaService, 'getReceitaById').and.returnValue(from(Promise.resolve(mockResponse)));
     const editReceita = spyOn(component, 'editReceita').and.callThrough();
 
@@ -218,7 +218,7 @@ describe('Unit Test ReceitasFormComponent', () => {
 
   it('should throws error when try to editReceita', fakeAsync(() => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message Edit Receita' };
+    const errorMessage = 'Fake Error Message Edit Receita';
     const mockReceita: IReceita = mockReceitas[1];
     const getReceitasById = spyOn(receitaService, 'getReceitaById').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
@@ -230,12 +230,12 @@ describe('Unit Test ReceitasFormComponent', () => {
     // Assert
     expect(getReceitasById).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, AlertType.Warning);
   }));
 
   it('should deleteReceita and open modal alert success', fakeAsync(() => {
     // Arrange
-    const mockResponse = { message: true };
+    const mockResponse = true;
     const getDeleteReceita = spyOn(receitaService, 'deleteReceita').and.returnValue(from(Promise.resolve(mockResponse)));
     spyOn(component.modalAlert, 'open').and.callThrough();
 
@@ -251,7 +251,7 @@ describe('Unit Test ReceitasFormComponent', () => {
 
   it('should try to deleteReceita and open modal alert warning', fakeAsync(() => {
     // Arrange
-    const mockResponse = { message: false };
+    const mockResponse = false;
     const getDeleteReceita = spyOn(receitaService, 'deleteReceita').and.returnValue(from(Promise.resolve(mockResponse)));
     spyOn(component.modalAlert, 'open').and.callThrough();
 
@@ -267,7 +267,7 @@ describe('Unit Test ReceitasFormComponent', () => {
 
   it('should throws error when try to deleteReceita and open modal alert warning', fakeAsync(() => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message Delete Receita' };
+    const errorMessage = 'Fake Error Message Delete Receita';
     const spyOnDeleteReceita = spyOn(receitaService, 'deleteReceita').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
@@ -278,6 +278,6 @@ describe('Unit Test ReceitasFormComponent', () => {
     // Assert
     expect(spyOnDeleteReceita).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, AlertType.Warning);
   }));
 });

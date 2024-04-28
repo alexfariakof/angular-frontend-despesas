@@ -14,4 +14,4 @@ services:
     volumes:
       - ./:/app
     command: |
-      /bin/sh -c "npm install --silent --no-audit --no-fund; npm run start:dev;"
+      /bin/sh -c "npm install --silent --no-audit --no-fund; npm start;"

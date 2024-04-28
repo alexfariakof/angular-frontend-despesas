@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IReceita } from '../../../interfaces/IReceita';
+import { IReceita } from '../../../models/IReceita';
 import { AbstractService } from '../base/AbstractService';
 @Injectable({
   providedIn: 'root'

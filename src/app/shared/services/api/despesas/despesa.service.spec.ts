@@ -2,11 +2,11 @@ import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { DespesaService } from './despesa.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { CustomInterceptor } from '../../interceptors/http.interceptor.service';
+import { CustomInterceptor } from '../../../interceptors/http.interceptor.service';
 import { environment } from 'src/app/shared/environments/environment';
-import { IDespesa } from 'src/app/shared/interfaces/IDespesa';
+import { IDespesa } from 'src/app/shared/models/IDespesa';
 import * as dayjs from 'dayjs';
-import { ICategoria } from 'src/app/shared/interfaces/ICategoria';
+import { ICategoria } from 'src/app/shared/models/ICategoria';
 
 describe('Unit Test DespesaService', () => {
 

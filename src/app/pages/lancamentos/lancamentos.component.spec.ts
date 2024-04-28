@@ -10,7 +10,7 @@ import { DespesasFormComponent } from "../despesas/despesas-form/despesas.form.c
 import { ReceitasFormComponent } from "../receitas/receitas-form/receitas.form.component";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { RouterTestingModule } from "@angular/router/testing";
-import { ILancamento } from 'src/app/shared/interfaces';
+import { ILancamento } from 'src/app/shared/models';
 import { LancamentoDataSet } from 'src/app/shared/datatable-config/lancamentos';
 import { from, throwError } from 'rxjs';
 import * as dayjs from 'dayjs';
@@ -56,7 +56,7 @@ describe('Unit Test LancamentosComponent', () => {
 
   it('should initializeDataTable', fakeAsync(() => {
     // Arrange
-    const getLancamntosByMesAnoSpy = spyOn(lancamentoService, 'getLancamentosByMesAno').and.returnValue(from(Promise.resolve({ message: true, lancamentos: mockLancamentos })));
+    const getLancamntosByMesAnoSpy = spyOn(lancamentoService, 'getLancamentosByMesAno').and.returnValue(from(Promise.resolve(mockLancamentos)));
 
     // Act
     component.initializeDataTable();
@@ -64,14 +64,14 @@ describe('Unit Test LancamentosComponent', () => {
 
     // Assert
     expect(getLancamntosByMesAnoSpy).toHaveBeenCalled();
-    console.log('Pode Ocorrer erro nesta asertividade conta da data')
+    console.log('Pode Ocorrer erro nesta assertividade por conta da data');
     expect(getLancamntosByMesAnoSpy).toHaveBeenCalledWith(dayjs(component.filterMesAnoService.dataMesAno));
     expect(component.lancamentosData.length).toBeGreaterThan(1);
   }));
 
   it('should throws error when initializeDataTable and show modal alert', fakeAsync(() => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message' };
+    const errorMessage = 'Fake Error Message';
     const getLancamntosByMesAnoSpy = spyOn(lancamentoService, 'getLancamentosByMesAno').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
@@ -82,13 +82,13 @@ describe('Unit Test LancamentosComponent', () => {
     // Assert
     expect(getLancamntosByMesAnoSpy).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, AlertType.Warning);
   }));
 
   it('should updateDatatable when is called', fakeAsync(() => {
     // Arrange
     let mockDAtaMesAno = dayjs().toISOString();
-    const getLancamntosByMesAnoSpy = spyOn(lancamentoService, 'getLancamentosByMesAno').and.returnValue(from(Promise.resolve({ message: true, lancamentos: mockLancamentos })));
+    const getLancamntosByMesAnoSpy = spyOn(lancamentoService, 'getLancamentosByMesAno').and.returnValue(from(Promise.resolve(mockLancamentos)));
 
     // Act
     component.barraFerramenta.filterMesAnoService.dataMesAno = mockDAtaMesAno;
@@ -103,7 +103,7 @@ describe('Unit Test LancamentosComponent', () => {
 
   it('should throw error when try to updateDataTable', () => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message Lançamentos UpdateDataTable' };
+    const errorMessage = 'Fake Error Message Lançamentos UpdateDataTable';
     const getLancamntosByMesAnoSpy = spyOn(lancamentoService, 'getLancamentosByMesAno').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
@@ -113,7 +113,7 @@ describe('Unit Test LancamentosComponent', () => {
     // Assert
     expect(getLancamntosByMesAnoSpy).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, AlertType.Warning);
   });
 
   it('should open modalform Despesa onClickEdit', () => {

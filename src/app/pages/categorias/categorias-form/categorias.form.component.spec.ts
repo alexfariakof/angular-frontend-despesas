@@ -5,7 +5,7 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { MdbFormsModule } from "mdb-angular-ui-kit/forms";
 import { from, of, throwError } from "rxjs";
 import { AlertComponent, AlertType } from "src/app/shared/components";
-import { ICategoria, IAction } from "src/app/shared/interfaces";
+import { ICategoria, IAction } from "src/app/shared/models";
 import { CategoriasFormComponent } from "./categorias.form.component";
 import { CategoriaService } from "src/app/shared/services/api";
 
@@ -84,7 +84,7 @@ describe('Unit Test CategoriasFormComponent', () => {
     // Arrange
     const categoria: ICategoria = { id: 0, descricao: "Teste categoria", idTipoCategoria: 2 };
     const errorMessage = 'Fake Error Message';
-    spyOn(categoriaService, 'postCategoria').and.callFake(() => { throw Error }).and.throwError(errorMessage);
+    spyOn(categoriaService, 'postCategoria').and.returnValue(throwError(() => { throw errorMessage}));
     const alertOpenSpy = spyOn(alertComponent, 'open');
 
     // Act

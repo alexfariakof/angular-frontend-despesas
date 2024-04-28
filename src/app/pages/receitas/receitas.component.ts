@@ -2,7 +2,7 @@ import { Component, ViewChild } from "@angular/core";
 import * as dayjs from "dayjs";
 import { BarraFerramentaClass, DataTableComponent, AlertComponent, ModalFormComponent, ModalConfirmComponent, AlertType } from "src/app/shared/components";
 import { ReceitaDataSet, ReceitaColumns } from "src/app/shared/datatable-config/receitas";
-import { IReceita, IAction } from "src/app/shared/interfaces";
+import { IReceita, IAction } from "src/app/shared/models";
 import { MenuService } from "src/app/shared/services";
 import { ReceitaService } from "src/app/shared/services/api";
 import { ReceitasFormComponent } from "./receitas-form/receitas.form.component";
@@ -42,8 +42,8 @@ export class ReceitasComponent implements BarraFerramentaClass {
           }
 
         },
-        error: (response: any) => {
-          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
+        error: (errorMessage: string) => {
+          this.modalAlert.open(AlertComponent, errorMessage, AlertType.Warning);
         }
       });
   }
@@ -57,8 +57,8 @@ export class ReceitasComponent implements BarraFerramentaClass {
             this.dataTable.rerender();
           }
         },
-        error: (response: any) => {
-          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
+        error: (errorMessage: string) => {
+          this.modalAlert.open(AlertComponent, errorMessage, AlertType.Warning);
         }
       });
   }

@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { map, catchError } from "rxjs";
 import { AlertComponent, AlertType } from "src/app/shared/components";
-import { ILogin, IAuth } from "src/app/shared/interfaces";
+import { ILogin, IAuth } from "src/app/shared/models";
 import { AuthService } from "src/app/shared/services";
 import { ControleAcessoService } from "src/app/shared/services/api";
 @Component({
@@ -22,14 +22,12 @@ export class LoginComponent implements OnInit{
     public router: Router,
     public controleAcessoService: ControleAcessoService,
     public authProviderService: AuthService,
-    public modalALert: AlertComponent ){
-
-  }
+    public modalALert: AlertComponent ){  }
 
   ngOnInit(): void{
     this.loginForm = this.formbuilder.group({
         email: ['teste@teste.com', [Validators.required, Validators.email]],
-        senha: ['12345T!', Validators.required]
+        senha: ['12345T!', [Validators.required, Validators.nullValidator]]
     }) as FormGroup & ILogin;
   }
 
@@ -37,7 +35,7 @@ export class LoginComponent implements OnInit{
     let login: ILogin = this.loginForm.getRawValue();
 
     this.controleAcessoService.signIn(login).pipe(
-      map((response: IAuth | any) => {
+      map((response: IAuth) => {
         if (response.authenticated) {
           return this.authProviderService.createAccessToken(response);
         }
@@ -46,19 +44,24 @@ export class LoginComponent implements OnInit{
         }
       }),
       catchError((error) => {
+        if (error.status === 400) {
+          const validationErrors = error.errors;
+          if (validationErrors) {
+            Object.keys(validationErrors).forEach(field => {
+              throw validationErrors[field][0];
+            });
+          }
+        }
         throw (error);
       })
     )
     .subscribe({
-      next: (result: Boolean) => {
-        if (result === true)
+      next: (response: Boolean) => {
+        if (response)
           this.router.navigate(['/dashboard']);
       },
-      error :(response : any) =>  {
-        this.modalALert.open(AlertComponent, response.message, AlertType.Warning);
-      },
-      complete() {
-
+      error :(errorMessage: string) =>  {
+        this.modalALert.open(AlertComponent, errorMessage, AlertType.Warning);
       }
     });
   }

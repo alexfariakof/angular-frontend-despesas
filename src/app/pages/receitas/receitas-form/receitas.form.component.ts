@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import * as dayjs from 'dayjs';
 import { AlertComponent, AlertType } from 'src/app/shared/components';
-import { ICategoria, IReceita, IAction } from 'src/app/shared/interfaces';
+import { ICategoria, IReceita, IAction } from 'src/app/shared/models';
 import { ReceitaService } from 'src/app/shared/services/api';
 import { CustomValidators } from 'src/app/shared/validators';
 
@@ -60,8 +60,8 @@ export class ReceitasFormComponent {
           if (result)
             this.categorias = result;
         },
-        error: (response: any) => {
-          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
+        error: (errorMessage: string) => {
+          this.modalAlert.open(AlertComponent, errorMessage, AlertType.Warning);
         }
       });
   }
@@ -69,15 +69,15 @@ export class ReceitasFormComponent {
   saveCreateReceita = () => {
     this.receitaService.postReceita(this.receitaForm.getRawValue() as IReceita)
       .subscribe({
-        next: (result: any) => {
-          if (result.message === true) {
+        next: (result: IReceita) => {
+          if (result) {
             this.activeModal.close();
             this.refresh();
             this.modalAlert.open(AlertComponent, 'Receita cadastrada com Sucesso.', AlertType.Success);
           }
         },
-        error: (error: any) => {
-          this.modalAlert.open(AlertComponent, error.message, AlertType.Warning);
+        error: (errorMessage: string) => {
+          this.modalAlert.open(AlertComponent, errorMessage, AlertType.Warning);
         }
       });
   }
@@ -85,15 +85,15 @@ export class ReceitasFormComponent {
   saveEditReceita = () => {
     this.receitaService.putReceita(this.receitaForm.getRawValue() as IReceita)
       .subscribe({
-        next: (response: any) => {
-          if (response !== undefined && response !== null && response.message === true) {
+        next: (response: IReceita) => {
+          if (response !== undefined && response !== null && response) {
             this.activeModal.close();
             this.refresh();
             this.modalAlert.open(AlertComponent, 'Receita alterada com Sucesso.', AlertType.Success);
           }
         },
-        error: (error: any) => {
-          this.modalAlert.open(AlertComponent, error.message, AlertType.Warning);
+        error: (errorMessage: string) => {
+          this.modalAlert.open(AlertComponent, errorMessage, AlertType.Warning);
         }
       });
   }
@@ -101,9 +101,9 @@ export class ReceitasFormComponent {
   editReceita = (idReceita: number) => {
     this.receitaService.getReceitaById(idReceita)
       .subscribe({
-        next: (response: any) => {
-          if (response.message === true && response.receita !== undefined && response.receita !== null){
-            const receitaData = response.receita
+        next: (response: IReceita) => {
+          if (response && response !== undefined && response !== null){
+            const receitaData = response
             this.receitaForm.patchValue(receitaData);
             const categoriaSelecionada = this.categorias.find(c => c.id === receitaData.categoria.id);
             if (categoriaSelecionada) {
@@ -111,8 +111,8 @@ export class ReceitasFormComponent {
             }
           }
         },
-        error: (response: any) => {
-          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
+        error: (errorMessage: string) => {
+          this.modalAlert.open(AlertComponent, errorMessage, AlertType.Warning);
         }
       });
   }
@@ -120,8 +120,8 @@ export class ReceitasFormComponent {
   deleteReceita = (idReceita: number, callBack: Function) => {
     this.receitaService.deleteReceita(idReceita)
       .subscribe({
-        next: (response: any) => {
-          if (response.message === true) {
+        next: (response: boolean) => {
+          if (response) {
             callBack();
             this.modalAlert.open(AlertComponent, 'Receita excluída com sucesso', AlertType.Success);
           }
@@ -129,8 +129,8 @@ export class ReceitasFormComponent {
             this.modalAlert.open(AlertComponent, 'Erro ao excluír receita', AlertType.Warning);
           }
         },
-        error: (response: any) => {
-          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
+        error: (errorMessage: string) => {
+          this.modalAlert.open(AlertComponent, errorMessage, AlertType.Warning);
         }
       });
   }

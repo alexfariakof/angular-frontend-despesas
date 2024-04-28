@@ -8,7 +8,7 @@ import { MdbFormsModule } from "mdb-angular-ui-kit/forms";
 import { from, throwError, of } from "rxjs";
 import { AlertComponent, ModalFormComponent, ModalConfirmComponent, DataTableComponent, AlertType } from "src/app/shared/components";
 import { CategoriaDataSet } from "src/app/shared/datatable-config/categorias";
-import { ICategoria } from "src/app/shared/interfaces";
+import { ICategoria } from "src/app/shared/models";
 import { CategoriaService } from "src/app/shared/services/api";
 import { SharedModule } from "src/app/shared/shared.module";
 import { CategoriasFormComponent } from "./categorias-form/categorias.form.component";
@@ -75,7 +75,7 @@ describe('Unit Test CategoriasComponent', () => {
 
   it('should throws error when try to initializeDataTable', () => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message'};
+    const errorMessage = 'Fake Error Message';
     const getCategoriasSpy = spyOn(categoriaService, 'getCategorias').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
@@ -85,7 +85,7 @@ describe('Unit Test CategoriasComponent', () => {
     // Assert
     expect(getCategoriasSpy).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, undefined, AlertType.Warning);
   });
 
   it('should update data table on updateDatatable', () => {
@@ -102,8 +102,8 @@ describe('Unit Test CategoriasComponent', () => {
 
   it('should throws error when try to updateDatatable', () => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message'};
-    const getCategoriasSpy = spyOn(categoriaService, 'getCategorias').and.returnValue(throwError(errorMessage));;
+    const errorMessage = 'Fake Error Message';
+    const getCategoriasSpy = spyOn(categoriaService, 'getCategorias').and.returnValue(throwError(errorMessage));
     const alertOpenSpy = spyOn(component.modalAlert, 'open').and.callThrough();
 
     // Act
@@ -112,7 +112,7 @@ describe('Unit Test CategoriasComponent', () => {
     // Assert
     expect(getCategoriasSpy).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, AlertType.Warning);
   });
 
   it('should return categoriasData on getCategoriasData', () => {
@@ -179,8 +179,8 @@ describe('Unit Test CategoriasComponent', () => {
 
   it('should throw error when onClickEdit ', fakeAsync(() => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message' };
-    const getCategoriaByIdSpy = spyOn(categoriaService, 'getCategoriaById').and.returnValue(throwError(errorMessage));;
+    const errorMessage = 'Fake Error Message';
+    const getCategoriaByIdSpy = spyOn(categoriaService, 'getCategoriaById').and.returnValue(throwError(() => errorMessage));;
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
     // Act
@@ -191,7 +191,7 @@ describe('Unit Test CategoriasComponent', () => {
     // Assert
     expect(getCategoriaByIdSpy).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, AlertType.Warning);
   }));
 
   it('should open modalConfirm when onDeleteClick', () => {
@@ -207,7 +207,7 @@ describe('Unit Test CategoriasComponent', () => {
 
   it('should  deleteCategoria and open modal alert success', fakeAsync(() => {
     // Arrange
-    const getDeleteCategoria = spyOn(categoriaService, 'deleteCategoria').withArgs(mockCategoria.id).and.returnValue(of({message: true}));
+    const getDeleteCategoria = spyOn(categoriaService, 'deleteCategoria').withArgs(mockCategoria.id).and.returnValue(of(true));
     spyOn(component.modalAlert, 'open').and.callThrough();
 
     // Act
@@ -223,7 +223,7 @@ describe('Unit Test CategoriasComponent', () => {
 
   it('should try deleteCategoria throw error and open modal alert warning', fakeAsync(() => {
     // Arrange
-    const getDeleteCategoria = spyOn(categoriaService, 'deleteCategoria').withArgs(mockCategoria.id).and.returnValue(of({message: false}));
+    const getDeleteCategoria = spyOn(categoriaService, 'deleteCategoria').withArgs(mockCategoria.id).and.returnValue(of(false));
     spyOn(component.modalAlert, 'open').and.callThrough();
 
     // Act
@@ -239,8 +239,8 @@ describe('Unit Test CategoriasComponent', () => {
 
   it('should throw error when deleteCategoria ', fakeAsync(() => {
     // Arrange
-    const errorMessage = { message: 'Fake Error Message' };
-    const getDeleteCategoria = spyOn(categoriaService, 'deleteCategoria').and.returnValue(throwError(errorMessage));;
+    const errorMessage = 'Fake Error Message';
+    const getDeleteCategoria = spyOn(categoriaService, 'deleteCategoria').and.returnValue(throwError(() => errorMessage));;
     const alertOpenSpy = spyOn(TestBed.inject(AlertComponent), 'open');
 
     // Act
@@ -251,6 +251,6 @@ describe('Unit Test CategoriasComponent', () => {
     // Assert
     expect(getDeleteCategoria).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage.message, AlertType.Warning);
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, AlertType.Warning);
   }));
 });

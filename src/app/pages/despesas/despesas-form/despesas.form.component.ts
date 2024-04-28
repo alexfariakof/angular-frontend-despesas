@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import * as dayjs from 'dayjs';
 import { AlertComponent, AlertType } from 'src/app/shared/components';
-import { IDespesa, ICategoria, IAction } from 'src/app/shared/interfaces';
+import { IDespesa, ICategoria, IAction } from 'src/app/shared/models';
 import { DespesaService } from 'src/app/shared/services/api';
 import { CustomValidators } from 'src/app/shared/validators';
 
@@ -48,8 +48,8 @@ export class DespesasFormComponent {
           if (result)
             this.categorias = result;
         },
-        error: (response: any) => {
-          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
+        error: (errorMessage: string) => {
+          this.modalAlert.open(AlertComponent, errorMessage, AlertType.Warning);
         }
       });
   }
@@ -70,15 +70,15 @@ export class DespesasFormComponent {
   saveCreateDespesa = () => {
     this.despesaService.postDespesa(this.despesaForm.getRawValue() as IDespesa)
       .subscribe({
-        next: (result: any) => {
-          if (result.message === true) {
+        next: (result: boolean) => {
+          if (result) {
             this.activeModal.close();
             this.refresh();
             this.modalAlert.open(AlertComponent, 'Despesa cadastrada com Sucesso.', AlertType.Success);
           }
         },
-        error: (error: any) => {
-          this.modalAlert.open(AlertComponent, error.message, AlertType.Warning);
+        error: (errorMessage: string) => {
+          this.modalAlert.open(AlertComponent, errorMessage, AlertType.Warning);
         }
       });
   }
@@ -87,15 +87,15 @@ export class DespesasFormComponent {
     const despesa = this.despesaForm.getRawValue() as IDespesa;
     this.despesaService.putDespesa(despesa)
       .subscribe({
-        next: (response: any) => {
-          if (response !== undefined && response !== null && response.message === true) {
+        next: (response: IDespesa) => {
+          if (response !== undefined && response !== null) {
             this.activeModal.close();
             this.refresh();
             this.modalAlert.open(AlertComponent, 'Despesa alterada com Sucesso.', AlertType.Success);
           }
         },
-        error: (error: any) => {
-          this.modalAlert.open(AlertComponent, error.message, AlertType.Warning);
+        error: (errorMessage: string) => {
+          this.modalAlert.open(AlertComponent, errorMessage, AlertType.Warning);
         }
       });
 
@@ -104,9 +104,9 @@ export class DespesasFormComponent {
   editDespesa = (idDespesa: number) => {
     this.despesaService.getDespesaById(idDespesa)
       .subscribe({
-        next: (response: any) => {
-          if (response.message === true && response.despesa !== undefined && response.despesa !== null){
-            const despesaData = response.despesa;
+        next: (response: IDespesa) => {
+          if (response !== undefined && response !== null){
+            const despesaData = response;
             this.despesaForm.patchValue(despesaData);
             const categoriaSelecionada = this.categorias.find(c => c.id === despesaData.categoria.id);
             if (categoriaSelecionada) {
@@ -115,8 +115,8 @@ export class DespesasFormComponent {
           }
 
         },
-        error: (response: any) => {
-          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
+        error: (errorMessage: string) => {
+          this.modalAlert.open(AlertComponent, errorMessage, AlertType.Warning);
         }
       });
   }
@@ -125,7 +125,7 @@ export class DespesasFormComponent {
     this.despesaService.deleteDespesa(idDespesa)
       .subscribe({
         next: (response: any) => {
-          if (response.message === true) {
+          if (response) {
             callBack();
             this.modalAlert.open(AlertComponent, 'Despesa excluída com sucesso', AlertType.Success);
           }
@@ -133,8 +133,8 @@ export class DespesasFormComponent {
             this.modalAlert.open(AlertComponent, 'Erro ao excluír despesa', AlertType.Warning);
           }
         },
-        error: (response: any) => {
-          this.modalAlert.open(AlertComponent, response.message, AlertType.Warning);
+        error: (errorMessage: string) => {
+          this.modalAlert.open(AlertComponent, errorMessage, AlertType.Warning);
         }
       });
   }
