@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testing';
-
 import { SaldoComponent } from './saldo.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { from, throwError } from 'rxjs';
@@ -111,6 +110,4 @@ describe('Unit Test SaldoComponent', () => {
     expect(spyOnHandleSaldoMesano).toHaveBeenCalledWith(dayjs(dayjs().format(`YYYY-${mes}-01`)));
     expect(component.filterMesService.selectMonth).toEqual(Number(mes));
   });
-
-
 });
