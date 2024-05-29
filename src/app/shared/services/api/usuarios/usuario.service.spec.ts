@@ -88,7 +88,7 @@ describe('Unit Test UsuarioService', () => {
         expect(response).toBeTruthy();
       });
 
-      const expectedUrl = `${environment.endPoint}/Usuario`;
+      const expectedUrl = `${environment.endPoint}/Usuario/UpdateUsuario`;
       const req = httpMock.expectOne(expectedUrl);
       expect(req.request.method).toBe('PUT');
 

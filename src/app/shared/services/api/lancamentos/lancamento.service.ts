@@ -11,7 +11,7 @@ export class LancamentoService extends AbstractService {
 
   constructor(public httpClient: HttpClient) {
     super();
-    this.urlPath = 'lancamento';
+    this.urlPath = 'Lancamento';
   }
 
   getLancamentosByMesAno(mesAno: Dayjs): any {

@@ -9,7 +9,7 @@ import { AbstractService } from '../base/AbstractService';
 export class CategoriaService extends AbstractService {
   constructor(public httpClient: HttpClient) {
     super();
-    this.urlPath = 'categoria';
+    this.urlPath = 'Categoria';
   }
 
   getCategorias() : any {

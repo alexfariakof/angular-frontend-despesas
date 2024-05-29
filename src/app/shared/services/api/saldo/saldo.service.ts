@@ -10,7 +10,7 @@ import { AbstractService } from '../base/AbstractService';
 export class SaldoService  extends AbstractService {
   constructor(public httpClient: HttpClient) {
     super();
-    this.urlPath = 'saldo';
+    this.urlPath = 'Saldo';
   }
 
   getSaldo(): any {
