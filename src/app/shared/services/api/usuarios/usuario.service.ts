@@ -10,7 +10,7 @@ import { AbstractService } from '../base/AbstractService';
 export class UsuarioService extends AbstractService {
   constructor(public httpClient: HttpClient) {
     super();
-    this.urlPath = 'Usuario';
+    this.urlPath = 'usuario';
   }
 
   getUsuario(): any {
@@ -22,7 +22,7 @@ export class UsuarioService extends AbstractService {
   }
 
   putUsuario(usuario: IUsuario): any {
-    return this.httpClient.put<IUsuario>(`${ this.urlPath }`, usuario);
+    return this.httpClient.put<IUsuario>(`${ this.urlPath }/UpdateUsuario`, usuario);
   }
 
   deleteUsuario(usuario: IUsuario): any {

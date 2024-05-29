@@ -11,7 +11,7 @@ import { AbstractService } from '../base/AbstractService';
   export class ControleAcessoService extends AbstractService {
     constructor(private httpClient: HttpClient) {
       super();
-      this.urlPath = 'ControleAcesso';
+      this.urlPath = 'controleacesso';
     }
 
     signIn(login: ILogin): any {

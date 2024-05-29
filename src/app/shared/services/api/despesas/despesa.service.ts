@@ -9,7 +9,7 @@ import { AbstractService } from '../base/AbstractService';
 export class DespesaService extends AbstractService {
   constructor(public httpClient: HttpClient) {
     super();
-    this.urlPath = "Despesa";
+    this.urlPath = "despesa";
   }
 
   getDespesas(): any {

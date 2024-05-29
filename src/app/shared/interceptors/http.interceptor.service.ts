@@ -35,6 +35,9 @@ export class CustomInterceptor implements HttpInterceptor {
         else if (error.status === 401) {
           return this.handle401Error(request, next);
         }
+        else if (error.status === 403) {
+          return throwError(() => 'Acesso não Autorizado!');
+        }
         console.log(error);
         return throwError(() => 'Erro tente atualizar a página ou realize novamente o login..');
       }),

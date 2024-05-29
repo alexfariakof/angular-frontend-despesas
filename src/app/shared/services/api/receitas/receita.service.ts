@@ -9,7 +9,7 @@ import { AbstractService } from '../base/AbstractService';
 export class ReceitaService extends AbstractService {
   constructor(public httpClient: HttpClient) {
     super();
-    this.urlPath = 'Receita';
+    this.urlPath = 'receita';
   }
 
   getReceitas(): any {
