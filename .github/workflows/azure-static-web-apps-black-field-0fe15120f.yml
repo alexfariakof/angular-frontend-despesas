@@ -19,10 +19,6 @@ jobs:
         with:
           submodules: true
           lfs: false
-      - name: Build
-        run: ng build
-        continue-on-error: false
-
       - name: Get Angular build output path
         id: get_output_path
         run: echo "::set-output name=output_path::$(jq -r '.projects[.defaultProject].architect.build.options.outputPath' angular.json)"          
