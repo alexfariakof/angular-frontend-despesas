@@ -15,6 +15,21 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
+      - name: Install dependencies
+        run: |
+          npm install npm@latest
+          npm install -g @angular/cli
+          npm install
+        continue-on-error: false
+
+      - name: Build
+        run: ng build
+        continue-on-error: false    
+
+      - name: Get Angular build output path
+        id: get_output_path
+        run: echo "::set-output name=output_path::$(jq -r '.projects[.defaultProject].architect.build.options.outputPath' angular.json)"
+
       - uses: actions/checkout@v3
         with:
           submodules: true
@@ -28,7 +43,7 @@ jobs:
           action: "upload"
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "/src" # App source code path
+          app_location: "/" # App source code path
           api_location: "" # Api source code path - optional
           output_location: "{angular.json#Object.values(data.projects)[0].architect.build.options.outputPath}" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
