@@ -40,5 +40,5 @@ jobs:
   trigger_tests_sonarcloud:
     needs: build_and_test
     name: Test and Analysis Code In Sonar Cloud
-    uses: alexfariakof/angular-frontend-despesas/.github/workflows/Tests_In_Sonar_Cloud.yml@main
+    uses: alexfariakof/angular-frontend-despesas/.github/workflows/Tests_In_Sonar_Cloud.yml@master
     secrets: inherit
