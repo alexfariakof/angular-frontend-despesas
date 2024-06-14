@@ -1,7 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { environment } from '../../../environments/environment';
-import { CustomInterceptor } from '../../../interceptors/http.interceptor.service';
+import { environment } from '../../../../../environments/environment';
+import { CustomInterceptor } from '../../../../../interceptors/http.interceptor.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ImagemPerfilService } from './imagem.perfil.service';
 
@@ -29,7 +29,7 @@ describe('Unit Test ImagemPerfilService', () => {
       service.getImagemPerfilUsuario().subscribe((response: any) => {
         expect(response).toBeTruthy();
       });
-      const expectedUrl = `${environment.endPoint}/Usuario/ImagemPerfil`;
+      const expectedUrl = `${environment.BASE_URL}/${environment.API_VERSION}/Usuario/ImagemPerfil`;
       const req = httpMock.expectOne(expectedUrl);
       expect(req.request.method).toBe('GET');
       req.flush(mockResponse);
@@ -44,7 +44,7 @@ describe('Unit Test ImagemPerfilService', () => {
       service.createImagemPerfilUsuario(file).subscribe((response: any) => {
         expect(response).toBeTruthy();
       });
-      const expectedUrl = `${environment.endPoint}/Usuario/ImagemPerfil`;
+      const expectedUrl = `${environment.BASE_URL}/${environment.API_VERSION}/Usuario/ImagemPerfil`;
       const req = httpMock.expectOne(expectedUrl);
       expect(req.request.method).toBe('POST');
       req.flush(mockResponse);
@@ -59,7 +59,7 @@ describe('Unit Test ImagemPerfilService', () => {
       service.updateImagemPerfilUsuario(file).subscribe((response: any) => {
         expect(response).toBeTruthy();
       });
-      const expectedUrl = `${environment.endPoint}/Usuario/ImagemPerfil`;
+      const expectedUrl = `${environment.BASE_URL}/${environment.API_VERSION}/Usuario/ImagemPerfil`;
       const req = httpMock.expectOne(expectedUrl);
       expect(req.request.method).toBe('PUT');
       req.flush(mockResponse);
@@ -75,7 +75,7 @@ describe('Unit Test ImagemPerfilService', () => {
         expect(response).toBeTruthy();
       });
 
-      const expectedUrl = `${environment.endPoint}/Usuario/ImagemPerfil`;
+      const expectedUrl = `${environment.BASE_URL}/${environment.API_VERSION}/Usuario/ImagemPerfil`;
       const req = httpMock.expectOne(expectedUrl);
       expect(req.request.method).toBe('DELETE');
       req.flush(mockResponse);

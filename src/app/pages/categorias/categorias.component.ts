@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
-import { MenuService } from 'src/app/shared/services/utils/menu-service/menu.service';
 import { CategoriasFormComponent } from './categorias-form/categorias.form.component';
 import { ICategoria, ITipoCategoria, IAction } from '../../shared/models';
-import { CategoriaService } from 'src/app/shared/services/api/categorias/categoria.service';
-import { CategoriaColumns, CategoriaDataSet } from 'src/app/shared/datatable-config/categorias';
-import { DataTableComponent, AlertComponent, ModalFormComponent, ModalConfirmComponent, BarraFerramentaClass, AlertType } from 'src/app/shared/components';
+import { BarraFerramentaClass, DataTableComponent, AlertComponent, ModalFormComponent, ModalConfirmComponent, AlertType } from '../../shared/components';
+import { CategoriaDataSet, CategoriaColumns } from '../../shared/datatable-config/categorias';
+import { MenuService } from '../../shared/services';
+import { CategoriaService } from '../../shared/services/api';
+
 @Component({
   selector: 'app-categorias',
   templateUrl: './categorias.component.html',
@@ -81,7 +82,7 @@ export class CategoriasComponent implements BarraFerramentaClass, OnInit {
     });
   }
 
-  onClickEdit = (idCategoria: Number) => {
+  onClickEdit = (idCategoria: number) => {
     this.categoriaService.getCategoriaById(idCategoria)
       .subscribe({
         next: (categoria: ICategoria) => {
@@ -103,12 +104,12 @@ export class CategoriasComponent implements BarraFerramentaClass, OnInit {
     });
   }
 
-  onClickDelete = (idCategoria: Number) => {
+  onClickDelete = (idCategoria: number) => {
     const modalRef = this.modalConfirm.open(ModalConfirmComponent, `Deseja excluir a categoria ${this.dataTable.row.descricao} ?`);
     modalRef.componentInstance.setConfirmButton(() => this.deleteCategoria(idCategoria));
   }
 
-  deleteCategoria = (idCategoria: Number) => {
+  deleteCategoria = (idCategoria: number) => {
     this.categoriaService.deleteCategoria(idCategoria)
       .subscribe({
         next: (response: any) => {

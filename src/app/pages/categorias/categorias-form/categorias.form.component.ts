@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AlertComponent, AlertType } from 'src/app/shared/components';
-import { ICategoria, IAction } from 'src/app/shared/models';
-import { CategoriaService } from 'src/app/shared/services/api';
+import { AlertComponent, AlertType } from '../../../shared/components';
+import { ICategoria, IAction } from '../../../shared/models';
+import { CategoriaService } from '../../../shared/services/api';
+
 @Component({
   selector: 'app-categorias-form',
   templateUrl: './categorias.form.component.html',

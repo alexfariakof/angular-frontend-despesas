@@ -1,15 +1,15 @@
 import { CommonModule } from "@angular/common";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed, fakeAsync, flush } from "@angular/core/testing";
+import { FormsModule } from "@angular/forms";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { AlertComponent, AlertType } from "src/app/shared/components";
+import { from, throwError, of } from "rxjs";
+import { AlertComponent, AlertType } from "../../shared/components";
+import { IUsuario } from "../../shared/models";
+import { MenuService } from "../../shared/services";
+import { UsuarioService } from "../../shared/services/api";
 import { PerfilComponent } from "./perfil.component";
-import { FormsModule } from "@angular/forms";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { UsuarioService } from "src/app/shared/services/api";
-import { from, of, throwError } from "rxjs";
-import { IUsuario } from "src/app/shared/models";
-import { MenuService } from "src/app/shared/services";
 
 describe('Unit Test PerfilComponent', () => {
   let component: PerfilComponent;

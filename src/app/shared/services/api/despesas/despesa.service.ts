@@ -8,31 +8,31 @@ import { AbstractService } from '../base/AbstractService';
 
 export class DespesaService extends AbstractService {
   constructor(public httpClient: HttpClient) {
-    super();
-    this.urlPath = "Despesa";
+    const ROUTE = 'Despesa';
+    super(ROUTE);
   }
 
   getDespesas(): any {
-    return this.httpClient.get(`${ this.urlPath }`);
+    return this.httpClient.get(`${ this.routeUrl }`);
   }
 
   getDespesaById(idDespesa: number): any {
-    return this.httpClient.get(`${ this.urlPath }/GetById/${idDespesa}`);
+    return this.httpClient.get(`${ this.routeUrl }/GetById/${idDespesa}`);
   }
 
   getDespesasCategorias(): any {
-    return this.httpClient.get(`Categoria/GetByTipoCategoria/1`);
+    return this.httpClient.get(`${ this.routeUrl.replace('Despesa', 'Categoria') }/GetByTipoCategoria/1`);
   }
 
   postDespesa(despesa: IDespesa): any {
-    return this.httpClient.post<IDespesa>(`${ this.urlPath }`, despesa);
+    return this.httpClient.post<IDespesa>(`${ this.routeUrl }`, despesa);
   }
 
   putDespesa(despesa: IDespesa): any {
-    return this.httpClient.put<IDespesa>(`${ this.urlPath }`, despesa);
+    return this.httpClient.put<IDespesa>(`${ this.routeUrl }`, despesa);
   }
 
   deleteDespesa(idDespesa: number): any {
-    return this.httpClient.delete(`${ this.urlPath }/${idDespesa}`);
+    return this.httpClient.delete(`${ this.routeUrl }/${idDespesa}`);
   }
 }

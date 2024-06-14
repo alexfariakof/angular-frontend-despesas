@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgbModalConfig, NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -9,7 +9,7 @@ import { NgbModalConfig, NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-boots
 export class ModalConfirmComponent {
   header:string = 'Mensagem';
   message:string ='';
-  onClickConfirm: Function;
+  onClickConfirm: Function = () => {};
 
   constructor(config: NgbModalConfig, public modalService: NgbModal, public activeModal: NgbActiveModal) {
     config.backdrop = 'static';

@@ -2,11 +2,10 @@ import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ReceitaService } from './receita.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { CustomInterceptor } from '../../../interceptors/http.interceptor.service';
-import { environment } from 'src/app/shared/environments/environment';
-import { IReceita } from 'src/app/shared/models/IReceita';
-import * as dayjs from 'dayjs';
-import { ICategoria } from 'src/app/shared/models/ICategoria';
+import { CustomInterceptor } from '../../../../../interceptors/http.interceptor.service';
+import  dayjs from 'dayjs';
+import { environment } from '../../../../../environments/environment';
+import { IReceita, ICategoria } from '../../../models';
 
 describe('Unit Test ReceitaService', () => {
 
@@ -37,7 +36,7 @@ describe('Unit Test ReceitaService', () => {
         expect(response).toBeTruthy();
       });
 
-      const expectedUrl = `${environment.endPoint}/Receita`;
+      const expectedUrl = `${environment.BASE_URL}/${environment.API_VERSION}/Receita`;
       const req = httpMock.expectOne(expectedUrl);
       expect(req.request.method).toBe('GET');
 
@@ -63,7 +62,7 @@ describe('Unit Test ReceitaService', () => {
         expect(response).toBeTruthy();
       });
 
-      const expectedUrl = `${environment.endPoint}/Receita/GetById/${idReceita}`;
+      const expectedUrl = `${environment.BASE_URL}/${environment.API_VERSION}/Receita/GetById/${idReceita}`;
       const req = httpMock.expectOne(expectedUrl);
       expect(req.request.method).toBe('GET');
 
@@ -93,7 +92,7 @@ describe('Unit Test ReceitaService', () => {
         expect(response).toBeTruthy();
       });
 
-      const expectedUrl = `${environment.endPoint}/Categoria/GetByTipoCategoria/2`;
+      const expectedUrl = `${environment.BASE_URL}/${environment.API_VERSION}/Categoria/GetByTipoCategoria/2`;
       const req = httpMock.expectOne(expectedUrl);
       expect(req.request.method).toBe('GET');
 
@@ -118,7 +117,7 @@ describe('Unit Test ReceitaService', () => {
         expect(response).toBeTruthy();
       });
 
-      const expectedUrl = `${environment.endPoint}/Receita`;
+      const expectedUrl = `${environment.BASE_URL}/${environment.API_VERSION}/Receita`;
       const req = httpMock.expectOne(expectedUrl);
       expect(req.request.method).toBe('POST');
 
@@ -143,7 +142,7 @@ describe('Unit Test ReceitaService', () => {
         expect(response).toBeTruthy();
       });
 
-      const expectedUrl = `${environment.endPoint}/Receita`;
+      const expectedUrl = `${environment.BASE_URL}/${environment.API_VERSION}/Receita`;
       const req = httpMock.expectOne(expectedUrl);
       expect(req.request.method).toBe('PUT');
 
@@ -163,7 +162,7 @@ describe('Unit Test ReceitaService', () => {
         expect(response).toBeTruthy();
       });
 
-      const expectedUrl = `${environment.endPoint}/Receita/${ idReceita }`;
+      const expectedUrl = `${environment.BASE_URL}/${environment.API_VERSION}/Receita/${ idReceita }`;
       const req = httpMock.expectOne(expectedUrl);
       expect(req.request.method).toBe('DELETE');
 

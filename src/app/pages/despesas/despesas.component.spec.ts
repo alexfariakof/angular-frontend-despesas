@@ -1,4 +1,3 @@
-import { MenuService } from 'src/app/shared/services';
 import { CommonModule } from "@angular/common";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed, fakeAsync, flush } from "@angular/core/testing";
@@ -7,15 +6,17 @@ import { MatDatepicker, MatDatepickerModule } from "@angular/material/datepicker
 import { MatSelect, MatSelectModule } from "@angular/material/select";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import * as dayjs from "dayjs";
+import dayjs from "dayjs";
 import { from, throwError } from "rxjs";
-import { AlertComponent, ModalFormComponent, ModalConfirmComponent, DataTableComponent, AlertType } from "src/app/shared/components";
-import { DespesaDataSet } from "src/app/shared/datatable-config/despesas";
-import { IDespesa } from "src/app/shared/models";
-import { DespesaService } from "src/app/shared/services/api";
-import { SharedModule } from "src/app/shared/shared.module";
+import { AlertComponent, ModalFormComponent, ModalConfirmComponent, DataTableComponent, AlertType } from "../../shared/components";
+import { DespesaDataSet } from "../../shared/datatable-config/despesas";
+import { IDespesa } from "../../shared/models";
+import { MenuService } from "../../shared/services";
+import { DespesaService } from "../../shared/services/api";
+import { SharedModule } from "../../shared/shared.module";
 import { DespesasFormComponent } from "./despesas-form/despesas.form.component";
 import { DespesasComponent } from "./despesas.component";
+
 
 describe('Unit Test DespesasComponent', () => {
   let component: DespesasComponent;
