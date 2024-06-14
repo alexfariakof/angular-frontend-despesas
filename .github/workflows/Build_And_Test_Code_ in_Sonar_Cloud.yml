@@ -2,6 +2,7 @@ name: Build And Test Code in Sonar Cloud
 on:
   push:
     branches:
+      - main
       - develop
       - hotfix/*
 
@@ -10,8 +11,6 @@ on:
     branches:
       - master
       - develop
-      - hotfix/*
-
 
 jobs:
   build_and_test:
