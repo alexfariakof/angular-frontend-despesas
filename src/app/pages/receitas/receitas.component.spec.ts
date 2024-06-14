@@ -1,4 +1,3 @@
-import { MenuService } from 'src/app/shared/services';
 import { CommonModule } from "@angular/common";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed, fakeAsync, flush } from "@angular/core/testing";
@@ -7,13 +6,14 @@ import { MatDatepicker, MatDatepickerModule } from "@angular/material/datepicker
 import { MatSelect, MatSelectModule } from "@angular/material/select";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import * as dayjs from "dayjs";
+import dayjs from "dayjs";
 import { from, throwError } from "rxjs";
-import { AlertComponent, ModalFormComponent, ModalConfirmComponent, DataTableComponent, AlertType } from "src/app/shared/components";
-import { ReceitaDataSet } from "src/app/shared/datatable-config/receitas";
-import { IReceita } from "src/app/shared/models";
-import { ReceitaService } from "src/app/shared/services/api";
-import { SharedModule } from "src/app/shared/shared.module";
+import { AlertComponent, ModalFormComponent, ModalConfirmComponent, DataTableComponent, AlertType } from "../../shared/components";
+import { ReceitaDataSet } from "../../shared/datatable-config/receitas";
+import { IReceita } from "../../shared/models";
+import { MenuService } from "../../shared/services";
+import { ReceitaService } from "../../shared/services/api";
+import { SharedModule } from "../../shared/shared.module";
 import { ReceitasFormComponent } from "./receitas-form/receitas.form.component";
 import { ReceitasComponent } from "./receitas.component";
 

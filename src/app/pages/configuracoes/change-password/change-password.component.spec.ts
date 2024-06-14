@@ -1,14 +1,15 @@
-import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testing';
-import { ChangePasswordComponent } from './change-password.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { AlertComponent, AlertType } from 'src/app/shared/components';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
-import { ControleAcessoService } from 'src/app/shared/services/api';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ILogin } from 'src/app/shared/models';
-import { from, throwError } from 'rxjs';
+import { CommonModule } from "@angular/common";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { ComponentFixture, TestBed, fakeAsync, flush } from "@angular/core/testing";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { MdbFormsModule } from "mdb-angular-ui-kit/forms";
+import { from, throwError } from "rxjs";
+import { AlertComponent, AlertType } from "../../../shared/components";
+import { ILogin } from "../../../shared/models";
+import { ControleAcessoService } from "../../../shared/services/api";
+import { ChangePasswordComponent } from "./change-password.component";
+
 
 describe('ChangePasswordComponent', () => {
   let component: ChangePasswordComponent;

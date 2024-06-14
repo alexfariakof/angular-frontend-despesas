@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import * as dayjs from 'dayjs';
-import { AlertComponent, AlertType } from 'src/app/shared/components';
-import { IDespesa, ICategoria, IAction } from 'src/app/shared/models';
-import { DespesaService } from 'src/app/shared/services/api';
-import { CustomValidators } from 'src/app/shared/validators';
+import dayjs from 'dayjs';
+import { AlertComponent, AlertType } from '../../../shared/components';
+import { ICategoria, IDespesa, IAction } from '../../../shared/models';
+import { DespesaService } from '../../../shared/services/api';
+import { CustomValidators } from '../../../shared/validators';
 
 @Component({
   selector: 'app-despesas-form',

@@ -2,10 +2,11 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { map, catchError } from "rxjs";
-import { AlertComponent, AlertType } from "src/app/shared/components";
-import { IControleAcesso } from "src/app/shared/models";
-import { ControleAcessoService } from "src/app/shared/services/api";
-import { CustomValidators } from "src/app/shared/validators";
+import { AlertComponent, AlertType } from "../../shared/components";
+import { IControleAcesso } from "../../shared/models";
+import { ControleAcessoService } from "../../shared/services/api";
+import { CustomValidators } from "../../shared/validators";
+
 @Component({
   selector: 'app-primeiro-acesso',
   templateUrl: './primeiro-acesso.component.html',
@@ -62,7 +63,7 @@ export class PrimeiroAcessoComponent  implements OnInit {
       })
     )
     .subscribe({
-      next: (result: Boolean) => {
+      next: (result: boolean) => {
         if (result){
           this.modalALert.open(AlertComponent, "Cadastro realizado com sucesso!", AlertType.Success);
           this.router.navigate(['/login']);

@@ -4,10 +4,11 @@ import { ReactiveFormsModule, FormBuilder } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { MdbFormsModule } from "mdb-angular-ui-kit/forms";
 import { from, of, throwError } from "rxjs";
-import { AlertComponent, AlertType } from "src/app/shared/components";
-import { ICategoria, IAction } from "src/app/shared/models";
 import { CategoriasFormComponent } from "./categorias.form.component";
-import { CategoriaService } from "src/app/shared/services/api";
+import { AlertComponent, AlertType } from "../../../shared/components";
+import { ICategoria, IAction } from "../../../shared/models";
+import { CategoriaService } from "../../../shared/services/api";
+
 
 describe('Unit Test CategoriasFormComponent', () => {
   let component: CategoriasFormComponent;

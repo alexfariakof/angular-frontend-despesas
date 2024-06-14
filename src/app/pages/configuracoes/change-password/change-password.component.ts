@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertComponent, AlertType } from 'src/app/shared/components';
-import { ILogin } from 'src/app/shared/models';
-import { ControleAcessoService } from 'src/app/shared/services/api';
+import { AlertComponent, AlertType } from '../../../shared/components';
+import { ILogin } from '../../../shared/models';
+import { ControleAcessoService } from '../../../shared/services/api';
 
 @Component({
   selector: 'app-change-password',

@@ -1,17 +1,17 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed, fakeAsync, flush } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { of } from "rxjs";
-import { AlertComponent } from "src/app/shared/components";
-import { ILogin, IAuth } from "src/app/shared/models";
-import { AuthService } from "src/app/shared/services";
+import { AlertComponent } from "../../shared/components";
+import { ILogin, IAuth } from "../../shared/models";
+import { AuthService } from "../../shared/services";
 import { LoginComponent } from "./login.component";
-import { MatInputModule } from "@angular/material/input";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -75,7 +75,7 @@ describe('LoginComponent', () => {
     // Arrange
     const errorMessage = "Error Test Component";
     spyOn(component.modalALert, 'open').and.callThrough();
-    spyOn(component.controleAcessoService, 'signIn').and.rejectWith(errorMessage).and.callThrough();
+    spyOn(component.controleAcessoService, 'signIn').and.rejectWith().and.callThrough();
     spyOn(component, 'onLoginClick');
 
     // Act

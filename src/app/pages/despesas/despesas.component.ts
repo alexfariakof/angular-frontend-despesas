@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import * as dayjs from "dayjs";
-import { BarraFerramentaClass, DataTableComponent, AlertComponent, ModalFormComponent, ModalConfirmComponent, AlertType } from "src/app/shared/components";
-import { DespesaDataSet, DespesaColumns } from "src/app/shared/datatable-config/despesas";
-import { IDespesa, IAction } from "src/app/shared/models";
-import { MenuService } from "src/app/shared/services";
-import { DespesaService } from "src/app/shared/services/api";
+import dayjs from "dayjs";
 import { DespesasFormComponent } from "./despesas-form/despesas.form.component";
+import { BarraFerramentaClass, DataTableComponent, AlertComponent, ModalFormComponent, ModalConfirmComponent, AlertType } from "../../shared/components";
+import { DespesaDataSet, DespesaColumns } from "../../shared/datatable-config/despesas";
+import { IDespesa, IAction } from "../../shared/models";
+import { MenuService } from "../../shared/services";
+import { DespesaService } from "../../shared/services/api";
 @Component({
   selector: 'app-despesas',
   templateUrl: './despesas.component.html',

@@ -3,7 +3,7 @@ import { SaldoComponent } from './saldo.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { from, throwError } from 'rxjs';
 import { SaldoService } from '../../services/api';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import { ISaldo } from '../../models';
 
 describe('Unit Test SaldoComponent', () => {

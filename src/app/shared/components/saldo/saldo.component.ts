@@ -1,7 +1,7 @@
 import { FilterMesService } from './../../services/utils/filter-mes.service/filter.mes.service';
 import { Component, OnInit } from '@angular/core';
 import { SaldoService } from '../../services/api';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import 'dayjs/locale/pt-br';
 import { Dayjs } from 'dayjs';
 import { CommonModule } from '@angular/common';

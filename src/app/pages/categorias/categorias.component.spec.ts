@@ -1,4 +1,3 @@
-import { MenuService } from 'src/app/shared/services';
 import { CommonModule } from "@angular/common";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed, fakeAsync, tick, flush } from "@angular/core/testing";
@@ -6,13 +5,15 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { MdbFormsModule } from "mdb-angular-ui-kit/forms";
 import { from, throwError, of } from "rxjs";
-import { AlertComponent, ModalFormComponent, ModalConfirmComponent, DataTableComponent, AlertType } from "src/app/shared/components";
-import { CategoriaDataSet } from "src/app/shared/datatable-config/categorias";
-import { ICategoria } from "src/app/shared/models";
-import { CategoriaService } from "src/app/shared/services/api";
-import { SharedModule } from "src/app/shared/shared.module";
 import { CategoriasFormComponent } from "./categorias-form/categorias.form.component";
 import { CategoriasComponent } from "./categorias.component";
+import { AlertComponent, AlertType, DataTableComponent, ModalConfirmComponent, ModalFormComponent } from "../../shared/components";
+import { CategoriaDataSet } from "../../shared/datatable-config/categorias";
+import { ICategoria } from "../../shared/models";
+import { MenuService } from "../../shared/services";
+import { CategoriaService } from "../../shared/services/api";
+import { SharedModule } from "../../shared/shared.module";
+import { AbstractService } from "../../shared/services/api/base/AbstractService";
 
 
 describe('Unit Test CategoriasComponent', () => {
@@ -85,7 +86,7 @@ describe('Unit Test CategoriasComponent', () => {
     // Assert
     expect(getCategoriasSpy).toHaveBeenCalled();
     expect(alertOpenSpy).toHaveBeenCalled();
-    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, undefined, AlertType.Warning);
+    expect(alertOpenSpy).toHaveBeenCalledWith(AlertComponent, errorMessage, AlertType.Warning);
   });
 
   it('should update data table on updateDatatable', () => {

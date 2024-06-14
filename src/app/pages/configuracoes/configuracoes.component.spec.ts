@@ -3,7 +3,8 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { ConfiguracoesComponent } from "./configuracoes.component";
 import { ReactiveFormsModule } from "@angular/forms";
-import { MenuService } from "src/app/shared/services";
+import { MenuService } from "../../shared/services";
+
 
 describe('Unit Test ConfiguracoesComponent', () => {
   let component: ConfiguracoesComponent;

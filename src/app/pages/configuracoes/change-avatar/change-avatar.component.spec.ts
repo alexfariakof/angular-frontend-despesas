@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testing';
 import { ChangeAvatarComponent } from './change-avatar.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { AlertComponent, AlertType } from 'src/app/shared/components';
-import { ImagemPerfilService, UsuarioService } from 'src/app/shared/services/api';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { from, throwError } from 'rxjs';
-import { IImagemPerfil } from 'src/app/shared/models';
+import { AlertComponent, AlertType } from '../../../shared/components';
+import { IImagemPerfil } from '../../../shared/models';
+import { ImagemPerfilService, UsuarioService } from '../../../shared/services/api';
 
 describe('Unit Test ChangeAvatarComponent', () => {
   let component: ChangeAvatarComponent;

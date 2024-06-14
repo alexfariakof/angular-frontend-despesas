@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DataTableComponent } from './data-table.component';
 import { DataTableModule } from './data-table.component.module';
 import { DataTableDirective } from 'angular-datatables';
-import { ITipoCategoria } from '../../models';
 
 describe('Unit Test DataTableComponent', () => {
   let component: DataTableComponent;
