@@ -38,7 +38,7 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnDestroy, OnC
 
   rerender(): void {
     if (this.dtElement != undefined) {
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      this.dtElement.dtInstance.then((dtInstance: any) => {
         dtInstance.destroy();
         this.dtTrigger.next();
       });
@@ -85,7 +85,7 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnDestroy, OnC
     this.data = newData;
   }
 
-  handleAction(action: string, id: number, _row, tipoCategoria: string) {
+  handleAction(action: string, id: number, _row: any, tipoCategoria: string) {
     this.row = _row;
     if (action === 'edit') {
       this.editAction(id, tipoCategoria);

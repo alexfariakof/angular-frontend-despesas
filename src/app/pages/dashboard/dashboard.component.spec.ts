@@ -1,15 +1,16 @@
-import { CommonModule } from '@angular/common';
-import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testing';
-import { NgChartsModule } from 'ng2-charts';
-import { AlertComponent, AlertType, BarChartComponent } from 'src/app/shared/components';
-import { AuthService, MenuService } from 'src/app/shared/services';
-import { SharedModule } from 'src/app/shared/shared.module';
-import { DashboardComponent } from './dashboard.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { DashboardService } from 'src/app/shared/services/api';
-import { from, throwError } from 'rxjs';
-import * as dayjs from 'dayjs';
+import { CommonModule } from "@angular/common";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { ComponentFixture, TestBed, fakeAsync, flush } from "@angular/core/testing";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import dayjs from "dayjs";
+import { NgChartsModule } from "ng2-charts";
+import { from, throwError } from "rxjs";
+import { BarChartComponent, AlertComponent, AlertType } from "../../shared/components";
+import { AuthService, MenuService } from "../../shared/services";
+import { DashboardService } from "../../shared/services/api";
+import { SharedModule } from "../../shared/shared.module";
+import { DashboardComponent } from "./dashboard.component";
+
 
 describe('Unit Test DashboardComponent', () => {
   let component: DashboardComponent;

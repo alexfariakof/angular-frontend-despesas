@@ -1,11 +1,11 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
-import { environment } from "src/app/shared/environments/environment";
-import { ILancamento } from "src/app/shared/models";
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { CustomInterceptor } from '../../../interceptors/http.interceptor.service';
+import { CustomInterceptor } from '../../../../../interceptors/http.interceptor.service';
 import { LancamentoService } from "./lancamento.service";
-import * as dayjs from "dayjs";
+import dayjs from "dayjs";
+import { environment } from '../../../../../environments/environment';
+import { ILancamento } from '../../../models';
 
 describe('Unit Test LancamentoService', () => {
 
@@ -32,7 +32,7 @@ describe('Unit Test LancamentoService', () => {
         expect(response).toBeTruthy();
       });
 
-      const expectedUrl = `${environment.endPoint}/Lancamento/${ dayjs() }`;
+      const expectedUrl = `${environment.BASE_URL}/${environment.API_VERSION}/Lancamento/${ dayjs() }`;
       const req = httpMock.expectOne(expectedUrl);
       expect(req.request.method).toBe('GET');
 

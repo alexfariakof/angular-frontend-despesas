@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { AlertComponent, AlertType } from 'src/app/shared/components';
-import { IImagemPerfil } from 'src/app/shared/models';
-import { ImagemPerfilService } from 'src/app/shared/services/api';
+import { AlertComponent, AlertType } from '../../../shared/components';
+import { IImagemPerfil } from '../../../shared/models';
+import { ImagemPerfilService } from '../../../shared/services/api';
+
 @Component({
   selector: 'app-change-avatar',
   templateUrl: './change-avatar.component.html',

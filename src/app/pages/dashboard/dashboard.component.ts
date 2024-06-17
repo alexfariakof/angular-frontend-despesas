@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
-import * as dayjs from 'dayjs';
-import { BarraFerramentaComponent, BarChartComponent, AlertComponent, AlertType } from 'src/app/shared/components';
-import { MenuService, FilterAnoService } from 'src/app/shared/services';
-import { DashboardService } from 'src/app/shared/services/api';
+import { BarraFerramentaComponent, BarChartComponent, AlertComponent, AlertType } from '../../shared/components';
+import { MenuService, FilterAnoService } from '../../shared/services';
+import { DashboardService } from '../../shared/services/api';
+import dayjs from 'dayjs';
 
 @Component({
   selector: 'app-dashboard',

@@ -1,5 +1,5 @@
-import { MenuService } from 'src/app/shared/services';
 import { Component } from "@angular/core";
+import { MenuService } from "../../shared/services";
 @Component({
   selector: 'app-configuracoes',
   templateUrl: './configuracoes.component.html',

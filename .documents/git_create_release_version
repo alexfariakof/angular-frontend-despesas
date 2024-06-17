@@ -1,18 +1,13 @@
 #  Cria uma release usando git flow
-git flow release start 1.0.3
+git flow release start 2.0.0
 
 
 # Cria uma tag no git "-a" inidicando que tem anotações "-m"
 #obs.: Padrão do projeto v*.*.*
-git tag -a <v*.*.*> -m "Version tag"
 
-git tag -a v1.1.6 -m "Version Server Port Change"
+git tag -a <v*.*.*> -m "Version tag"
+git tag -a v2.0.0 -m "Api Rest Version 2.0.0"
+git flow release finish 2.0.0
 
 # Envia as alterações(commits) e as tags locais para o repositório remoto
 git push --follow-tags
-
-
-#  Finaliza a release usando git flow
-git flow release finish 1.0.2
-
-

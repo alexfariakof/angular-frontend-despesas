@@ -2,10 +2,11 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { map, catchError } from "rxjs";
-import { AlertComponent, AlertType } from "src/app/shared/components";
-import { ILogin, IAuth } from "src/app/shared/models";
-import { AuthService } from "src/app/shared/services";
-import { ControleAcessoService } from "src/app/shared/services/api";
+import { AlertComponent, AlertType } from "../../shared/components";
+import { ILogin, IAuth } from "../../shared/models";
+import { AuthService } from "../../shared/services";
+import { ControleAcessoService } from "../../shared/services/api";
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -44,19 +45,14 @@ export class LoginComponent implements OnInit{
         }
       }),
       catchError((error) => {
-        if (error.status === 400) {
-          const validationErrors = error.errors;
-          if (validationErrors) {
-            Object.keys(validationErrors).forEach(field => {
-              throw validationErrors[field][0];
-            });
-          }
+        if (error && typeof error.message === 'string'){
+          throw (error.message);
         }
         throw (error);
       })
     )
     .subscribe({
-      next: (response: Boolean) => {
+      next: (response: boolean) => {
         if (response)
           this.router.navigate(['/dashboard']);
       },

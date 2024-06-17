@@ -2,12 +2,22 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/spec",
-    "types": [
-      "jasmine"
-    ]
+    "types": [ "jasmine", "node" ]
   },
+  "module": "esnext",
+  "files": [
+    "src/test.ts"
+  ],
   "include": [
     "src/**/*.spec.ts",
     "src/**/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules/**",
+    "dist/**",
+    ".angular/**",
+    ".vscode/**",
+    "obj/**",
+    "covergae/**"
   ]
 }

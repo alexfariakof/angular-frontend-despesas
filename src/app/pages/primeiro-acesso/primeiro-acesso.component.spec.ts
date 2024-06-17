@@ -1,4 +1,3 @@
-import { AlertComponent, AlertType } from './../../shared/components/alert-component/alert.component';
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed, fakeAsync, flush } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
@@ -7,7 +6,8 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { MdbFormsModule } from "mdb-angular-ui-kit/forms";
 import { of, throwError } from "rxjs";
-import { IControleAcesso } from "src/app/shared/models";
+import { AlertComponent, AlertType } from "../../shared/components";
+import { IControleAcesso } from "../../shared/models";
 import { PrimeiroAcessoComponent } from "./primeiro-acesso.component";
 
 describe('PrimeiroAcessoComponent', () => {

@@ -1,23 +1,23 @@
-import { LancamentoService } from './../../shared/services/api/lancamentos/lancamento.service';
 import { CommonModule } from "@angular/common";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed, fakeAsync, flush } from "@angular/core/testing";
+import { MatNativeDateModule } from "@angular/material/core";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatSelectModule } from "@angular/material/select";
+import { RouterTestingModule } from "@angular/router/testing";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { AlertComponent, AlertType, DataTableComponent, ModalConfirmComponent, ModalFormComponent } from "src/app/shared/components";
-import { FilterMesAnoService, MenuService } from "src/app/shared/services";
-import { SharedModule } from "src/app/shared/shared.module";
-import { LancamentosComponent } from "./lancamentos.component";
+import dayjs from "dayjs";
+import { from, throwError } from "rxjs";
+import { AlertComponent, ModalFormComponent, ModalConfirmComponent, DataTableComponent, AlertType } from "../../shared/components";
+import { LancamentoDataSet } from "../../shared/datatable-config/lancamentos";
+import { ILancamento } from "../../shared/models";
+import { MenuService, FilterMesAnoService } from "../../shared/services";
+import { LancamentoService } from "../../shared/services/api";
+import { SharedModule } from "../../shared/shared.module";
 import { DespesasFormComponent } from "../despesas/despesas-form/despesas.form.component";
 import { ReceitasFormComponent } from "../receitas/receitas-form/receitas.form.component";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { RouterTestingModule } from "@angular/router/testing";
-import { ILancamento } from 'src/app/shared/models';
-import { LancamentoDataSet } from 'src/app/shared/datatable-config/lancamentos';
-import { from, throwError } from 'rxjs';
-import * as dayjs from 'dayjs';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatSelectModule } from '@angular/material/select';
+import { LancamentosComponent } from "./lancamentos.component";
 
 describe('Unit Test LancamentosComponent', () => {
   let component: LancamentosComponent;
