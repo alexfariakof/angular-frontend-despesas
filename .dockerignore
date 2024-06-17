@@ -1,6 +1,5 @@
 **/.classpath
 **/.dockerignore
-**/.env
 **/.git
 **/.gitignore
 **/.project
@@ -24,6 +23,8 @@
 LICENSE
 README.md
 **/.angular
+**/.documents
+**/.github
 despesas-frontend-angular.code-workspace
 .editorconfig
 **/generate_coverage_report.*
