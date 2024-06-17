@@ -5,7 +5,6 @@
     "types": [ "jasmine", "node" ]
   },
   "module": "esnext",
-  "sdk": "Microsoft.VisualStudio.JavaScript.Sdk/1.0.784122",
   "files": [
     "src/test.ts"
   ],
