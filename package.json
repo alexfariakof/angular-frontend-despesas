@@ -6,14 +6,15 @@
     "start": "run-script-os",
     "build": "ng build",
     "build:dev": "ng build --configuration=development",
-    "watch": "ng build --watch --configuration development",
+    "build:prod": "ng build --configuration=production",
+    "watch": "ng build --watch ",
     "test": "set BROWSER=ChromeHeadless && ng test --browsers=ChromeHeadless --no-watch",
     "test:debug": "set BROWSER=Chrome && ng test --browsers=Chrome",
     "test:coverage": "ng test --code-coverage --browsers=ChromeHeadless --no-watch",
     "test:watch": "ng test --code-coverage --browsers=ChromeHeadless --watch",
     "prestart": "node aspnetcore-https",
-    "start:windows": "ng serve --ssl --configuration development --ssl-cert \"%APPDATA%\\ASP.NET\\https\\%npm_package_name%.pem\" --ssl-key \"%APPDATA%\\ASP.NET\\https\\%npm_package_name%.key\" --host=127.0.0.1",
-    "start:default": "ng serve --ssl --configuration development --ssl-cert \"$HOME/.aspnet/https/${npm_package_name}.pem\" --ssl-key \"$HOME/.aspnet/https/${npm_package_name}.key\" --host=127.0.0.1"
+    "start:windows": "ng serve --ssl --configuration local-development --ssl-cert \"%APPDATA%\\ASP.NET\\https\\%npm_package_name%.pem\" --ssl-key \"%APPDATA%\\ASP.NET\\https\\%npm_package_name%.key\" --host=127.0.0.1",
+    "start:default": "ng serve --ssl --configuration local-development --ssl-cert \"$HOME/.aspnet/https/${npm_package_name}.pem\" --ssl-key \"$HOME/.aspnet/https/${npm_package_name}.key\" --host=127.0.0.1"
   },
   "private": true,
   "dependencies": {
