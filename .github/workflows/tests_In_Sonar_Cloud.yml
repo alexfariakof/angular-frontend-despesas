@@ -30,7 +30,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install -g @angular/core@16 @angular/cli@16 > /dev/null > 2>&1
+          npm install -g @angular/core @angular/cli
           npm install
 
       - name: Build Test and Generate Code Coverage
