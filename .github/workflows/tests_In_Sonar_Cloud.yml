@@ -5,8 +5,8 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
-      - dev
-      - staging
+      - develop
+      - pre-release
       - hotfix/*
       - feature/*
       - bugfix/*
