@@ -126,6 +126,10 @@
             "development": {
               "proxyConfig": "src/proxy.conf.js",
               "buildTarget": "angularapp:build:development"
+            },
+            "local-development": {
+              "proxyConfig": "src/proxy.conf.js",
+              "buildTarget": "angularapp:build:local-development"
             }
           },
           "defaultConfiguration": "production"
