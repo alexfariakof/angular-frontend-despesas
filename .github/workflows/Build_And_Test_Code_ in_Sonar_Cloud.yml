@@ -27,7 +27,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install -g @angular/core@16 @angular/cli@16 > /dev/null 2>&1
+          npm install -g @angular/core @angular/cli > /dev/null 2>&1
           npm install
         continue-on-error: false
 
