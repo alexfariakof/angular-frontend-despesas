@@ -14,17 +14,17 @@
 ## Run Local Development Server
   > This server points the endpoint to the local application API.
 
-Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Run ```powershell npm start` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
 ## Run Development Server
   > This server points the endpoint to the development application API.
 > 
-Run `npm run start:dev` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Run ```powershell npm run start:dev` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
 ## Run Production Server
   > This server points the endpoint to the production application API.
 
-Run `npm run start:prod` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Run ```powershell npm run start:prod` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
 ## Run Local Development Server In Docker
   > This build may take a little while, be patient.

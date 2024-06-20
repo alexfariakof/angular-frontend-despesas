@@ -1,4 +1,4 @@
-FROM node:21-slim
+FROM node:20-slim
 ENV NODE_ENV=development
 WORKDIR /app
 RUN npm install -g @angular/cli
